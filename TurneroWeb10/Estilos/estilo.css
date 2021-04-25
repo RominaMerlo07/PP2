@@ -1,0 +1,232 @@
+body{
+
+	background: #f0e7cd; 
+	
+}
+
+
+#conten_logo_header{
+
+	float: left;
+	position: relative;
+	width: 9%;
+	height: 100px;
+}
+
+#logo_header{
+	
+	width:100%;
+	height:100px;
+	float: left;
+	position: relative;
+}
+
+
+#conten_nav{
+
+	background-color: #08748c;
+	float: left;	
+	width:91%;
+	height: 100px;
+	position: relative;
+	
+	
+}
+
+
+
+#pestañas_nav>li{
+	list-style: none;
+	margin: 30px;
+	color:white;
+	display: inline-block;
+	position: relative;
+	text-align:right;
+	padding-top: 20px;
+	font-family: 'Lucida Sans';
+	font-size: 15px;
+	font-weight: bold;
+
+}
+
+.contenedor_turnos{
+
+	width: 100%;
+	height: 500px;
+	position: relative;
+	float: left;
+	margin-top: 1%;
+	margin-bottom: 3%;
+	margin-left: 4%;
+	margin-right: 4%;
+}
+
+/*antes h1*/
+.tituloH1{
+
+    font-family:'Yanone Kaffeesatz';
+    font-size: 50px;
+    font-weight: bolder;
+    position: relative;
+    text-align: start;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    color: #f27405;
+
+}
+
+/*form{
+position:relative;
+display: inline-block;
+margin-left: 10px;
+margin-right: 10px;
+margin-top: 10px;
+}*/
+
+/*antes form>label*/
+.lblForms {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: #343a40;
+    /*#08748c;*/
+    font-weight: lighter;
+}
+
+
+#conten_footer{
+	background-color: black;
+	width: 100%;
+	height: 230px;
+	position: relative;
+	float: left;
+	padding-top: -20px,-20px;
+    margin-top: -200px;
+}
+
+#imagen_footer{
+
+	width: 20%;
+	height: 230px;
+	float: left;
+	
+	
+}
+#imagen_footer>img{
+	width: 100%;
+	height: 230px;
+	float: left;
+	
+		
+}
+#contacto_footer{
+	width: 25%;
+	height: 230px;
+	position: relative;
+	float: left;
+	border-right: #037f8c solid;
+			
+}
+#contacto_footer>ul{
+	color:#f27405;
+	font-size: 14px;
+	font-family:'Yanone Kaffeesatz';
+	font-weight: bolder;
+	float: left;
+	margin-top: 25px;
+}
+
+#contacto_footer>ul>p{
+
+	color: white;
+	display: inline-block;
+	font-size: 12px;
+	font-family:'Yanone Kaffeesatz';
+	text-align: justify;
+	font-weight: bolder;
+	margin-top: 15px;
+}
+
+#contacto_footer>ul>li{
+
+	color:#08748c;
+	font-size: 13px;
+	font-family:'Yanone Kaffeesatz';
+	list-style: none;
+	margin-top: 10px;
+	
+}
+
+
+
+#horarios_footer{
+	
+	width: 20%;
+	height: 205px;
+	position: relative;
+	float: left;
+	border-right: #037f8c solid;
+	padding-top: 25px;
+	margin-left: 50px;
+	
+}
+#horarios_footer>span{
+	
+	color: #f27405;
+	font-family:'Yanone Kaffeesatz';
+	font-weight: bolder;
+	font-size: 14px;
+	display: block;
+	margin: auto;
+	
+	
+}
+#horarios_footer>p{
+	color: white;
+	font-family: 'Yanone Kaffeesatz';
+	font-size: 13px;
+	font-weight: bolder;
+	margin-top: 35px;
+}
+
+
+
+.iconos-redes{
+	width: 25%;
+	height: 230;
+	position: relative;
+	border-radius: 5px;
+	border-style: white solid;
+	float: left;
+	padding-top: 25px;
+}
+
+.iconos-redes>a>i{
+
+	font-size: 40px;
+	margin-top: 40px;
+	margin-left: 70px;
+	display: inline-block;
+	
+	
+
+		}
+
+	.iconos-redes>a{
+	color: white;
+	text-decoration: none;
+	
+	
+	}
+
+	.iconos-redes>span{
+		color: #f27405;
+		font-family:'Yanone Kaffeesatz';
+		font-weight: bolder;
+		font-size: 14px;
+		display: block;
+		text-align: center;
+		
+		
+		
+		
+	}

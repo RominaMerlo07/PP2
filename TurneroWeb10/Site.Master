@@ -1,0 +1,91 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TurneroWeb10.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href= "<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Content/bootstrap.min.css"%>"/>
+    <link rel="stylesheet" type="text/css" href= "<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Content/bootstrap-datepicker.min.css"%>"/>
+
+
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/jquery-3.0.0.min.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/umd/popper.min.js"%>"></script>   
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/bootstrap.min.js"%>"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/bootstrap-datepicker.min.js"%>"></script>
+
+
+    
+    <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/estilo.css" %>" rel="stylesheet" type="text/css">
+    <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/modifBootstrap.css" %>" rel="stylesheet" type="text/css">
+
+    <script src="https://kit.fontawesome.com/5da641aba0.js" crossorigin="anonymous"></script>
+
+    <title>Sparring - Turnos</title>
+    
+    <link rel="shortcut icon" type = "imagen/X-UA-Compatible"  href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/img/sparring_logo.jpg"%>"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%--<aside>--%>
+        <header>
+            <div id= "conten_logo_header">
+                <img src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/img/sparring_logo.jpg"%>" id="logo_header" alt="logotipo"/>
+            </div>   
+            <div id= "conten_nav" > 
+                <nav>
+                    <ul id="pestañas_nav" >
+                        <li><a href="#"></a>TERAPIAS</li>
+                        <li><a href="#"></a>ESTÉTICA</li>
+                        <li><a href="#"></a>PROFESIONALES</li>
+                        <li><a href="#"></a>CONTACTO</li>
+                    </ul>
+                </nav>
+            </div>    
+        </header>
+    <%--ESPACIO PARA CONTENIDO--%>
+    <div>
+        <%--<form id="Form1" runat="server">--%>
+
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+
+        <%--</form>--%>
+    </div>
+    <%---------------------%>
+    <%--<div id="conten_footer">
+
+        <div id= "imagen_footer">
+            <img src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/img/sparring_logo.jpg"%>" alt="logotipo"/>
+        </div>
+    
+        <div id="contacto_footer">
+            <ul title="Nuestras_sucursales">Nuestras Sucursales
+                <li>Córdoba</li>
+                    <p> <i class="fas fa-map-marker-alt"></i> Av. Velez Sarsfield 940 </p>
+                    <p><i class="fas fa-phone-square-alt"></i> (0351) 432-6754</p>
+                <li>Carlos Paz</li>
+                    <p> <i class="fas fa-map-marker-alt"></i> Gobernador Álvarez 210 </p>
+                    <p><i class="fas fa-phone-square-alt"></i> (0351) 153-897654</p><br>
+                    <p><i class="fas fa-map-marker-alt"></i> Gobernador Nuñez 213</p>
+                    <p><i class="fas fa-phone-square-alt"></i> (0351) 153-897654</p>             
+            </ul> 
+        </div>  
+        <div id="horarios_footer">
+            <span>Horarios de atención:</span>
+            <p><i class="fas fa-clock"></i> Lunes a viernes de 9:00 a 20:30 hs.</p>
+            <p><i class="fas fa-clock"></i> Sábados de 9:00 a 12:00 hs</p>
+        </div>
+        <div class="iconos-redes">
+            <span>Contactanos</span>
+            <a target="_blank" href="https://www.facebook.com/Sparring-Rehabilitaci%C3%B3n-102085675045861/"> <i class="fab fa-facebook"></i> </a>
+            <a><i class="fab fa-whatsapp"></i></a>
+            <a target="_blank" href="https://instagram.com/sparring.rehabilitacion?igshid=1pq2e7copnhjj"> <i class="fab fa-instagram"></i></a>     
+        </div>
+    </div>--%>
+    <%--</aside>--%>
+</body>
+</html>
