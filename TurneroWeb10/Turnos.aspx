@@ -3,17 +3,168 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <style>
-        .datepicker.date{
+        .datepicker.date {
             width: 210px;
         }
-
     </style>
-    <div class="contenedor_turnos">   
+
+    <section class="content-header">
+        <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>
+        <h1 style="text-align: left">REGISTRAR TURNO</h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6" id="crdDatosTurno">
+                <div class="card text-white bg-light">
+                    <div class="card-header bg-info">
+                        <h4>Datos del turno </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Centro: </span>
+                                    </div>
+                                    <select class="custom-select form-control" id="ddlCentro">
+                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
+                                        <option value="1">Córdoba</option>
+                                        <option value="2">Carlos Paz I</option>
+                                        <option value="3">Carlos Paz II</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Especialidad: </span>
+                                    </div>
+                                    <select class="custom-select form-control" id="ddlEspecialidad">
+                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
+                                        <option value="1">Especialidad 1</option>
+                                        <option value="2">Especialidad 2</option>
+                                        <option value="3">Especialidad 3</option>
+                                        <option value="4">Especialidad 4</option>
+                                        <option value="5">Especialidad 5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Fecha: </span>
+                                    </div>
+                                    <div>
+                                        <input type='text' class="form-control datepicker date" id="dtpFechaTurno"
+                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                            data-date-format="mm/dd/yyyy" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Hora: </span>
+                                    </div>
+                                    <select class="custom-select form-control" id="ddlHoraTurno">
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">:</span>
+                                    </div>
+                                    <select class="custom-select form-control" id="ddlMinTurno">
+                                        <option value="00">00</option>
+                                        <option value="15">15</option>
+                                        <option value="30">30</option>
+                                        <option value="45">45</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnConfTurno">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="crdDatosContacto">
+                <div class="card text-white bg-light">
+                    <div class="card-header bg-info">
+                        <h4>Datos del Paciente</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-sm-5">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Documento</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtDocumento" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Nombre y Apellido</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtNombre" />
+                                    <input type="text" class="form-control" id="txtApeliido" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-5">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Celular</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtCelular" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Email: </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtEmail1" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">@</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnRegistrarTruno">Registrar Turno</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <%--<div class="contenedor_turnos">
         <h1 class="tituloH1">Turnero Online</h1>
         <div class="row">
             <div class="col-5" id="crdDatosTurno">
                 <div class="card text-white bg-secondary">
-                    <div class="card-header"> 
+                    <div class="card-header">
                         <h4>Datos del turno </h4>
                     </div>
                     <div class="card-body">
@@ -48,15 +199,15 @@
                             </div>
                         </div>
                         <div class="form-row">
-			                <div class="col">
-                                <div class="input-group mb-3" >
+                            <div class="col">
+                                <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Fecha: </span>
                                     </div>
-                                    <div>                            
+                                    <div>
                                         <input type='text' class="form-control datepicker date" id="dtpFechaTurno"
-                                                placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                                data-date-format="mm/dd/yyyy"/>
+                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                            data-date-format="mm/dd/yyyy" />
                                     </div>
                                 </div>
                             </div>
@@ -98,50 +249,50 @@
             </div>
             <div class="col-5" id="crdDatosPersonales">
                 <div class="card text-white bg-secondary">
-                    <div class="card-header"> 
+                    <div class="card-header">
                         <h4>Datos personales</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col">
                                 <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">Nombre y Apellido</span>
-                                  </div>
-                                  <input type="text" class="form-control" id="txtNombre">
-                                  <input type="text" class="form-control" id="txtApeliido">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                               <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text" >Documento</span>
-                                  </div>
-                                  <input type="text" class="form-control" id="txtDocumento">
-                                </div>
-                            </div>
-			                <div class="col">
-                                <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text" >Celular</span>
-                                  </div>
-                                  <input type="text" class="form-control" id="txtCelular">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">Nombre y Apellido</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtNombre" />
+                                    <input type="text" class="form-control" id="txtApeliido" />
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend" >
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Documento</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtDocumento" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Celular</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="txtCelular" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
                                         <span class="input-group-text">Email: </span>
                                     </div>
-                                    <input type="text" class="form-control" id="txtEmail1">
+                                    <input type="text" class="form-control" id="txtEmail1" />
                                     <div class="input-group-append">
                                         <span class="input-group-text">@</span>
                                     </div>
-                                    <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com">
+                                    <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" />
                                 </div>
                             </div>
                         </div>
@@ -243,7 +394,7 @@
         });
 
         function validarDatosTurno() {
-            
+
             if (centro == null) {
                 alert("Ingrese un Centro");
                 return false;
@@ -299,7 +450,7 @@
 
         };
 
-    </script>
+    </script>--%>
 </asp:Content>
 
 
