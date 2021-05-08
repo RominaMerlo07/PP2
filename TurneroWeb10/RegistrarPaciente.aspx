@@ -46,7 +46,7 @@
                                             <span class="input-group-text">Fecha de Nacimiento</span>
                                         </div>
                                         <div>
-                                            <input type='text' class="form-control datepicker date" id="dtpFechaTurno"
+                                            <input type='text' class="form-control datepicker date" id="dtpFechaNacimiento"
                                                 placeholder="DD/MM/YYYY" data-provide="datepicker"
                                                 data-date-format="dd/mm/yyyy" />
                                         </div>
