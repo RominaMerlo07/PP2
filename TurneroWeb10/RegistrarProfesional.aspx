@@ -187,8 +187,7 @@
                         p_matricula: matricula,
                         p_nombre: nombre,
                         p_apellido: apellido,
-                        p_fechaNac: fechaNac,
-                        p_obraSocial: obraSocial,
+                        p_fechaNac: fechaNac,                    
                         p_calle: calle,
                         p_numero: numero,
                         p_barrio: barrio,
@@ -198,7 +197,7 @@
                         p_email2: email2
                     }
                     console.log(profesional);
-                    //registrarPaciente(paciente);                 
+                    registrarProfesional(profesional);                 
                 }
                 else
                 {
@@ -210,29 +209,29 @@
         });
 
 
-        //function registrarPaciente(datosPaciente) {
-        //    $.ajax({
-        //        url: "RegistrarPaciente.aspx/registrarPaciente",
-        //        data: JSON.stringify(datosPaciente),
-        //        type: "post",
-        //        contentType: "application/json",
-        //        async: false,
-        //        success: function (data) {
+        function registrarProfesional(datosProfesional) {
+            $.ajax({
+                url: "RegistrarProfesional.aspx/registrarProfesional",
+                data: JSON.stringify(datosProfesional),
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
 
-        //            if (data.d != 'OK') {
-        //                alert('Error al registrar el paciente.')
-        //            } else {
-        //                $('#btnConfPaciente').show();
-        //                alert('Paciente registrado con Éxito.')
-        //            }
-        //        },
-        //        error: function (xhr, ajaxOptions, thrownError) {
-        //            alert(data.error);
-        //        }
+                    if (data.d != 'OK') {
+                        alert('Error al registrar el profesional.')
+                    } else {
+                        $('#btnConfProfesional').show();
+                        alert('profesional registrado con Éxito.')
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(data.error);
+                }
 
-        //    });
+            });
 
-        //}
+        }
 
 
         function validarDatosProfesional() {
