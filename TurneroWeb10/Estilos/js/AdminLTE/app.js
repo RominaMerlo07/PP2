@@ -153,8 +153,7 @@ function fix_sidebar() {
 }
 
 /*END DEMO*/
-$(window).on('load', function () {
-//$(window).load(function() {
+$(window).load(function() {
     /*! pace 0.4.17 */
     (function() {
         var a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V = [].slice, W = {}.hasOwnProperty, X = function(a, b) {
