@@ -118,20 +118,12 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-sm-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Celular</span>
                                     </div>
                                     <input type="text" style="text-align: left" class="form-control" id="txtCelular" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Telefono</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtTelefono" />
                                 </div>
                             </div>
                         </div>
@@ -170,7 +162,6 @@
         var barrio;
         var localidad;
         var celular;
-        var telefono;
         var email1;
         var email2;
 
@@ -193,7 +184,6 @@
                 barrio = $('#txtBarrio').val();
                 localidad = $('#txtLocalidad').val();
                 celular = $('#txtCelular').val();
-                telefono = $('#txtTelefono').val();
                 email1 = $('#txtEmail1').val();
                 email2 = $('#txtEmail2').val();
 
@@ -207,51 +197,47 @@
                         p_nombre: nombre,
                         p_apellido: apellido,
                         p_fechaNac: fechaNac,
-                        p_obra_social: obraSocial,
+                        p_obraSocial: obraSocial,
                         p_calle: calle,
                         p_numero: numero,
                         p_barrio: barrio,
                         p_localidad: localidad,
                         p_celular: celular,
-                        p_telefono: telefono,
                         p_email1: email1,
                         p_email2: email2
-                    }
-
-                    //    registrarTurno(turnoYPersona);
-                    console.log(paciente);
-                }
-                else {
-                    console.log("Falto algun dato o no ingrese a la validacion");
-                }
+                    }                 
+                    registrarPaciente(paciente);                 
+                }              
 
             });
 
         });
 
-        //function registrarTurno(datosTurno) {
 
-        //    $.ajax({
-        //        url: "RegistrarTurno.aspx/registrarTurno",
-        //        data: JSON.stringify(datosTurno),
-        //        type: "post",
-        //        contentType: "application/json",
-        //        async: false,
-        //        success: function (data) {
+        function registrarPaciente(datosPaciente) {
+            $.ajax({
+                url: "RegistrarPaciente.aspx/registrarPaciente",
+                data: JSON.stringify(datosPaciente),
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
 
-        //            if (data.d != 'OK') {
-        //                alert('Error al registrar turno.')
-        //            } else {
-        //                $('#btnConfTurno').show();
-        //                alert('Turno registrado con Éxito.')
-        //            }
-        //        },
-        //        error: function (xhr, ajaxOptions, thrownError) {
-        //            alert(data.error);
-        //        }
+                    if (data.d != 'OK') {
+                        alert('Error al registrar el paciente.')
+                    } else {
+                        $('#btnConfPaciente').show();
+                        alert('Paciente registrado con Éxito.')
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(data.error);
+                }
 
-        //    });
-        //}
+            });
+
+        }
+              
 
         function validarDatosPaciente() {
 
