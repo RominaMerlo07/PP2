@@ -18,7 +18,8 @@
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/bootstrap.min.js"%>"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/bootstrap-datepicker.min.js"%>"></script>
-
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/AdminLTE/app.js"%>"></script>
+    
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/estilo.css" %>" rel="stylesheet" type="text/css" />
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/modifBootstrap.css" %>" rel="stylesheet" type="text/css" />
 
@@ -30,17 +31,12 @@
 
 
 
-    <link href="Estilos/FullCalendar/lib/main.css" rel='stylesheet' />
-    <script src="Estilos/FullCalendar/lib/main.js" type="text/javascript"></script>
+    <link rel='stylesheet' href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/FullCalendar/lib/main.css"%>" />
+    
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/FullCalendar/lib/main.js"%>" ></script>
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
-            });
-            calendar.render();
-        });
+
 
     </script>
 
@@ -263,10 +259,11 @@
         </aside>
     </div>
     <!--FIN DISEÑO MENU LATERAL-->
+
 </body>
-<script src="Estilos/js/AdminLTE/app.js" type="text/javascript"></script>
-<script src="Estilos/Scripts/bootstrap.min.js" type="text/javascript"></script>
+<%--<script src="Estilos/js/AdminLTE/app.js" type="text/javascript"></script>--%>
+<%--<script src="Estilos/Scripts/bootstrap.min.js" type="text/javascript"></script>
 <script src="Estilos/js/jquery-ui.min.js" type="text/javascript"></script>
-<script src="Estilos/js/jquery.min.js" type="text/javascript"></script>
+<script src="Estilos/js/jquery.min.js" type="text/javascript"></script>--%>
 
 </html>
