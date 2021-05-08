@@ -34,7 +34,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Especialidad: </span>
                                     </div>
-                                    <select class="custom-select form-control" id="ddlEspecialidad1">
+                                    <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
                                         <option value="1">Kinesiología y Fisioterapia</option>
                                         <option value="2">Quiropraxia</option>
@@ -184,12 +184,156 @@
             </div>
             <div class="card" style="width: 40rem;">
                 <div class="card-body">
-                    <div id='calendar'></div>
+                    <div id='calendarioTurno'></div>
                 </div>
             </div>
         </div>
-
-
-
     </section>
+    <script type="text/javascript">
+        var centro;
+        var especialidad;
+        var fechaTurno;
+        var horaTurno;
+        var minTurno;
+
+        var nombre;
+        var apellido;
+        var documento;
+        var celular;
+        var email1;
+        var email2;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendarioTurno');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth'
+            });
+            calendar.render();
+        });
+
+        $(document).ready(function () {
+
+            $('.date').datepicker({
+                autoclose: true,
+                format: "dd/mm/yyyy"
+            });
+
+            $('#crdDatosPersonales').hide();
+
+            $('#btnRegistrar').click(function () {
+
+                centro = $('#ddlSucursal').val();
+                especialidad = $('#ddlEspecialidad').val();
+                fechaTurno = $('#dtpFechaD').val();
+                horaTurno = $('#ddlHoraDesde').val();
+                obraSocial = $('#ddlObraSocial').val();
+                minTurno = $('#ddlMinDesde').val();
+                nombre = $('#txtNombre').val();
+                apellido = $('#txtApeliido').val();
+                documento = $('#txtDocumento').val();
+                celular = $('#txtCelular').val();
+                email1 = $('#txtEmail1').val();
+                email2 = $('#txtEmail2').val();
+
+                var validacion = validarDatosTurno();
+
+                if (validacion === true) {
+
+                    var turnoYPersona = {
+                        p_centro: centro,
+                        p_especialidad: especialidad,
+                        p_fechaTurno: fechaTurno,
+                        p_horaTurno: horaTurno,
+                        p_obra_social: obraSocial,
+                        p_minTurno: minTurno,
+                        p_nombre: nombre,
+                        p_apellido: apellido,
+                        p_documento: documento,
+                        p_celular: celular,
+                        p_email1: email1,
+                        p_email2: email2
+                    }
+
+                    registrarTurno(turnoYPersona);
+                   
+                }
+
+            });
+
+        });
+
+        function registrarTurno(datosTurno) {
+
+            $.ajax({
+                url: "RegistrarTurno.aspx/registrarTurno",
+                data: JSON.stringify(datosTurno),
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d != 'OK') {
+                        alert('Error al registrar turno.')
+                    } else {
+                        $('#btnConfTurno').show();
+                        alert('Turno registrado con Éxito.')
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(data.error);
+                }
+
+            });
+        }
+
+        function validarDatosTurno() {
+
+            if (centro == null) {
+                alert("Ingrese un Centro");
+                return false;
+            }
+            else if (especialidad == null) {
+                alert("Ingrese una Especialidad");
+                return false;
+            }
+            else if (fechaTurno == "") {
+                alert("Ingrese una Fecha");
+                return false;
+            }
+            else if (horaTurno == null) {
+                return false;
+            }
+            else if (minTurno == null) {
+                return false;
+            }
+            else if (nombre == "") {
+                alert("Ingrese un Nombre");
+                return false;
+            }
+            else if (apellido == "") {
+                alert("Ingrese un Apellido");
+                return false;
+            }
+            else if (documento == "") {
+                alert("Ingrese un Documento");
+                return false;
+            }
+            else if (celular == "") {
+                alert("Ingrese un Celular");
+                return false;
+            }
+            else if (email1 == "") {
+                alert("Ingrese un Email válido");
+                return false;
+            }
+            else if (email2 == "") {
+                alert("Ingrese un Email válido");
+                return false;
+            }
+            else {
+                return true;
+            };
+        };
+
+    </script>
 </asp:Content>
