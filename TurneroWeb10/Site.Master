@@ -173,13 +173,13 @@
                             <span>Gestión de Turnos</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="Turnos.aspx">
+                          <%--  <a class="dropdown-item" href="Turnos.aspx">
                                 <i class="fa fa-calendar-plus"></i>
                                 <span>Registrar Turno</span>
-                            </a>
+                            </a>--%>
                              <a class="dropdown-item" href="RegistrarTurno.aspx">
                                 <i class="fa fa-calendar"></i>
-                                <span>Registrar Turnos_2</span>
+                                <span>Registrar Turnos</span>
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fa fa-calendar"></i>

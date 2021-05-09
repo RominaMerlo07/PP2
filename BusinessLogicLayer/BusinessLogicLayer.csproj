@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gestores\GestorPacientes.cs" />
+    <Compile Include="Gestores\GestorProfesionales.cs" />
     <Compile Include="Gestores\GestorDisponibilidadHoraria.cs" />
     <Compile Include="Gestores\GestorTurno.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

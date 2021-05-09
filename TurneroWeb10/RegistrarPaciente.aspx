@@ -25,7 +25,7 @@
                                     </div>
                                     <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
@@ -34,7 +34,7 @@
                                         <span class="input-group-text" id="">Nombre y Apellido</span>
                                     </div>
                                     <input type="text" style="text-align: left" class="form-control" id="txtNombre" />
-                                    <input type="text" style="text-align: left" class="form-control" id="txtApeliido" />
+                                    <input type="text" style="text-align: left" class="form-control" id="txtApellido" />
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                             <span class="input-group-text">Fecha de Nacimiento</span>
                                         </div>
                                         <div>
-                                            <input type='text' class="form-control datepicker date" id="dtpFechaTurno"
+                                            <input type='text' class="form-control datepicker date" id="dtpFechaNac"
                                                 placeholder="DD/MM/YYYY" data-provide="datepicker"
                                                 data-date-format="dd/mm/yyyy" />
                                         </div>
@@ -118,20 +118,12 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-sm-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Celular</span>
                                     </div>
                                     <input type="text" style="text-align: left" class="form-control" id="txtCelular" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Telefono</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtTelefono" />
                                 </div>
                             </div>
                         </div>
@@ -158,4 +150,150 @@
         <%--<button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>--%>
         <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
     </section>
+    <script type="text/javascript">
+        var dni;
+        var nombre;
+        var apellido;
+        var fechaNac;
+        var obraSocial;
+
+        var calle;
+        var numero;
+        var barrio;
+        var localidad;
+        var celular;
+        var email1;
+        var email2;
+
+        $(document).ready(function () {
+
+            $('.date').datepicker({
+                autoclose: true,
+                format: "dd/mm/yyyy"
+            });
+
+            $('#btnRegistrar').click(function () {
+
+                dni = $('#txtDocumento').val();
+                nombre = $('#txtNombre').val();
+                apellido = $('#txtApellido').val();
+                fechaNac = $('#dtpFechaNac').val();
+                obraSocial = $('#ddlObraSocial').val();
+                calle = $('#txtCalle').val();
+                numero = $('#txtNumero').val();
+                barrio = $('#txtBarrio').val();
+                localidad = $('#txtLocalidad').val();
+                celular = $('#txtCelular').val();
+                email1 = $('#txtEmail1').val();
+                email2 = $('#txtEmail2').val();
+
+                var validacion = validarDatosPaciente();
+
+                if (validacion === true) {
+
+                    var paciente = {
+
+                        p_dni: dni,
+                        p_nombre: nombre,
+                        p_apellido: apellido,
+                        p_fechaNac: fechaNac,
+                        p_obraSocial: obraSocial,
+                        p_calle: calle,
+                        p_numero: numero,
+                        p_barrio: barrio,
+                        p_localidad: localidad,
+                        p_celular: celular,
+                        p_email1: email1,
+                        p_email2: email2
+                    }                 
+                    registrarPaciente(paciente);                 
+                }              
+
+            });
+
+        });
+
+
+        function registrarPaciente(datosPaciente) {
+            $.ajax({
+                url: "RegistrarPaciente.aspx/registrarPaciente",
+                data: JSON.stringify(datosPaciente),
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d != 'OK') {
+                        alert('Error al registrar el paciente.')
+                    } else {
+                        $('#btnConfPaciente').show();
+                        alert('Paciente registrado con Éxito.')
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(data.error);
+                }
+
+            });
+
+        }
+              
+
+        function validarDatosPaciente() {
+
+            if (dni == null) {
+                alert("Por favor, ingrese DNI");
+                return false;
+            }
+            else if (nombre == null) {
+                alert("Por favor, ingrese Nombre");
+                return false;
+            }
+            else if (apellido == null) {
+                alert("Por favor, ingrese Apellido");
+                return false;
+            }
+            else if (fechaNac == "") {
+                alert("Por favor, ingrese Fecha de Nacimiento");
+                return false;
+            }
+            else if (obraSocial == null) {
+                alert("Por favor, seleccione una obra social o particular");
+                return false;
+            }
+            else if (calle == "") {
+                alert("Por favor, ingrese Calle");
+                return false;
+            }
+            else if (numero == "") {
+                alert("Por favor, ingrese Numero");
+                return false;
+            }
+            else if (barrio == "") {
+                alert("Por favor, ingrese Barrio");
+                return false;
+            }
+            else if (localidad == "") {
+                alert("Por favor, ingrese Localidad");
+                return false;
+            }
+            else if (celular == "") {
+                alert("Por favor, ingrese un telefono de contacto");
+                return false;
+            }
+            else if (email1 == "") {
+                alert("Por favor, ingrese un E-mail válido");
+                return false;
+            }
+            else if (email2 == "") {
+                alert("Por favor, ingrese un E-mail válido");
+                return false;
+            }
+            else {
+                return true;
+            };
+        };
+
+
+    </script>
 </asp:Content>
