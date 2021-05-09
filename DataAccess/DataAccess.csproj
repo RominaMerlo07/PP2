@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DADisponibilidadHoraria.cs" />
     <Compile Include="DAPaciente.cs" />
     <Compile Include="DATurno.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DisponibilidadHoraria.aspx.cs" Inherits="TurneroWeb10.DisponibilidadHoraria" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-    <!--aqui va personalizadion en js y/o css propio para este form-->
-
-
-</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <style>
+        .datepicker.date {
+            width: 100%;
+        }
+    </style>
     <section class="content-header">
         <h1 style="text-align: left">DISPONIBILIDAD HORARIA</h1>
     </section>
@@ -54,7 +54,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Especialidad: </span>
                                     </div>
-                                    <select class="custom-select form-control" id="ddlEspecialidad1">
+                                    <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
                                         <option value="1">Kinesiología y Fisioterapia</option>
                                         <option value="2">Quiropraxia</option>
@@ -84,19 +84,33 @@
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Fecha Desde</span>
+                                        <span class="input-group-text">Desde: </span>
                                     </div>
                                     <div>
-                                        <input type='text' class="form-control datepicker date" id="dtpFechaD"
+                                        <input type='text' class="form-control datepicker date" id="dtpFechaDesde"
                                             placeholder="DD/MM/YYYY" data-provide="datepicker"
                                             data-date-format="dd/mm/yyyy" />
                                     </div>
                                 </div>
                             </div>
-                               <div class="col">
+                            <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Hora: </span>
+                                        <span class="input-group-text">Hasta: </span>
+                                    </div>
+                                    <div>
+                                        <input type='text' class="form-control datepicker date" id="dtpFechaHasta"
+                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                            data-date-format="dd/mm/yyyy" />
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Hora Desde: </span>
                                     </div>
                                     <select class="btn btn-white form-control" id="ddlHoraDesde">
                                         <option value="8">8</option>
@@ -124,24 +138,10 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Fecha Hasta</span>
-                                    </div>
-                                    <div>
-                                        <input type='text' class="form-control datepicker date" id="dtpFechaHasta"
-                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                            data-date-format="dd/mm/yyyy" />
-                                    </div>
-                                </div>
-                            </div>
-                               <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Hora: </span>
+                                        <span class="input-group-text">Hora Hasta: </span>
                                     </div>
                                     <select class="btn btn-white form-control" id="ddlHoraHasta">
                                         <option value="8">8</option>
@@ -175,18 +175,128 @@
                 <br />
                     <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
             </div>
-        <br/>      
-        <div class="card" style="width: 40rem;">
-            <div class="card-body">
-                <div id='calendar'></div>
+            <br/>      
+            <div class="card" style="width: 40rem;">
+                <div class="card-body">
+                    <div id='calendar'></div>
+                </div>
             </div>
         </div>
-        </div>
-       
-
-
-
     </section>
+    <script type="text/javascript">
 
+        var profesional;
+        var sucursal;
+        var especialidad;
+        var fechaDesde;
+        var fechaHasta;
+        var horaDesde;
+        var minDesde;
+        var horaHasta;
+        var minHasta;
+
+
+        $(document).ready(function () {
+
+            $('#btnRegistrar').click(function () {
+
+                profesional = $('#ddlProfesional').val()
+                sucursal = $('#ddlSucursal').val();
+                especialidad = $('#ddlEspecialidad').val();
+                fechaDesde = $('#dtpFechaDesde').val();
+                fechaHasta = $('#dtpFechaHasta').val();
+                horaDesde = $('#ddlHoraDesde').val();
+                minDesde = $('#ddlMinDesde').val();
+                horaHasta = $('#ddlHoraHasta').val();
+                minHasta = $('#ddlMinHasta').val();
+
+                var validacion = validarDatos();
+
+                if (validacion === true) {
+
+
+
+                    var disponibilidad = {
+                        p_profesional: profesional,
+                        p_sucursal: sucursal, 
+                        p_especialidad: especialidad,
+                        p_fechaDesde: fechaDesde, 
+                        p_fechaHasta: fechaHasta, 
+                        p_horaDesde: horaDesde, 
+                        p_minDesde: minDesde, 
+                        p_horaHasta: horaHasta, 
+                        p_minHasta: minHasta
+                    }
+
+                    registrarDisponibilidad(disponibilidad);                  
+                }
+            });
+        });
+
+        function registrarDisponibilidad(datosTurno) {
+
+            $.ajax({
+                url: "DisponibilidadHoraria.aspx/registrarDisponibilidad",
+                data: JSON.stringify(datosTurno),
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d != 'OK') {                       
+                        alert('Error al registrar Disponibilidad Horaria.');
+                    } else {                        
+                        alert('Disponibilidad Horaria registradad con éxito!');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(data.error);
+                }
+
+            });
+        }
+
+        function validarDatos() {
+            if (profesional == null) {
+                alert("Ingrese un Profesional");
+                return false;
+            } else if (sucursal == null) {
+                alert("Ingrese una Sucursal");
+                return false;
+            } else if (especialidad == null) {
+                alert("Ingrese una Especialidad");
+                return false;
+            } else if (fechaDesde == null) {
+                alert("Ingrese una Fecha");
+                return false;
+            } else if (fechaHasta == null) {
+                alert("Ingrese una Fecha");
+                return false;
+            } else if (horaDesde == null) {
+                alert("Ingrese una Hora válida");
+                return false;
+            } else if (minDesde == null) {
+                alert("Ingrese una Hora válida");
+                return false;
+            } else if (horaHasta == null) {
+                alert("Ingrese una Hora válida");
+                return false;
+            } else if (minDesde == null) {
+                alert("Ingrese una Hora válida");
+                return false;
+            } else {
+                var d1 = fechaDesde.split('/');
+                var d2 = fechaHasta.split('/');
+                var compDesde = d1[1] + '-' + d1[0] + '-' + d1[2]
+                var compHasta = d2[1] + '-' + d2[0] + '-' + d2[2]
+                if (Date.parse(compDesde) > Date.parse(compHasta)) {
+                    alert("Error en las Fechas ingresadas!");
+                    return false
+                } else {
+                    return true;
+                }
+            };
+        }
+    </script>
 </asp:Content>
 

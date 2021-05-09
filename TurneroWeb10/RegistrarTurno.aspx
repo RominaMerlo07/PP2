@@ -1,8 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarTurno.aspx.cs" Inherits="TurneroWeb10.RegistrarTurno" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <style>
+        .datepicker.date {
+            width: 210px;
+        }
+    </style>
     <section class="content-header">
         <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>
         <h1 style="text-align: left">REGISTRAR TURNO</h1>
@@ -257,7 +260,6 @@
                     registrarTurno(turnoYPersona);
                    
                 }
-
             });
 
         });
