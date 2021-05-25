@@ -187,21 +187,11 @@
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                            <span>Gestión Pacientes</span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="RegistrarPaciente.aspx">
-                                <i class="fa fa-user-plus"></i>
-                                <span>Pacientes</span>
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fa fa-notes-medical"></i>
-                                <span>Historias Clínicas</span>
-                            </a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="RegistrarPaciente.aspx" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-notes-medical"></i>
+                            <span>Historias Clínicas</span>
+                        </a>                        
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
