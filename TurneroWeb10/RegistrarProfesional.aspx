@@ -8,154 +8,139 @@
         <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Profesionales</button>
         <h1 style="text-align: left">REGISTRO DE PROFESIONALES</h1>
     </section>
-    <section class="content">
-        <div class="row">
-            <div class="col-md-6" id="crdDatosPersonales">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos personales</h4>
+    <section class="content">       
+            <div class="row">
+                <div class="col-md-6" id="crdDatosPersonales">
+                    <div class="card text-white bg-light">
+                        <div class="card-header bg-info">
+                            <h4>Datos personales</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">DNI</span>
+                                        </div>
+                                        <input type="text" style="text-align: left"  class="form-control" id="txtDocumento" onkeypress="return soloNumeros(event)" onpaste="return false" maxlength="8"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Matricula</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtMatricula" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Nombre y Apellido</span>
+                                        </div>
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtNombre" onkeypress="return soloLetras(event)" />
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtApellido" onkeypress="return soloLetras(event)"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fecha de Nacimiento</span>
+                                        </div>
+                                        <div>
+                                            <input type='text' class="form-control datepicker date" id="dtpFechaNac"
+                                                placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                                data-date-format="dd/mm/yyyy" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">DNI</span>
+                </div>
+                <div class="col-md-6" id="crdDatosContacto">
+                    <div class="card text-white bg-light">
+                        <div class="card-header bg-info">
+                            <h4>Datos de Contacto</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Calle</span>
+                                        </div>
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtCalle" onkeypress="return soloLetras(event)"/>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" onkeypress="return soloNumeros(event)" onpaste="return false" maxlength="8" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Numero</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtNumero" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Matricula</span>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Barrio</span>
+                                        </div>
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtBarrio" onkeypress="return soloLetras(event)"/>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtMatricula" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                </div>
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Localidad</span>
+                                        </div>
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtLocalidad" onkeypress="return soloLetras(event)"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="">Nombre y Apellido</span>
+                            <div class="form-row">
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Celular</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtCelular" onkeypress="return soloNumeros(event)" onpaste="return false" />
                                     </div>
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtNombre" onkeypress="return soloLetras(event)" />
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtApellido" onkeypress="return soloLetras(event)" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Fecha de Nacimiento</span>
-                                    </div>
-                                    <div>
-                                        <input type='text' class="form-control datepicker date" id="dtpFechaNac"
-                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                            data-date-format="dd/mm/yyyy" />
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Email: </span>
+                                        </div>
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtEmail1" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">@</span>
+                                        </div>
+                                        <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtEmail2" placeholder="gmail.com" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6" id="crdDatosContacto">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos de Contacto</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Calle</span>
-                                    </div>
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtCalle" onkeypress="return soloLetras(event)" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Numero</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtNumero" onkeypress="return soloNumeros(event)" onpaste="return false" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Barrio</span>
-                                    </div>
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtBarrio" onkeypress="return soloLetras(event)" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Localidad</span>
-                                    </div>
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtLocalidad" onkeypress="return soloLetras(event)" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Celular</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtCelular" onkeypress="return soloNumeros(event)" onpaste="return false" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Email: </span>
-                                    </div>
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtEmail1" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">@</span>
-                                    </div>
-                                    <input type="text" style="text-align: left; text-transform: uppercase" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="txtEmail2" placeholder="gmail.com" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>   
-        <br />
+            </div>    
+        <div class="card-body">
             <div class="col" id="crdDatosLaborales">
                 <div class="card text-white bg-light">
                     <div class="card-header bg-info">
                         <h4>Datos Laborales</h4>
                     </div>
                     <div class="card-body">
-                          <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Sucursal: </span>
-                                    </div>
-                                    <select class="custom-select form-control" id="ddlSucursal">
-                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">CORDOBA</option>
-                                        <option value="2">CARLOS PAZ I</option>
-                                        <option value="3">CARLOS PAZ II</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
@@ -187,90 +172,33 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                      
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Sucursal: </span>
+                                    </div>
+                                    <select class="custom-select form-control" id="ddlSucursal">
+                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--SELECCIONE--</option>
+                                        <option value="1">CORDOBA</option>
+                                        <option value="2">CARLOS PAZ I</option>
+                                        <option value="3">CARLOS PAZ II</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-      
+        </div>
+
         <br />
         <!--VER COMO ALINEAR DOS BOTONES AL CENTRO O A LA DERECHA-->
         <%--<button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>--%>
-
-        <div align="right">
-            <table>
-                <tr>
-                    <td>
-                        <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
-                    </td>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td>
-                        <button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br />                              
-        <div class="row">
-            <div class="col">
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Lista de Profesionales</h3>
-                    </div>
-                    <div class="box-body table-responsive">
-                        <table id="tbl_Profesionales" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Documento</th>
-                                    <th>Matricula</th>
-                                    <th>Profesional</th>
-                                    <th>Especialidad</th>
-                                    <th>Centro</th>
-                                    <th>Celular</th>
-                                    <th>Email</th>
-                                    <th>Direccion</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbl_body_table">
-                                <!-- Aqui va el ajax para recuperar la data-->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
-
-
-     <div class="modal fade" id="imodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Actualizar registro</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>NOMBRES Y APELLIDOS</label>
-                    </div>
-                    <div class="form-group">
-                        <asp:TextBox ID="txtFullName" runat="server" Text="" CssClass="form-control" Enabled="false"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <label>DIRECCIÓN</label>
-                    </div>
-                    <div class="form-group">
-                        <asp:TextBox ID="txtModalDireccion" runat="server" Text="" CssClass="form-control"></asp:TextBox>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnactualizar">Actualizar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
     <script type="text/javascript">
         var dni;
         var matricula;
@@ -328,8 +256,7 @@
                         p_email2: email2
                     }
                     console.log(profesional);
-                    registrarProfesional(profesional)                   
-
+                    registrarProfesional(profesional);
                 }
                 else {
                     console.log("No valide datos o sali por error");
@@ -353,7 +280,7 @@
                         alert('Error al registrar el profesional.')
                     } else {
                         $('#btnConfProfesional').show();
-                        alert('profesional registrado con Éxito.')                      
+                        alert('profesional registrado con Éxito.')
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -439,12 +366,12 @@
                 return false;
             }
         }
-
+              
         //Para ingresar solo letras
 
-        function soloLetras(e) {
-            key = e.keyCode || e.which;
-            teclado = String.fromCharCode(key).toLowerCase();
+         function soloLetras(e) {
+             key = e.keyCode || e.which;
+             teclado = String.fromCharCode(key).toLowerCase();
 
             letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
             especiales = "8-37-38-46-164";
@@ -460,7 +387,7 @@
                 return false;
             }
         }
-
-
+        
+        
     </script>
 </asp:Content>
