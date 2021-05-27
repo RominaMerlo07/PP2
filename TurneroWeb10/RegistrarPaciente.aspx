@@ -7,7 +7,7 @@
 
     <section class="content-header">
         <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Pacientes</button>
-        <h1 style="text-align: left">REGISTRAR HISTORIA CLINICA</h1>
+        <h1 style="text-align: left">REGISTRO DE PACIENTES</h1>
     </section>
     <section class="content">
         <div class="row">
@@ -23,7 +23,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">DNI</span>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" required />
+                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,6 @@
         var email1;
         var email2;
 
-    
         $(document).ready(function () {
 
             $('.date').datepicker({
@@ -206,9 +205,9 @@
                         p_celular: celular,
                         p_email1: email1,
                         p_email2: email2
-                    }
-                    registrarPaciente(paciente);
-                }
+                    }                 
+                    registrarPaciente(paciente);                 
+                }              
 
             });
 
@@ -238,19 +237,19 @@
             });
 
         }
-
+              
 
         function validarDatosPaciente() {
 
-            if (dni == "") {
+            if (dni == null) {
                 alert("Por favor, ingrese DNI");
                 return false;
             }
-            else if (nombre == "") {
+            else if (nombre == null) {
                 alert("Por favor, ingrese Nombre");
                 return false;
             }
-            else if (apellido == "") {
+            else if (apellido == null) {
                 alert("Por favor, ingrese Apellido");
                 return false;
             }
