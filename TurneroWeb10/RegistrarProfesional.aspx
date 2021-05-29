@@ -1,9 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarProfesional.aspx.cs" Inherits="TurneroWeb10.RegistrarProfesional" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+<%--    <style>
+        .multiselect{
+            bottom: 5px;
+        }
+    </style>--%>
     <section class="content-header">
         <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Profesionales</button>
         <h1 style="text-align: left">REGISTRO DE PROFESIONALES</h1>
@@ -17,22 +19,36 @@
                     </div>
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">DNI</span>
+                            <div class="col-sm">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">DNI</span>
+                                            </div>
+                                            <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
+                                        </div>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
+                                    <div class="col-sm">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Matricula</span>
+                                            </div>
+                                            <input type="text" style="text-align: left" class="form-control" id="txtMatricula" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-sm-6">
+                            <div class="col-sm multiselect">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Matricula</span>
+                                        <span class="input-group-text">Especialidad: </span>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtMatricula" />
+                                    <select multiple class="form-control select2" id="ddlEspecialidad">
+                                        <option value="0" disabled="disabled" selected="" hidden="hidden">--Seleccione--</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +80,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="col-md-6" id="crdDatosContacto">
                 <div class="card text-white bg-light">
                     <div class="card-header bg-info">
@@ -143,6 +159,7 @@
     <script type="text/javascript">
         var dni;
         var matricula;
+        var especialidades;
         var nombre;
         var apellido;
         var fechaNac;     
@@ -157,6 +174,8 @@
 
         $(document).ready(function () {
 
+            cargarEspecialidades("#ddlEspecialidad");
+
             $('.date').datepicker({
                 autoclose: true,
                 format: "dd/mm/yyyy"
@@ -165,7 +184,8 @@
             $('#btnRegistrar').click(function () {
 
                 dni = $('#txtDocumento').val();
-                matricula = $('#txtMatricula').val();                
+                matricula = $('#txtMatricula').val();  
+                especialidades = $('#ddlEspecialidad').val();
                 nombre = $('#txtNombre').val();
                 apellido = $('#txtApellido').val();
                 fechaNac = $('#dtpFechaNac').val();                
@@ -185,6 +205,7 @@
 
                         p_dni: dni,
                         p_matricula: matricula,
+                        p_especialidades: especialidades,
                         p_nombre: nombre,
                         p_apellido: apellido,
                         p_fechaNac: fechaNac,                    
@@ -197,17 +218,32 @@
                         p_email2: email2
                     }
                     console.log(profesional);
-                    registrarProfesional(profesional);                 
+                    registrarProfesional(profesional);    
+                    limpiarCampos();
                 }
                 else
                 {
                     console.log("No valide datos o sali por error");
                 }
 
-            });
-
+            });          
         });
 
+        function limpiarCampos() {
+            $('#txtDocumento').val("");
+            $('#txtMatricula').val("");  
+            $('#ddlEspecialidad').val([]);
+            $('#txtNombre').val("");
+            $('#txtApellido').val("");
+            $('#dtpFechaNac').datepicker('clearDates');              
+            $('#txtCalle').val("");
+            $('#txtNumero').val("");
+            $('#txtBarrio').val("");
+            $('#txtLocalidad').val("");
+            $('#txtCelular').val("");
+            $('#txtEmail1').val("");
+            $('#txtEmail2').val("");
+        }
 
         function registrarProfesional(datosProfesional) {
             $.ajax({
@@ -230,7 +266,6 @@
                 }
 
             });
-
         }
 
 
@@ -242,6 +277,10 @@
             }
             else if (matricula == "") {
                 alert("Por favor, ingrese Matricula");
+                return false;
+            }
+            else if (especialidades.length < 1) {
+                alert("Por favor, seleccionar Especialidades");
                 return false;
             }
             else if (nombre == null) {
@@ -289,6 +328,32 @@
             };
         };
 
+        function cargarEspecialidades(ddl) {
+            $.ajax({
+                url: "RegistrarProfesional.aspx/cargarEspecialidades",
+                //data: "{idCentro: '" + idCentro + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+
+                            $(ddl).append($("<option></option>").val(data.d[i].IdEspecialidad).html(data.d[i].Descripcion));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
+            });
+        }
 
     </script>
 </asp:Content>

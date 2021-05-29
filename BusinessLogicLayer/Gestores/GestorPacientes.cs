@@ -8,11 +8,11 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorPacientes
     {
-        public string RegistrarPaciente(Paciente paciente)
+        public int RegistrarPaciente(Paciente paciente)
         {
             try
             {
-                DAPaciente2 DaPaciente = new DAPaciente2();
+                DAPaciente DaPaciente = new DAPaciente();
                 return DaPaciente.DaRegistrarPaciente(paciente);
             }
             catch (Exception e)

@@ -46,6 +46,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -584,14 +587,10 @@
     <Content Include="Estilos\Scripts\umd\popper-utils.min.js" />
     <Content Include="Estilos\Scripts\umd\popper.js" />
     <Content Include="Estilos\Scripts\umd\popper.min.js" />
-    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="RegistrarPaciente.aspx" />
     <Content Include="RegistrarProfesional.aspx" />
     <Content Include="RegistrarTurno.aspx" />
-    <Content Include="Scripts\jquery-3.6.0.js" />
-    <Content Include="Scripts\jquery-3.6.0.min.js" />
-    <Content Include="Scripts\jquery-3.6.0.slim.js" />
-    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -658,8 +657,6 @@
     <Content Include="Estilos\Scripts\popper-utils.min.js.map" />
     <Content Include="Estilos\Scripts\popper-utils.js.map" />
     <Content Include="Site.Master" />
-    <Content Include="Scripts\jquery-3.6.0.min.map" />
-    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -699,7 +696,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49512</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49512/</IISUrl>
+          <IISUrl>http://localhost:49513/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

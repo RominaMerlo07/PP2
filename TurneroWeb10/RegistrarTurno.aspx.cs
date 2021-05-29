@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -7,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
 using Entidades.ent;
+using Newtonsoft.Json;
 
 namespace TurneroWeb10
 {
@@ -115,6 +117,53 @@ namespace TurneroWeb10
                 return error;
             }
 
+        }
+
+        [WebMethod]
+        public static List<Centro> cargarCentros()
+        {
+            try
+            {
+                GestorCentros gestorCentros = new GestorCentros();
+                List<Centro> centros = gestorCentros.obtenerCentros();
+                return centros;
+                //string col = JsonConvert.SerializeObject(centros);
+                //return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static List<Especialidad> cargarEspecialidades(string idCentro)
+        {
+            try
+            {
+                GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+                List<Especialidad> especialidades = gestorEspecialidades.obtenerEspecialidades();
+                return especialidades;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static List<ObraSocial> cargarObrasSociales(string idCentro)
+        {
+            try
+            {
+                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerObrasSociales(idCentro);
+                return obrasSociales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
     }

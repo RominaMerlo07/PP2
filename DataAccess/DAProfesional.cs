@@ -19,12 +19,10 @@ namespace DataAccess
         SqlTransaction trans;
 
 
-        public string DaRegistrarProfesional(Profesional profesional)
+        public int DaRegistrarProfesional(Profesional profesional)
         {
             try
             {
-                string resultado = "OK";
-
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
 
                 con = new SqlConnection(cadenaDeConexion);
@@ -110,13 +108,13 @@ namespace DataAccess
                 cmd.Parameters.AddWithValue("@USUARIO_ALTA", profesional.UsuarioAlta);
                 cmd.Parameters.AddWithValue("@FECHA_ALTA", profesional.FechaAlta);
 
-                cmd.ExecuteNonQuery();
-                //  int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+                //cmd.ExecuteNonQuery();
+                int devolver = Convert.ToInt32(cmd.ExecuteScalar());
                 trans.Commit();
 
                 con.Close();
 
-                return resultado;
+                return devolver;
             }
             catch (Exception e)
             {
@@ -125,6 +123,153 @@ namespace DataAccess
                 throw e;
             }
 
+        }
+        
+        public List<Profesional> traerProfesionales()
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = "SELECT * FROM T_PROFESIONALES " +
+                                    "WHERE FECHA_BAJA IS NULL;";
+
+                cmd = new SqlCommand(consulta, con);
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<Profesional> listaProfesionales = new List<Profesional>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Profesional profesional = new Profesional();
+                        if (dr["ID_PROFESIONAL"] != DBNull.Value)
+                            profesional.IdProfesional = Convert.ToInt32(dr["ID_PROFESIONAL"]);
+                        if (dr["NOMBRE"] != DBNull.Value)
+                            profesional.Nombre = Convert.ToString(dr["NOMBRE"]);
+                        if (dr["APELLIDO"] != DBNull.Value)
+                            profesional.Apellido = Convert.ToString(dr["APELLIDO"]);
+                        if (dr["DOCUMENTO"] != DBNull.Value)
+                            profesional.Documento = Convert.ToString(dr["DOCUMENTO"]);
+                        if (dr["NRO_CONTACTO"] != DBNull.Value)
+                            profesional.NroContacto = Convert.ToString(dr["NRO_CONTACTO"]);
+                        if (dr["EMAIL_CONTACTO"] != DBNull.Value)
+                            profesional.EmailContacto = Convert.ToString(dr["EMAIL_CONTACTO"]);
+                        if (dr["FECHA_NACIMIENTO"] != DBNull.Value)
+                            profesional.FechaNacimiento = Convert.ToDateTime(dr["FECHA_NACIMIENTO"]);
+                        if (dr["DOMICILIO"] != DBNull.Value)
+                            profesional.Domicilio = Convert.ToString(dr["DOMICILIO"]);
+                        if (dr["LOCALIDAD"] != DBNull.Value)
+                            profesional.Localidad = Convert.ToString(dr["LOCALIDAD"]);
+                        if (dr["NRO_MATRICULA"] != DBNull.Value)
+                            profesional.NroMatricula = Convert.ToString(dr["NRO_MATRICULA"]);
+                        if (dr["USUARIO_ALTA"] != DBNull.Value)
+                            profesional.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
+                        if (dr["FECHA_ALTA"] != DBNull.Value)
+                            profesional.FechaAlta = Convert.ToDateTime(dr["FECHA_ALTA"]);
+                        if (dr["USUARIO_MOD"] != DBNull.Value)
+                            profesional.UsuarioMod = Convert.ToInt32(dr["USUARIO_MOD"]);
+                        if (dr["FECHA_MOD"] != DBNull.Value)
+                            profesional.FechaMod = Convert.ToDateTime(dr["FECHA_MOD"]);
+                        if (dr["USUARIO_BAJA"] != DBNull.Value)
+                            profesional.UsuarioBaja = Convert.ToInt32(dr["USUARIO_BAJA"]);
+                        if (dr["FECHA_BAJA"] != DBNull.Value)
+                            profesional.FechaBaja = Convert.ToDateTime(dr["FECHA_BAJA"]);
+
+                        listaProfesionales.Add(profesional);
+                    }
+
+                    return listaProfesionales;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public Profesional obtenerProfesional(int idProfesional)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = "SELECT * FROM T_PROFESIONALES " +
+                                    "WHERE ID_PROFESIONAL = @ID_PROFESIONAL " +
+                                    "AND FECHA_BAJA IS NULL;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (idProfesional != 0)
+                    cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                else
+                    cmd.Parameters.AddWithValue("@ID_PROFESIONAL", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                Profesional profesional = new Profesional();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {                        
+                        if (dr["ID_PROFESIONAL"] != DBNull.Value)
+                            profesional.IdProfesional = Convert.ToInt32(dr["ID_PROFESIONAL"]);
+                        if (dr["NOMBRE"] != DBNull.Value)
+                            profesional.Nombre = Convert.ToString(dr["NOMBRE"]);
+                        if (dr["APELLIDO"] != DBNull.Value)
+                            profesional.Apellido = Convert.ToString(dr["APELLIDO"]);
+                        if (dr["DOCUMENTO"] != DBNull.Value)
+                            profesional.Documento = Convert.ToString(dr["DOCUMENTO"]);
+                        if (dr["NRO_CONTACTO"] != DBNull.Value)
+                            profesional.NroContacto = Convert.ToString(dr["NRO_CONTACTO"]);
+                        if (dr["EMAIL_CONTACTO"] != DBNull.Value)
+                            profesional.EmailContacto = Convert.ToString(dr["EMAIL_CONTACTO"]);
+                        if (dr["FECHA_NACIMIENTO"] != DBNull.Value)
+                            profesional.FechaNacimiento = Convert.ToDateTime(dr["FECHA_NACIMIENTO"]);
+                        if (dr["DOMICILIO"] != DBNull.Value)
+                            profesional.Domicilio = Convert.ToString(dr["DOMICILIO"]);
+                        if (dr["LOCALIDAD"] != DBNull.Value)
+                            profesional.Localidad = Convert.ToString(dr["LOCALIDAD"]);
+                        if (dr["NRO_MATRICULA"] != DBNull.Value)
+                            profesional.NroMatricula = Convert.ToString(dr["NRO_MATRICULA"]);
+                        if (dr["USUARIO_ALTA"] != DBNull.Value)
+                            profesional.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
+                        if (dr["FECHA_ALTA"] != DBNull.Value)
+                            profesional.FechaAlta = Convert.ToDateTime(dr["FECHA_ALTA"]);
+                        if (dr["USUARIO_MOD"] != DBNull.Value)
+                            profesional.UsuarioMod = Convert.ToInt32(dr["USUARIO_MOD"]);
+                        if (dr["FECHA_MOD"] != DBNull.Value)
+                            profesional.FechaMod = Convert.ToDateTime(dr["FECHA_MOD"]);
+                        if (dr["USUARIO_BAJA"] != DBNull.Value)
+                            profesional.UsuarioBaja = Convert.ToInt32(dr["USUARIO_BAJA"]);
+                        if (dr["FECHA_BAJA"] != DBNull.Value)
+                            profesional.FechaBaja = Convert.ToDateTime(dr["FECHA_BAJA"]);
+                    }
+
+                    return profesional;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         .datepicker.date {
-            width: 210px;
+            width: 207px;
         }
     </style>
     <section class="content-header">
@@ -25,10 +25,6 @@
                                         <span class="input-group-text">Sucursal: </span>
                                     </div>
                                     <select class="custom-select form-control" id="ddlSucursal">
-                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">Córdoba</option>
-                                        <option value="2">Carlos Paz I</option>
-                                        <option value="3">Carlos Paz II</option>
                                     </select>
                                 </div>
                             </div>
@@ -39,19 +35,6 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">Kinesiología y Fisioterapia</option>
-                                        <option value="2">Quiropraxia</option>
-                                        <option value="3">Rehabilitacion de terapias deportivas</option>
-                                        <option value="4">Rehabilitacion</option>
-                                        <option value="5">Osteopatia</option>
-                                        <option value="6">Actividades fisicas adaptadas</option>
-                                        <option value="7">Reeducacion postural global</option>
-                                        <option value="8">Tratamiento de columna vertebral</option>
-                                        <option value="9">Lesion Nerviosa Espinal</option>
-                                        <option value="10">Terapia fisica</option>
-                                        <option value="11">Pre-Post Quirurgicos</option>
-                                        <option value="12">Pilates</option>
-                                        <option value="13">Terapias Chinas</option>
                                     </select>
                                 </div>
                             </div>
@@ -60,7 +43,7 @@
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Fecha</span>
+                                        <span class="input-group-text">Fecha:</span>
                                     </div>
                                     <div>
                                         <input type='text' class="form-control datepicker date" id="dtpFechaD"
@@ -113,27 +96,19 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Paciente: </span>
                                         </div>
-                                        <input type="search" class="form-control rounded" placeholder="Ingrese DNI" aria-label="Search"
+                                        <input type="search" class="form-control rounded" id="txtDocumento" placeholder="Ingrese DNI" aria-label="Search"
                                             aria-describedby="search-addon" />
-                                        <span class="input-group-text border-0" id="search-addon">
+                                        <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                             <i class="fas fa-search"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">DNI</span>
-                                        </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col">
+                                <div class="col paciente">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="">Nombre y Apellido</span>
+                                            <span class="input-group-text" id="">Nombre y Apellido:</span>
                                         </div>
                                         <input type="text" style="text-align: left" class="form-control" id="txtNombre" />
                                         <input type="text" style="text-align: left" class="form-control" id="txtApeliido" />
@@ -141,32 +116,27 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col">
+                                <div class="col paciente">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Obra Social: </span>
                                         </div>
                                         <select class="custom-select form-control" id="ddlObraSocial">
                                             <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                            <option value="1">Particular</option>
-                                            <option value="2">Omint</option>
-                                            <option value="3">Sancor</option>
-                                            <option value="3">Swiss Medical</option>
-                                            <option value="3">Sipssa</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col paciente">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">Celular</span>
+                                            <span class="input-group-text">Celular:</span>
                                         </div>
                                         <input type="text" style="text-align: left" class="form-control" id="txtCelular" />
                                     </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col">
+                                <div class="col paciente">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Email: </span>
@@ -185,13 +155,16 @@
                 <br />
                 <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
             </div>
-            <div class="card" style="width: 40rem;">
-                <div class="card-body">
-                    <div id='calendarioTurno'></div>
+            <div class="col-md-6">
+                <div class="card" > <%--style="width: 40rem;"--%>
+                    <div class="card-body">
+                        <div id='calendarioTurno'></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+    <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/jquery-3.0.0.js"%>"></script>--%>
     <script type="text/javascript">
         var centro;
         var especialidad;
@@ -205,23 +178,31 @@
         var celular;
         var email1;
         var email2;
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendarioTurno');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
-            });
-            calendar.render();
-        });
+        var calendar;
+        var eventos =
+                        {
+                            title: 'Business Lunch',
+                            start: '2021-05-22T13:00:00',
+                            constraint: 'businessHours'
+                        };
+        
 
         $(document).ready(function () {
 
-            $('.date').datepicker({
+            dibujaCalendario();
+
+            $('#dtpFechaD').datepicker({ //.date
                 autoclose: true,
-                format: "dd/mm/yyyy"
+                format: "dd/mm/yyyy",
+                startDate: '+1d'
             });
 
             $('#crdDatosPersonales').hide();
+            $(".paciente").hide();
+            $("#ddlSucursal").prop("disabled", true);
+            $("#ddlEspecialidad").prop("disabled", true);
+            $("#ddlObraSocial").prop("disabled", true);
+            cargarComboCentros('#ddlSucursal'); 
 
             $('#btnRegistrar').click(function () {
 
@@ -258,11 +239,144 @@
                     }
 
                     registrarTurno(turnoYPersona);
-                   
+                    limpiarCampos();
                 }
             });
 
+            $("#ddlSucursal").bind("change", function () {
+
+                var idCentro = $('#ddlSucursal').val();
+                cargarObrasSociales(idCentro, "#ddlObraSocial");
+                cargarEspecialidades(idCentro, "#ddlEspecialidad");
+
+            });
+
+            $('#btnBuscarDNI').click(function () {
+
+                //trae datos de paciente
+                $(".paciente").show();
+                //limpiarCampos();
+            });
+            
+
         });
+
+        function dibujaCalendario() {
+           
+            var calendarEl = document.getElementById('calendarioTurno');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                selectable: true,
+                dateClick: function(info) {
+                    limpiarCampos();
+                }
+            });
+            calendar.render();
+
+            calendar.addEvent(eventos);
+        }
+
+        function limpiarCampos() {
+
+            $('#ddlSucursal').val(0);
+            $('#ddlEspecialidad').empty();
+            $('#ddlEspecialidad').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+            $('#ddlEspecialidad').prop("disabled", true);
+            $("#dtpFechaD").datepicker('clearDates');
+            $('#ddlHoraDesde').val('8');
+            $('#ddlObraSocial').empty();
+            $('#ddlObraSocial').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+            $('#ddlObraSocial').prop("disabled", true);
+            $('#ddlMinDesde').val('00');
+            $('#txtNombre').val("");
+            $('#txtApeliido').val("");
+            $('#txtDocumento').val("");
+            $('#txtCelular').val("");
+            $('#txtEmail1').val("");
+            $('#txtEmail2').val("");
+        }
+
+        function cargarEspecialidades(idCentro, ddl) {
+            $.ajax({
+                url: "RegistrarTurno.aspx/cargarEspecialidades",
+                data: "{idCentro: '" + idCentro + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+
+                            $(ddl).append($("<option></option>").val(data.d[i].IdEspecialidad).html(data.d[i].Descripcion));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
+            });
+        }
+
+        function cargarObrasSociales(idCentro, ddl) {
+
+            $.ajax({
+                url: "RegistrarTurno.aspx/cargarObrasSociales",
+                data: "{idCentro: '" + idCentro + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+
+                            $(ddl).append($("<option></option>").val(data.d[i].IdObraSocial).html(data.d[i].Descripcion));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
+            });
+        }
+
+        function cargarComboCentros(ddl) {
+            
+            $.ajax({
+                url: "RegistrarTurno.aspx/cargarCentros",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+
+                            $(ddl).append($("<option></option>").val(data.d[i].IdCentro).html(data.d[i].NombreCentro));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
+            });
+        }
 
         function registrarTurno(datosTurno) {
 

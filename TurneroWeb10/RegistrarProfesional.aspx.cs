@@ -18,7 +18,7 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string registrarProfesional(string p_dni, string p_matricula, string p_nombre, string p_apellido, string p_fechaNac,
+        public static string registrarProfesional(string p_dni, string p_matricula, List<string> p_especialidades,    string p_nombre, string p_apellido, string p_fechaNac,
                                                  string p_calle, string p_numero, string p_barrio, string p_localidad, string p_celular, string p_email1, string p_email2)
         {
 
@@ -81,18 +81,9 @@ namespace TurneroWeb10
                 profesional.UsuarioAlta = 1;
                 profesional.FechaAlta = DateTime.Today;
 
-                //Sumar Campo de Obra Social
-
-                //if (!string.IsNullOrEmpty(p_obra_social))   
-                //{
-                //    ObraSocial obraSocial = new ObraSocial(p_obra_social, centro.IdCentro);
-                //    turno.ObraSocial = obraSocial;
-                //}                
-
-
                 #endregion
 
-                gestorProfesionales.RegistrarProfesional(profesional);
+                gestorProfesionales.RegistrarProfesional(profesional, p_especialidades);
 
                 return mensaje;
             }
@@ -101,7 +92,21 @@ namespace TurneroWeb10
                 string error = "Se produjo un error al registrar el profesional " + e.Message;
                 return error;
             }
+        }
 
+        [WebMethod]
+        public static List<Especialidad> cargarEspecialidades()
+        {
+            try
+            {
+                GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+                List<Especialidad> especialidades = gestorEspecialidades.obtenerEspecialidades();
+                return especialidades;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

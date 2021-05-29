@@ -33,7 +33,7 @@ namespace TurneroWeb10
                 #region Completa entidad Disponibilidad
 
                 if (!string.IsNullOrEmpty(p_profesional)) {
-                    profDetalle.IdProfesionalDetalle = 1; // hardcode, quitar
+                    profDetalle.IdProfesionalDetalle = Convert.ToInt32(p_especialidad);
                     disponibilidad.ProfesionalDetalle = profDetalle;
                 }
 
@@ -70,5 +70,61 @@ namespace TurneroWeb10
             }
 
         }
+
+        [WebMethod]
+        public static List<Centro> cargarCentros()
+        {
+            try
+            {
+                GestorCentros gestorCentros = new GestorCentros();
+                List<Centro> centros = gestorCentros.obtenerCentros();
+                return centros;
+                //string col = JsonConvert.SerializeObject(centros);
+                //return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static List<Profesional> cargarProfesionales()
+        {
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                List<Profesional> profesionales = gestorProfesionales.obtenerProfesionales();
+                return profesionales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }      
+
+        [WebMethod]
+        public static List<Especialidad> cargarEspecialidades(string idCentro, string idProfesional)
+        {
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                List<ProfesionalDetalle> listaProfDetalle = gestorProfesionales.obtenerDetalleProfesionalPorCentro(idCentro, idProfesional);
+
+                List<Especialidad> listaEspecialidades = new List<Especialidad>();
+                foreach (ProfesionalDetalle detalle in listaProfDetalle)
+                {
+                    detalle.Especialidad.IdEspecialidad = detalle.IdProfesionalDetalle;
+                    listaEspecialidades.Add(detalle.Especialidad);
+                }
+
+                return listaEspecialidades;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

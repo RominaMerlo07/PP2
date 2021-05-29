@@ -25,10 +25,6 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlProfesional">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">Juan Perez</option>
-                                        <option value="2">Miel Castillo</option>
-                                        <option value="3">Emmanuel Funes</option>
-                                        <option value="4">Mario Gomez</option>
                                     </select>
                                 </div>
                             </div>
@@ -41,9 +37,6 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlSucursal">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">Córdoba</option>
-                                        <option value="2">Carlos Paz I</option>
-                                        <option value="3">Carlos Paz II</option>
                                     </select>
                                 </div>
                             </div>
@@ -56,30 +49,17 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">Kinesiología y Fisioterapia</option>
-                                        <option value="2">Quiropraxia</option>
-                                        <option value="3">Rehabilitacion de terapias deportivas</option>
-                                        <option value="4">Rehabilitacion</option>
-                                        <option value="5">Osteopatia</option>
-                                        <option value="6">Actividades fisicas adaptadas</option>
-                                        <option value="7">Reeducacion postural global</option>
-                                        <option value="8">Tratamiento de columna vertebral</option>
-                                        <option value="9">Lesion Nerviosa Espinal</option>
-                                        <option value="10">Terapia fisica</option>
-                                        <option value="11">Pre-Post Quirurgicos</option>
-                                        <option value="12">Pilates</option>
-                                        <option value="13">Terapias Chinas</option>
                                     </select>
                                 </div>
                             </div>
                         </div>                            
-                        <div class="form-row">
+<%--                        <div class="form-row">
                             <div class="col">
                                 <div class="input-group mb-3">
                                    <button type="button" class="btn btn-outline-primary">Agregar Especialidad</button> 
                                 </div>
                             </div>
-                        </div> 
+                        </div> --%>
                          <div class="form-row">
                             <div class="col">
                                 <div class="input-group mb-3">
@@ -173,7 +153,7 @@
                     </div>
                 </div>
                 <br />
-                    <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
+                <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
             </div>
             <br/>      
             <div class="card" style="width: 40rem;">
@@ -197,6 +177,39 @@
 
 
         $(document).ready(function () {
+
+            $("#ddlEspecialidad").prop("disabled", true);
+            $("#ddlSucursal").prop("disabled", true);
+
+            cargarComboProfesional('#ddlProfesional');
+            cargarComboCentros('#ddlSucursal');
+
+            $("#ddlProfesional").bind("change", function () {
+
+                if ($("#ddlProfesional").val() != 0) {
+
+                    $("#ddlSucursal").prop("disabled", false);
+
+                    if ($("#ddlSucursal").val() != null) {
+                        var idCentro = $('#ddlSucursal').val();
+                        var idProfesional = $('#ddlProfesional').val();
+                        cargarEspecialidades(idCentro, idProfesional, "#ddlEspecialidad");
+                        $("#ddlEspecialidad").prop("disabled", false);
+
+                    }
+                    
+                }
+
+            });
+
+            $("#ddlSucursal").bind("change", function () {
+
+                var idCentro = $('#ddlSucursal').val();
+                var idProfesional = $('#ddlProfesional').val();
+                cargarEspecialidades(idCentro, idProfesional, "#ddlEspecialidad");
+                $("#ddlEspecialidad").prop("disabled", false);
+
+            });
 
             $('#btnRegistrar').click(function () {
 
@@ -233,11 +246,11 @@
             });
         });
 
-        function registrarDisponibilidad(datosTurno) {
+        function registrarDisponibilidad(diponibilidad) {
 
             $.ajax({
                 url: "DisponibilidadHoraria.aspx/registrarDisponibilidad",
-                data: JSON.stringify(datosTurno),
+                data: JSON.stringify(diponibilidad),
                 type: "post",
                 contentType: "application/json",
                 async: false,
@@ -253,6 +266,87 @@
                     alert(data.error);
                 }
 
+            });
+        }
+
+        function cargarEspecialidades(idCentro, idProfesional, ddl) {
+            $.ajax({
+                url: "DisponibilidadHoraria.aspx/cargarEspecialidades",
+                data: "{idCentro: '" + idCentro + "', idProfesional: '" + idProfesional + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+
+                            $(ddl).append($("<option></option>").val(data.d[i].IdEspecialidad).html(data.d[i].Descripcion));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
+            });
+        }
+
+        function cargarComboProfesional(ddl) {
+            
+            $.ajax({
+                url: "DisponibilidadHoraria.aspx/cargarProfesionales",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+                            var nombre = data.d[i].Nombre + " " + data.d[i].Apellido;
+                            $(ddl).append($("<option></option>").val(data.d[i].IdProfesional).html(nombre));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
+            });
+        }
+
+        function cargarComboCentros(ddl) {
+            
+            $.ajax({
+                url: "DisponibilidadHoraria.aspx/cargarCentros",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    if (data.d.length > 0) {
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+                        
+                        for (i = 0; i < data.d.length; i++) {
+
+                            $(ddl).append($("<option></option>").val(data.d[i].IdCentro).html(data.d[i].NombreCentro));
+                        }
+                        $(ddl).prop("disabled", false);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                    alert(data.error);
+                }
             });
         }
 

@@ -78,5 +78,6 @@ namespace Entidades.ent
         }
 
         public ProfesionalDetalle() { }
+
     }
 }
