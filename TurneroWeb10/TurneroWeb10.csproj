@@ -591,6 +591,7 @@
     <Content Include="RegistrarProfesional.aspx" />
     <Content Include="RegistrarTurno.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
+    <Content Include="Scripts\RegistrarProfesional.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

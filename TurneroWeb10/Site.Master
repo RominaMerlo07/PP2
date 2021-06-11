@@ -35,6 +35,10 @@
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/FullCalendar/lib/main.js"%>" ></script>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/funcionesComunes.js"%>"></script>
 
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datatables/jquery.dataTables.js"%>" ></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datatables/dataTables.bootstrap.js"%>" ></script>
+
+
     <link href="Estilos/css/AdminLTE.css" rel="stylesheet" type="text/css" />
     
     <style>

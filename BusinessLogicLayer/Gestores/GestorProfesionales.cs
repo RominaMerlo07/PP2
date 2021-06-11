@@ -111,5 +111,19 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public string ActualizarProfesional(Profesional profesional)
+        {
+            try
+            { 
+            DAProfesional DaProfesional = new DAProfesional();
+            return DaProfesional.ActualizarProfesional(profesional);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }
