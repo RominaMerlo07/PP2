@@ -11,68 +11,138 @@
         <h1 style="text-align: center">REGISTRO DE PROFESIONALES</h1>
     </section>
     <section class="content">
-        <div class="row">
-            <div class="col-md-6" id="crdDatosPersonales">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos personales</h4>
+            <div class="row">
+                <div class="col-md-6" id="crdDatosPersonales">
+                    <div class="card text-white bg-light">
+                        <div class="card-header bg-info">
+                            <h4>Datos personales</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-sm">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">DNI</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Matricula</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtMatricula" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm multiselect">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Especialidad: </span>
+                                        </div>
+                                        <select multiple class="form-control select2" id="ddlEspecialidad">
+                                            <option value="0" disabled="disabled" selected="" hidden="hidden">--Seleccione--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="">Nombre y Apellido</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtApellido" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fecha de Nacimiento</span>
+                                        </div>
+                                        <div>
+                                            <input type='text' class="form-control datepicker date" id="dtpFechaNac"
+                                                placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                                data-date-format="dd/mm/yyyy" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-sm">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">DNI</span>
-                                            </div>
-                                            <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
+                </div>
+                <div class="col-md-6" id="crdDatosContacto">
+                    <div class="card text-white bg-light">
+                        <div class="card-header bg-info">
+                            <h4>Datos de Contacto</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Calle</span>
                                         </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtCalle" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                     </div>
-                                    <div class="col-sm">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Matricula</span>
-                                            </div>
-                                            <input type="text" style="text-align: left" class="form-control" id="txtMatricula" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Numero</span>
                                         </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtNumero" maxlength="4"/>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm multiselect">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Especialidad: </span>
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Barrio</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                     </div>
-                                    <select multiple class="form-control select2" id="ddlEspecialidad">
-                                        <option value="0" disabled="disabled" selected="" hidden="hidden">--Seleccione--</option>
-                                    </select>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Localidad</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtLocalidad" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="">Nombre y Apellido</span>
+                            <div class="form-row">
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Celular</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtCelular" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" placeholder="Ej: 3515123456" />
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtNombre" />
-                                    <input type="text" style="text-align: left" class="form-control" id="txtApellido" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Fecha de Nacimiento</span>
-                                    </div>
-                                    <div>
-                                        <input type='text' class="form-control datepicker date" id="dtpFechaNac"
-                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                            data-date-format="dd/mm/yyyy" />
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Email: </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">@</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                     </div>
                                 </div>
                             </div>
@@ -80,76 +150,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" id="crdDatosContacto">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos de Contacto</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Calle</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtCalle" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Numero</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtNumero" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Barrio</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtBarrio" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Localidad</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtLocalidad" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Celular</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtCelular" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Email: </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="txtEmail1" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">@</span>
-                                    </div>
-                                    <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>     
         <%--<button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>--%>
         <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
         <br />
@@ -175,7 +175,7 @@
                                     <th>Matricula</th>
                                     <th>Contacto</th>
                                     <th>Email</th>
-                                    <th >Domicilio</th>
+                                    <th>Domicilio</th>
                                     <th>Especialidad</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -212,7 +212,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">DNI</span>
                                         </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtDocumentoA" />
+                                        <input type="text" style="text-align: left" class="form-control" id="txtDocumentoA" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false"/>
                                     </div>
                                 </div>
                                 <div class="col-sm">
@@ -220,7 +220,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Matricula</span>
                                         </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtMatriculaA" />
+                                        <input type="text" style="text-align: left" class="form-control" id="txtMatriculaA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
                                     </div>
                                 </div>
                             </div>
@@ -232,8 +232,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="">Nombre y Apellido</span>
                                 </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtNombreA" />
-                                <input type="text" style="text-align: left" class="form-control" id="txtApellidoA" />
+                                <input type="text" style="text-align: left" class="form-control" id="txtNombreA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                <input type="text" style="text-align: left" class="form-control" id="txtApellidoA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                             </div>
                         </div>
                     </div>
@@ -261,7 +261,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Direccion</span>
                                 </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtDomicilio" />
+                                <input type="text" style="text-align: left" class="form-control" id="txtDomicilio"  maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                             </div>
                         </div>
                     </div>
@@ -271,7 +271,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Barrio</span>
                                 </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtBarrioA" />
+                                <input type="text" style="text-align: left" class="form-control" id="txtBarrioA" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                             </div>
                         </div>
                         <div class="col">
@@ -279,7 +279,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Localidad</span>
                                 </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidadA" />
+                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidadA" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                             </div>
                         </div>
                     </div>
@@ -289,7 +289,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Celular</span>
                                 </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtCelularA" />
+                                <input type="text" style="text-align: left" class="form-control" id="txtCelularA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
                             </div>
                         </div>
                     </div>
@@ -299,11 +299,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Email: </span>
                                 </div>
-                                <input type="text" class="form-control" id="txtEmail1A" />
+                                <input type="text" class="form-control" id="txtEmail1A" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text">@</span>
                                 </div>
-                                <input type="text" class="form-control" id="txtEmail2A" placeholder="gmail.com" />
+                                <input type="text" class="form-control" id="txtEmail2A" placeholder="gmail.com" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                             </div>
                         </div>
                     </div>

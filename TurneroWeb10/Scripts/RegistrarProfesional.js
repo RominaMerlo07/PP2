@@ -288,7 +288,7 @@ function fillModalData(data) {
     $("#txtEmail1A").val(email[0]);
     $("#txtEmail2A").val(email[1]);
 
-  }
+}
 
 $("#btnActualizar").click(function (e) {
     e.preventDefault();
@@ -336,6 +336,45 @@ function UpdateDataProfesionales(id) {
                 //console.log(response);
             }
         })
+}
+
+function soloNumeros(e) {
+
+    key = e.keyCode || e.which;
+    teclado = String.fromCharCode(key);
+    numeros = "0123456789";
+    especiales = "8-37-38-46";
+    teclado_especial = false;
+
+    for (var i in especiales) {
+        if (key == especiales[i]) {
+            teclado_especial = true;
+        }
+    }
+
+    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+        return false;
+    }
+}
+
+
+function soloLetras(e) {
+
+    key = e.keyCode || e.which;
+    teclado = String.fromCharCode(key);
+    numeros = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    especiales = "8-37-38-46-164";
+    teclado_especial = false;
+
+    for (var i in especiales) {
+        if (key == especiales[i]) {
+            teclado_especial = true; break;
+        }
+    }
+
+    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+        return false;
+    }
 }
 
 
