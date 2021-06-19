@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Entidades.ent;
 using DataAccess;
+using System.Data;
 
 namespace BusinessLogicLayer.Gestores
 {
@@ -29,6 +30,32 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
             
+        }
+
+        public DataTable TraerTurnos(string idProfesionalDetalle)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraerTurnos(idProfesionalDetalle);           
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable TraerTurnos(string idProfesionalDetalle, DateTime dia)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraerTurnos(idProfesionalDetalle, dia);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

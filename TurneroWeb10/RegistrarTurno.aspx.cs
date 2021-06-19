@@ -20,7 +20,7 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string registrarTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, string p_obra_social, string p_minTurno,
+        public static string registrarTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, //string p_obra_social, string p_minTurno,
                                             string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2)
         {
 
@@ -62,9 +62,9 @@ namespace TurneroWeb10
                 //    turno.ObraSocial = obraSocial;
                 //}                
 
-                if ((!string.IsNullOrEmpty(p_horaTurno)) && (!string.IsNullOrEmpty(p_minTurno)))
+                if (!string.IsNullOrEmpty(p_horaTurno))
                 {
-                    TimeSpan ts = TimeSpan.Parse(p_horaTurno + ":" + p_minTurno);
+                    TimeSpan ts = TimeSpan.Parse(p_horaTurno);
                     turno.HoraDesde = ts;
                 }
 
@@ -137,13 +137,44 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static List<Especialidad> cargarEspecialidades(string idCentro)
+        public static string cargarEspecialidades(string idCentro)
         {
             try
             {
                 GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
-                List<Especialidad> especialidades = gestorEspecialidades.obtenerEspecialidades();
-                return especialidades;
+                List<Especialidad> especialidades = new List<Especialidad>();//gestorEspecialidades.obtenerEspecialidades();
+                DataTable dt = gestorEspecialidades.obtenerEspecialidadDisponible(idCentro);
+                string col = JsonConvert.SerializeObject(dt);
+                //foreach (DataRow row in dt.Rows)
+                //{
+                //    Especialidad especialidad = new Especialidad();
+
+                //    especialidad.IdEspecialidad = Convert.ToInt32(row["ID_PROFESIONALES_DETALLE"].ToString());
+                //    especialidad.Descripcion = row["DESCRIPCION"].ToString();
+
+                //    especialidades.Add(especialidad);
+                //}
+
+                //return especialidades;
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string traerTurnos(string idProfesionalDetalle, string dia)
+        {
+            try
+            {
+                DateTime diaTurno = DateTime.Parse(dia);
+                GestorTurno gTurno = new GestorTurno();
+                DataTable dt = gTurno.TraerTurnos(idProfesionalDetalle, diaTurno);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
             }
             catch (Exception e)
             {

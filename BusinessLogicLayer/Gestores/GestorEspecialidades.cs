@@ -11,11 +11,12 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorEspecialidades
     {
+        DAEspecialidades daEspecialidades = new DAEspecialidades();
+
         public List<Especialidad> obtenerEspecialidades()
         {
             try
             {
-                DAEspecialidades daEspecialidades = new DAEspecialidades();
                 List<Especialidad> list = daEspecialidades.traerEspecialidades();
 
                 if (list.Count > 0)
@@ -30,5 +31,17 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }  
+
+        public DataTable obtenerEspecialidadDisponible(string idCentro)
+        {
+            try
+            {
+                return daEspecialidades.obtenerEspecialidadDisponible(idCentro);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

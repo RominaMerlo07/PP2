@@ -135,6 +135,42 @@ namespace DataAccess
                 throw e;
             }
         }
-        
+
+        public DataTable obtenerEspecialidadDisponible(string idCentro)
+        //obtiene las Especialidades, segun el Centro, que tengan Disponibilidad Horaria cargada
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select e.*, pd.*, dh.*
+                                    from t_centros c, t_especialidades e, t_profesionales_detalle pd, t_disponibilidad_horaria dh
+                                    where pd.id_centro = c.id_centro
+                                    and e.id_especialidades = pd.id_especialidad
+                                    and dh.id_profesionales_detalle = pd.ID_PROFESIONALES_DETALLE
+                                    and c.id_centro = @id_centro
+                                    ; ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!String.IsNullOrEmpty(idCentro))
+                    cmd.Parameters.AddWithValue("@id_centro", idCentro);
+                else
+                    cmd.Parameters.AddWithValue("@id_centro", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }            
+        }
+
+
     }
 }
