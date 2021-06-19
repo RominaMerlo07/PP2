@@ -23,7 +23,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">DNI</span>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" />
+                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)"/>
                                 </div>
                             </div>
                         </div>

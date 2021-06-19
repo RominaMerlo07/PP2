@@ -108,5 +108,105 @@ namespace TurneroWeb10
                 throw e;
             }
         }
+
+        [WebMethod]
+        public static List<Profesional> cargarProfesionales()
+        {
+            List<Profesional> profesionales = null;
+
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                profesionales = gestorProfesionales.obtenerProfesionales();                
+            }
+            catch (Exception e)
+            {
+                profesionales = null;
+                throw e;
+            }
+            return profesionales;
+        }
+
+
+        [WebMethod]
+        public static string actualizarProfesional(string id, string nombre, string apellido, string dni, string matricula, string fechaNacimiento,
+                                                   string localidad, string barrio, string direccion, string celular, string email1, string email2)
+        {
+
+            Profesional profesional = new Profesional();
+            GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad Profesional
+
+                if (!string.IsNullOrEmpty(dni))
+                {
+                    profesional.Documento = dni;
+                }
+
+                if (!string.IsNullOrEmpty(matricula))
+                {
+                    profesional.NroMatricula = matricula;
+                }
+
+                if (!string.IsNullOrEmpty(nombre))
+                {
+                    profesional.Nombre = nombre;
+                }
+
+                if (!string.IsNullOrEmpty(apellido))
+                {
+                    profesional.Apellido = apellido;
+                }
+
+                if (!string.IsNullOrEmpty(fechaNacimiento))
+                {
+                    profesional.FechaNacimiento = Convert.ToDateTime(fechaNacimiento);
+                }
+
+                if (!string.IsNullOrEmpty(direccion))
+                {
+                    string domicilio = direccion + " Barrio: " + barrio;
+                    profesional.Domicilio = domicilio;
+                }
+
+                if (!string.IsNullOrEmpty(localidad))
+                {
+                    profesional.Localidad = localidad;
+                }
+
+                if (!string.IsNullOrEmpty(celular))
+                {
+                    profesional.NroContacto = celular;
+                }
+
+                if ((!string.IsNullOrEmpty(email1)) && (!string.IsNullOrEmpty(email2)))
+                {
+                    string email = email1 + "@" + email2;
+                    profesional.EmailContacto = email;
+                }
+
+                profesional.IdProfesional = Convert.ToInt32(id);
+
+                profesional.UsuarioMod = 1;
+                profesional.FechaMod = DateTime.Today;
+
+                #endregion
+
+                gestorProfesionales.ActualizarProfesional(profesional);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del profesional " + e.Message;
+                return error;
+            }                                  
+
+        }
     }
 }
