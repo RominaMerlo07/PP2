@@ -7,7 +7,7 @@
         }
     </style>
     <section class="content-header">
-        <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>
+        <%--<button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>--%>
         <h1 style="text-align: left">REGISTRAR TURNO</h1>
     </section>
     <section class="content" id="sectionEspecialidad">
@@ -38,133 +38,16 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <%--<div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Fecha:</span>
-                                    </div>
-                                    <div>
-                                        <input type='text' class="form-control datepicker date" id="dtpFechaD"
-                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                            data-date-format="dd/mm/yyyy" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Hora: </span>
-                                    </div>
-                                    <select class="btn btn-white form-control" id="ddlHoraDesde">
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                    </select>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">:</span>
-                                    </div>
-                                    <select class="btn btn-white form-control" id="ddlMinDesde">
-                                        <option value="00">00</option>
-                                        <option value="15">15</option>
-                                        <option value="30">30</option>
-                                        <option value="45">45</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>   --%>      
+                        </div>    
                     </div>
                 </div>
             </div>
-<%--            <div class="col-md-6" id="crdPaciente">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos del Paciente</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Paciente: </span>
-                                    </div>
-                                    <input type="search" class="form-control rounded" id="txtDocumento" placeholder="Ingrese DNI" aria-label="Search"
-                                        aria-describedby="search-addon" />
-                                    <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col paciente">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="">Nombre y Apellido:</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtNombre" />
-                                    <input type="text" style="text-align: left" class="form-control" id="txtApeliido" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col paciente">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Obra Social: </span>
-                                    </div>
-                                    <select class="custom-select form-control" id="ddlObraSocial">
-                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col paciente">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Celular:</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtCelular" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col paciente">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Email: </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="txtEmail1" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">@</span>
-                                    </div>
-                                    <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>--%>
         </div>
-        <%--<br />
-        <div class="row float-right">
-            <button class="btn btn-success btn-lg " type="button" id="btnRegistrar">Registrar</button>      
-        </div>--%>
     </section>
     <section class="content" id="calDisposicionHoraria">           
         <div class="row justify-content-md-center">
             <div class="col-md-8">
-                <div class="card" > <%--style="width: 40rem;"--%>
+                <div class="card" >
                     <div class="card-body">
                         <div id='calendarioDispHor'></div>
                     </div>
@@ -175,7 +58,7 @@
     <section class="content" id="calTurnos">    
         <div class="row justify-content-md-center">
             <div class="col-md-8">
-                <div class="card" > <%--style="width: 40rem;"--%>
+                <div class="card" > 
                     <button class="btn btn-secondary btn-lg " type="button" onclick="volver()" id="btnVolver">Volver a la Disponibilidad Horaria</button>
                     <div class="card-body">
                         <div id='calendarioTurnos'></div>
@@ -184,7 +67,7 @@
             </div>
         </div>
     </section>
-        <%--<section class="content" >--%>
+    <%--MODAL TURNO--%>
     <div class="modal fade" tabindex="-1" role="dialog" id ="modalTurno" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -266,20 +149,56 @@
                 <br />
                 <div class="modal-footer">
                     <div class="row float-right">
-                        <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>                      
+                
                         <button class="btn btn-success btn-lg " type="button" id="btnRegistrar">Registrar</button>      
                     </div>
                 </div>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-        <%--</section>--%>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id ="modalListarTurnos" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-info text-white">
+                <h4 class="modal-title " >Listar turnos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>       
+              </div>
+                <div class="modal-body">
+                    <div class="col-md-12" id="">
+                        <div class="card text-white ">
+                            <div class="card-header ">
+                                <h4 class="modal-title text-dark" id="lblListarTurnos"></h4>
+                            </div>
+                            <div class="card-body">               
+                                <div class="form-row">
+                                    <div id="tListarTurnos" style="display: none">
+                                        <table style="width:100%" class="table table-striped table-bordered" id="tablaListarTurnos">
+                                            <thead>
+                                                <tr>
+                                                    <th>FECHA</th>
+                                                    <th>HORA</th>
+                                                    <th>ESPECIALIDAD</th>
+                                                    <th>PROFESIONAL</th>
+                                                    <th>PACIENTE</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
     
-    <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/jquery-3.0.0.js"%>"></script>--%>
     <script type="text/javascript">
         const setTrad = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         var disponibilidadHoraria;
         var turnosXIdProfDetalle;
+        var eventosDelDia;
 
         var centro;
         var especialidad;
@@ -296,49 +215,11 @@
         var idProfesionalDetalle;
         var calendarDisp;
         var calendarTur;
-        var infoTurno;
-        //var eventos =[
-        //                {
-        //                    title: 'Turno',
-        //                    start: '2021-05-22T13:00:00',
-        //                    constraint: 'businessHours'
-        //},
-        //    {
-        //                    title: 'Turno',
-        //                    start: '2021-05-24T13:00:00',
-        //                    constraint: 'businessHours'
-        //                },
-        //    {
-        //                    title: 'Turno',
-        //                    start: '2021-05-25T13:00:00',
-        //                    constraint: 'businessHours'
-        //                },
-        //    {
-        //                    title: 'Turno',
-        //                    start: '2021-05-27T13:00:00',
-        //                    constraint: 'businessHours'
-        //},
-        //    {
-        //                    title: 'Turno',
-        //                    start: '2021-05-30T13:00:00',
-        //                    constraint: 'businessHours'
-        //},
-        //    {
-        //                    title: 'Turno',
-        //                    start: '2021-05-30T14:00:00',
-        //                    constraint: 'businessHours'
-        //    },
-        //    {
-        //      title: 'Disponibilidad Horaria',
-        //      start: '2021-05-11',
-        //      end: '2021-05-30'
-        //    },
-        //];
-        
+        var infoTurno;        
 
         $(document).ready(function () {
 
-            $('#dtpFechaD').datepicker({ //.date
+            $('#dtpFechaD').datepicker({ 
                 autoclose: true,
                 format: "dd/mm/yyyy",
                 startDate: '+1d'
@@ -346,6 +227,8 @@
 
             //$('#modalTurno').modal('show');
             $('#modalTurno').modal('hide');
+
+            $('#tListarTurnos').show();
 
             $('#crdDatosPersonales').hide();
             $(".paciente").hide();
@@ -355,8 +238,6 @@
             $("#ddlEspecialidad").prop("disabled", true);
             $("#ddlObraSocial").prop("disabled", true);
             cargarComboCentros('#ddlSucursal'); 
-
-            //dibujaCalendarioDisp();
 
             $('#btnRegistrar').click(function () {
 
@@ -391,7 +272,7 @@
                         p_email1: email1,
                         p_email2: email2
                     }
-                    debugger;
+                    
                     registrarTurno(turnoYPersona);
                     $('#modalTurno').modal('hide');
                     $("#calDisposicionHoraria").hide();
@@ -468,7 +349,7 @@
         {
             var dispHor = [];
 
-            var dispHorSemana = '{"title": "Disponibilidad Horaria", "start": "", "end":""}';
+            var dispHorSemana = '{"title": "Disponibilidad", "start": "", "end":""}';
             
             for (i = 0; i < diasArray.length; i++) {
 
@@ -501,7 +382,7 @@
                 success: function (data) {
 
                     turnosXIdProfDetalle = JSON.parse(data.d);
-                    debugger;
+                    
                     var turnosXDia = '{"title": "Turno", "start": "", "end":""}';
             
                     for (i = 0; i < turnosXIdProfDetalle.length; i++) {
@@ -536,36 +417,91 @@
 
         function dibujaCalendarioTurnos(dia)
         {
-            var eventosDelDia = obtenerTurnosXDia(idProfesionalDetalle, dia); // se guarda en var turnosXIdProfDetalle
+            eventosDelDia = obtenerTurnosXDia(idProfesionalDetalle, dia); // se guarda en var turnosXIdProfDetalle
            
             var calendarTurnos = document.getElementById('calendarioTurnos');
             calendarTur = new FullCalendar.Calendar(calendarTurnos, {
                 initialDate: dia,//'2020-09-12',
                 initialView: 'timeGridDay',
+                customButtons: {
+                    btnListarTurnos: {
+                        text: 'Listar Turnos',
+                        click: function() {
+                            btnListarTurnoClick(turnosXIdProfDetalle);
+                        }
+                    }
+                },
+                headerToolbar: {
+                    left: 'title',
+                    center: '',
+                    right: 'btnListarTurnos'
+                },
                 selectable: true,
                 select: function (arg) {
-                    //var title = prompt('Event Title:');
-                    mostrarModalTurno(arg);
-                    
+                    mostrarModalTurno(arg);                  
                 },
-                //dayMaxEvents: true,
-                //headerToolbar: {
-
-                //},
                 locale: 'ES',
                 slotMinTime: '08:00:00',
                 slotMaxTime: '21:00:00',
                 slotDuration: '00:15:00',
                 slotLabelInterval: '00:15:00',
-                //slotMinutes: 15,
-                //eventClick: function (info) {
-
-                //}
             });
             $("#calTurnos").show();
             calendarTur.render();
 
             calendarTur.addEventSource(eventosDelDia);
+        }
+
+        function btnListarTurnoClick(turnos)
+        {
+            
+            //<th>FECHA</th> FECHA_TURNO
+            //<th>HORA</th> HORA_DESDE
+            //<th>ESPECIALIDAD</th> ESPECIALIDAD
+            //<th>PROFESIONAL</th> PROFESIONAL
+            //<th>PACIENTE</th> PACIENTE
+            //tablaListarTurnos
+            $('#modalListarTurnos').modal('show');
+            var arrayTurnosTabla = new Array();
+
+            $('#lblListarTurnos').text($('#ddlEspecialidad option:selected').text());
+
+            if (turnos != null) {
+                turnos.forEach(function (e) {
+                    var fecha = getFormattedDate(new Date(e.FECHA_TURNO));
+                    var hora = e.HORA_DESDE;
+                    var especialidad = e.ESPECIALIDAD;
+                    var prof = e.PROFESIONAL;
+                    var paciente = e.PACIENTE;
+
+                    arrayTurnosTabla.push([fecha, hora, especialidad, prof, paciente]);
+
+                });
+            }
+            var table = $('#tablaListarTurnos').DataTable({
+                //data: arrayTurnosTabla,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "bDestroy": true,
+                //columns: [
+                //    { title: "FECHA"},
+                //    { title: "HORA" },
+                //    { title: "ESPECIALIDAD" },
+                //    { title: "PROFESIONAL" },
+                //    { title: "PACIENTE" }
+                //],
+                dom: 'Bfrtip',
+                select: true,
+                buttons: [
+                    { extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+            table.fnAddData(arrayTurnosTabla)
         }
 
         function mostrarModalTurno(arg)
@@ -579,9 +515,6 @@
              $("#lblTituloTurno").text(diaTrad);
             fechaTurno = getFormattedDateInversed(dia);
             horaTurno = hora;
-            //fechaTurno  horaTurno  minTurno
-            debugger;
-            //lblTituloTurno
         }
 
         function dibujaCalendarioDisp()
@@ -594,9 +527,9 @@
                 selectable: true,
                 dayMaxEvents: true,
                 headerToolbar: {
-                    //left: 'prev,next today',
-                    //center: 'title'
-                    //right: 'dayGridMonth,timeGridDay' // timeGridWeek,
+                    left: 'title',
+                    center: '',
+                    right: 'prev,next' // timeGridWeek,
                 },
                 locale: 'ES',
                 eventClick: function (info)
@@ -609,7 +542,6 @@
                 }
             });
             calendarDisp.render();
-            //calendar.addEventSource(eventos);
         }
 
         function volver()
@@ -663,7 +595,6 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $(ddl).prop("disabled", true);
-                    //alert(data.error);
                 }
             });
         }
@@ -764,9 +695,6 @@
             else if (horaTurno == null) {
                 return false;
             }
-            //else if (minTurno == null) {
-            //    return false;
-            //}
             else if (nombre == "") {
                 alert("Ingrese un Nombre");
                 return false;

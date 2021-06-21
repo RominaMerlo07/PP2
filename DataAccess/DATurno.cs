@@ -235,12 +235,20 @@ namespace DataAccess
 	                                    (SELECT E.DESCRIPCION FROM T_ESPECIALIDADES E, T_PROFESIONALES_DETALLE PD
 		                                    WHERE E.ID_ESPECIALIDADES = PD.ID_ESPECIALIDAD
 		                                    AND PD.ID_PROFESIONALES_DETALLE = T.ID_PROFESIONAL_DETALLE
-		                                    ) as ESPECIALIDAD
+		                                    ) as ESPECIALIDAD,
+	                                    (select p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p
+	                                    where PD.ID_PROFESIONALES_DETALLE = T.ID_PROFESIONAL_DETALLE
+	                                    and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
+	                                    ) as PROFESIONAL,
+	                                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE, ' - Contacto: ', PA.NRO_CONTACTO)
+	                                    FROM T_PACIENTES PA
+	                                    WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE
                                         from T_TURNOS t
                                         where t.ID_PROFESIONAL_DETALLE = @idProfesionalDetalle
                                         and t.FECHA_BAJA is null
                                         and t.ESTADO is null
-                                        AND t.FECHA_TURNO = @diaTurno ";
+                                        AND t.FECHA_TURNO = @diaTurno
+                                            order by hora_desde";
 
                 cmd = new SqlCommand(consulta, con);
 

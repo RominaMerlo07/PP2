@@ -321,7 +321,7 @@ function UpdateDataProfesionales(id) {
             contentType: 'application/json; charset=utf-8',
             error: function (xhr, ajaxOptions, thrownError) {
                 //$(ddl).prop("disabled", true);
-                alert(data.error);
+                //alert(data.error);
                 console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
             },
             success: function (response) {
