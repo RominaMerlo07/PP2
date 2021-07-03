@@ -125,5 +125,19 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public string DarBajaProfesional(Profesional profesional)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DarBajaProfesional(profesional);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+
     }
 }

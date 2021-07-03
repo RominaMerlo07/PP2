@@ -173,6 +173,7 @@
                                     <th>Profesional</th>
                                     <th>DNI</th>
                                     <th>Matricula</th>
+                                    <th>Nacimiento</th>
                                     <th>Contacto</th>
                                     <th>Email</th>
                                     <th>Domicilio</th>

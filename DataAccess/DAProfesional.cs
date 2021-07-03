@@ -374,6 +374,50 @@ namespace DataAccess
 
         }
 
+        public string DarBajaProfesional(Profesional profesional)
+        {
+
+            string result;
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_PROFESIONALES " +
+                                     "SET USUARIO_BAJA = @USUARIO_BAJA, " +
+                                          "FECHA_BAJA = @FECHA_BAJA " +
+                                   "WHERE ID_PROFESIONAL = @ID_PROFESIONAL;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", profesional.IdProfesional);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", profesional.UsuarioBaja);
+                cmd.Parameters.AddWithValue("@FECHA_BAJA", profesional.FechaBaja);
+
+                cmd.ExecuteNonQuery();
+                //int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+                trans.Commit();
+                con.Close();
+
+                result = "OK";
+
+            }
+            catch (Exception e)
+            {
+                result = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+            return result;
+
+        }
 
     }
 }

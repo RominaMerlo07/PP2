@@ -208,5 +208,34 @@ namespace TurneroWeb10
             }                                  
 
         }
+
+        [WebMethod]
+        public static string darBajaProfesional(string idProfesional)
+        {
+
+            Profesional profesional = new Profesional();
+            GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+            try
+            {
+                string mensaje = "OK";
+
+                profesional.IdProfesional = Convert.ToInt32(idProfesional);
+
+                profesional.UsuarioBaja = 1;
+                profesional.FechaBaja = DateTime.Today;
+
+                mensaje = gestorProfesionales.DarBajaProfesional(profesional);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del profesional " + e.Message;
+                return error;
+            }
+
+        }
+        
     }
 }

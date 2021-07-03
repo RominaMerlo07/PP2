@@ -104,10 +104,13 @@ function registrarProfesional(datosProfesional) {
         success: function (data) {
 
             if (data.d != 'OK') {
-                alert('Error al registrar el profesional.')
+                alert('Error al registrar el profesional.');
+                
             } else {
                 $('#btnConfProfesional').show();
                 alert('profesional registrado con Éxito.');
+                $("#tabla_profesionales").DataTable().fnClearTable();
+                sendDataProfesionales();
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -207,19 +210,24 @@ var tabla, data, id;
 
 function addRowProfesionales(data) {
     tabla = $("#tabla_profesionales").DataTable();
+
     for (var i = 0; i < data.length; i++) {
+
+        var fechaNac = data[i].FechaNacimiento;
+        var DateFechaNac = mostrarFecha(fechaNac);
+
         tabla.fnAddData([
             data[i].IdProfesional,
             (data[i].Nombre + ", " + data[i].Apellido),
             data[i].Documento,
             data[i].NroMatricula,
-            //data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
+            DateFechaNac,//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
             data[i].NroContacto,
             data[i].EmailContacto,
             (data[i].Domicilio + ", " + data[i].Localidad),
             '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>',
             '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
-            '<button title= "Inactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>'
+            '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>'
         ])
     }
 
@@ -231,15 +239,18 @@ function sendDataProfesionales() {
             type: "POST",
             url: "RegistrarProfesional.aspx/cargarProfesionales",
             data: {},
-            contentType: 'application/json; charset=utf-8',
+            contentType: 'application/json; charset=utf-8', 
+            async: false,
+            success: function (data) {
+
+                $("#tabla_profesionales").DataTable().fnClearTable();
+                addRowProfesionales(data.d);
+
+            },
             error: function (xhr, ajaxOptions, thrownError) {
                 //$(ddl).prop("disabled", true);
                 //alert(data.error);
                 console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
-            },
-            success: function (data) {
-                //console.log(data);
-                addRowProfesionales(data.d);
             }
         })
 }
@@ -253,12 +264,32 @@ $(document).on('click', '.btn-editar', function (e) {
     console.log('clic en editar');
 });
 
-$(document).on('click', '.btn-eliminar', function (e) {
+$(document).on('click', '#btnInactivar', function (e) {
     e.preventDefault();
-    console.log('clic en eliminar');
+
     var row = $(this).parent().parent()[0];
     var datos = tabla.fnGetData(row);
-    console.log(datos);
+    debugger;
+    var IdProfesional = datos[0];
+    var nomApeProf = datos[1];
+
+    $.ajax({
+        url: "RegistrarProfesional.aspx/darBajaProfesional",
+        data: "{idProfesional: '" + IdProfesional + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            alert("Se dio de baja exitosamente a " + nomApeProf + ".");
+
+            sendDataProfesionales();
+            debugger;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+        }
+    });
 });
 
 $(document).on('click', '.btn-especialidades', function (e) {
@@ -269,11 +300,12 @@ $(document).on('click', '.btn-especialidades', function (e) {
 function fillModalData(data) {
 
     var profesional = data[1].split(', ');
-    var direccion = data[6].split(', ');
+    var direccion = data[7].split(', ');
     var barrio = direccion[0].split(' Barrio: ');
-    var email = data[5].split('@');
+    var email = data[6].split('@');
     var localidad = direccion[1];
     var domicilio = barrio[0];
+    var fechaNacim = data[4];
 
     id = data[0];
 
@@ -282,9 +314,10 @@ function fillModalData(data) {
     $("#txtDocumentoA").val(data[2]);
     $("#txtMatriculaA").val(data[3]);
     $("#txtLocalidadA").val(localidad);
+    $("#dtpFechaNacA").val(fechaNacim);    
     $("#txtBarrioA").val(barrio[1]);
     $("#txtDomicilio").val(domicilio);
-    $("#txtCelularA").val(data[4]);
+    $("#txtCelularA").val(data[5]);
     $("#txtEmail1A").val(email[0]);
     $("#txtEmail2A").val(email[1]);
 
@@ -293,6 +326,9 @@ function fillModalData(data) {
 $("#btnActualizar").click(function (e) {
     e.preventDefault();
     UpdateDataProfesionales(id);
+
+    $("#tabla_profesionales").DataTable().fnClearTable();
+    sendDataProfesionales();
 });
 
 function UpdateDataProfesionales(id) {
