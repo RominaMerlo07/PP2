@@ -5,6 +5,15 @@
         .datepicker.date {
             width: 207px;
         }
+        /*div.dt-buttons {
+            float: left;
+            margin-left:10px;
+        }*/
+        div.dataTables_filter{
+            float: left;
+            margin-left:10px;
+            color: black;
+        }
     </style>
     <section class="content-header">
         <%--<button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>--%>
@@ -19,7 +28,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Sucursal: </span>
@@ -28,7 +37,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Especialidad: </span>
@@ -170,10 +179,10 @@
                                 <h4 class="modal-title text-dark" id="lblListarTurnos"></h4>
                             </div>
                             <div class="card-body">               
-                                <div class="form-row">
+                                <%--<div class="form-row">--%>
                                     <div id="tListarTurnos" style="display: none">
                                         <table style="width:100%" class="table table-striped table-bordered" id="tablaListarTurnos">
-                                            <thead>
+<%--                                            <thead>
                                                 <tr>
                                                     <th>FECHA</th>
                                                     <th>HORA</th>
@@ -181,10 +190,10 @@
                                                     <th>PROFESIONAL</th>
                                                     <th>PACIENTE</th>
                                                 </tr>
-                                            </thead>
+                                            </thead>--%>
                                         </table>
                                     </div>
-                                </div>                                
+                                <%--</div>--%>                                
                             </div>
                         </div>
                     </div>
@@ -224,6 +233,8 @@
                 format: "dd/mm/yyyy",
                 startDate: '+1d'
             });
+
+            swal("Good job!", "You clicked the button!", "warning");
 
             //$('#modalTurno').modal('show');
             $('#modalTurno').modal('hide');
@@ -479,29 +490,39 @@
                 });
             }
             var table = $('#tablaListarTurnos').DataTable({
-                //data: arrayTurnosTabla,
+                data: arrayTurnosTabla,
                 "scrollX": true,
                 "languaje": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
                 },
+                "ordering": true,
                 "bDestroy": true,
-                //columns: [
-                //    { title: "FECHA"},
-                //    { title: "HORA" },
-                //    { title: "ESPECIALIDAD" },
-                //    { title: "PROFESIONAL" },
-                //    { title: "PACIENTE" }
-                //],
-                dom: 'Bfrtip',
-                select: true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "FECHA"},
+                    { title: "HORA" },
+                    { title: "ESPECIALIDAD" },
+                    { title: "PROFESIONAL" },
+                    { title: "PACIENTE" }
+                ],
+                //dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 5,
                 buttons: [
-                    { extend: 'copy', text: "Copiar" },
+                    //{ extend: 'copy', text: "Copiar" },
                     { extend: 'print', text: "Imprimir" },
                     { extend: 'pdf', orientation: 'landscape' },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });
-            table.fnAddData(arrayTurnosTabla)
         }
 
         function mostrarModalTurno(arg)
@@ -665,10 +686,12 @@
                 success: function (data) {
 
                     if (data.d != 'OK') {
-                        alert('Error al registrar turno.')
+                        //alert('Error al registrar turno.')
+                        swal("Hubo un problema", "Error al registrar el turno!", "error");
                     } else {
                         $('#btnConfTurno').show();
-                        alert('Turno registrado con Éxito.')
+                        //alert('Turno registrado con Éxito.')
+                        swal("Hecho", "Turno registrado con éxito!", "success");
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -681,42 +704,42 @@
         function validarDatosTurno() {
 
             if (centro == null) {
-                alert("Ingrese un Centro");
+                swal("Cuidado", "Ingrese un Centro", "warning");
                 return false;
             }
             else if (especialidad == null) {
-                alert("Ingrese una Especialidad");
+                swal("Cuidado", "Ingrese una Especialidad", "warning");
                 return false;
             }
             else if (fechaTurno == "") {
-                alert("Ingrese una Fecha");
+                swal("Cuidado", "Ingrese una Fecha", "warning");
                 return false;
             }
             else if (horaTurno == null) {
                 return false;
             }
             else if (nombre == "") {
-                alert("Ingrese un Nombre");
+                swal("Cuidado", "Ingrese un Nombre", "warning");
                 return false;
             }
             else if (apellido == "") {
-                alert("Ingrese un Apellido");
+                swal("Cuidado", "Ingrese un Apellido", "warning");
                 return false;
             }
             else if (documento == "") {
-                alert("Ingrese un Documento");
+                swal("Cuidado", "Ingrese un Documento", "warning");
                 return false;
             }
             else if (celular == "") {
-                alert("Ingrese un Celular");
+                swal("Cuidado", "Ingrese un Celular", "warning");
                 return false;
             }
             else if (email1 == "") {
-                alert("Ingrese un Email válido");
+                swal("Cuidado", "Ingrese un Email válido", "warning");
                 return false;
             }
             else if (email2 == "") {
-                alert("Ingrese un Email válido");
+                swal("Cuidado", "Ingrese un Email válido", "warning");
                 return false;
             }
             else {
