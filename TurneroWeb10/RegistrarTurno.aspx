@@ -14,21 +14,43 @@
             margin-left:10px;
             color: black;
         }
+         /*.card-body .typeahead { position: fixed }*/
+        /*.wrapper {
+            position: relative;
+          }*/
+
     </style>
     <section class="content-header">
         <%--<button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>--%>
         <h1 style="text-align: left">REGISTRAR TURNO</h1>
     </section>
-    <section class="content" id="sectionEspecialidad">
+    <div class="content" id="sectionEspecialidad">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Profesional: </span>
+                </div>
+                <select class="form-control" id="ddlProfesional">
+                <%--<input type="text" class="typeahead form-control" />--%>
+                    <option value="AL">Alabama</option>
+                    <option value="el">otro</option>
+                    <option value="il">otros</option>
+                    <option value="ol">otroaa</option>
+                    <option value="ul">otrogg</option>
+                    <option value="ei">otroasad</option>
+                </select>
+            </div>
+        </div>
         <div class="row justify-content-md-center">
-            <div class="col-md-8">
+            
+            <div class="col-md">
                 <div class="card text-white bg-light">                    
                     <div class="card-header bg-info">
                         <h4>Datos del Turno</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Sucursal: </span>
@@ -37,7 +59,15 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-6">
+                            <%--<div class="col-sm-4 col-md-4 col-lg-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Profesional: </span>
+                                    </div>
+                                    <input type="text" class="typeahead form-control" id="profesionalesAC" />
+                                </div>
+                            </div>--%>
+                            <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Especialidad: </span>
@@ -50,10 +80,17 @@
                         </div>    
                     </div>
                 </div>
+                <div class="card text-white bg-light" id="ocultoSiempre" style="display:none">                    
+                    <div class="card-header bg-info">
+                        <h4></h4>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-    <section class="content" id="calDisposicionHoraria">           
+    </div>
+    <div class="content" id="calDisposicionHoraria">           
         <div class="row justify-content-md-center">
             <div class="col-md-8">
                 <div class="card" >
@@ -63,8 +100,8 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="content" id="calTurnos">    
+    </div>
+    <div class="content" id="calTurnos">    
         <div class="row justify-content-md-center">
             <div class="col-md-8">
                 <div class="card" > 
@@ -75,7 +112,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <%--MODAL TURNO--%>
     <div class="modal fade" tabindex="-1" role="dialog" id ="modalTurno" >
         <div class="modal-dialog modal-lg" role="document">
@@ -202,7 +239,6 @@
             </div>
         </div>
     </div>
-    
     <script type="text/javascript">
         const setTrad = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         var disponibilidadHoraria;
@@ -234,9 +270,10 @@
                 startDate: '+1d'
             });
 
-            swal("Good job!", "You clicked the button!", "warning");
+            //swal("Good job!", "You clicked the button!", "warning");
 
             //$('#modalTurno').modal('show');
+            //$('#ocultoSiempre').
             $('#modalTurno').modal('hide');
 
             $('#tListarTurnos').show();
@@ -249,6 +286,37 @@
             $("#ddlEspecialidad").prop("disabled", true);
             $("#ddlObraSocial").prop("disabled", true);
             cargarComboCentros('#ddlSucursal'); 
+
+            //profesionalesAC
+
+            $('#ddlProfesional').select2({theme: "bootstrap4"});
+
+            //var $input = $(".typeahead");
+            //$input.typeahead({
+            //    source: [
+            //    {id: "someId1", name: "Display name 1"},
+            //        { id: "someId2", name: "Display name 2" },
+            //        { id: "someId3", name: "Display name 3" },
+            //        { id: "someId4", name: "Display name 4" },
+            //        { id: "someId5", name: "Display name 5" },
+            //        { id: "someId6", name: "Display name 6" },
+            //        { id: "someId7", name: "Display name 7" },
+            //        { id: "someId8", name: "Display name 8" },
+            //        { id: "someId9", name: "Display name 9" },
+            //        { id: "someId10", name: "Display name 10" },
+            //        { id: "someId11", name: "Display name 11" },
+            //    ],
+            //    autoSelect: true
+            //});
+
+            //var $parent = this.$menu.closest('.typeahead');
+            //$menu.css({
+            //    display : 'block',
+            //    top     : $parent.offset().top + $parent.outerHeight(),
+            //    left    : $parent.offset().left,
+            //    position: 'fixed'
+            //});
+
 
             $('#btnRegistrar').click(function () {
 

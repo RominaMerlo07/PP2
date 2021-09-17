@@ -46,8 +46,15 @@
 
     <link rel="stylesheet" type="text/css" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/DataTable/responsive.bootstrap.min.css"%>"/>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/sweetalert.min.js"%>"></script>
+    <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/typeahead/bootstrap3-typeahead.min.js"%>"></script>--%>
 
     <link href="Estilos/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/DataTable/autocomplete.js"%>"></script>--%>
+
+    <link href="Scripts/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="Scripts/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/select2.min.js"%>"></script>
+
     
     <style>
         html, body {

@@ -167,9 +167,9 @@
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
                         <table id="tabla_profesionales" class="table table-bordered table-hover">
-                            <thead>
+                            <%--<thead>
                                 <tr>
-                                    <th>N°</th>
+                                    <th>Numero</th>
                                     <th>Profesional</th>
                                     <th>DNI</th>
                                     <th>Matricula</th>
@@ -180,7 +180,7 @@
                                     <th>Especialidad</th>
                                     <th>Acciones</th>
                                 </tr>
-                            </thead>
+                            </thead>--%>
                             <tbody id="tbl_body_table">
                                 <!-- DATA POR MEDIO DE AJAX-->
                             </tbody>
