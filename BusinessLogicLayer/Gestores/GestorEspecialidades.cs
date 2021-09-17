@@ -43,5 +43,18 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public string RegistrarEspecialidades(Especialidad especialidad)
+        {
+            try
+            {
+                DAEspecialidades DaEspecialidades = new DAEspecialidades();
+                return DaEspecialidades.DaRegistrarEspecialidades(especialidad);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -171,6 +171,56 @@ namespace DataAccess
             }            
         }
 
+        public string DaRegistrarEspecialidades(Especialidad especialidad)
+        {
+            try
+            {
+                string resultado = "OK";
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "INSERT INTO T_ESPECIALIDADES(" +
+                                                "DESCRIPCION, " +
+                                                "USUARIO_ALTA, " +
+                                                "FECHA_ALTA) " +
+                                   "VALUES(" +
+                                                "@DESCRIPCION, " +
+                                                "@USUARIO_ALTA, " +
+                                                "@FECHA_ALTA); SELECT SCOPE_IDENTITY()";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(especialidad.Descripcion))
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", especialidad.Descripcion);
+                else
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", DBNull.Value);
+
+                cmd.Parameters.AddWithValue("@USUARIO_ALTA", especialidad.UsuarioAlta);
+                cmd.Parameters.AddWithValue("@FECHA_ALTA", especialidad.FechaAlta);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                con.Close();
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+        }
+
+
 
     }
 }
