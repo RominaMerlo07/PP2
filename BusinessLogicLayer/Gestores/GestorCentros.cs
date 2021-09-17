@@ -30,5 +30,25 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+
+        public string RegistrarCentros(Centro centro)
+        {
+            try
+            {
+                DACentros DaCentros = new DACentros();
+                return DaCentros.DaRegistrarCentros(centro);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
-}
+
+    
+        
+    }
+
+
