@@ -9,14 +9,26 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorTurno
     {
-        public string RegistrarTurno(Turno turno, Paciente paciente)
+        public string RegistrarTurno(Turno turno, Paciente paciente, bool es_edicion)
         {
             string mensaje = "OK";
 
+            int idPaciente;
+
             try
             {
-                DAPaciente DaPaciente = new DAPaciente();
-                int idPaciente = DaPaciente.DaRegistrarPaciente(paciente);
+                if (es_edicion)
+                {
+                    DAPaciente DaPaciente = new DAPaciente();
+                    paciente.UsuarioMod = 1; //hardcode
+                    paciente.FechaMod = DateTime.Now;
+                    idPaciente = DaPaciente.DaEditarPaciente(paciente);
+                }
+                else
+                {
+                    DAPaciente DaPaciente = new DAPaciente();
+                    idPaciente = DaPaciente.DaRegistrarPaciente(paciente);                    
+                }
 
                 turno.Paciente = paciente;
                 turno.Paciente.IdPaciente = idPaciente;

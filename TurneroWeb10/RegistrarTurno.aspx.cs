@@ -21,7 +21,7 @@ namespace TurneroWeb10
 
         [WebMethod]
         public static string registrarTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, //string p_obra_social, string p_minTurno,
-                                            string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2)
+                                            string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2, string p_profesional, string es_edicion)
         {
 
             Turno turno = new Turno();
@@ -40,6 +40,13 @@ namespace TurneroWeb10
                     
                     centro.IdCentro = Convert.ToInt32(p_centro);
                     turno.Centro = centro;
+                }
+
+                if (!string.IsNullOrEmpty(p_profesional))
+                {
+                    Profesional prof = new Profesional();
+                    prof.IdProfesional = Convert.ToInt32(p_profesional);
+                    turno.Profesional = prof;
                 }
 
                 if (!string.IsNullOrEmpty(p_especialidad))
@@ -107,7 +114,7 @@ namespace TurneroWeb10
                 #endregion
 
 
-                gestorTurno.RegistrarTurno(turno, paciente);
+                gestorTurno.RegistrarTurno(turno, paciente, Convert.ToBoolean(es_edicion));
 
                 return mensaje;
             }
@@ -129,6 +136,24 @@ namespace TurneroWeb10
                 return centros;
                 //string col = JsonConvert.SerializeObject(centros);
                 //return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+        [WebMethod]
+        public static string cargarProfesionales(string idCentro, string idEspecialidad)
+        {
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                List<Profesional> especialidades = new List<Profesional>();//gestorEspecialidades.obtenerEspecialidades();
+                DataTable dt = gestorProfesionales.obtenerProfesionalesDisponibles(idCentro, idEspecialidad);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
             }
             catch (Exception e)
             {
@@ -197,5 +222,40 @@ namespace TurneroWeb10
             }
         }
 
+        [WebMethod]
+        public static string traerDisponibilidadHoraria(string idProfesionalDetalle, string idCentro)
+        {
+            try
+            {
+                GestorProfesionales gProfesionales = new GestorProfesionales();
+                DataTable dt = gProfesionales.TraerDisponibilidadHoraria(idProfesionalDetalle, idCentro);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string buscarPaciente(string dniPaciente)
+        {
+            try
+            {
+                GestorPacientes gPacientes = new GestorPacientes();
+                Paciente paciente = new Paciente();
+                paciente = gPacientes.BuscarPaciente(dniPaciente);
+                string col = JsonConvert.SerializeObject(paciente);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
     }
 }

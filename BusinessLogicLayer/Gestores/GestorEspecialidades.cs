@@ -30,7 +30,7 @@ namespace BusinessLogicLayer.Gestores
             {
                 throw e;
             }
-        }  
+        }
 
         public DataTable obtenerEspecialidadDisponible(string idCentro)
         {
