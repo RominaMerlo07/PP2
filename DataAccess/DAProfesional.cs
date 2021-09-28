@@ -419,6 +419,85 @@ namespace DataAccess
 
         }
 
+        public DataTable obtenerProfesionalesDisponibles(string idCentro, string idEspecialidad)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select pd.ID_PROFESIONAL,  
+	                                       concat(p.APELLIDO, ', ', p.NOMBRE) as NOMBRE
+                                    from t_profesionales_detalle pd, T_PROFESIONALES p
+                                    where p.ID_PROFESIONAL = pd.ID_PROFESIONAL
+                                    and pd.FECHA_BAJA is null
+                                    and pd.ID_CENTRO = @idCentro
+                                    and ID_ESPECIALIDAD = @idEspecialidad
+                                    ; ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!String.IsNullOrEmpty(idCentro))
+                    cmd.Parameters.AddWithValue("@idCentro", idCentro);
+                else
+                    cmd.Parameters.AddWithValue("@idCentro", DBNull.Value);
+
+                if (!String.IsNullOrEmpty(idEspecialidad))
+                    cmd.Parameters.AddWithValue("@idEspecialidad", idCentro);
+                else
+                    cmd.Parameters.AddWithValue("@idEspecialidad", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable TraerDisponibilidadHoraria(string idProfesionalDetalle, string idCentro)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select dh.*
+                                    from t_profesionales_detalle pd, t_disponibilidad_horaria dh
+                                    where pd.id_profesionales_detalle = dh.id_Profesionales_detalle
+                                    and pd.FECHA_BAJA is null
+                                    and dh.FECHA_BAJA is null
+                                    and pd.ID_CENTRO = @idCentro
+                                    and pd.ID_PROFESIONAL = @idProfesional
+
+                                    ; ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!String.IsNullOrEmpty(idCentro))
+                    cmd.Parameters.AddWithValue("@idCentro", idCentro);
+                else
+                    cmd.Parameters.AddWithValue("@idCentro", DBNull.Value);
+                if (!String.IsNullOrEmpty(idProfesionalDetalle))
+                    cmd.Parameters.AddWithValue("@idProfesional", idProfesionalDetalle);
+                else
+                    cmd.Parameters.AddWithValue("@idProfesional", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
 

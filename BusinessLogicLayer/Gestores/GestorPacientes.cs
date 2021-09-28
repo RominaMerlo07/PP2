@@ -20,5 +20,18 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public Paciente BuscarPaciente(string dniPaciente)
+        {
+            try
+            {
+                DAPaciente DaPaciente = new DAPaciente();
+                return DaPaciente.BuscarPaciente(dniPaciente);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

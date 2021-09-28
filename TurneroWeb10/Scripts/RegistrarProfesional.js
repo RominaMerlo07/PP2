@@ -22,15 +22,6 @@ $(document).ready(function () {
         format: "dd/mm/yyyy"
     });
 
-
-    $('#tabla_profesionales').dataTable({
-        "bPaginate": false,
-        "oLanguage": {
-            "sInfo": ""
-        }
-    });
-
-
     $('#btnRegistrar').click(function () {
 
         dni = $('#txtDocumento').val();
@@ -109,7 +100,7 @@ function registrarProfesional(datosProfesional) {
             } else {
                 $('#btnConfProfesional').show();
                 alert('profesional registrado con Éxito.');
-                $("#tabla_profesionales").DataTable().fnClearTable();
+                //$("#tabla_profesionales").DataTable().fnClearTable();
                 sendDataProfesionales();
             }
         },
@@ -208,30 +199,30 @@ function cargarEspecialidades(ddl) {
 
 var tabla, data, id;
 
-function addRowProfesionales(data) {
-    tabla = $("#tabla_profesionales").DataTable();
+//function addRowProfesionales(data) {
+//    tabla = $("#tabla_profesionales").DataTable();
 
-    for (var i = 0; i < data.length; i++) {
+//    for (var i = 0; i < data.length; i++) {
 
-        var fechaNac = data[i].FechaNacimiento;
-        var DateFechaNac = mostrarFecha(fechaNac);
+//        var fechaNac = data[i].FechaNacimiento;
+//        var DateFechaNac = mostrarFecha(fechaNac);
 
-        tabla.fnAddData([
-            data[i].IdProfesional,
-            (data[i].Nombre + ", " + data[i].Apellido),
-            data[i].Documento,
-            data[i].NroMatricula,
-            DateFechaNac,//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
-            data[i].NroContacto,
-            data[i].EmailContacto,
-            (data[i].Domicilio + ", " + data[i].Localidad),
-            '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>',
-            '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
-            '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>'
-        ])
-    }
+//        tabla.fnAddData([
+//            data[i].IdProfesional,
+//            (data[i].Nombre + ", " + data[i].Apellido),
+//            data[i].Documento,
+//            data[i].NroMatricula,
+//            DateFechaNac,//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
+//            data[i].NroContacto,
+//            data[i].EmailContacto,
+//            (data[i].Domicilio + ", " + data[i].Localidad),
+//            '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>',
+//            '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
+//            '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>'
+//        ])
+//    }
 
-}
+//}
 
 function sendDataProfesionales() {
     $.ajax(
@@ -243,8 +234,68 @@ function sendDataProfesionales() {
             async: false,
             success: function (data) {
 
-                $("#tabla_profesionales").DataTable().fnClearTable();
-                addRowProfesionales(data.d);
+                var arrayProfesionales = new Array();
+
+                for (var i = 0; i < data.d.length; i++) {
+
+                    var fechaNac = data.d[i].FechaNacimiento;
+                    var DateFechaNac = mostrarFecha(fechaNac);
+                    var Numero = data.d[i].IdProfesional;
+                    var Profesional = (data.d[i].Nombre + ", " + data.d[i].Apellido);
+                    var DNI = data.d[i].Documento;
+                    var Matricula = data.d[i].NroMatricula;
+                    var Nacimiento = DateFechaNac;//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
+                    var Contacto = data.d[i].NroContacto;
+                    var Email = data.d[i].EmailContacto;
+                    var Domicilio = (data.d[i].Domicilio + ", " + data.d[i].Localidad);
+                    var Especialidad = '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>';
+                    var Acciones = '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
+                        '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>';
+
+                    arrayProfesionales.push([
+                        Numero, Profesional, DNI, Matricula, Nacimiento, Contacto, Email, Domicilio, Especialidad, Acciones
+                    ])
+                }
+
+                var table = $('#tabla_profesionales').DataTable({
+                    data: arrayProfesionales,
+                    "scrollX": true,
+                    "languaje": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                    },
+                    "ordering": true,
+                    "bDestroy": true,
+                    "bAutoWidth": true,
+                    columns: [
+                        { title: "Numero" },
+                        { title: "Profesional" },
+                        { title: "DNI" },
+                        { title: "Matricula" },
+                        { title: "Nacimiento" },
+                        { title: "Contacto" },
+                        { title: "Email" },
+                        { title: "Domicilio" },
+                        { title: "Especialidad" },
+                        { title: "Acciones" }
+                    ],
+                    dom: 'Bfrtip',
+                    dom: '<"top"B>rti<"bottom"fp><"clear">',
+                    "oLanguage": {
+                        "sSearch": "Filtrar:",
+                        "oPaginate": {
+                            "sPrevious": "Anterior",
+                            "sNext": "Siguiente"
+                        }
+                    },
+                    "bPaginate": true,
+                    "pageLength": 5,
+                    buttons: [
+                        //{ extend: 'copy', text: "Copiar" },
+                        { extend: 'print', text: "Imprimir" },
+                        { extend: 'pdf', orientation: 'landscape' },
+                        { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                    ]
+                });
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -327,7 +378,7 @@ $("#btnActualizar").click(function (e) {
     e.preventDefault();
     UpdateDataProfesionales(id);
 
-    $("#tabla_profesionales").DataTable().fnClearTable();
+    //$("#tabla_profesionales").DataTable().fnClearTable();
     sendDataProfesionales();
 });
 

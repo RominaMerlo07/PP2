@@ -8,7 +8,7 @@ namespace Entidades.ent
     {
         private int id_turno;
         private Paciente paciente;
-        private ProfesionalDetalle profesional_detalle;
+        private Profesional profesional;
         private ObraSocial obra_social;
         private Especialidad especialidad;
         private Centro centro;
@@ -36,10 +36,10 @@ namespace Entidades.ent
             set { paciente = value; }
         }
 
-        public ProfesionalDetalle ProfesionalDetalle
+        public Profesional Profesional
         {
-            get { return profesional_detalle; }
-            set { profesional_detalle = value; }
+            get { return profesional; }
+            set { profesional = value; }
         }
 
         public ObraSocial ObraSocial

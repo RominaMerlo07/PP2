@@ -11,7 +11,7 @@ namespace TurneroWeb10
 {
 
 
-    public partial class RegistrarProfesional
+    public partial class RegistrarCentros
     {
     }
 }

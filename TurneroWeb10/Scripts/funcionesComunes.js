@@ -41,3 +41,22 @@ var soloNumeros = function (e) {
 
     return /\d/.test(String.fromCharCode(keynum));
 }
+
+var soloLetras = function (e) {
+
+    key = e.keyCode || e.which;
+    teclado = String.fromCharCode(key);
+    numeros = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    especiales = "8-37-38-46-164";
+    teclado_especial = false;
+
+    for (var i in especiales) {
+        if (key == especiales[i]) {
+            teclado_especial = true; break;
+        }
+    }
+
+    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+        return false;
+    }
+}
