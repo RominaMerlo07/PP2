@@ -189,6 +189,7 @@
     <Content Include="Estilos\FullCalendar\LICENSE.txt" />
     <Content Include="Estilos\img\AdobeColor-Paleta.jpeg" />
     <Content Include="Estilos\img\avatar5.png" />
+    <Content Include="Estilos\img\fondo6.png" />
     <Content Include="Estilos\img\mini-brandguide.jpg" />
     <Content Include="Estilos\img\sparring_logo.jpg" />
     <Content Include="Estilos\js\AdminLTE\app.js" />
@@ -481,6 +482,8 @@
     <Content Include="Estilos\css\morris\morris.css" />
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.css" />
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Estilos\styleLogin.css" />
+    <Content Include="Login.aspx" />
     <Content Include="Principal.aspx" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.js" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.min.js" />
@@ -1103,6 +1106,7 @@
     <Content Include="Scripts\DataTable\Select-1.3.3\js\select.semanticui.min.js" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\RegistrarProfesional.js" />
     <Content Include="Scripts\select2-bootstrap.min.css" />
     <Content Include="Scripts\select2.min.css" />
@@ -1127,6 +1131,13 @@
     </Compile>
     <Compile Include="DisponibilidadHoraria.aspx.designer.cs">
       <DependentUpon>DisponibilidadHoraria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Principal.aspx.cs">
       <DependentUpon>Principal.aspx</DependentUpon>

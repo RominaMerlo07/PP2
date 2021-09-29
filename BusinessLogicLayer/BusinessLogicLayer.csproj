@@ -48,6 +48,7 @@
     <Compile Include="Gestores\GestorProfesionales.cs" />
     <Compile Include="Gestores\GestorDisponibilidadHoraria.cs" />
     <Compile Include="Gestores\GestorTurno.cs" />
+    <Compile Include="Gestores\GestorUsuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

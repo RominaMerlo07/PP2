@@ -50,6 +50,7 @@
     <Compile Include="DAProfesional.cs" />
     <Compile Include="DAProfesionalDetalle.cs" />
     <Compile Include="DATurno.cs" />
+    <Compile Include="DAUsuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlConnectionManager.cs" />
   </ItemGroup>
