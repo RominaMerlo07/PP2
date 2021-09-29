@@ -188,15 +188,15 @@ namespace TurneroWeb10
                 throw e;
             }
         }
-
+        
         [WebMethod]
-        public static string traerTurnos(string idProfesionalDetalle, string dia)
+        public static string traerTurnos(string idProfesional, string dia)
         {
             try
             {
                 DateTime diaTurno = DateTime.Parse(dia);
                 GestorTurno gTurno = new GestorTurno();
-                DataTable dt = gTurno.TraerTurnos(idProfesionalDetalle, diaTurno);
+                DataTable dt = gTurno.TraerTurnos(idProfesional, diaTurno);
                 string col = JsonConvert.SerializeObject(dt);
 
                 return col;
@@ -223,12 +223,12 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string traerDisponibilidadHoraria(string idProfesionalDetalle, string idCentro)
+        public static string traerDisponibilidadHoraria(string idProfesional, string idEspecialidad, string idCentro, string dia = null)
         {
             try
             {
                 GestorProfesionales gProfesionales = new GestorProfesionales();
-                DataTable dt = gProfesionales.TraerDisponibilidadHoraria(idProfesionalDetalle, idCentro);
+                DataTable dt = gProfesionales.TraerDisponibilidadHoraria(idProfesional, idEspecialidad, idCentro, dia);
                 string col = JsonConvert.SerializeObject(dt);
 
                 return col;

@@ -57,12 +57,25 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-        public DataTable TraerTurnos(string idProfesionalDetalle, DateTime dia)
+        public DataTable TraerTurnos(string idProfesional, DateTime dia)
         {
             try
             {
                 DATurno Daturno = new DATurno();
-                return Daturno.TraerTurnos(idProfesionalDetalle, dia);
+                return Daturno.TraerTurnos(idProfesional, dia);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable TraerTurnosDelDia()
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraerTurnosDelDia();
             }
             catch (Exception e)
             {

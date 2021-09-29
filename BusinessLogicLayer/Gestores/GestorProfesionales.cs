@@ -152,12 +152,12 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-        public DataTable TraerDisponibilidadHoraria(string idProfesionalDetalle, string idCentro)
+        public DataTable TraerDisponibilidadHoraria(string idProfesional, string idEspecialidad, string idCentro, string dia = null)
         {
             try
             {
                 DAProfesional DaProfesional = new DAProfesional();
-                return DaProfesional.TraerDisponibilidadHoraria(idProfesionalDetalle, idCentro);
+                return DaProfesional.TraerDisponibilidadHoraria(idProfesional, idEspecialidad, idCentro, dia);
             }
             catch (Exception e)
             {

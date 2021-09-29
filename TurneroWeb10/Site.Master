@@ -54,7 +54,8 @@
     <link href="Scripts/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="Scripts/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/select2.min.js"%>"></script>
-
+    
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/moment.min.js"%>"></script>
     
     <style>
         html, body {
@@ -181,7 +182,19 @@
                         <p>Bienvenido "Usuario"</p>
                     </div>
                 </div>
-                <ul class="sidebar-menu">       
+                <ul class="sidebar-menu"> 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-desktop"></i>
+                            <span>Mesa de Entrada</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="Agenda.aspx">
+                                <i class="fas fa-desktop"></i>
+                                <span>Agenda</span>
+                            </a>
+                        </div>
+                    </li>
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-building"></i>
@@ -208,7 +221,7 @@
                                 <i class="fa fa-calendar"></i>
                                 <span>Registrar Turnos</span>
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="#" visible="false">
                                 <i class="fa fa-calendar"></i>
                                 <span>Consultar Turnos</span>
                             </a>
@@ -282,12 +295,13 @@
             </section>
         </aside>
         <%--ESPACIO PARA CONTENIDO DINAMICO--%>
+        <%--<h1>
+            <asp:Label ID="lblOpcionMenu" runat="server" Text="Panel General"></asp:Label>
+        </h1>--%>
         <aside class="right-side">
-            <section class="content-header">
-                <h1>
-                    <asp:Label ID="lblOpcionMenu" runat="server" Text="Panel General"></asp:Label>
-                </h1>
-            </section>
+            <%--<section class="content-header">
+                
+            </section>--%>
             <section class="content">
                 <form id="Form1" runat="server">
                     <div>

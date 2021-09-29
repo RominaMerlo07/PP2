@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Agenda.aspx" />
     <Content Include="DisponibilidadHoraria.aspx" />
     <Content Include="Estilos\Content\bootstrap-datepicker.min.css" />
     <Content Include="Estilos\Content\bootstrap-grid.css" />
@@ -1101,16 +1102,25 @@
     <Content Include="Scripts\DataTable\Select-1.3.3\js\select.semanticui.js" />
     <Content Include="Scripts\DataTable\Select-1.3.3\js\select.semanticui.min.js" />
     <Content Include="Scripts\funcionesComunes.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\RegistrarProfesional.js" />
     <Content Include="Scripts\select2-bootstrap.min.css" />
     <Content Include="Scripts\select2.min.css" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="UserControls\AgendaTurnos.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agenda.aspx.cs">
+      <DependentUpon>Agenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda.aspx.designer.cs">
+      <DependentUpon>Agenda.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DisponibilidadHoraria.aspx.cs">
       <DependentUpon>DisponibilidadHoraria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1167,6 +1177,13 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AgendaTurnos.ascx.cs">
+      <DependentUpon>AgendaTurnos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\AgendaTurnos.ascx.designer.cs">
+      <DependentUpon>AgendaTurnos.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

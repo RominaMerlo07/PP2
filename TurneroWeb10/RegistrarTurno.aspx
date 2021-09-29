@@ -18,6 +18,9 @@
         /*.wrapper {
             position: relative;
           }*/
+        .fc-event {
+            cursor: pointer !important;
+        }
 
     </style>
     <section class="content-header">
@@ -245,7 +248,7 @@
         var celular;
         var email1;
         var email2;
-        var idProfesionalDetalle;
+        var idProfesional;
         var calendarDisp;
         var calendarTur;
         var infoTurno;        
@@ -333,9 +336,10 @@
 
             $("#ddlProfesional").bind("change", function () {
 
-                idProfesionalDetalle = $('#ddlProfesional').val();
-                dibujaCalendarioDisp();
-                CargarEventosFullCalendar(idProfesionalDetalle, centro);
+                var idEspecialidad = $('#ddlEspecialidad').val();
+                idProfesional = $('#ddlProfesional').val();
+                dibujaCalendarioDisp(idEspecialidad);
+                CargarEventosFullCalendar(idProfesional, idEspecialidad, centro);
             });
                 
 
@@ -361,7 +365,6 @@
                 async: false,
                 success: function (data) {
 
-                    debugger;
                     var paciente = JSON.parse(data.d);
 
                     if (data.d != "null") {
@@ -401,33 +404,43 @@
             }); 
         }
 
-        function CargarEventosFullCalendar(idProfesionalDetalle, centro)
+        function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia="")
         {
-            var eventos = [];
+            var disponibilidadHoraria;
 
             $.ajax({
                 url: "RegistrarTurno.aspx/traerDisponibilidadHoraria",
-                data: "{idProfesionalDetalle: '" + idProfesionalDetalle + "', idCentro: '" + centro + "'}",
+                data: "{idProfesional: '" + idProfesional + "', idEspecialidad: '" + idEspecialidad + "', idCentro: '" + centro + "', dia: '" + dia + "'}",
                 type: "post",
                 contentType: "application/json",
                 async: false,
                 success: function (data) {
 
-                    var disponibilidadHoraria = JSON.parse(data.d);
-
-                    disponibilidadHoraria.forEach(function (e)
-                    {
-
-                        var dateInic = new Date(e.FECHA_INIC);
-                        var dateFin = new Date(e.FECHA_FIN);
-
-                        var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
-
-                        eventos = armarSemanasSinFindesemanas(diasArray);
-                                    
-                    });
+                    disponibilidadHoraria = JSON.parse(data.d);
+                    
                 }
-            });            
+            });
+
+            return disponibilidadHoraria;
+        }
+
+        function CargarEventosFullCalendar(idProfesional, idEspecialidad, centro)
+        {
+            var eventos = [];
+
+            var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
+
+            disponibilidadHoraria.forEach(function (e)
+            {
+
+                var dateInic = new Date(e.FECHA_INIC);
+                var dateFin = new Date(e.FECHA_FIN);
+
+                var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
+
+                eventos = armarSemanasSinFindesemanas(diasArray);
+                                    
+            });
             
             calendarDisp.addEventSource(eventos);
         }
@@ -473,45 +486,80 @@
             return dispHor;
         }
 
-        function obtenerTurnosXDia(idProfesionalDetalle, dia)
+        function obtenerTurnosXDia(idProfesional, dia)
         {
+            var turnosXIdProf;
             
-            var turnos = [];
-
             $.ajax({
                 url: "RegistrarTurno.aspx/traerTurnos",
-                data: "{idProfesionalDetalle: '" + idProfesionalDetalle + "', dia: '"+ dia + "'}",
+                data: "{idProfesional: '" + idProfesional + "', dia: '"+ dia + "'}",
                 type: "post",
                 contentType: "application/json",
                 async: false,
                 success: function (data) {
-
-                    turnosXIdProfDetalle = JSON.parse(data.d);
                     
-                    var turnosXDia = '{"title": "Turno", "start": "", "end":""}';
-            
-                    for (i = 0; i < turnosXIdProfDetalle.length; i++) {
-
-                        var obj = JSON.parse(turnosXDia);
-
-                        var fechaTurno = turnosXIdProfDetalle[i].FECHA_TURNO;
-                        var dateT = new Date(fechaTurno);
-                        var horaTurno = turnosXIdProfDetalle[i].HORA_DESDE;
-                        var splitResult = horaTurno.split(':');
-
-                        var diaFormatedz = getFormattedDateInversed(dateT);
-                        var diaFormated = diaFormatedz + 'T' + splitResult[0] + ':' + splitResult[1] + ':00';
-                        obj.start = diaFormated;
-                        var end = parseInt(splitResult[1]) + 15;
-                        obj.end = diaFormatedz + 'T' + splitResult[0] + ':' + end + ':00';
-                        obj.title = turnosXIdProfDetalle[i].ESPECIALIDAD + ' - Turno Confirmado.';
-                        turnos.push(obj);
-
-                    }           
-                    
+                    turnosXIdProf = JSON.parse(data.d);    
+                 
                 }
             });
-            return turnos;
+            return turnosXIdProf;
+        }
+
+        function obtenerHorarios(idProfesional, idEspecialidad, dia)
+        {
+            
+            var disponibilidad = [];
+            var disponibilidadXDia = '{"title": "Disponible", "start": "", "end":"", "color":"green"}';
+            var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia);
+
+            for (i = 0; i < disponibilidadHoraria.length; i++) {
+
+                var horaInicio = disponibilidadHoraria[i].HORA_DESDE;
+                var horaHasta = disponibilidadHoraria[i].HORA_HASTA;
+                var dispStart = moment(dia + ' ' + horaInicio, 'YYYY-MM-DD HH:mm:ss');
+                var dispEnd = moment(dia + ' ' + horaHasta, 'YYYY-MM-DD HH:mm:ss');
+
+                for (i = 0; !dispStart.isSame(dispEnd); i++)
+                {
+                    var obj = JSON.parse(disponibilidadXDia);
+
+                    obj.start = dispStart.format();
+                    obj.end = dispStart.add(15, 'm').format();
+
+                    disponibilidad.push(obj);
+                }
+            }
+            
+            var turnos = [];
+            var disponibilidad2 = disponibilidad;
+            var turnosXIdProf = obtenerTurnosXDia(idProfesional, dia);
+            var turnosXDia = '{"title": "Turno", "start": "", "end":"", "color":"#007bff"}';//, "color":"blue"  #007bff
+
+            for (i = 0; i < turnosXIdProf.length; i++) {
+
+                for (j = 0; j < disponibilidad.length; j++) {
+
+                    var turno = moment(dia + ' ' + turnosXIdProf[i].HORA_DESDE, 'YYYY-MM-DD HH:mm:ss');
+                    var fecha = disponibilidad[j].start.split('T');
+                    var dispon = moment(fecha[0] + ' ' + fecha[1], 'YYYY-MM-DD HH:mm:ss');
+
+                    if (turno.isSame(dispon)) {
+                        //elimino de disponibilidad2
+                        var obj = JSON.parse(turnosXDia);
+
+                        var turno = moment(dia + ' ' + turnosXIdProf[i].HORA_DESDE, 'YYYY-MM-DD HH:mm:ss');
+                        obj.start = turno.format();
+                        obj.end = turno.add(15, 'm').format();
+
+                        obj.title = turnosXIdProf[i].ESPECIALIDAD + ' - Turno Confirmado.';
+
+                        disponibilidad2[j] = obj;
+                    }
+
+                }
+
+            }   
+            return disponibilidad2;
         }
 
         Date.prototype.addDays = function(days) {
@@ -520,9 +568,9 @@
             return date;
         }
 
-        function dibujaCalendarioTurnos(dia)
+        function dibujaCalendarioTurnos(dia, idEspecialidad)
         {
-            eventosDelDia = obtenerTurnosXDia(idProfesionalDetalle, dia); // se guarda en var turnosXIdProfDetalle
+            eventosDelDia = obtenerHorarios(idProfesional, idEspecialidad, dia);
            
             var calendarTurnos = document.getElementById('calendarioTurnos');
             calendarTur = new FullCalendar.Calendar(calendarTurnos, {
@@ -532,7 +580,7 @@
                     btnListarTurnos: {
                         text: 'Listar Turnos',
                         click: function() {
-                            btnListarTurnoClick(turnosXIdProfDetalle);
+                            btnListarTurnoClick(obtenerTurnosXDia(idProfesional, dia)); 
                         }
                     }
                 },
@@ -541,15 +589,30 @@
                     center: '',
                     right: 'btnListarTurnos'
                 },
-                selectable: true,
-                select: function (arg) {
-                    mostrarModalTurno(arg);                  
+                //selectable: true,
+                //editable: true,
+                //select: function (arg) {
+                //    mostrarModalTurno(arg);                  
+                //},
+
+                eventClick: function (info) {
+                    debugger;
+                    mostrarModalTurno(info)
                 },
+
                 locale: 'ES',
                 slotMinTime: '08:00:00',
                 slotMaxTime: '21:00:00',
                 slotDuration: '00:15:00',
                 slotLabelInterval: '00:15:00',
+                slotLabelFormat: [
+                    {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      omitZeroMinute: false,
+                      meridiem: 'short'
+                    }
+                ],
             });
             $("#calTurnos").show();
             calendarTur.render();
@@ -615,19 +678,25 @@
 
         function mostrarModalTurno(arg)
         {
-            limpiarModalTurno();
-            $('#modalTurno').modal('show');
+            if (arg.event.backgroundColor == 'green') {
+
+                limpiarModalTurno();
+                $('#modalTurno').modal('show');
+
+                var dia = new Date(arg.event.startStr);
+                var hora = String(dia.getHours()).padStart(2, '0') + ':' + String(dia.getMinutes()).padStart(2, '0');
+                var diaTrad = $('#ddlEspecialidad option:selected').text() + ': ' + dia.toLocaleDateString('es-ES', setTrad) + ', ' + hora + '.';
+                $("#lblTituloTurno").text(diaTrad);
+                fechaTurno = getFormattedDateInversed(dia);
+                horaTurno = hora;
+            }
+            else {
+                swal("Cuidado", "Elija un horario Disponible.", "warning");
+            }
            
-            infoTurno = arg;
-            var dia = new Date(arg.startStr);
-            var hora = String(dia.getHours()).padStart(2, '0') + ':' + String(dia.getMinutes()).padStart(2, '0');
-            var diaTrad = $('#ddlEspecialidad option:selected').text() + ': ' + dia.toLocaleDateString('es-ES', setTrad) + ', ' + hora + '.';
-             $("#lblTituloTurno").text(diaTrad);
-            fechaTurno = getFormattedDateInversed(dia);
-            horaTurno = hora;
         }
 
-        function dibujaCalendarioDisp()
+        function dibujaCalendarioDisp(idEspecialidad)
         {
             $("#calDisposicionHoraria").show();     
             var calendarEl = document.getElementById('calendarioDispHor');
@@ -648,7 +717,7 @@
                     
                     $("#calDisposicionHoraria").hide();
                     $("#calTurnos").show;
-                    dibujaCalendarioTurnos(dia);
+                    dibujaCalendarioTurnos(dia, idEspecialidad);
                 }
             });
             calendarDisp.render();

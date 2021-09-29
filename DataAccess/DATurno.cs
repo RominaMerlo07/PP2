@@ -230,7 +230,7 @@ namespace DataAccess
             }
         }
 
-        public DataTable TraerTurnos(string idProfesionalDetalle, DateTime dia)
+        public DataTable TraerTurnos(string idProfesional, DateTime dia)
         {
             try
             {
@@ -249,17 +249,17 @@ namespace DataAccess
                                      FROM T_PACIENTES PA
                                      WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE
                                         from T_TURNOS t
-                                        where t.ID_PROFESIONAL = @idProfesionalDetalle
+                                        where t.ID_PROFESIONAL = @idProfesional
                                         and t.FECHA_BAJA is null
                                         AND t.FECHA_TURNO = @diaTurno
                                             order by hora_desde";
 
                 cmd = new SqlCommand(consulta, con);
 
-                if (!String.IsNullOrEmpty(idProfesionalDetalle))
-                    cmd.Parameters.AddWithValue("@idProfesionalDetalle", idProfesionalDetalle);
+                if (!String.IsNullOrEmpty(idProfesional))
+                    cmd.Parameters.AddWithValue("@idProfesional", idProfesional);
                 else
-                    cmd.Parameters.AddWithValue("@idProfesionalDetalle", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@idProfesional", DBNull.Value);
 
                 cmd.Parameters.AddWithValue("@diaTurno", dia);
 
@@ -274,5 +274,45 @@ namespace DataAccess
                 throw ex;
             }
         }
+
+        public DataTable TraerTurnosDelDia()
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"
+                                    select * ,
+                                    (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
+                                        WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
+                                    ) as ESPECIALIDAD,
+                                    (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
+                                        where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
+                                        and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
+                                    ) as PROFESIONAL,
+                                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE, ' - Contacto: ', PA.NRO_CONTACTO)
+                                     FROM T_PACIENTES PA
+                                     WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE
+                                        from T_TURNOS t
+                                        where t.FECHA_BAJA is null
+                                        AND t.FECHA_TURNO = @diaTurno
+                                            order by hora_desde";
+
+                cmd = new SqlCommand(consulta, con);
+
+                cmd.Parameters.AddWithValue("@diaTurno", DateTime.Today);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }
