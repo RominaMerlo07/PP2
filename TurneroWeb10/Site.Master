@@ -37,7 +37,7 @@
 
     <link rel='stylesheet' href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/FullCalendar/lib/main.css"%>" />    
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/FullCalendar/lib/main.js"%>" ></script>
-    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/funcionesComunes.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/funcionesComunes.js"%>"></script>
 
     <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datatables/jquery.dataTables.js"%>" ></script>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datatables/dataTables.bootstrap.js"%>" ></script>--%>
@@ -168,9 +168,11 @@
     </header>
 
     <!--INICIO MENU-->
+    <form runat="server">
     <div class="wrapper row-offcanvas row-offcanvas-left">
 
         <!--MENU DISEÑO LATERAL-->
+        
         <aside class="left-side sidebar-offcanvas">
             <section class="sidebar">
                 <div class="user-panel">
@@ -179,7 +181,11 @@
                     </div>
                     <div class="pull-left info">
                         <br />
-                        <p>Bienvenido "Usuario"</p>
+                        <p runat="server" id="lblUsuarioMaster">Bienvenido "Usuario"</p>
+                        <p runat="server" id="lblRolMaster"></p>
+                        <p class="h6"><asp:LinkButton id="CerrarSesion" runat="server" style="color: #0000EE" OnClick="cerrarSesion_Click">Cerrar Sesión</asp:LinkButton></p>
+                        <%--<asp:LinkButton runat="server" ID="cerrarSesion2">Cerrar Sesion</asp:LinkButton>--%>
+
                     </div>
                 </div>
                 <ul class="sidebar-menu"> 
@@ -263,6 +269,19 @@
                             </a>
                         </div>
                     </li>
+                    
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-id-card-alt"></i>
+                            <span>Gestión Obras Sociales</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-folder-plus"></i>
+                                <span>Obras Sociales</span>
+                            </a>
+                        </div>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-users"></i>
@@ -279,21 +298,10 @@
                             </a>
                         </div>
                     </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-id-card-alt"></i>
-                            <span>Gestión Obras Sociales</span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-folder-plus"></i>
-                                <span>Obras Sociales</span>
-                            </a>
-                        </div>
-                    </li>
                 </ul>
             </section>
         </aside>
+            
         <%--ESPACIO PARA CONTENIDO DINAMICO--%>
         <%--<h1>
             <asp:Label ID="lblOpcionMenu" runat="server" Text="Panel General"></asp:Label>
@@ -303,14 +311,15 @@
                 
             </section>--%>
             <section class="content">
-                <form id="Form1" runat="server">
+                <%--<form id="Form1" runat="server">--%>
                     <div>
                         <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
                     </div>
-                </form>
+                <%--</form>--%>
             </section>
         </aside>
     </div>
+        </form>
     <!--FIN DISEÑO MENU LATERAL-->
 
 </body>

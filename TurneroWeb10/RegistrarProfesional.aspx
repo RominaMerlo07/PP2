@@ -317,6 +317,6 @@
     </div>
 
 
-    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/RegistrarProfesional.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarProfesional.js"%>"></script>
 
 </asp:Content>

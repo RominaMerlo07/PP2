@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 using System.Web.Services;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
@@ -17,6 +19,7 @@ namespace TurneroWeb10
         {
 
         }
+
         [WebMethod]
         public static string accesoUser(string p_usuario, string p_password)
         {
@@ -26,13 +29,14 @@ namespace TurneroWeb10
 
             try
             {
-               // string mensaje = "OK";
+                // string mensaje = "OK";
 
-  
-                bool result = gestorUsuarios.accederUsuario(p_usuario, p_password);
+                usuario = gestorUsuarios.accederUsuario(p_usuario, p_password);
 
-                if (result)
+                if (!String.IsNullOrEmpty(usuario.NombreUsuario))
                 {
+                    HttpContext.Current.Session["TURNERO.Usuario"] = usuario;
+
                     return "OK";
                 }
                 else {

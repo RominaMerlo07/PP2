@@ -20,17 +20,18 @@ namespace DataAccess
         SqlDataReader dr;
         SqlTransaction trans;
 
-        public bool accederUsuario(string NombreUsuario, string passwordUsuario)
+        public Usuario accederUsuario(string NombreUsuario, string passwordUsuario)
         {
             try
             {
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
 
-                string consulta = "SELECT * FROM T_USUARIOS " +
-                                   "WHERE NOMBRE_USUARIO = @USUARIO " +
-                                   "AND CLAVE_USUARIO = @PASSWORD " +
-                                   "AND FECHA_BAJA IS NULL; ";
+                string consulta = @"SELECT * FROM T_USUARIOS U, T_ROLES R
+                                    WHERE U.ID_ROL = R.ID_ROL
+                                   AND U.NOMBRE_USUARIO = @USUARIO 
+                                   AND U.CLAVE_USUARIO = @PASSWORD 
+                                   AND U.FECHA_BAJA IS NULL; ";
 
                 cmd = new SqlCommand(consulta, con);
 
@@ -60,14 +61,23 @@ namespace DataAccess
                         if (dr["NOMBRE_USUARIO"] != DBNull.Value)
                             usuario.NombreUsuario = Convert.ToString(dr["NOMBRE_USUARIO"]);
                         if (dr["CLAVE_USUARIO"] != DBNull.Value)
-                            usuario.ClaveUsuario = Convert.ToString(dr["CLAVE_USUARIO"]);                        
+                            usuario.ClaveUsuario = Convert.ToString(dr["CLAVE_USUARIO"]);
+
+                        Rol rol = new Rol();
+
+                        if (dr["ID_ROL"] != DBNull.Value)
+                            rol.IdRol = Convert.ToInt32(dr["ID_ROL"]);
+                        if (dr["NOMBRE_ROL"] != DBNull.Value)
+                            rol.NombreRol = Convert.ToString(dr["NOMBRE_ROL"]);
+
+                        usuario.Rol = rol;
                     }
 
-                    return true;
+                    return usuario;
                 }
                 else
                 {
-                    return false;
+                    return usuario;
                 }
 
             }

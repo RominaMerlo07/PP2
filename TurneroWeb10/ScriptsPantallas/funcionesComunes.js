@@ -60,3 +60,20 @@ var soloLetras = function (e) {
         return false;
     }
 }
+
+var traerRol = function ()
+{
+    var rol;
+    $.ajax({
+        url: "Principal.aspx/traerRol",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            rol = data.d;
+        }
+    });
+
+    return rol;
+}

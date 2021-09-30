@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Gestores
     public class GestorUsuarios
     {
 
-        public bool accederUsuario(string NombreUsuario, string passwordUsuario)
+        public Usuario accederUsuario(string NombreUsuario, string passwordUsuario)
         {
             try
             {

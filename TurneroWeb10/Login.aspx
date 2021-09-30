@@ -46,7 +46,7 @@
 
 
     
-    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/Login.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Login.js"%>"></script>
     
 
 </body>

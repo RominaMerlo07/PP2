@@ -483,6 +483,7 @@
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.css" />
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Estilos\styleLogin.css" />
+    <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Principal.aspx" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.js" />
@@ -598,7 +599,7 @@
     <Content Include="RegistrarPaciente.aspx" />
     <Content Include="RegistrarProfesional.aspx" />
     <Content Include="RegistrarTurno.aspx" />
-    <Content Include="Scripts\Centros.js" />
+    <Content Include="ScriptsPantallas\Centros.js" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.min.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap4.css" />
@@ -673,8 +674,6 @@
     <Content Include="Scripts\DataTable\Buttons-1.7.1\js\buttons.semanticui.min.js" />
     <Content Include="Scripts\DataTable\Buttons-1.7.1\js\dataTables.buttons.js" />
     <Content Include="Scripts\DataTable\Buttons-1.7.1\js\dataTables.buttons.min.js" />
-    <Content Include="Scripts\DataTable\Centro.js" />
-    <Content Include="Scripts\DataTable\Centros.js" />
     <Content Include="Scripts\DataTable\ColReorder-1.5.4\css\colReorder.bootstrap.css" />
     <Content Include="Scripts\DataTable\ColReorder-1.5.4\css\colReorder.bootstrap.min.css" />
     <Content Include="Scripts\DataTable\ColReorder-1.5.4\css\colReorder.bootstrap4.css" />
@@ -1104,10 +1103,10 @@
     <Content Include="Scripts\DataTable\Select-1.3.3\js\select.jqueryui.min.js" />
     <Content Include="Scripts\DataTable\Select-1.3.3\js\select.semanticui.js" />
     <Content Include="Scripts\DataTable\Select-1.3.3\js\select.semanticui.min.js" />
-    <Content Include="Scripts\funcionesComunes.js" />
+    <Content Include="ScriptsPantallas\funcionesComunes.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\login.js" />
-    <Content Include="Scripts\RegistrarProfesional.js" />
+    <Content Include="ScriptsPantallas\login.js" />
+    <Content Include="ScriptsPantallas\RegistrarProfesional.js" />
     <Content Include="Scripts\select2-bootstrap.min.css" />
     <Content Include="Scripts\select2.min.css" />
     <Content Include="Scripts\select2.min.js" />
@@ -1131,6 +1130,9 @@
     </Compile>
     <Compile Include="DisponibilidadHoraria.aspx.designer.cs">
       <DependentUpon>DisponibilidadHoraria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -1217,6 +1219,7 @@
     <Content Include="Scripts\DataTable\Buttons-1.7.1\css\common.scss" />
     <Content Include="Scripts\DataTable\Buttons-1.7.1\css\mixins.scss" />
     <Content Include="Scripts\DataTable\pdfmake.min.js.map" />
+    <Content Include="Scripts\moment.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1239,6 +1242,9 @@
       <Project>{7246793b-caa8-45c1-a0b6-e4536804b2df}</Project>
       <Name>Entidades</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

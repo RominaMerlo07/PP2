@@ -275,7 +275,7 @@ namespace DataAccess
             }
         }
 
-        public DataTable TraerTurnosDelDia()
+        public DataTable TraerTurnosDelDia(string idCentro, string dia)
         {
             try
             {
@@ -283,6 +283,8 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
                 string consulta = @"
                                     select * ,
+	                                (select distinct C.NOMBRE_CENTRO from T_CENTROS C
+		                                where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
                                     (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
                                         WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
                                     ) as ESPECIALIDAD,
@@ -295,12 +297,14 @@ namespace DataAccess
                                      WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE
                                         from T_TURNOS t
                                         where t.FECHA_BAJA is null
-                                        AND t.FECHA_TURNO = @diaTurno
+                                        and t.ESTADO NOT IN ('CANCELADO')
+                                        and t.ID_CENTRO = @idCentro
+                                        AND t.FECHA_TURNO = @dia
                                             order by hora_desde";
 
                 cmd = new SqlCommand(consulta, con);
-
-                cmd.Parameters.AddWithValue("@diaTurno", DateTime.Today);
+                cmd.Parameters.AddWithValue("@idCentro", idCentro);
+                cmd.Parameters.AddWithValue("@dia", Convert.ToDateTime(dia));
 
                 dta = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -313,6 +317,63 @@ namespace DataAccess
                 throw ex;
             }
         }
-        
+
+        public DataTable TraeEstados()
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"
+                                    select * from T_TURNOS_ESTADOS 
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ModificarEstadoEnTurno(string idturno, string estado)
+        {
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    update T_TURNOS
+                                    set ESTADO = @estado,
+                                        USUARIO_MOD = 1,
+                                        FECHA_MOD = GETDATE()
+                                    where ID_TURNO = @idTurnos
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@estado", estado);
+                cmd.Parameters.AddWithValue("@idTurnos", idturno);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
