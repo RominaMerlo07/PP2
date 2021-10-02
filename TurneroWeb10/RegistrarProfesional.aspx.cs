@@ -236,6 +236,23 @@ namespace TurneroWeb10
             }
 
         }
-        
+        [WebMethod]
+        public static Profesional buscaProfesional(int idProf)
+        {
+            try
+            {
+                Profesional profesional = new Profesional();
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                profesional = gestorProfesionales.obtenerProfesional(idProf);
+
+                return profesional;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+            
+
     }
 }

@@ -13,8 +13,11 @@ var celular;
 var email1;
 var email2;
 
+var tabla, data, id;
+
 $(document).ready(function () {
 
+    sendDataProfesionales();
     cargarEspecialidades("#ddlEspecialidad");
 
     $('.date').datepicker({
@@ -58,7 +61,7 @@ $(document).ready(function () {
                 p_email1: email1,
                 p_email2: email2
             }
-            console.log(profesional);
+            //console.log(profesional);
             registrarProfesional(profesional);
             limpiarCampos();
         }
@@ -67,7 +70,71 @@ $(document).ready(function () {
         }
 
     });
+
+    $('#btnRegistrarModal').click(function () {
+        $("#modalRegistrar").modal('show');
+    });
+
 });
+
+function actualizar(idBuscar) {
+
+    id = idBuscar;
+
+    $.ajax({
+        type: "POST",
+        url: "RegistrarProfesional.aspx/buscaProfesional",
+        data: "{idProf: '" + idBuscar + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+            
+            $("#modalEditar").modal('show');
+
+            $("#txtNombreA").val(data.d.Nombre);
+            $("#txtApellidoA").val(data.d.Apellido);
+            $("#txtDocumentoA").val(data.d.Documento);
+            $("#txtMatriculaA").val(data.d.NroMatricula);
+            $("#txtLocalidadA").val(data.d.Localidad);
+            $("#dtpFechaNacA").val(mostrarFecha(data.d.FechaNacimiento));
+            var direccion = data.d.Domicilio.split('Barrio:')
+            $("#txtDomicilio").val(direccion[0]);
+            $("#txtBarrioA").val(direccion[1]);
+
+            $("#txtCelularA").val(data.d.NroContacto);
+            var email = data.d.EmailContacto.split('@');
+            $("#txtEmail1A").val(email[0]);
+            $("#txtEmail2A").val(email[1]);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+    })
+}
+
+function inactivar(id, nombre) {
+
+    var IdProfesional = id;
+    var nomApeProf = nombre;
+
+    $.ajax({
+        url: "RegistrarProfesional.aspx/darBajaProfesional",
+        data: "{idProfesional: '" + IdProfesional + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            swal("Hecho", "Se dio de baja exitosamente a " + nomApeProf + ".", "success");
+
+            sendDataProfesionales();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+        }
+    });
+}
 
 function limpiarCampos() {
     $('#txtDocumento').val("");
@@ -95,11 +162,13 @@ function registrarProfesional(datosProfesional) {
         success: function (data) {
 
             if (data.d != 'OK') {
-                alert('Error al registrar el profesional.');
+
+                swal("Hubo un problema", "Error al registrar el profesional!", "error"); //error
                 
             } else {
-                $('#btnConfProfesional').show();
-                alert('profesional registrado con Éxito.');
+                //$('#btnConfProfesional').show();
+                $("#modalRegistrar").modal('hide');
+                swal("Hecho", "Profesional registrado con Éxito!", "success"); //error
                 //$("#tabla_profesionales").DataTable().fnClearTable();
                 sendDataProfesionales();
             }
@@ -114,55 +183,55 @@ function registrarProfesional(datosProfesional) {
 function validarDatosProfesional() {
 
     if (dni == "") {
-        alert("Por favor, ingrese DNI");
+        swal("Cuidado", "Por favor, ingrese DNI.", "warning");
         return false;
     }
     else if (matricula == "") {
-        alert("Por favor, ingrese Matricula");
+        swal("Cuidado", "Por favor, ingrese Matricula.", "warning");
         return false;
     }
     else if (especialidades.length < 1) {
-        alert("Por favor, seleccionar Especialidades");
+        swal("Cuidado", "Por favor, seleccionar Especialidades.", "warning");
         return false;
     }
     else if (nombre == null) {
-        alert("Por favor, ingrese Nombre");
+        swal("Cuidado", "Por favor, ingrese Nombre.", "warning");
         return false;
     }
     else if (apellido == null) {
-        alert("Por favor, ingrese Apellido");
+        swal("Cuidado", "Por favor, ingrese Apellido.", "warning");
         return false;
     }
     else if (fechaNac == "") {
-        alert("Por favor, ingrese Fecha de Nacimiento");
+        swal("Cuidado", "Por favor, ingrese Fecha de Nacimiento.", "warning");
         return false;
     }
     else if (calle == "") {
-        alert("Por favor, ingrese Calle");
+        swal("Cuidado", "Por favor, ingrese Calle.", "warning");
         return false;
     }
     else if (numero == "") {
-        alert("Por favor, ingrese Numero");
+        swal("Cuidado", "Por favor, ingrese Numero.", "warning");
         return false;
     }
     else if (barrio == "") {
-        alert("Por favor, ingrese Barrio");
+        swal("Cuidado", "Por favor, ingrese Barrio.", "warning");
         return false;
     }
     else if (localidad == "") {
-        alert("Por favor, ingrese Localidad");
+        swal("Cuidado", "Por favor, ingrese Localidad.", "warning");
         return false;
     }
     else if (celular == "") {
-        alert("Por favor, ingrese un telefono de contacto");
+        swal("Cuidado", "Por favor, ingrese un telefono de contacto.", "warning");
         return false;
     }
     else if (email1 == "") {
-        alert("Por favor, ingrese un E-mail válido");
+        swal("Cuidado", "Por favor, ingrese un E-mail válido.", "warning");
         return false;
     }
     else if (email2 == "") {
-        alert("Por favor, ingrese un E-mail válido");
+        swal("Cuidado", "Por favor, ingrese un E-mail válido.", "warning");
         return false;
     }
     else {
@@ -197,182 +266,97 @@ function cargarEspecialidades(ddl) {
     });
 }
 
-var tabla, data, id;
-
-//function addRowProfesionales(data) {
-//    tabla = $("#tabla_profesionales").DataTable();
-
-//    for (var i = 0; i < data.length; i++) {
-
-//        var fechaNac = data[i].FechaNacimiento;
-//        var DateFechaNac = mostrarFecha(fechaNac);
-
-//        tabla.fnAddData([
-//            data[i].IdProfesional,
-//            (data[i].Nombre + ", " + data[i].Apellido),
-//            data[i].Documento,
-//            data[i].NroMatricula,
-//            DateFechaNac,//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
-//            data[i].NroContacto,
-//            data[i].EmailContacto,
-//            (data[i].Domicilio + ", " + data[i].Localidad),
-//            '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>',
-//            '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
-//            '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>'
-//        ])
-//    }
-
-//}
-
 function sendDataProfesionales() {
-    $.ajax(
-        {
-            type: "POST",
-            url: "RegistrarProfesional.aspx/cargarProfesionales",
-            data: {},
-            contentType: 'application/json; charset=utf-8', 
-            async: false,
-            success: function (data) {
-
-                var arrayProfesionales = new Array();
-
-                for (var i = 0; i < data.d.length; i++) {
-
-                    var fechaNac = data.d[i].FechaNacimiento;
-                    var DateFechaNac = mostrarFecha(fechaNac);
-                    var Numero = data.d[i].IdProfesional;
-                    var Profesional = (data.d[i].Nombre + ", " + data.d[i].Apellido);
-                    var DNI = data.d[i].Documento;
-                    var Matricula = data.d[i].NroMatricula;
-                    var Nacimiento = DateFechaNac;//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
-                    var Contacto = data.d[i].NroContacto;
-                    var Email = data.d[i].EmailContacto;
-                    var Domicilio = (data.d[i].Domicilio + ", " + data.d[i].Localidad);
-                    var Especialidad = '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>';
-                    var Acciones = '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
-                        '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>';
-
-                    arrayProfesionales.push([
-                        Numero, Profesional, DNI, Matricula, Nacimiento, Contacto, Email, Domicilio, Especialidad, Acciones
-                    ])
-                }
-
-                var table = $('#tabla_profesionales').DataTable({
-                    data: arrayProfesionales,
-                    "scrollX": true,
-                    "languaje": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
-                    },
-                    "ordering": true,
-                    "bDestroy": true,
-                    "bAutoWidth": true,
-                    columns: [
-                        { title: "Numero" },
-                        { title: "Profesional" },
-                        { title: "DNI" },
-                        { title: "Matricula" },
-                        { title: "Nacimiento" },
-                        { title: "Contacto" },
-                        { title: "Email" },
-                        { title: "Domicilio" },
-                        { title: "Especialidad" },
-                        { title: "Acciones" }
-                    ],
-                    dom: 'Bfrtip',
-                    dom: '<"top"B>rti<"bottom"fp><"clear">',
-                    "oLanguage": {
-                        "sSearch": "Filtrar:",
-                        "oPaginate": {
-                            "sPrevious": "Anterior",
-                            "sNext": "Siguiente"
-                        }
-                    },
-                    "bPaginate": true,
-                    "pageLength": 5,
-                    buttons: [
-                        //{ extend: 'copy', text: "Copiar" },
-                        { extend: 'print', text: "Imprimir" },
-                        { extend: 'pdf', orientation: 'landscape' },
-                        { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
-                    ]
-                });
-
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //$(ddl).prop("disabled", true);
-                //alert(data.error);
-                console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
-            }
-        })
-}
-
-
-$(document).on('click', '.btn-editar', function (e) {
-    e.preventDefault();
-    var row = $(this).parent().parent()[0];
-    var data = tabla.fnGetData(row);
-    fillModalData(data);
-    console.log('clic en editar');
-});
-
-$(document).on('click', '#btnInactivar', function (e) {
-    e.preventDefault();
-
-    var row = $(this).parent().parent()[0];
-    var datos = tabla.fnGetData(row);
-    debugger;
-    var IdProfesional = datos[0];
-    var nomApeProf = datos[1];
-
     $.ajax({
-        url: "RegistrarProfesional.aspx/darBajaProfesional",
-        data: "{idProfesional: '" + IdProfesional + "'}",
-        type: "post",
-        contentType: "application/json",
+        type: "POST",
+        url: "RegistrarProfesional.aspx/cargarProfesionales",
+        data: {},
+        contentType: 'application/json; charset=utf-8', 
         async: false,
         success: function (data) {
 
-            alert("Se dio de baja exitosamente a " + nomApeProf + ".");
+            var arrayProfesionales = new Array();
 
-            sendDataProfesionales();
-            debugger;
+            for (var i = 0; i < data.d.length; i++) {
+
+                var fechaNac = data.d[i].FechaNacimiento;
+                var DateFechaNac = mostrarFecha(fechaNac);
+                var Numero = data.d[i].IdProfesional;
+                var Profesional = (data.d[i].Nombre + ", " + data.d[i].Apellido);
+                var DNI = data.d[i].Documento;
+                var Matricula = data.d[i].NroMatricula;
+                var Nacimiento = DateFechaNac;//data[i].fechaNac, ************************* VER COMO DAR FORMATO DD/MM/YYYY ******************************
+                var Contacto = data.d[i].NroContacto;
+                var Email = data.d[i].EmailContacto;
+                var Domicilio = (data.d[i].Domicilio + ", " + data.d[i].Localidad);
+
+                var jsonStr = '["' + DateFechaNac + '", "' + Numero + '", "' + Profesional + '", "' + DNI + '", "' + Matricula + '", "' + Nacimiento + '","' + Contacto + '","' + Email + '","' + Domicilio + '"]';
+                //const array = JSON.parse(jsonStr);
+
+                var Especialidad = '<button title= "Consultar Especialidades" class="btn btn-warning btn-especialidades"><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>';
+                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
+                    '<a href="#" onclick="return inactivar(' + Numero + ",'" + Profesional + "'" +')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
+                
+
+                //' + "'"+ Numero +"'"+ '
+                arrayProfesionales.push([ 
+                    Numero, Profesional, DNI, Matricula, Nacimiento, Contacto, Email, Domicilio, Especialidad, Acciones
+                ])
+            }
+
+            var table = $('#tabla_profesionales').DataTable({
+                data: arrayProfesionales,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "ordering": true,
+                "bDestroy": true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "Numero", visible: false },
+                    { title: "Profesional" },
+                    { title: "DNI" },
+                    { title: "Matricula" },
+                    { title: "Nacimiento" },
+                    { title: "Contacto" },
+                    { title: "Email" },
+                    { title: "Domicilio" },
+                    { title: "Especialidad" },
+                    { title: "Acciones" }
+                ],
+                dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 3,
+                buttons: [
+                    //{ extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            //console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
         }
-    });
-});
-
-$(document).on('click', '.btn-especialidades', function (e) {
-    e.preventDefault();
-    console.log('clic en especialidades');
-});
-
-function fillModalData(data) {
-
-    var profesional = data[1].split(', ');
-    var direccion = data[7].split(', ');
-    var barrio = direccion[0].split(' Barrio: ');
-    var email = data[6].split('@');
-    var localidad = direccion[1];
-    var domicilio = barrio[0];
-    var fechaNacim = data[4];
-
-    id = data[0];
-
-    $("#txtNombreA").val(profesional[0]);
-    $("#txtApellidoA").val(profesional[1]);
-    $("#txtDocumentoA").val(data[2]);
-    $("#txtMatriculaA").val(data[3]);
-    $("#txtLocalidadA").val(localidad);
-    $("#dtpFechaNacA").val(fechaNacim);    
-    $("#txtBarrioA").val(barrio[1]);
-    $("#txtDomicilio").val(domicilio);
-    $("#txtCelularA").val(data[5]);
-    $("#txtEmail1A").val(email[0]);
-    $("#txtEmail2A").val(email[1]);
-
+    })
 }
+
+//$(document).on('click', '.btn-especialidades', function (e) {
+//    e.preventDefault();
+//    console.log('clic en especialidades');
+//});
 
 $("#btnActualizar").click(function (e) {
     e.preventDefault();
@@ -380,6 +364,8 @@ $("#btnActualizar").click(function (e) {
 
     //$("#tabla_profesionales").DataTable().fnClearTable();
     sendDataProfesionales();
+    $("#modalEditar").modal('hide');
+
 });
 
 function UpdateDataProfesionales(id) {
@@ -399,30 +385,29 @@ function UpdateDataProfesionales(id) {
         email2: $("#txtEmail2A").val()
     })
 
-    $.ajax(
-        {
-            type: "POST",
-            url: "RegistrarProfesional.aspx/actualizarProfesional",
-            data: obj,
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            error: function (xhr, ajaxOptions, thrownError) {
-                //$(ddl).prop("disabled", true);
-                //alert(data.error);
-                console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
-            },
-            success: function (response) {
+    $.ajax({
+        type: "POST",
+        url: "RegistrarProfesional.aspx/actualizarProfesional",
+        data: obj,
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr, ajaxOptions, thrownError) {
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        success: function (response) {
 
-                if (response.d != 'OK') {
-                    alert('Error al actualizar los datos del profesional.');
-                }
-                else {
-                    $('#btnActfProfesional').show();
-                    alert('Los datos del profesional se actualizaron con Éxito.');
-                }
-                //console.log(response);
+            if (response.d != 'OK') {
+                swal("Hubo un problema", "Error al actualizar los datos del profesional.", "error");
             }
-        })
+            else {
+                $('#btnActfProfesional').show();
+                swal("Hecho", "Los datos del profesional se actualizaron con Éxito.", "success");
+            }
+            //console.log(response);
+        }
+    })
 }
 
 function soloNumeros(e) {
@@ -465,4 +450,3 @@ function soloLetras(e) {
 }
 
 
-sendDataProfesionales();
