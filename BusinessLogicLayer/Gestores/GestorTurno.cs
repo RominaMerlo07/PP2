@@ -9,14 +9,26 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorTurno
     {
-        public string RegistrarTurno(Turno turno, Paciente paciente)
+        public string RegistrarTurno(Turno turno, Paciente paciente, bool es_edicion)
         {
             string mensaje = "OK";
 
+            int idPaciente;
+
             try
             {
-                DAPaciente DaPaciente = new DAPaciente();
-                int idPaciente = DaPaciente.DaRegistrarPaciente(paciente);
+                if (es_edicion)
+                {
+                    DAPaciente DaPaciente = new DAPaciente();
+                    paciente.UsuarioMod = 1; //hardcode
+                    paciente.FechaMod = DateTime.Now;
+                    idPaciente = DaPaciente.DaEditarPaciente(paciente);
+                }
+                else
+                {
+                    DAPaciente DaPaciente = new DAPaciente();
+                    idPaciente = DaPaciente.DaRegistrarPaciente(paciente);                    
+                }
 
                 turno.Paciente = paciente;
                 turno.Paciente.IdPaciente = idPaciente;
@@ -45,16 +57,54 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-        public DataTable TraerTurnos(string idProfesionalDetalle, DateTime dia)
+        public DataTable TraerTurnos(string idProfesional, DateTime dia)
         {
             try
             {
                 DATurno Daturno = new DATurno();
-                return Daturno.TraerTurnos(idProfesionalDetalle, dia);
+                return Daturno.TraerTurnos(idProfesional, dia);
             }
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+
+        public DataTable TraerTurnosDelDia(string idCentro, string dia)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraerTurnosDelDia(idCentro, dia);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable TraeEstados()
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraeEstados();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void ModificarEstadoEnTurno(string idturno, string estado)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                Daturno.ModificarEstadoEnTurno(idturno, estado);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

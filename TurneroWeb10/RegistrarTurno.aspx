@@ -18,6 +18,9 @@
         /*.wrapper {
             position: relative;
           }*/
+        .fc-event {
+            cursor: pointer !important;
+        }
 
     </style>
     <section class="content-header">
@@ -25,22 +28,7 @@
         <h1 style="text-align: left">REGISTRAR TURNO</h1>
     </section>
     <div class="content" id="sectionEspecialidad">
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Profesional: </span>
-                </div>
-                <select class="form-control" id="ddlProfesional">
-                <%--<input type="text" class="typeahead form-control" />--%>
-                    <option value="AL">Alabama</option>
-                    <option value="el">otro</option>
-                    <option value="il">otros</option>
-                    <option value="ol">otroaa</option>
-                    <option value="ul">otrogg</option>
-                    <option value="ei">otroasad</option>
-                </select>
-            </div>
-        </div>
+        
         <div class="row justify-content-md-center">
             
             <div class="col-md">
@@ -58,15 +46,7 @@
                                     <select class="custom-select form-control" id="ddlSucursal">
                                     </select>
                                 </div>
-                            </div>
-                            <%--<div class="col-sm-4 col-md-4 col-lg-4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Profesional: </span>
-                                    </div>
-                                    <input type="text" class="typeahead form-control" id="profesionalesAC" />
-                                </div>
-                            </div>--%>
+                            </div>                           
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -74,6 +54,16 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Profesional: </span>
+                                    </div>
+                                    <select class="form-control" id="ddlProfesional">
+                                        <%--<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>--%>
                                     </select>
                                 </div>
                             </div>
@@ -136,9 +126,9 @@
                                             </div>
                                             <input type="search" class="form-control rounded" id="txtDocumento" placeholder="Ingrese DNI" aria-label="Search"
                                                 aria-describedby="search-addon" onkeypress="return soloNumeros(event)"/>
-                                            <%--<button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
+                                            <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                                 <i class="fas fa-search"></i>
-                                            </button>--%>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col ">
@@ -146,7 +136,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Celular:</span>
                                             </div>
-                                            <input type="text" style="text-align: left" class="form-control" id="txtCelular" onkeypress="return soloNumeros(event)"/>
+                                            <input type="text" style="text-align: left" class="form-control" id="txtCelular" onkeypress="return soloNumeros(event)" disabled="disabled"/>
                                         </div>
                                     </div>
                                 </div>
@@ -156,8 +146,8 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="">Nombre y Apellido:</span>
                                             </div>
-                                            <input type="text" style="text-align: left" class="form-control" id="txtNombre" />
-                                            <input type="text" style="text-align: left" class="form-control" id="txtApeliido" />
+                                            <input type="text" style="text-align: left" class="form-control" id="txtNombre" onkeypress="return soloLetras(event)" disabled="disabled" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                            <input type="text" style="text-align: left" class="form-control" id="txtApeliido" onkeypress="return soloLetras(event)" disabled="disabled" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                                         </div>
                                     </div>
                                 </div>
@@ -180,11 +170,11 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Email: </span>
                                             </div>
-                                            <input type="text" class="form-control" id="txtEmail1" />
+                                            <input type="text" class="form-control" id="txtEmail1" disabled="disabled"/>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">@</span>
                                             </div>
-                                            <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" />
+                                            <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" disabled="disabled"/>
                                         </div>
                                     </div>
                                 </div>
@@ -244,6 +234,7 @@
         var disponibilidadHoraria;
         var turnosXIdProfDetalle;
         var eventosDelDia;
+        var esEdicionPaciente;
 
         var centro;
         var especialidad;
@@ -257,7 +248,7 @@
         var celular;
         var email1;
         var email2;
-        var idProfesionalDetalle;
+        var idProfesional;
         var calendarDisp;
         var calendarTur;
         var infoTurno;        
@@ -270,13 +261,9 @@
                 startDate: '+1d'
             });
 
-            //swal("Good job!", "You clicked the button!", "warning");
-
-            //$('#modalTurno').modal('show');
-            //$('#ocultoSiempre').
             $('#modalTurno').modal('hide');
-
             $('#tListarTurnos').show();
+            $('#ddlProfesional').select2({theme: "bootstrap4", placeholder: "-- Seleccione --"});
 
             $('#crdDatosPersonales').hide();
             $(".paciente").hide();
@@ -284,39 +271,9 @@
             $("#calTurnos").hide();
             $("#ddlSucursal").prop("disabled", true);
             $("#ddlEspecialidad").prop("disabled", true);
+            $("#ddlProfesional").prop("disabled", true);
             $("#ddlObraSocial").prop("disabled", true);
-            cargarComboCentros('#ddlSucursal'); 
-
-            //profesionalesAC
-
-            $('#ddlProfesional').select2({theme: "bootstrap4"});
-
-            //var $input = $(".typeahead");
-            //$input.typeahead({
-            //    source: [
-            //    {id: "someId1", name: "Display name 1"},
-            //        { id: "someId2", name: "Display name 2" },
-            //        { id: "someId3", name: "Display name 3" },
-            //        { id: "someId4", name: "Display name 4" },
-            //        { id: "someId5", name: "Display name 5" },
-            //        { id: "someId6", name: "Display name 6" },
-            //        { id: "someId7", name: "Display name 7" },
-            //        { id: "someId8", name: "Display name 8" },
-            //        { id: "someId9", name: "Display name 9" },
-            //        { id: "someId10", name: "Display name 10" },
-            //        { id: "someId11", name: "Display name 11" },
-            //    ],
-            //    autoSelect: true
-            //});
-
-            //var $parent = this.$menu.closest('.typeahead');
-            //$menu.css({
-            //    display : 'block',
-            //    top     : $parent.offset().top + $parent.outerHeight(),
-            //    left    : $parent.offset().left,
-            //    position: 'fixed'
-            //});
-
+            cargarComboCentros('#ddlSucursal');          
 
             $('#btnRegistrar').click(function () {
 
@@ -349,7 +306,9 @@
                         p_documento: documento,
                         p_celular: celular,
                         p_email1: email1,
-                        p_email2: email2
+                        p_email2: email2,
+                        p_profesional: $('#ddlProfesional').val(),
+                        es_edicion: esEdicionPaciente
                     }
                     
                     registrarTurno(turnoYPersona);
@@ -363,46 +322,126 @@
 
             $("#ddlSucursal").bind("change", function () {
 
-                var idCentro = $('#ddlSucursal').val();
-                cargarObrasSociales(idCentro, "#ddlObraSocial");
-                cargarEspecialidades(idCentro, "#ddlEspecialidad");
+                centro = $('#ddlSucursal').val();
+                cargarObrasSociales(centro, "#ddlObraSocial");
+                cargarEspecialidades(centro, "#ddlEspecialidad");
             });
 
             $("#ddlEspecialidad").bind("change", function () {
 
-                idProfesionalDetalle = $('#ddlEspecialidad').val();
-                dibujaCalendarioDisp();
-                CargarEventosFullCalendar(idProfesionalDetalle);
+                var idEspecialidad = $('#ddlEspecialidad').val();
+                cargarProfesionales(centro, idEspecialidad, "#ddlProfesional");
+
+            });
+
+            $("#ddlProfesional").bind("change", function () {
+
+                var idEspecialidad = $('#ddlEspecialidad').val();
+                idProfesional = $('#ddlProfesional').val();
+                dibujaCalendarioDisp(idEspecialidad);
+                CargarEventosFullCalendar(idProfesional, idEspecialidad, centro);
             });
                 
 
             $('#btnBuscarDNI').click(function () {
 
                 //trae datos de paciente
-                $(".paciente").show();
-                //limpiarCampos();
+                
+                var dniPaciente = $('#txtDocumento').val();
+                buscarPaciente(dniPaciente);
+
             });
             
 
         });
 
-        function CargarEventosFullCalendar(idProfesionalDetalle)
+        function buscarPaciente(dniPaciente)
+        {
+            $.ajax({
+                url: "RegistrarTurno.aspx/buscarPaciente",
+                data: "{dniPaciente: '" + dniPaciente + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    var paciente = JSON.parse(data.d);
+
+                    if (data.d != "null") {
+                        $('#txtDocumento').prop('disabled', true);
+                        $('#txtCelular').prop('disabled', false);
+                        $('#txtNombre').prop('disabled', false);
+                        $('#txtApeliido').prop('disabled', false);
+                        $('#txtEmail1').prop('disabled', false);
+                        $('#txtEmail2').prop('disabled', false);
+
+                        $('#txtCelular').val(paciente.NroContacto);
+                        $('#txtNombre').val(paciente.Nombre);
+                        $('#txtApeliido').val(paciente.Apellido);
+
+                        var pacienteEmail = paciente.EmailContacto.split('@');
+
+                        $('#txtEmail1').val(pacienteEmail[0]);
+                        $('#txtEmail2').val(pacienteEmail[1]);
+
+                        esEdicionPaciente = true;
+                    }
+                    else {
+
+                        $('#txtDocumento').prop('disabled', false);
+
+                        $('#txtCelular').prop('disabled', false);
+                        $('#txtNombre').prop('disabled', false);
+                        $('#txtApeliido').prop('disabled', false);
+                        $('#txtEmail1').prop('disabled', false);
+                        $('#txtEmail2').prop('disabled', false);
+
+                        esEdicionPaciente = true;
+                    }
+
+
+                }
+            }); 
+        }
+
+        function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia="")
+        {
+            var disponibilidadHoraria;
+
+            $.ajax({
+                url: "RegistrarTurno.aspx/traerDisponibilidadHoraria",
+                data: "{idProfesional: '" + idProfesional + "', idEspecialidad: '" + idEspecialidad + "', idCentro: '" + centro + "', dia: '" + dia + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+
+                    disponibilidadHoraria = JSON.parse(data.d);
+                    
+                }
+            });
+
+            return disponibilidadHoraria;
+        }
+
+        function CargarEventosFullCalendar(idProfesional, idEspecialidad, centro)
         {
             var eventos = [];
+
+            var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
+
             disponibilidadHoraria.forEach(function (e)
             {
-                if (e.ID_PROFESIONALES_DETALLE == idProfesionalDetalle)
-                {
-                    var dateInic = new Date(e.FECHA_INIC);
-                    var dateFin = new Date(e.FECHA_FIN);
 
-                    var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
+                var dateInic = new Date(e.FECHA_INIC);
+                var dateFin = new Date(e.FECHA_FIN);
 
-                    eventos = armarSemanasSinFindesemanas(diasArray);
-                }
+                var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
 
-                
+                eventos = armarSemanasSinFindesemanas(diasArray);
+                                    
             });
+            
             calendarDisp.addEventSource(eventos);
         }
 
@@ -447,45 +486,80 @@
             return dispHor;
         }
 
-        function obtenerTurnosXDia(idProfesionalDetalle, dia)
+        function obtenerTurnosXDia(idProfesional, dia)
         {
+            var turnosXIdProf;
             
-            var turnos = [];
-
             $.ajax({
                 url: "RegistrarTurno.aspx/traerTurnos",
-                data: "{idProfesionalDetalle: '" + idProfesionalDetalle + "', dia: '"+ dia + "'}",
+                data: "{idProfesional: '" + idProfesional + "', dia: '"+ dia + "'}",
                 type: "post",
                 contentType: "application/json",
                 async: false,
                 success: function (data) {
-
-                    turnosXIdProfDetalle = JSON.parse(data.d);
                     
-                    var turnosXDia = '{"title": "Turno", "start": "", "end":""}';
-            
-                    for (i = 0; i < turnosXIdProfDetalle.length; i++) {
-
-                        var obj = JSON.parse(turnosXDia);
-
-                        var fechaTurno = turnosXIdProfDetalle[i].FECHA_TURNO;
-                        var dateT = new Date(fechaTurno);
-                        var horaTurno = turnosXIdProfDetalle[i].HORA_DESDE;
-                        var splitResult = horaTurno.split(':');
-
-                        var diaFormatedz = getFormattedDateInversed(dateT);
-                        var diaFormated = diaFormatedz + 'T' + splitResult[0] + ':' + splitResult[1] + ':00';
-                        obj.start = diaFormated;
-                        var end = parseInt(splitResult[1]) + 15;
-                        obj.end = diaFormatedz + 'T' + splitResult[0] + ':' + end + ':00';
-                        obj.title = turnosXIdProfDetalle[i].ESPECIALIDAD + ' - Turno Confirmado.';
-                        turnos.push(obj);
-
-                    }           
-                    
+                    turnosXIdProf = JSON.parse(data.d);    
+                 
                 }
             });
-            return turnos;
+            return turnosXIdProf;
+        }
+
+        function obtenerHorarios(idProfesional, idEspecialidad, dia)
+        {
+            
+            var disponibilidad = [];
+            var disponibilidadXDia = '{"title": "Disponible", "start": "", "end":"", "color":"green"}';
+            var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia);
+
+            for (i = 0; i < disponibilidadHoraria.length; i++) {
+
+                var horaInicio = disponibilidadHoraria[i].HORA_DESDE;
+                var horaHasta = disponibilidadHoraria[i].HORA_HASTA;
+                var dispStart = moment(dia + ' ' + horaInicio, 'YYYY-MM-DD HH:mm:ss');
+                var dispEnd = moment(dia + ' ' + horaHasta, 'YYYY-MM-DD HH:mm:ss');
+
+                for (i = 0; !dispStart.isSame(dispEnd); i++)
+                {
+                    var obj = JSON.parse(disponibilidadXDia);
+
+                    obj.start = dispStart.format();
+                    obj.end = dispStart.add(15, 'm').format();
+
+                    disponibilidad.push(obj);
+                }
+            }
+            
+            var turnos = [];
+            var disponibilidad2 = disponibilidad;
+            var turnosXIdProf = obtenerTurnosXDia(idProfesional, dia);
+            var turnosXDia = '{"title": "Turno", "start": "", "end":"", "color":"#007bff"}';//, "color":"blue"  #007bff
+
+            for (i = 0; i < turnosXIdProf.length; i++) {
+
+                for (j = 0; j < disponibilidad.length; j++) {
+
+                    var turno = moment(dia + ' ' + turnosXIdProf[i].HORA_DESDE, 'YYYY-MM-DD HH:mm:ss');
+                    var fecha = disponibilidad[j].start.split('T');
+                    var dispon = moment(fecha[0] + ' ' + fecha[1], 'YYYY-MM-DD HH:mm:ss');
+
+                    if (turno.isSame(dispon)) {
+                        //elimino de disponibilidad2
+                        var obj = JSON.parse(turnosXDia);
+
+                        var turno = moment(dia + ' ' + turnosXIdProf[i].HORA_DESDE, 'YYYY-MM-DD HH:mm:ss');
+                        obj.start = turno.format();
+                        obj.end = turno.add(15, 'm').format();
+
+                        obj.title = turnosXIdProf[i].ESPECIALIDAD + ' - Turno Confirmado.';
+
+                        disponibilidad2[j] = obj;
+                    }
+
+                }
+
+            }   
+            return disponibilidad2;
         }
 
         Date.prototype.addDays = function(days) {
@@ -494,9 +568,9 @@
             return date;
         }
 
-        function dibujaCalendarioTurnos(dia)
+        function dibujaCalendarioTurnos(dia, idEspecialidad)
         {
-            eventosDelDia = obtenerTurnosXDia(idProfesionalDetalle, dia); // se guarda en var turnosXIdProfDetalle
+            eventosDelDia = obtenerHorarios(idProfesional, idEspecialidad, dia);
            
             var calendarTurnos = document.getElementById('calendarioTurnos');
             calendarTur = new FullCalendar.Calendar(calendarTurnos, {
@@ -506,7 +580,7 @@
                     btnListarTurnos: {
                         text: 'Listar Turnos',
                         click: function() {
-                            btnListarTurnoClick(turnosXIdProfDetalle);
+                            btnListarTurnoClick(obtenerTurnosXDia(idProfesional, dia)); 
                         }
                     }
                 },
@@ -515,15 +589,30 @@
                     center: '',
                     right: 'btnListarTurnos'
                 },
-                selectable: true,
-                select: function (arg) {
-                    mostrarModalTurno(arg);                  
+                //selectable: true,
+                //editable: true,
+                //select: function (arg) {
+                //    mostrarModalTurno(arg);                  
+                //},
+
+                eventClick: function (info) {
+                    debugger;
+                    mostrarModalTurno(info)
                 },
+
                 locale: 'ES',
                 slotMinTime: '08:00:00',
                 slotMaxTime: '21:00:00',
                 slotDuration: '00:15:00',
                 slotLabelInterval: '00:15:00',
+                slotLabelFormat: [
+                    {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      omitZeroMinute: false,
+                      meridiem: 'short'
+                    }
+                ],
             });
             $("#calTurnos").show();
             calendarTur.render();
@@ -534,12 +623,6 @@
         function btnListarTurnoClick(turnos)
         {
             
-            //<th>FECHA</th> FECHA_TURNO
-            //<th>HORA</th> HORA_DESDE
-            //<th>ESPECIALIDAD</th> ESPECIALIDAD
-            //<th>PROFESIONAL</th> PROFESIONAL
-            //<th>PACIENTE</th> PACIENTE
-            //tablaListarTurnos
             $('#modalListarTurnos').modal('show');
             var arrayTurnosTabla = new Array();
 
@@ -595,18 +678,25 @@
 
         function mostrarModalTurno(arg)
         {
-            $('#modalTurno').modal('show');
+            if (arg.event.backgroundColor == 'green') {
+
+                limpiarModalTurno();
+                $('#modalTurno').modal('show');
+
+                var dia = new Date(arg.event.startStr);
+                var hora = String(dia.getHours()).padStart(2, '0') + ':' + String(dia.getMinutes()).padStart(2, '0');
+                var diaTrad = $('#ddlEspecialidad option:selected').text() + ': ' + dia.toLocaleDateString('es-ES', setTrad) + ', ' + hora + '.';
+                $("#lblTituloTurno").text(diaTrad);
+                fechaTurno = getFormattedDateInversed(dia);
+                horaTurno = hora;
+            }
+            else {
+                swal("Cuidado", "Elija un horario Disponible.", "warning");
+            }
            
-            infoTurno = arg;
-            var dia = new Date(arg.startStr);
-            var hora = String(dia.getHours()).padStart(2, '0') + ':' + String(dia.getMinutes()).padStart(2, '0');
-            var diaTrad = $('#ddlEspecialidad option:selected').text() + ': ' + dia.toLocaleDateString('es-ES', setTrad) + ', ' + hora + '.';
-             $("#lblTituloTurno").text(diaTrad);
-            fechaTurno = getFormattedDateInversed(dia);
-            horaTurno = hora;
         }
 
-        function dibujaCalendarioDisp()
+        function dibujaCalendarioDisp(idEspecialidad)
         {
             $("#calDisposicionHoraria").show();     
             var calendarEl = document.getElementById('calendarioDispHor');
@@ -627,7 +717,7 @@
                     
                     $("#calDisposicionHoraria").hide();
                     $("#calTurnos").show;
-                    dibujaCalendarioTurnos(dia);
+                    dibujaCalendarioTurnos(dia, idEspecialidad);
                 }
             });
             calendarDisp.render();
@@ -645,6 +735,9 @@
             $('#ddlEspecialidad').empty();
             $('#ddlEspecialidad').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
             $('#ddlEspecialidad').prop("disabled", true);
+            $('#ddlProfesional').empty();
+            $('#ddlProfesional').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+            $('#ddlProfesional').prop("disabled", true);
             $("#dtpFechaD").datepicker('clearDates');
             $('#ddlHoraDesde').val('8');
             $('#ddlObraSocial').empty();
@@ -658,8 +751,55 @@
             $('#txtEmail1').val("");
             $('#txtEmail2').val("");
         }
+        function limpiarModalTurno() {
+
+            $('#txtDocumento').prop('disabled', false);
+            $('#txtCelular').prop('disabled', true);
+            $('#txtNombre').prop('disabled', true);
+            $('#txtApeliido').prop('disabled', true);
+            $('#txtEmail1').prop('disabled', true);
+            $('#txtEmail2').prop('disabled', true);
+
+            $('#txtNombre').val("");
+            $('#txtApeliido').val("");
+            $('#txtDocumento').val("");
+            $('#txtCelular').val("");
+            $('#txtEmail1').val("");
+            $('#txtEmail2').val("");
+        }
+        
+        function cargarProfesionales(idCentro, idEspecialidad, ddl) {
+            
+            $.ajax({
+                url: "RegistrarTurno.aspx/cargarProfesionales",
+                data: "{idCentro: '" + idCentro + "', idEspecialidad: '" + idEspecialidad + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+                    var profesionales = JSON.parse(data.d);
+                    if (profesionales != null) {
+
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+
+                        profesionales.forEach(function (e) {
+                            $(ddl).append($("<option></option>").val(e.ID_PROFESIONAL).html(e.NOMBRE));
+                        });
+                        $(ddl).prop("disabled", false);
+                    }
+                    else {
+                        $(ddl).prop("disabled", true);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("disabled", true);
+                }
+            });
+        }
 
         function cargarEspecialidades(idCentro, ddl) {
+            
             $.ajax({
                 url: "RegistrarTurno.aspx/cargarEspecialidades",
                 data: "{idCentro: '" + idCentro + "'}",
@@ -667,14 +807,15 @@
                 contentType: "application/json",
                 async: false,
                 success: function (data) {
-                    disponibilidadHoraria = JSON.parse(data.d);
-                    if (disponibilidadHoraria != null) {
+                    var especialidades = JSON.parse(data.d);
+                    //disponibilidadHoraria = especialidades;
+                    if (especialidades != null) {
 
                         $(ddl).empty();
                         $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
 
-                        disponibilidadHoraria.forEach(function (e) {
-                            $(ddl).append($("<option></option>").val(e.ID_PROFESIONALES_DETALLE).html(e.DESCRIPCION));
+                        especialidades.forEach(function (e) {
+                            $(ddl).append($("<option></option>").val(e.ID_ESPECIALIDADES).html(e.DESCRIPCION));
                         });
                         $(ddl).prop("disabled", false);
                     }
@@ -756,7 +897,8 @@
                     if (data.d != 'OK') {
                         //alert('Error al registrar turno.')
                         swal("Hubo un problema", "Error al registrar el turno!", "error");
-                    } else {
+                    } else
+                    {
                         $('#btnConfTurno').show();
                         //alert('Turno registrado con Éxito.')
                         swal("Hecho", "Turno registrado con éxito!", "success");
@@ -815,5 +957,6 @@
             };
         };
 
+        
     </script>
 </asp:Content>

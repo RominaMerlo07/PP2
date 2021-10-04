@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Entidades.ent;
 using DataAccess;
+using System.Data;
 
 namespace BusinessLogicLayer.Gestores
 {
@@ -116,8 +117,8 @@ namespace BusinessLogicLayer.Gestores
         {
             try
             { 
-            DAProfesional DaProfesional = new DAProfesional();
-            return DaProfesional.ActualizarProfesional(profesional);
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.ActualizarProfesional(profesional);
             }
             catch (Exception e)
             {
@@ -137,7 +138,31 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
-        
 
+        public DataTable obtenerProfesionalesDisponibles(string idCentro, string idEspecialidad)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.obtenerProfesionalesDisponibles(idCentro, idEspecialidad);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable TraerDisponibilidadHoraria(string idProfesional, string idEspecialidad, string idCentro, string dia = null)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.TraerDisponibilidadHoraria(idProfesional, idEspecialidad, idCentro, dia);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
