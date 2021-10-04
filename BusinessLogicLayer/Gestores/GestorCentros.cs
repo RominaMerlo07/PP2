@@ -45,6 +45,20 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public string ActualizarCentros(Centro centro)
+        {
+            try
+            {
+                DACentros DaCentros = new DACentros();
+                return DaCentros.DaActualizarCentro(centro);
+            }
+            catch (Exception e) 
+            {
+                throw e;
+            }      
+        }
+
+
     }
 
     

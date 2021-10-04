@@ -236,7 +236,86 @@ namespace DataAccess
                 throw e;
             }
 
-
         }
+
+        public string DaActualizarCentro(Centro centro) 
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_CENTROS SET NOMBRE_CENTRO = @NOMBRE_CENTRO," +
+                                                        "DOMICILIO_CENTRO = @DOMICILIO_CENTRO," +
+                                                        "LOCALIDAD_CENTRO =@LOCALIDAD_CENTRO," +
+                                                        "EMAIL_CENTRO = @EMAIL_CENTRO, " +
+                                                        "NRO_CONTACTO_1 = @NRO_CONTACTO1, " +
+                                                        "NRO_CONTACTO_2 = @NRO_CONTACTO2, " +
+                                                        "USUARIO_MOD = @USUARIO_MOD, " +
+                                                        "FECHA_MOD = @FECHA_MOD " +
+                                                        "WHERE ID_CENTRO = @ID_CENTRO;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(centro.NombreCentro))
+                    cmd.Parameters.AddWithValue("@NOMBRE_CENTRO", centro.NombreCentro);
+                else
+                    cmd.Parameters.AddWithValue("@NOMBRE_CENTRO", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(centro.DomicilioCentro))
+                    cmd.Parameters.AddWithValue("@DOMICILIO_CENTRO", centro.DomicilioCentro);
+                else
+                    cmd.Parameters.AddWithValue("@DOMICILIO_CENTRO", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(centro.LocalidadCentro))
+                    cmd.Parameters.AddWithValue("@LOCALIDAD_CENTRO", centro.LocalidadCentro);
+                else
+                    cmd.Parameters.AddWithValue("@LOCALIDAD_CENTRO", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(centro.EmailCentro))
+                    cmd.Parameters.AddWithValue("@EMAIL_CENTRO", centro.EmailCentro);
+                else
+                    cmd.Parameters.AddWithValue("@EMAIL_CENTRO", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(centro.NroCentro1))
+                    cmd.Parameters.AddWithValue("@NRO_CONTACTO1", centro.NroCentro1);
+                else
+                    cmd.Parameters.AddWithValue("@NRO_CONTACTO1", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(centro.NroCentro2))
+                    cmd.Parameters.AddWithValue("@NRO_CONTACTO2", centro.NroCentro2);
+                else
+                    cmd.Parameters.AddWithValue("@NRO_CONTACTO2", DBNull.Value);
+
+                cmd.Parameters.AddWithValue("@ID_CENTROS", centro.IdCentro);
+                cmd.Parameters.AddWithValue("@USUARIO_MOD", centro.UsuarioMod);
+                cmd.Parameters.AddWithValue("@FECHA_MOD", centro.FechaMod);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+
+            catch (Exception e)
+            {
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+            return resultado;
+        
+        }
+
     }
 }
