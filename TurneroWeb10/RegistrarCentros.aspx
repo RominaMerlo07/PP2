@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarCentros.aspx.cs" Inherits="TurneroWeb10.RegistrarCentros" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarCentros.aspx.cs" Inherits="TurneroWeb10.RegistrarCentros" ClientIDMode="Static" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -69,6 +69,40 @@
                         </div>
                     </div>
                 </div>
+
+              <!-- Datatable Part -->
+        <div class="row">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Lista de Centros Sparring</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <div class="col-md-12">
+                        <table id="tabla_centros" class="table table-bordered table-hover">
+                            <%--<thead>
+                                <tr>
+                                    <th>Numero</th>
+                                    <th>Profesional</th>
+                                    <th>DNI</th>
+                                    <th>Matricula</th>
+                                    <th>Nacimiento</th>
+                                    <th>Contacto</th>
+                                    <th>Email</th>
+                                    <th>Domicilio</th>
+                                    <th>Especialidad</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>--%>
+                            <tbody id="tbl_body_table">
+                                <!-- DATA POR MEDIO DE AJAX-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Datatable -->
+
            </section>
 
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Centros.js"%>"></script>
