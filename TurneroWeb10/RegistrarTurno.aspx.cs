@@ -21,7 +21,8 @@ namespace TurneroWeb10
 
         [WebMethod]
         public static string registrarTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, //string p_obra_social, string p_minTurno,
-                                            string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2, string p_profesional, string es_edicion)
+                                            string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2, 
+                                            string p_obraSocial, string p_planObra, string p_profesional, string es_edicion)
         {
 
             Turno turno = new Turno();
@@ -62,12 +63,19 @@ namespace TurneroWeb10
                 }
 
                 //Sumar Campo de Obra Social
+                ObraSocial obraSocial = new ObraSocial();
 
-                //if (!string.IsNullOrEmpty(p_obra_social))   
-                //{
-                //    ObraSocial obraSocial = new ObraSocial(p_obra_social, centro.IdCentro);
-                //    turno.ObraSocial = obraSocial;
-                //}                
+                if (!string.IsNullOrEmpty(p_obraSocial))
+                {
+                    obraSocial.IdObraSocial = Convert.ToInt32(p_obraSocial);
+                    turno.ObraSocial = obraSocial;
+                }
+
+                if (!string.IsNullOrEmpty(p_planObra))
+                {
+                    obraSocial.IdPlanObra = Convert.ToInt32(p_planObra);
+                    turno.ObraSocial = obraSocial;
+                }
 
                 if (!string.IsNullOrEmpty(p_horaTurno))
                 {
@@ -208,12 +216,12 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static List<ObraSocial> cargarObrasSociales(string idCentro)
+        public static List<ObraSocial> cargarObrasSociales()
         {
             try
             {
                 GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
-                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerObrasSociales(idCentro);
+                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerObrasSociales();
                 return obrasSociales;
             }
             catch (Exception e)
@@ -257,5 +265,21 @@ namespace TurneroWeb10
             }
         }
         
+        [WebMethod]
+        public static string cargarPlanes(string idObraSocial)
+        {
+            try
+            {
+                GestorObrasSociales gObras = new GestorObrasSociales();
+                DataTable obras = gObras.TraerPlanes(idObraSocial);
+                string col = JsonConvert.SerializeObject(obras);
+
+                return col;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

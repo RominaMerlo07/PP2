@@ -484,7 +484,9 @@
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Estilos\styleLogin.css" />
     <Content Include="Global.asax" />
+    <Content Include="InformeObras.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="ObrasSociales.aspx" />
     <Content Include="Principal.aspx" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.js" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.min.js" />
@@ -1134,12 +1136,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InformeObras.aspx.cs">
+      <DependentUpon>InformeObras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformeObras.aspx.designer.cs">
+      <DependentUpon>InformeObras.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ObrasSociales.aspx.cs">
+      <DependentUpon>ObrasSociales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ObrasSociales.aspx.designer.cs">
+      <DependentUpon>ObrasSociales.aspx</DependentUpon>
     </Compile>
     <Compile Include="Principal.aspx.cs">
       <DependentUpon>Principal.aspx</DependentUpon>

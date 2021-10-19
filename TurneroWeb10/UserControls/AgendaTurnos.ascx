@@ -169,6 +169,9 @@
                     var Centro = e.CENTRO;
                     var fechaArr = moment(e.FECHA_TURNO).format("DD/MM/yyyy");
                     var Fecha = fechaArr;
+                    var Telefono = e.CONTACTO;
+                    var ObraSocial = e.OBRA_SOCIAL;
+                    var Orden = '';
 
                     var comboEstado =
                         '<select class="custom-select form-control" id="' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ')">';
@@ -184,7 +187,7 @@
 
                     comboEstado += '</select>';
 
-                    turnos.push([IdTurno, Centro, Fecha, Hora, Especialidad, Profesional, Paciente, Estado, comboEstado]);
+                    turnos.push([IdTurno, Centro, Fecha, Hora, Especialidad, Profesional, Paciente, Telefono, ObraSocial, Orden, Estado, comboEstado]);
                                     
                 });
 
@@ -206,6 +209,9 @@
                         { title: "Especialidad" },
                         { title: "Profesional" },
                         { title: "Paciente" },
+                        { title: "Telefono" },
+                        { title: "Obra Social" },
+                        { title: "Orden", visible: false },
                         { title: "Estado", visible: false },
                         { title: "Estado"}
                     ],
@@ -219,17 +225,17 @@
                         }
                     },
                     "rowCallback": function (row, data, index) {
-                        if (data[7] == 'OTORGADO') {
+                        if (data[10] == 'OTORGADO') {
                             $('td', row).css('background-color', '#90f5a6');
                             //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
-                            $('td', row).eq(4).css('background-color', '#28a745');
-                            $('td', row).eq(4).css('color', 'rgba(255, 255, 255, .8)');
-                        } else if (data[7] == 'EN ESPERA') {
+                            $('td', row).eq(6).css('background-color', '#28a745');
+                            $('td', row).eq(6).css('color', 'rgba(255, 255, 255, .8)');
+                        } else if (data[10] == 'EN ESPERA') {
                             //#ffc107
                             $('td', row).css('background-color', '#f7d260');
                             //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
-                            $('td', row).eq(4).css('background-color', '#ffc107');
-                            $('td', row).eq(4).css('color', 'rgba(255, 255, 255, .8)');
+                            $('td', row).eq(6).css('background-color', '#ffc107');
+                            $('td', row).eq(6).css('color', 'rgba(255, 255, 255, .8)');
                         }
                     },
                     "bPaginate": true,
@@ -240,13 +246,13 @@
                             extend: 'print',
                             text: "Imprimir",
                             exportOptions: {
-                                columns: [ 1, 2, 3, 4, 5, 6, 7 ]
+                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ]
                             }
                         },
                         {
                             extend: 'pdf', /*orientation: 'landscape'*/
                             exportOptions: {
-                                columns: [ 1, 2, 3, 4, 5, 6, 7 ]
+                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ]
                             }
                         },
                         { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }

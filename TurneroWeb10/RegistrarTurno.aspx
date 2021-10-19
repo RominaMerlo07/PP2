@@ -151,19 +151,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%--<div class="form-row">--%>
-                                    <%--<div class="col ">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Obra Social: </span>
-                                            </div>
-                                            <select class="custom-select form-control" id="ddlObraSocial">
-                                                <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                            </select>
-                                        </div>
-                                    </div>--%>
-                                    
-                                <%--</div>--%>
                                 <div class="form-row">
                                     <div class="col ">
                                         <div class="input-group mb-3">
@@ -175,6 +162,26 @@
                                                 <span class="input-group-text">@</span>
                                             </div>
                                             <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" disabled="disabled"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col ">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Obra Social: </span>
+                                            </div>
+                                            <select class="custom-select form-control" id="ddlObraSocial" disabled="disabled">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col ">
+                                        <div class="input-group mb-3" id="frmPlanObra">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Plan: </span>
+                                            </div>
+                                            <select class="custom-select form-control" id="ddlPlanObra" disabled="disabled">
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -248,6 +255,8 @@
         var celular;
         var email1;
         var email2;
+        var obraSocial;
+        var planObra;
         var idProfesional;
         var calendarDisp;
         var calendarTur;
@@ -273,7 +282,8 @@
             $("#ddlEspecialidad").prop("disabled", true);
             $("#ddlProfesional").prop("disabled", true);
             $("#ddlObraSocial").prop("disabled", true);
-            cargarComboCentros('#ddlSucursal');          
+            cargarComboCentros('#ddlSucursal');   
+            cargarObrasSociales("#ddlObraSocial");
 
             $('#btnRegistrar').click(function () {
 
@@ -289,6 +299,8 @@
                 celular = $('#txtCelular').val();
                 email1 = $('#txtEmail1').val();
                 email2 = $('#txtEmail2').val();
+                obraSocial = $('#ddlObraSocial').val();
+                planObra = $('#ddlPlanObra').val();
 
                 var validacion = validarDatosTurno();
 
@@ -307,6 +319,8 @@
                         p_celular: celular,
                         p_email1: email1,
                         p_email2: email2,
+                        p_obraSocial: obraSocial,
+                        p_planObra: planObra,
                         p_profesional: $('#ddlProfesional').val(),
                         es_edicion: esEdicionPaciente
                     }
@@ -323,7 +337,6 @@
             $("#ddlSucursal").bind("change", function () {
 
                 centro = $('#ddlSucursal').val();
-                cargarObrasSociales(centro, "#ddlObraSocial");
                 cargarEspecialidades(centro, "#ddlEspecialidad");
             });
 
@@ -351,7 +364,13 @@
                 buscarPaciente(dniPaciente);
 
             });
-            
+
+            $("#ddlObraSocial").bind("change", function () {
+
+                var idObraSocial = $('#ddlObraSocial').val();
+                cargarComboPlanes(idObraSocial, "#ddlPlanObra");
+                //$('#ddlPlanObra').prop('disabled', false);   
+            });
 
         });
 
@@ -374,6 +393,8 @@
                         $('#txtApeliido').prop('disabled', false);
                         $('#txtEmail1').prop('disabled', false);
                         $('#txtEmail2').prop('disabled', false);
+                        $('#ddlObraSocial').prop('disabled', false);
+                        $('#ddlPlanObra').prop('disabled', true);
 
                         $('#txtCelular').val(paciente.NroContacto);
                         $('#txtNombre').val(paciente.Nombre);
@@ -395,6 +416,8 @@
                         $('#txtApeliido').prop('disabled', false);
                         $('#txtEmail1').prop('disabled', false);
                         $('#txtEmail2').prop('disabled', false);
+                        $('#ddlObraSocial').prop('disabled', false);
+                        $('#ddlPlanObra').prop('disabled', true);
 
                         esEdicionPaciente = true;
                     }
@@ -596,7 +619,6 @@
                 //},
 
                 eventClick: function (info) {
-                    debugger;
                     mostrarModalTurno(info)
                 },
 
@@ -740,8 +762,8 @@
             $('#ddlProfesional').prop("disabled", true);
             $("#dtpFechaD").datepicker('clearDates');
             $('#ddlHoraDesde').val('8');
-            $('#ddlObraSocial').empty();
-            $('#ddlObraSocial').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+            $('#ddlObraSocial').val(0);
+            //$('#ddlObraSocial').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
             $('#ddlObraSocial').prop("disabled", true);
             $('#ddlMinDesde').val('00');
             $('#txtNombre').val("");
@@ -759,13 +781,17 @@
             $('#txtApeliido').prop('disabled', true);
             $('#txtEmail1').prop('disabled', true);
             $('#txtEmail2').prop('disabled', true);
-
+            $('#ddlObraSocial').prop('disabled', true);
+            $('#ddlPlanObra').prop('disabled', true);
+           
             $('#txtNombre').val("");
             $('#txtApeliido').val("");
             $('#txtDocumento').val("");
             $('#txtCelular').val("");
             $('#txtEmail1').val("");
             $('#txtEmail2').val("");
+            $('#ddlObraSocial').val(0);
+            $('#ddlPlanObra').empty();
         }
         
         function cargarProfesionales(idCentro, idEspecialidad, ddl) {
@@ -829,11 +855,11 @@
             });
         }
 
-        function cargarObrasSociales(idCentro, ddl) {
+        function cargarObrasSociales(ddl) {
 
             $.ajax({
                 url: "RegistrarTurno.aspx/cargarObrasSociales",
-                data: "{idCentro: '" + idCentro + "'}",
+                //data: "{idCentro: '" + idCentro + "'}",
                 type: "post",
                 contentType: "application/json",
                 async: false,
@@ -880,6 +906,39 @@
                 error: function (xhr, ajaxOptions, thrownError) {
                     $(ddl).prop("disabled", true);
                     alert(data.error);
+                }
+            });
+        }
+
+        function cargarComboPlanes(idObraSocial, ddl) {
+            
+            $.ajax({
+                url: "RegistrarTurno.aspx/cargarPlanes",
+                data: "{idObraSocial: '" + idObraSocial + "'}",
+                type: "post",
+                contentType: "application/json",
+                async: false,
+                success: function (data) {
+                    var planes = JSON.parse(data.d);
+                    //disponibilidadHoraria = especialidades;
+
+                    if (planes.length > 0) {
+
+                        $(ddl).empty();
+                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+
+                        planes.forEach(function (e) {
+                            $(ddl).append($("<option></option>").val(e.ID_PLANES).html(e.DESCRIPCION));
+                        });
+                        $("#ddlPlanObra").prop("disabled", false);
+                        
+                    }
+                    else {
+                        $("#ddlPlanObra").prop("disabled", true);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $(ddl).prop("visible", true);
                 }
             });
         }
@@ -950,6 +1009,10 @@
             }
             else if (email2 == "") {
                 swal("Cuidado", "Ingrese un Email válido", "warning");
+                return false;
+            }
+            else if (obraSocial == "") {
+                swal("Cuidado", "Ingrese una Obra Social", "warning");
                 return false;
             }
             else {

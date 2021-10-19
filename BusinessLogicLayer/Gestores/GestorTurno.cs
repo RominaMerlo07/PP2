@@ -95,12 +95,26 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
         public void ModificarEstadoEnTurno(string idturno, string estado)
         {
             try
             {
                 DATurno Daturno = new DATurno();
                 Daturno.ModificarEstadoEnTurno(idturno, estado);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable TraerTurnosInformes(string idSucursal, string idObraSocial, string fechaDesde, string fechaHasta)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraerTurnosInformes(idSucursal, idObraSocial, fechaDesde, fechaHasta);
             }
             catch (Exception ex)
             {

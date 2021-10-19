@@ -33,7 +33,7 @@ namespace DataAccess
                 string consulta = "INSERT INTO T_TURNOS (" +
                                         "ID_PACIENTE, " +
                                         "ID_PROFESIONAL, " +
-                                        //"ID_OBRA_SOCIAL, " +
+                                        "ID_OBRA_SOCIAL, " +
                                         "ID_ESPECIALIDAD, " +
                                         "ID_CENTRO, " +
                                         "FECHA_TURNO, " +
@@ -42,11 +42,12 @@ namespace DataAccess
                                         "ESTADO, " +
                                         //"OBSERVACIONES, " +
                                         "USUARIO_ALTA, " +
-                                        "FECHA_ALTA " +
+                                        "FECHA_ALTA, " +
+                                        "ID_PLAN_OBRA " +
                                     ") VALUES ( " +
                                         "@ID_PACIENTE, " +
                                         "@ID_PROFESIONAL, " +
-                                        //"@ID_OBRA_SOCIAL, " +
+                                        "@ID_OBRA_SOCIAL, " +
                                         "@ID_ESPECIALIDAD, " +
                                         "@ID_CENTRO, " +
                                         "@FECHA_TURNO, " +
@@ -55,13 +56,14 @@ namespace DataAccess
                                         "@ESTADO, " +
                                         //"@OBSERVACIONES, " +
                                         "@USUARIO_ALTA, " +
-                                        "@FECHA_ALTA " +
+                                        "@FECHA_ALTA, " +
+                                        "@ID_PLAN_OBRA " +
                                         ")";
 
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Transaction = trans;
-
+                
                 if (turno.Paciente.IdPaciente != 0)
                     cmd.Parameters.AddWithValue("@ID_PACIENTE", turno.Paciente.IdPaciente);
                 else
@@ -81,10 +83,20 @@ namespace DataAccess
                     cmd.Parameters.AddWithValue("@ID_CENTRO", turno.Centro.IdCentro);
                 else
                     cmd.Parameters.AddWithValue("@ID_CENTRO", DBNull.Value);
+                 
+                if (turno.ObraSocial.IdObraSocial != 0)
+                    cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", turno.ObraSocial.IdObraSocial);
+                else
+                    cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", DBNull.Value);
+
+                if (turno.ObraSocial.IdPlanObra != 0)
+                    cmd.Parameters.AddWithValue("@ID_PLAN_OBRA", turno.ObraSocial.IdPlanObra);
+                else
+                    cmd.Parameters.AddWithValue("@ID_PLAN_OBRA", DBNull.Value);
 
                 cmd.Parameters.AddWithValue("@FECHA_TURNO", turno.FechaTurno);
                 cmd.Parameters.AddWithValue("@HORA_DESDE", turno.HoraDesde);
-                cmd.Parameters.AddWithValue("@ESTADO", "CONFIRMADO");
+                cmd.Parameters.AddWithValue("@ESTADO", "OTORGADO");
                 cmd.Parameters.AddWithValue("@USUARIO_ALTA", turno.UsuarioAlta);
                 cmd.Parameters.AddWithValue("@FECHA_ALTA", turno.FechaAlta);
 
@@ -292,9 +304,17 @@ namespace DataAccess
                                         where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
                                         and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
                                     ) as PROFESIONAL,
-                                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE, ' - Contacto: ', PA.NRO_CONTACTO)
+                                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
                                      FROM T_PACIENTES PA
-                                     WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE
+                                     WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
+                                    (SELECT PA.NRO_CONTACTO
+                                     FROM T_PACIENTES PA
+                                     WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as CONTACTO,
+                                    (SELECT concat(os.DESCRIPCION, ' (', op.DESCRIPCION ,')') 
+                                    FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
+                                    WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                    and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                    and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL
                                         from T_TURNOS t
                                         where t.FECHA_BAJA is null
                                         and t.ESTADO NOT IN ('CANCELADO')
@@ -369,6 +389,87 @@ namespace DataAccess
                 cmd.ExecuteNonQuery();
                 trans.Commit();
                 con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable TraerTurnosInformes(string idSucursal, string idObraSocial, string fechaDesde, string fechaHasta)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"
+                                    select 
+	                                    (select distinct C.NOMBRE_CENTRO from T_CENTROS C
+		                                    where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
+                                        (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
+                                            WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
+                                        ) as ESPECIALIDAD,
+                                        (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
+                                            where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
+                                            and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
+                                        ) as PROFESIONAL,
+                                        (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
+                                            FROM T_PACIENTES PA
+                                            WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
+                                        (SELECT PA.DOCUMENTO
+                                            FROM T_PACIENTES PA
+                                            WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as DOCUMENTO,
+                                        (SELECT os.DESCRIPCION 
+                                        FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
+                                        WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                        and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                        and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL,
+	                                    (SELECT op.DESCRIPCION 
+                                        FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
+                                        WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                        and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                        and op.ID_PLANES = t.ID_PLAN_OBRA) as DESCRIPCION,
+	                                    FECHA_TURNO,
+	                                    HORA_DESDE,
+	                                    ESTADO,
+	                                    NRO_ORDEN
+                                            from T_TURNOS t
+                                            where t.FECHA_BAJA is null
+		                                    AND ESTADO = 'ATENDIDO'
+		                                    AND T.ID_OBRA_SOCIAL <> 1
+ 
+                                        ";
+
+                //idSucursal, idObraSocial, fechaDesde, fechaHasta
+                cmd = new SqlCommand();
+
+                if (!string.IsNullOrEmpty(idSucursal))
+                {
+                    cmd.Parameters.AddWithValue("@ID_CENTRO", idSucursal);
+                    consulta += " AND T.ID_CENTRO = @ID_CENTRO ";
+                }
+
+                if (!string.IsNullOrEmpty(idObraSocial))
+                {
+                    cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", idObraSocial);
+                    consulta += " AND T.ID_OBRA_SOCIAL = @ID_OBRA_SOCIAL ";
+                }
+
+                if (!string.IsNullOrEmpty(fechaDesde) && !string.IsNullOrEmpty(fechaHasta))
+                {
+                    cmd.Parameters.AddWithValue("@FECHA_DESDE", fechaDesde);
+                    cmd.Parameters.AddWithValue("@FECHA_HASTA", fechaHasta);
+
+                    consulta += " AND FECHA_TURNO BETWEEN @FECHA_DESDE AND @FECHA_HASTA ";
+                }
+                cmd.CommandText = consulta;
+                cmd.Connection = con;
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
             }
             catch (Exception ex)
             {

@@ -31,7 +31,7 @@
 
     <script src="https://kit.fontawesome.com/5da641aba0.js" crossorigin="anonymous"></script>
 
-    <link rel="shortcut icon" type="imagen/X-UA-Compatible" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/img/sparring_logo.jpg"%>" />
+    <%--<link rel="shortcut icon" type="imagen/X-UA-Compatible" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/img/sparring_logo.jpg"%>" />--%>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200&display=swap" rel="stylesheet" />
 
@@ -276,9 +276,13 @@
                             <span>Gestión Obras Sociales</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="ObrasSociales.aspx">
                                 <i class="fas fa-folder-plus"></i>
                                 <span>Obras Sociales</span>
+                            </a>
+                            <a class="dropdown-item" href="InformeObras.aspx">
+                                <i class="far fa-clipboard"></i>
+                                <span>Informes</span>
                             </a>
                         </div>
                     </li>

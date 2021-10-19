@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Entidades.ent
 {
-    public class ObraSocial
+    public class ObrasPlanes
     {
-        private int id_obra_social;
+        private int id_planes;
+        private string cod_plan;
         private string descripcion;
-        private int id_plan_obra;
-        //private Centro centro;
+        private int id_obra_social;
         private int usuario_alta;
         private DateTime fecha_alta;
         private int usuario_mod;
@@ -17,10 +19,16 @@ namespace Entidades.ent
         private int usuario_baja;
         private DateTime fecha_baja;
 
-        public int IdObraSocial
+        public int IdPlanes
         {
-            get { return id_obra_social; }
-            set { id_obra_social = value; }
+            get { return id_planes; }
+            set { id_planes = value; }
+        }
+
+        public string CodPlan
+        {
+            get { return cod_plan; }
+            set { cod_plan = value; }
         }
 
         public string Descripcion
@@ -29,17 +37,11 @@ namespace Entidades.ent
             set { descripcion = value; }
         }
 
-        public int IdPlanObra
+        public int IdObraSocial
         {
-            get { return id_plan_obra; }
-            set { id_plan_obra = value; }
+            get { return id_obra_social; }
+            set { id_obra_social = value; }
         }
-
-        //public Centro Centro
-        //{
-        //    get { return centro; }
-        //    set { centro = value; }
-        //}
 
         public int UsuarioAlta
         {
@@ -76,7 +78,5 @@ namespace Entidades.ent
             get { return fecha_baja; }
             set { fecha_baja = value; }
         }
-
-        public ObraSocial() { }
     }
 }
