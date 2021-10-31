@@ -121,5 +121,18 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+        public void ModificarNroOrden(string idturno, string autorizacion)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                Daturno.ModificarNroOrden(idturno, autorizacion);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

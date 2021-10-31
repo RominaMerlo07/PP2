@@ -22,7 +22,7 @@ namespace TurneroWeb10
         [WebMethod]
         public static string registrarTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, //string p_obra_social, string p_minTurno,
                                             string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2, 
-                                            string p_obraSocial, string p_planObra, string p_profesional, string es_edicion)
+                                            string p_obraSocial, string p_planObra, string p_nroAfiliado, string p_profesional, string es_edicion)
         {
 
             Turno turno = new Turno();
@@ -76,6 +76,12 @@ namespace TurneroWeb10
                     obraSocial.IdPlanObra = Convert.ToInt32(p_planObra);
                     turno.ObraSocial = obraSocial;
                 }
+
+                if (!string.IsNullOrEmpty(p_nroAfiliado))
+                {
+                    turno.NroAfiliado = p_nroAfiliado;
+                }
+                
 
                 if (!string.IsNullOrEmpty(p_horaTurno))
                 {

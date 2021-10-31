@@ -185,6 +185,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="col ">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nro. Afiliado:</span>
+                                            </div>
+                                            <input type="text" style="text-align: left" class="form-control" id="txtNroAfiliado" onkeypress="return soloNumeros(event)" disabled="disabled"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,6 +267,7 @@
         var email2;
         var obraSocial;
         var planObra;
+        var nroAfiliado;
         var idProfesional;
         var calendarDisp;
         var calendarTur;
@@ -301,6 +312,7 @@
                 email2 = $('#txtEmail2').val();
                 obraSocial = $('#ddlObraSocial').val();
                 planObra = $('#ddlPlanObra').val();
+                nroAfiliado = $('#txtNroAfiliado').val();
 
                 var validacion = validarDatosTurno();
 
@@ -321,6 +333,7 @@
                         p_email2: email2,
                         p_obraSocial: obraSocial,
                         p_planObra: planObra,
+                        p_nroAfiliado: nroAfiliado,
                         p_profesional: $('#ddlProfesional').val(),
                         es_edicion: esEdicionPaciente
                     }
@@ -395,6 +408,7 @@
                         $('#txtEmail2').prop('disabled', false);
                         $('#ddlObraSocial').prop('disabled', false);
                         $('#ddlPlanObra').prop('disabled', true);
+                        $('#txtNroAfiliado').prop('disabled', true);                       
 
                         $('#txtCelular').val(paciente.NroContacto);
                         $('#txtNombre').val(paciente.Nombre);
@@ -418,7 +432,8 @@
                         $('#txtEmail2').prop('disabled', false);
                         $('#ddlObraSocial').prop('disabled', false);
                         $('#ddlPlanObra').prop('disabled', true);
-
+                        $('#txtNroAfiliado').prop('disabled', true);
+                        
                         esEdicionPaciente = true;
                     }
 
@@ -783,6 +798,8 @@
             $('#txtEmail2').prop('disabled', true);
             $('#ddlObraSocial').prop('disabled', true);
             $('#ddlPlanObra').prop('disabled', true);
+            $('#txtNroAfiliado').prop('disabled', true);
+
            
             $('#txtNombre').val("");
             $('#txtApeliido').val("");
@@ -792,6 +809,8 @@
             $('#txtEmail2').val("");
             $('#ddlObraSocial').val(0);
             $('#ddlPlanObra').empty();
+            $('#txtNroAfiliado').val("");;
+
         }
         
         function cargarProfesionales(idCentro, idEspecialidad, ddl) {
@@ -931,10 +950,13 @@
                             $(ddl).append($("<option></option>").val(e.ID_PLANES).html(e.DESCRIPCION));
                         });
                         $("#ddlPlanObra").prop("disabled", false);
+                        $('#txtNroAfiliado').prop('disabled', false);
                         
                     }
                     else {
                         $("#ddlPlanObra").prop("disabled", true);
+                        $('#txtNroAfiliado').prop('disabled', true);
+
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

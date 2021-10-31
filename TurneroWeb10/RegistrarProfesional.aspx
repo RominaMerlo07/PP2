@@ -8,7 +8,7 @@
     </style>--%>
     <section class="content-header">
         <%-- <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Profesionales</button>--%>
-        <h1 style="text-align: center">REGISTRO DE PROFESIONALES</h1>
+        <h1 style="text-align: left">REGISTRO DE PROFESIONALES</h1>
     </section>
     <section class="content">
         <div class="row">

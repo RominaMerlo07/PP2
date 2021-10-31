@@ -43,7 +43,8 @@ namespace DataAccess
                                         //"OBSERVACIONES, " +
                                         "USUARIO_ALTA, " +
                                         "FECHA_ALTA, " +
-                                        "ID_PLAN_OBRA " +
+                                        "ID_PLAN_OBRA, " +
+                                        "NRO_AFILIADO " +
                                     ") VALUES ( " +
                                         "@ID_PACIENTE, " +
                                         "@ID_PROFESIONAL, " +
@@ -57,7 +58,8 @@ namespace DataAccess
                                         //"@OBSERVACIONES, " +
                                         "@USUARIO_ALTA, " +
                                         "@FECHA_ALTA, " +
-                                        "@ID_PLAN_OBRA " +
+                                        "@ID_PLAN_OBRA, " +
+                                        "@NRO_AFILIADO " +
                                         ")";
 
 
@@ -93,6 +95,12 @@ namespace DataAccess
                     cmd.Parameters.AddWithValue("@ID_PLAN_OBRA", turno.ObraSocial.IdPlanObra);
                 else
                     cmd.Parameters.AddWithValue("@ID_PLAN_OBRA", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(turno.NroAfiliado))
+                    cmd.Parameters.AddWithValue("@NRO_AFILIADO", turno.NroAfiliado);
+                else
+                    cmd.Parameters.AddWithValue("@NRO_AFILIADO", DBNull.Value);
+
 
                 cmd.Parameters.AddWithValue("@FECHA_TURNO", turno.FechaTurno);
                 cmd.Parameters.AddWithValue("@HORA_DESDE", turno.HoraDesde);
@@ -314,7 +322,9 @@ namespace DataAccess
                                     FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
                                     WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
                                     and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
-                                    and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL
+                                    and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL,
+                                    t.NRO_AFILIADO,
+                                    t.NRO_AUTORIZACION_OBRA
                                         from T_TURNOS t
                                         where t.FECHA_BAJA is null
                                         and t.ESTADO NOT IN ('CANCELADO')
@@ -396,6 +406,40 @@ namespace DataAccess
             }
         }
 
+        public void ModificarNroOrden(string idturno, string autorizacion)
+        {
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    update T_TURNOS
+                                    set NRO_AUTORIZACION_OBRA = @nroAutorizacion,
+                                        USUARIO_MOD = 1,
+                                        FECHA_MOD = GETDATE()
+                                    where ID_TURNO = @idTurnos
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@nroAutorizacion", autorizacion);
+                cmd.Parameters.AddWithValue("@idTurnos", idturno);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public DataTable TraerTurnosInformes(string idSucursal, string idObraSocial, string fechaDesde, string fechaHasta)
         {
             try
@@ -406,6 +450,9 @@ namespace DataAccess
                                     select 
 	                                    (select distinct C.NOMBRE_CENTRO from T_CENTROS C
 		                                    where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
+                                        (SELECT distinct E.CODIGO_ESPECIALIDAD FROM T_ESPECIALIDADES E
+                                            WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
+                                        ) as CODIGO_ESPECIALIDAD,
                                         (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
                                             WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
                                         ) as ESPECIALIDAD,
@@ -432,7 +479,8 @@ namespace DataAccess
 	                                    FECHA_TURNO,
 	                                    HORA_DESDE,
 	                                    ESTADO,
-	                                    NRO_ORDEN
+	                                    t.NRO_AFILIADO,
+                                        NRO_AUTORIZACION_OBRA
                                             from T_TURNOS t
                                             where t.FECHA_BAJA is null
 		                                    AND ESTADO = 'ATENDIDO'

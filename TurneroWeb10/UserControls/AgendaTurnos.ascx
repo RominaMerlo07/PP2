@@ -49,10 +49,10 @@
 
 <script type="text/javascript">
     
-
+    var rol;
     $(document).ready(function () {
         
-        var rol = traerRol();
+        rol = traerRol();
 
         cargarComboCentros('#ddlSucursal'); 
         $('#ddlSucursal').val('1');
@@ -126,6 +126,28 @@
 
     }
 
+    function cambioNroOrden(idturno) {
+
+        var nroOrden = $("#" + idturno).val();
+
+        $.ajax({
+            url: "Agenda.aspx/modificarNroOrden",
+            data: "{idturno: '" + idturno + "', autorizacion: '" + nroOrden + "'}",
+            type: "post",
+            contentType: "application/json",
+            async: false,
+            success: function (data) {
+
+                completarTurnosDelDia($('#ddlSucursal').val(), $('#dtpFecha').val())
+                swal("Hecho", "Nro. de Orden modificado!", "success");
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                swal("Hubo un problema", "Error al modificar el Nro. de Orden.", "error");
+            }
+        });
+    }
+
     function traerEstados() {
 
         var estados;
@@ -160,6 +182,7 @@
                 var turnos = [];
                 datos.forEach(function (e)
                 {
+                    debugger;
                     var IdTurno = e.ID_TURNO;
                     var Hora = e.HORA_DESDE;
                     var Especialidad = e.ESPECIALIDAD;
@@ -171,23 +194,34 @@
                     var Fecha = fechaArr;
                     var Telefono = e.CONTACTO;
                     var ObraSocial = e.OBRA_SOCIAL;
-                    var Orden = '';
+                    var NroAfiliado = e.NRO_AFILIADO;
+                    var NroAutObra = e.NRO_AUTORIZACION_OBRA === null ? '' : e.NRO_AUTORIZACION_OBRA;
+                    var Orden = '<input type="text" style="text-align: left" class="form-control" id="' + e.ID_TURNO + '" placeholder="Completar..." value="' + NroAutObra + '" onkeypress="return soloNumeros(event)" onchange="cambioNroOrden(' + e.ID_TURNO + ')" />';
 
                     var comboEstado =
                         '<select class="custom-select form-control" id="' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ')">';
-
+                    var comboEstadosItems = '';
                     estados.forEach(function (f) {
                         if (e.ESTADO == f.ESTADO) {
-                            comboEstado += ' <option selected value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
+
+                            if (e.ESTADO == 'ATENDIDO') {
+                                comboEstado = '<select class="custom-select form-control" id="' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ') "disabled="true">';
+                            }
+
+                            comboEstadosItems += ' <option selected value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
                         }
                         else {
-                            comboEstado += ' <option value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
+
+                            if (f.ESTADO == 'ATENDIDO' && rol == 'ADMINISTRATIVO') { }
+                            else {
+                                comboEstadosItems += ' <option value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
+                            }
                         }
                     });
 
-                    comboEstado += '</select>';
+                    comboEstado += comboEstadosItems + '</select>';
 
-                    turnos.push([IdTurno, Centro, Fecha, Hora, Especialidad, Profesional, Paciente, Telefono, ObraSocial, Orden, Estado, comboEstado]);
+                    turnos.push([IdTurno, Centro, Fecha, Hora, Especialidad, Profesional, Paciente, Telefono, ObraSocial, NroAfiliado, Orden, Estado, comboEstado]);
                                     
                 });
 
@@ -211,7 +245,8 @@
                         { title: "Paciente" },
                         { title: "Telefono" },
                         { title: "Obra Social" },
-                        { title: "Orden", visible: false },
+                        { title: "Nro. Afiliado" },
+                        { title: "Orden"},
                         { title: "Estado", visible: false },
                         { title: "Estado"}
                     ],
@@ -225,17 +260,23 @@
                         }
                     },
                     "rowCallback": function (row, data, index) {
-                        if (data[10] == 'OTORGADO') {
+                        if (data[11] == 'OTORGADO') {
                             $('td', row).css('background-color', '#90f5a6');
                             //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
-                            $('td', row).eq(6).css('background-color', '#28a745');
-                            $('td', row).eq(6).css('color', 'rgba(255, 255, 255, .8)');
-                        } else if (data[10] == 'EN ESPERA') {
+                            $('td', row).eq(8).css('background-color', '#28a745');
+                            $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
+                        } else if (data[11] == 'EN ESPERA') {
                             //#ffc107
                             $('td', row).css('background-color', '#f7d260');
                             //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
-                            $('td', row).eq(6).css('background-color', '#ffc107');
-                            $('td', row).eq(6).css('color', 'rgba(255, 255, 255, .8)');
+                            $('td', row).eq(8).css('background-color', '#ffc107');
+                            $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
+                        } else if (data[11] == 'ATENDIDO') {
+                            //#ffc107
+                            $('td', row).css('background-color', '#adadd5');
+                            //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
+                            $('td', row).eq(8).css('background-color', '#4148e9');
+                            $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
                         }
                     },
                     "bPaginate": true,
@@ -246,13 +287,13 @@
                             extend: 'print',
                             text: "Imprimir",
                             exportOptions: {
-                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ]
+                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12 ]
                             }
                         },
                         {
                             extend: 'pdf', /*orientation: 'landscape'*/
                             exportOptions: {
-                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10 ]
+                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12 ]
                             }
                         },
                         { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }

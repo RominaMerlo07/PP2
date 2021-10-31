@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Sistema - Sparring</title>
+    <title>Sistema Kinesio - Sparring Center</title>
     <asp:ContentPlaceHolder ID="Head" runat="server"></asp:ContentPlaceHolder>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
@@ -31,7 +31,6 @@
 
     <script src="https://kit.fontawesome.com/5da641aba0.js" crossorigin="anonymous"></script>
 
-    <%--<link rel="shortcut icon" type="imagen/X-UA-Compatible" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/img/sparring_logo.jpg"%>" />--%>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200&display=swap" rel="stylesheet" />
 
@@ -189,48 +188,41 @@
                     </div>
                 </div>
                 <ul class="sidebar-menu"> 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="idMesaDeEntrada">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-desktop"></i>
                             <span>Mesa de Entrada</span>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="Agenda.aspx">
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item" id="idAgenda" href="Agenda.aspx">
                                 <i class="fas fa-desktop"></i>
                                 <span>Agenda</span>
                             </a>
                         </div>
                     </li>
-                     <li class="nav-item dropdown">
+                     <li class="nav-item dropdown" id="idGestionSucursales">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-building"></i>
                             <span>Gestión Sucursales</span>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="RegistrarCentros.aspx">
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item" id="idNuevaSucursal" href="RegistrarCentros.aspx">
                                 <i class="fas fa-building"></i>
                                 <span>Nueva Sucursal</span>
                             </a>
 
-                            
+                         <%--</div>   
                        
-                           <div class="dropdown-submenu">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-building"></i>
-                                  <span>Sucursales</span>
-                                </a>
-                                
-                                <ul class="dropdown-menu">
-                                  <li class="dropdown-item"><a tabindex="-1" href="#">Second level</a></li>
-                                      </ul>
-                            </div>
+                        <div class="dropdown-submenu" >--%>
+                            <a class="dropdown-item" id="idSucursales" href="#">
+                                <i class="fas fa-building"></i>
+                                <span>Sucursales</span>
+                            </a>
                               
-                                   
-                            </div>
-
+                        </div>
                            
                     </li>
-                    <li class="nav-item dropdown active">
+                    <li class="nav-item dropdown active" id="idGestionTurnos">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-calendar-alt"></i>
                             <span>Gestión de Turnos</span>
@@ -241,80 +233,84 @@
                                 <i class="fa fa-calendar-plus"></i>
                                 <span>Registrar Turno</span>
                             </a>--%>
-                             <a class="dropdown-item" href="RegistrarTurno.aspx">
+                             <a class="dropdown-item" id="idRegistrarTurnos" href="RegistrarTurno.aspx">
                                 <i class="fa fa-calendar"></i>
                                 <span>Registrar Turnos</span>
                             </a>
-                            <a class="dropdown-item" href="#" visible="false">
+                            <a class="dropdown-item" id="idConsultarTurnos" href="#" >
                                 <i class="fa fa-calendar"></i>
                                 <span>Consultar Turnos</span>
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="idGestionPacientes">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user"></i>
                             <span>Gestión Pacientes</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="RegistrarPaciente.aspx">
+                            <a class="dropdown-item" id="idPacientes" href="RegistrarPaciente.aspx">
                                 <i class="fa fa-user-plus"></i>
                                 <span>Pacientes</span>
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" id="idHistoriasClinicas" href="#">
                                 <i class="fa fa-notes-medical"></i>
                                 <span>Historias Clínicas</span>
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="idGestionProfesionales">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user-md"></i>
                             <span>Gestión Profesionales</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="RegistrarProfesional.aspx">
+                            <a class="dropdown-item" id="idProfesionales" href="RegistrarProfesional.aspx">
                                 <i class="fa fa-user-plus"></i>
                                 <span>Profesionales</span>
                             </a>
-                            <a class="dropdown-item" href="RegistrarEspecialidades.aspx">
+                            <a class="dropdown-item" id="idEspecialidades" href="RegistrarEspecialidades.aspx">
                                 <i class="fa fa-user-tag"></i>
                                 <span>Especialidades</span>
                             </a>
-                            <a class="dropdown-item" href="DisponibilidadHoraria.aspx">
+                            <a class="dropdown-item" id="iddisponibilidadHoraria" href="DisponibilidadHoraria.aspx">
                                 <i class="fa fa-calendar-plus"></i>
                                 <span>Disponibilidad Horaria</span>
                             </a>
                         </div>
                     </li>
                     
-                     <li class="nav-item dropdown">
+                     <li class="nav-item dropdown" id="idGestionObrasSociales">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-id-card-alt"></i>
                             <span>Gestión Obras Sociales</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="ObrasSociales.aspx">
+                            <a class="dropdown-item" id="idObrasSociales" href="ObrasSociales.aspx">
                                 <i class="fas fa-folder-plus"></i>
                                 <span>Obras Sociales</span>
                             </a>
-                            <a class="dropdown-item" href="InformeObras.aspx">
+                            <a class="dropdown-item" id="idInformes" href="InformeObras.aspx">
                                 <i class="far fa-clipboard"></i>
                                 <span>Informes</span>
                             </a>
+                            <a class="dropdown-item" id="idInstructivos" href="InstructivosObras.aspx">
+                                <i class="fas fa-book"></i>
+                                <span>Instructivos</span>
+                            </a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="idGestionUsuarios">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-users"></i>
                             <span>Gestión de Usuarios</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" id="idGenerarUsuario" href="#">
                                 <i class="fa fa-user-plus"></i>
                                 <span>Generar Usuario</span>
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" id="idGestionarPermisos" href="#">
                                 <i class="fa fa-users-cog"></i>
                                 <span>Gestionar permisos</span>
                             </a>
@@ -343,7 +339,26 @@
     </div>
         </form>
     <!--FIN DISEÑO MENU LATERAL-->
+    <script>
 
+        $(document).ready(function () {
+            var rol = traerRol();
+
+            if (rol == 'ADMINISTRATIVO') {
+                $("#idHistoriasClinicas").hide();
+                $("#idGestionUsuarios").hide();
+                $("#idGestionSucursales").hide();
+            }
+
+            if (rol == 'PROFESIONAL') {
+                $("#idGestionUsuarios").hide();
+                $("#idGestionSucursales").hide(); 
+                $("#idGestionProfesionales").hide();
+                $("#idGestionObrasSociales").hide();
+
+            }
+        })
+    </script>
 </body>
 <%--<script src="Estilos/js/AdminLTE/app.js" type="text/javascript"></script>--%>
 <%--<script src="Estilos/Scripts/bootstrap.min.js" type="text/javascript"></script>--%>
