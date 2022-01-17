@@ -529,7 +529,7 @@ namespace DataAccess
                                      "AND P.ID_PROFESIONAL = @idProfesional " +
                                    "ORDER BY 2; ";
 
-                //DESCOMENTAR PARA MOSTRAR EN FORMA DE TABLA
+                //DESCOMENTAR PARA MOSTRAR EN TABLA
 
                 //string consulta = @"SELECT DISTINCT PD.ID_ESPECIALIDAD, 
                 //                           UPPER(E.DESCRIPCION) ESPECIALIDAD, 
