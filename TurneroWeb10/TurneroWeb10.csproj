@@ -482,6 +482,7 @@
     <Content Include="Estilos\css\morris\morris.css" />
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.css" />
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Estilos\styleRegistrarProfesional.css" />
     <Content Include="Estilos\styleLogin.css" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -600,6 +601,7 @@
     <Content Include="RegistrarProfesional.aspx" />
     <Content Include="RegistrarTurno.aspx" />
     <Content Include="ScriptsPantallas\Centros.js" />
+    <Content Include="ScriptsPantallas\RegistrarProfesionales_validacion.js" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.min.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap4.css" />

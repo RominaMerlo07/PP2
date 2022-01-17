@@ -56,5 +56,24 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public List<Especialidad> traerEspecialidadesNotInProfesional(string idProfesional)
+        {
+            try
+            {
+                List<Especialidad> list = daEspecialidades.traerEspecialidadesNotInProfesional(idProfesional);
+
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

@@ -219,7 +219,58 @@ namespace DataAccess
             }
         }
 
+        public List<Especialidad> traerEspecialidadesNotInProfesional(string idProfesional)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
 
+                string consulta = @"SELECT E.ID_ESPECIALIDADES, 
+                                           E.DESCRIPCION 
+                                      FROM T_ESPECIALIDADES E 
+                                     WHERE ID_ESPECIALIDADES NOT IN (SELECT PD.ID_ESPECIALIDAD 
+                                                                       FROM T_PROFESIONALES_DETALLE PD 
+                                                                      WHERE PD.ID_ESPECIALIDAD = ID_ESPECIALIDADES 
+                                                                        AND PD.ID_PROFESIONAL = @idProfesional)";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@idProfesional", idProfesional);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<Especialidad> listaEspecialidades = new List<Especialidad>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Especialidad especialidad = new Especialidad();
+                        if (dr["ID_ESPECIALIDADES"] != DBNull.Value)
+                            especialidad.IdEspecialidad = Convert.ToInt32(dr["ID_ESPECIALIDADES"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            especialidad.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+
+                        listaEspecialidades.Add(especialidad);
+
+                    }
+
+                    return listaEspecialidades;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
+
+    
 }

@@ -8,14 +8,15 @@
     </style>--%>
     <section class="content-header">
         <%-- <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Profesionales</button>--%>
-        <h1 style="text-align: center">REGISTRO DE PROFESIONALES</h1>
+        <h1 style="text-align: center">PROFESIONALES</h1>
     </section>
     <section class="content">
         <div class="row">
-            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal">Registrar Profesional</button>
+            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"> <i class="fas fa-user-plus"></i>  | Registrar Profesional</button>
         </div>
-        </br>
+        <br />
 
+        <!-- Lista profesionales -->
         <!-- Datatable Part -->
         <div class="row">
             <div class="box box-primary">
@@ -34,6 +35,9 @@
             </div>
         </div>
         <!-- End Datatable -->
+        <!-- End Lista profesionales -->
+
+
         <%--Modal Registrar--%>
         <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
@@ -42,7 +46,7 @@
                         <h4 class="modal-title" id="lblRegistrar">Registrar Profesional</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="formularioRegistrar">                 
                         <div class="row">
                             <div class="col-md" id="crdDatosPersonales">
                                 <div class="card text-white bg-light">
@@ -54,20 +58,24 @@
                                             <div class="col-sm">
                                                 <div class="row">
                                                     <div class="col-sm">
-                                                        <div class="input-group mb-3">
+                                                        <div class="input-group mb-3">                                                            
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">DNI</span>
                                                             </div>
-                                                            <input type="text" style="text-align: left" class="form-control" id="txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                                            <input type="text" name="dni" style="text-align: left" class="formulario-input form-control" id="id__txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                            <i class="formulario__validacion fas fa-times-circle" id="icon__txtDocumento"></i>
                                                         </div>
+                                                        <p class="formulario__error" id="p__txtDocumento"> Por favor, ingrese el DNI sin puntos.</p>
                                                     </div>
                                                     <div class="col-sm">
                                                         <div class="input-group mb-3">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">Matricula</span>
                                                             </div>
-                                                            <input type="text" style="text-align: left" class="form-control" id="txtMatricula" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                                            <input type="text" name="matricula" style="text-align: left" class="form-control" id="id__txtMatricula" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                                             <i class="formulario__validacion fas fa-times-circle" id="icon__txtMatricula"></i>
                                                         </div>
+                                                        <p class="formulario__error" id="p__txtMatricula"> Por favor, ingrese la matrícula sin puntos.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,23 +98,29 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="">Nombre y Apellido</span>
                                                     </div>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtApellido" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="nombre" style="text-align: left" class="form-control" id="id__txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                                     <i class="formulario__validacion fas fa-times-circle" id="icon__txtNombre"></i>
+                                                    <input type="text" name="apellido" style="text-align: left" class="form-control" id="id__txtApellido" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <i class="formulario__validacion fas fa-times-circle" id="icon__txtApellido"></i>
                                                 </div>
+                                                <p class="formulario__error" id="p__txtNombre"> Por favor, ingrese el/los nombre/s</p>
+                                                <p class="formulario__error" id="p__txtApellido"> Por favor, ingrese el/los apellido/s</p>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col">
+                                            <div class="col-sm-6">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Fecha de Nacimiento</span>
                                                     </div>
-                                                    <div>
-                                                        <input type='text' class="form-control datepicker date" id="dtpFechaNac"
+                                                  <%--  <div>--%>
+                                                        <input type='text' name="fechaNac" class="form-control datepicker date" id="id__dtpFechaNac"
                                                             placeholder="DD/MM/YYYY" data-provide="datepicker"
                                                             data-date-format="dd/mm/yyyy" />
-                                                    </div>
+                                                        <i class="formulario__validacion fas fa-times-circle" id="icon__dtpFechaNac"></i>
+                                                    <%--</div>--%>
                                                 </div>
+                                                    <p class="formulario__error" id="p__dtpFechaNac"> Por favor, ingrese la fecha de nacimiento</p>
                                             </div>
                                         </div>
                                     </div>
@@ -125,17 +139,21 @@
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Calle</span>
-                                                    </div>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtCalle" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    </div>                                                    
+                                                        <input type="text" name="calle" id="id__txtCalle" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                        <i class="formulario__validacion fas fa-times-circle" id="icon__txtCalle"></i>                                                    
                                                 </div>
+                                                <p class="formulario__error" id="p__txtCalle">Por favor, ingrese la calle</p>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Numero</span>
-                                                    </div>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtNumero" maxlength="4"/>
+                                                    </div>                                               
+                                                    <input type="text" name="numero" style="text-align: left" class="form-control" id="id__txtNumero" maxlength="4"/>
+                                                        <i class="formulario__validacion fas fa-times-circle" id="icon__txtNumero"></i>                                                    
                                                 </div>
+                                                <p class="formulario__error" id="p__txtNumero">Por favor, ingrese el Número o "0".</p>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -144,16 +162,20 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Barrio</span>
                                                     </div>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="barrio" style="text-align: left" class="form-control" id="id__txtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    
                                                 </div>
+                                                 <p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>
                                             </div>
                                             <div class="col">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Localidad</span>
                                                     </div>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtLocalidad" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="localidad" style="text-align: left" class="form-control" id="id__txtLocalidad" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  
                                                 </div>
+                                                <p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -162,8 +184,10 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Celular</span>
                                                     </div>
-                                                    <input type="text" style="text-align: left" class="form-control" id="txtCelular" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" placeholder="Ej: 3515123456" />
+                                                    <input type="text" name="celular" style="text-align: left" class="form-control" id="id__txtCelular" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" placeholder="Ej: 3515123456" />
+                                                     <i class="formulario__validacion fas fa-times-circle" id="icon__txtCelular"></i>  
                                                 </div>
+                                                <p class="formulario__error" id="p__txtCelular">Por favor, ingrese el Celular sin 0 y sin 15</p>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -172,12 +196,15 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Email: </span>
                                                     </div>
-                                                    <input type="text" class="form-control" id="txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                        <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail1"></i>  
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">@</span>
                                                     </div>
-                                                    <input type="text" class="form-control" id="txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                                </div>
+                                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail2"></i>  
+                                                </div>                              
+                                                <p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>
                                             </div>
                                         </div>
                                     </div>
@@ -186,20 +213,15 @@
                         </div>
                         <br />
                     <%--<button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>--%>
-                        <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
+                        <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>                       
                     </div>
                 </div>
             </div>
         </div>
         <%--final Modal registrar--%>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
     </section>
 
-
+    <%--Modal Editar--%>
     <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -207,7 +229,7 @@
                     <h4 class="modal-title" id="myModalLabel">Actualizar datos del Profesional</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="formularioEditar">   
                     <div>
                         <h4 class="modal-title" id="DatosPersonales">Datos Personales</h4>
                     </div>
@@ -322,8 +344,93 @@
             </div>
         </div>
     </div>
+    <%--End Modal Editar--%>
 
 
+     <%--Modal Especialidades--%>
+        <div class="modal fade" id="modalEspecialidades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-white bg-info">
+                        <h4 class="modal-title" id="lblEspecialidad">Especialidades por profesional</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md" id="crdDatosEspecialidad">
+                                <div class="card text-white bg-light">
+                             
+                                    <div class="card-body">
+                                        <!-- Datatable Part -->
+                                        <div class="row">
+                                            <div class="box box-primary">
+                                                <div class="box-header">
+                                                    <h1 class="box-title" id="infoProfesional">Profesional - Matrícula</h1>                                                                         
+                                                </div>
+                                             
+                                                <div class="col-md">
+                                                    <button class="btn btn-success btn-sm" type="button" id="btnRegistrarEsp"><i class="fas fa-plus-square"></i>  | Agregar Nueva Especialidad</button>
+                                                </div>
+                                         
+                                                <div class="box-body table-responsive">
+                                                    <div class="col">
+                                                        <table id="tabla_especialidades" class="table table-bordered table-hover">
+                                                            <tbody id="tbl_body_table_E">
+                                                                <!-- DATA POR MEDIO DE AJAX-->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Datatable -->                                                                                          
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+     <%--End Modal Especialidades--%>
+
+           
+     <%--Modal Add Especialidades--%>
+    <div class="modal fade" id="modalAddEspecialidades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-info">
+                    <h4 class="modal-title" id="lblAddEspecialidad">Seleccionar Especialidades para el Profesional</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body bg-gradient-light">
+                    <div class="row">
+                        <div class="card-body text-black">
+                            <div class="form-row">
+                                <div class="col-sm multiselect">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Especialidad: </span>
+                                        </div>
+                                        <select multiple class="form-control select2" id="ddlAddEspecialidad">
+                                            <option value="0" disabled="disabled" selected="" hidden="hidden">--Seleccione--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                             <button class="btn btn-success btn-lg float-right" type="button" id="btnAgregar">Agregar</button>                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <%--End Modal Add Especialidades--%>
+
+
+
+    <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarProfesional.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarProfesionales_validacion.js"%>"></script>
 
 </asp:Content>

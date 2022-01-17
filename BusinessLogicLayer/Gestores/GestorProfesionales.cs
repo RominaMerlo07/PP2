@@ -164,5 +164,73 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public DataTable especialidadPorProfesional(string idProfesional)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.especialidadPorProfesional(idProfesional);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public int RegistrarEspeProfesional(Profesional profesional, List<string> p_especialidadesP)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                //tomar centros
+                if (profesional.IdProfesional > 0)
+                {
+                    
+                        DACentros centros = new DACentros();
+                        List<Centro> listaCentros = centros.traerCentros();
+
+                        foreach (Centro centro in listaCentros)
+                        {
+
+                            foreach (string id_especialidad in p_especialidadesP)
+                            {
+                                ProfesionalDetalle profDetalle = new ProfesionalDetalle();
+                                profDetalle.Profesional = profesional;
+                                profDetalle.Centro = centro;
+                                Especialidad especialidad = new Especialidad();
+                                especialidad.IdEspecialidad = Convert.ToInt32(id_especialidad);
+                                profDetalle.Especialidad = especialidad;
+                                profDetalle.UsuarioAlta = profesional.UsuarioAlta;
+                                profDetalle.FechaAlta = DateTime.Now;
+
+                                DAProfesionalDetalle DaProfDetalle = new DAProfesionalDetalle();
+                                int IdProfDetalle = DaProfDetalle.DaRegistrarProfesionalDetalle(profDetalle);
+
+                            }
+                        }                                        
+                }
+                return 0;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaProfesionalE(string idProfesional, string idEspecialidad, int usuarioBaja, DateTime fechaBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DarBajaProfesionalE(idProfesional, idEspecialidad, usuarioBaja, fechaBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }
