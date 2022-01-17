@@ -20,14 +20,14 @@ namespace TurneroWeb10
             }
             else
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("Login.aspx", false);
             }
         }
 
         protected void cerrarSesion_Click(object sender, EventArgs e)
         {
             Session["TURNERO.Usuario"] = null;
-            Response.Redirect("Login.aspx");
+            Response.Redirect("Login.aspx", false);
         }
     }
 }

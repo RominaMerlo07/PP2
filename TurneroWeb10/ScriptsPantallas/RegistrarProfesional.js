@@ -310,7 +310,6 @@ function sendDataProfesionales() {
              
                 var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
                     '<a href="#" onclick="return inactivar(' + Numero + ",'" + Profesional + "'" +')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
-                
 
                 //' + "'"+ Numero +"'"+ '
                 arrayProfesionales.push([ 

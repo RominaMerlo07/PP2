@@ -189,9 +189,10 @@
     <Content Include="Estilos\FullCalendar\LICENSE.txt" />
     <Content Include="Estilos\img\AdobeColor-Paleta.jpeg" />
     <Content Include="Estilos\img\avatar5.png" />
+    <Content Include="Estilos\img\fondo21.png" />
     <Content Include="Estilos\img\fondo6.png" />
     <Content Include="Estilos\img\mini-brandguide.jpg" />
-    <Content Include="Estilos\img\sparring_logo.jpg" />
+    <Content Include="Estilos\img\user3.png" />
     <Content Include="Estilos\js\AdminLTE\app.js" />
     <Content Include="Estilos\js\AdminLTE\dashboard.js" />
     <Content Include="Estilos\js\AdminLTE\demo.js" />
@@ -485,7 +486,10 @@
     <Content Include="Estilos\styleRegistrarProfesional.css" />
     <Content Include="Estilos\styleLogin.css" />
     <Content Include="Global.asax" />
+    <Content Include="InformeObras.aspx" />
+    <Content Include="InstructivosObras.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="ObrasSociales.aspx" />
     <Content Include="Principal.aspx" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.js" />
     <Content Include="Estilos\Scripts\bootstrap.bundle.min.js" />
@@ -1136,12 +1140,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InformeObras.aspx.cs">
+      <DependentUpon>InformeObras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformeObras.aspx.designer.cs">
+      <DependentUpon>InformeObras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InstructivosObras.aspx.cs">
+      <DependentUpon>InstructivosObras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InstructivosObras.aspx.designer.cs">
+      <DependentUpon>InstructivosObras.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ObrasSociales.aspx.cs">
+      <DependentUpon>ObrasSociales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ObrasSociales.aspx.designer.cs">
+      <DependentUpon>ObrasSociales.aspx</DependentUpon>
     </Compile>
     <Compile Include="Principal.aspx.cs">
       <DependentUpon>Principal.aspx</DependentUpon>
@@ -1222,6 +1247,7 @@
     <Content Include="Scripts\DataTable\Buttons-1.7.1\css\mixins.scss" />
     <Content Include="Scripts\DataTable\pdfmake.min.js.map" />
     <Content Include="Scripts\moment.min.js.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

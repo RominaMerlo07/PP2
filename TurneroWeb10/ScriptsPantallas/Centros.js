@@ -10,10 +10,7 @@
 
      $(document).ready(function () {
 
-        //       $('.date').datepicker({
-        //           autoclose: true,
-        //           format: "dd/mm/yyyy"
-        //       });
+      
 
         $('#btnGuardarNvoCentro').click(function () {
 
@@ -112,4 +109,78 @@
                 return true;
             };
         };
+function sendDataCentros() {
+    $.ajax(
+        {
+            type: "POST",
+            url: "RegistrarCentros.aspx/traerCentros",
+            data: {},
+            contentType: 'application/json; charset=utf-8',
+            async: false,
+            success: function (data) {
 
+                var arrayCentros = new Array();
+
+                for (var i = 0; i < data.d.length; i++) {
+
+                    var Nombre = data.d[i].NombreCentro;
+                    var Domicilio = data.d[i].DomicilioCentro;
+                    var Localidad = data.d[i].LocalidadCentro;
+                    var Email = data.d[i].EmailCentro;
+                    var NroCentro1 = data.d[i].NroCentro1;
+                    var NroCentro2 = data.d[i].NroCentro2;
+                    var Acciones = '<button title= "Actualizar" class="btn btn-primary btn-editar" data-target="#modalEditar" data-toggle="modal"><i class="fas fa-user-edit" aria-hidden="true"></i></button>&nbsp' +
+                        '<button title= "Inactivar" id="btnInactivar" class="btn btn-danger btn-eliminar"><i class="fas fa-user-minus" aria-hidden="true"></i></button>';
+
+                    arrayCentros.push([
+                        Nombre, Domicilio, Localidad, Email, NroCentro1,NroCentro2, Acciones
+                    ])
+                }
+
+                var table = $('#tabla_centros').DataTable({
+                    data: arrayCentros,
+                    "scrollX": true,
+                    "languaje": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                    },
+                    "ordering": true,
+                    "bDestroy": true,
+                    "bAutoWidth": true,
+                    columns: [
+                        { title: "Nombre" },
+                        { title: "Domicilio" },
+                        { title: "Localidad" },
+                        { title: "Email" },
+                        { title: "Nro Contacto" },
+                        { title: "Nro Contacto 2" },
+                        { title: "Acciones" },
+                    ],
+                    dom: 'Bfrtip',
+                    dom: '<"top"B>rti<"bottom"fp><"clear">',
+                    "oLanguage": {
+                        "sSearch": "Filtrar:",
+                        "oPaginate": {
+                            "sPrevious": "Anterior",
+                            "sNext": "Siguiente"
+                        }
+                    },
+                    "bPaginate": true,
+                    "pageLength": 5,
+                    buttons: [
+                        //{ extend: 'copy', text: "Copiar" },
+                        { extend: 'print', text: "Imprimir" },
+                        { extend: 'pdf', orientation: 'landscape' },
+                        { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                    ]
+                });
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //$(ddl).prop("disabled", true);
+                //alert(data.error);
+                console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+            }
+        })
+}
+
+sendDataCentros();

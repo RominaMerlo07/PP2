@@ -80,6 +80,47 @@ namespace TurneroWeb10
             }
 
         }
+
+        [WebMethod]
+        public static List<Centro> traerCentros()
+        {
+            try
+            {
+                GestorCentros gestorCentros = new GestorCentros();
+                List<Centro> centros = new List<Centro>();//gestorCentros.traerCentros();
+                return centros;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+
+        public static string actualizarCentros(string p_id, string p_nombre, string p_domicilio, string p_localidad, string p_email, string p_contacto_1, string p_contacto_2)
+        
+        {
+
+            Centro centro = new Centro();
+            GestorCentros gestorCentros = new GestorCentros();
+
+            try
+            {
+                string mensaje = "OK";
+
+                gestorCentros.ActualizarCentros(centro);
+
+                return mensaje;
+            }
+
+            catch (Exception e)
+            {
+                throw e;            
+            }
+        }
+
+
     }
 
 }

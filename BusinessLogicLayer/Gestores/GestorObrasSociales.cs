@@ -11,12 +11,12 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorObrasSociales
     {
-        public List<ObraSocial> obtenerObrasSociales(string id_Centro)
+        public List<ObraSocial> obtenerObrasSociales()
         {
             try
             {
                 DAObrasSociales daObrasSociales = new DAObrasSociales();
-                List<ObraSocial> list = daObrasSociales.traerObrasSociales(id_Centro);
+                List<ObraSocial> list = daObrasSociales.traerObrasSociales();
 
                 if (list.Count > 0)
                 {
@@ -30,5 +30,73 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public void DarBajaObraSocial(ObraSocial obraSocial)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                daObrasSociales.DarBajaObraSocial(obraSocial);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable TraerPlanes(string idObraSocial)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                return daObrasSociales.TraerPlanes(idObraSocial);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void DarBajaPlan(ObrasPlanes plan)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                daObrasSociales.DarBajaPlan(plan);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void AgregarPlan(ObrasPlanes plan)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                daObrasSociales.AgregarPlan(plan);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void AgregarObraSocial(ObraSocial obraSocial)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                daObrasSociales.AgregarObraSocial(obraSocial);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
+
+
 }

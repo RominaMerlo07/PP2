@@ -60,8 +60,10 @@ namespace DataAccess
 
                 cmd.Parameters.AddWithValue("@FECHA_INIC", disponibilidad.FechaInic);
                 cmd.Parameters.AddWithValue("@FECHA_FIN", disponibilidad.FechaFin);
-                cmd.Parameters.AddWithValue("@HORA_DESDE", disponibilidad.HoraDesde);
-                cmd.Parameters.AddWithValue("@HORA_HASTA", disponibilidad.HoraHasta);
+                //cmd.Parameters.AddWithValue("@HORA_DESDE", disponibilidad.HoraDesde);
+                cmd.Parameters.Add("@HORA_DESDE", SqlDbType.Time).Value = disponibilidad.HoraDesde;
+                //cmd.Parameters.AddWithValue("@HORA_HASTA", disponibilidad.HoraHasta);
+                cmd.Parameters.Add("@HORA_HASTA", SqlDbType.Time).Value = disponibilidad.HoraHasta;
                 cmd.Parameters.AddWithValue("@USUARIO_ALTA", disponibilidad.UsuarioAlta);
                 cmd.Parameters.AddWithValue("@FECHA_ALTA", disponibilidad.FechaAlta);
 

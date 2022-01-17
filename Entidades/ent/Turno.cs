@@ -23,6 +23,8 @@ namespace Entidades.ent
         private DateTime fecha_mod;
         private int usuario_baja;
         private DateTime fecha_baja;
+        private string nroAfiliado;
+        private string nroAutorizacionObra;
 
         public int IdTurno
         {
@@ -126,6 +128,18 @@ namespace Entidades.ent
             set { fecha_baja = value; }
         }
 
+        public string NroAfiliado
+        {
+            get { return nroAfiliado; }
+            set { nroAfiliado = value; }
+        }
+
+        public string NroAutorizacionObra
+        {
+            get { return nroAutorizacionObra; }
+            set { nroAutorizacionObra = value; }
+        }
+        
         public Turno() { }
     }
 }

@@ -156,11 +156,11 @@
                 <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
             </div>
             <br/>      
-            <div class="card" style="width: 40rem;">
+            <%--<div class="card" style="width: 40rem;">
                 <div class="card-body">
                     <div id='calendar'></div>
                 </div>
-            </div>
+            </div>--%>
         </div>
     </section>
     <script type="text/javascript">
