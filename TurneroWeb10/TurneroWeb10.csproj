@@ -602,10 +602,13 @@
     <Content Include="RegistrarCentros.aspx" />
     <Content Include="RegistrarEspecialidades.aspx" />
     <Content Include="RegistrarPaciente.aspx" />
+    <Content Include="RegistrarPersonal.aspx" />
     <Content Include="RegistrarProfesional.aspx" />
     <Content Include="RegistrarTurno.aspx" />
     <Content Include="ScriptsPantallas\Centros.js" />
+    <Content Include="ScriptsPantallas\Personal.js" />
     <Content Include="ScriptsPantallas\RegistrarProfesionales_validacion.js" />
+    <Content Include="ScriptsPantallas\Usuarios.js" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.min.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap4.css" />
@@ -1118,6 +1121,7 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="UserControls\AgendaTurnos.ascx" />
+    <Content Include="Usuarios.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1197,6 +1201,13 @@
     <Compile Include="RegistrarPaciente.aspx.designer.cs">
       <DependentUpon>RegistrarPaciente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RegistrarPersonal.aspx.cs">
+      <DependentUpon>RegistrarPersonal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarPersonal.aspx.designer.cs">
+      <DependentUpon>RegistrarPersonal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegistrarProfesional.aspx.cs">
       <DependentUpon>RegistrarProfesional.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1224,6 +1235,13 @@
     </Compile>
     <Compile Include="UserControls\AgendaTurnos.ascx.designer.cs">
       <DependentUpon>AgendaTurnos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

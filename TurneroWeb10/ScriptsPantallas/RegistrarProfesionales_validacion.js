@@ -19,7 +19,7 @@ const expresiones = {
     email2: /(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
     //password: /^.{4,12}$/, // 4 a 12 digitos.
     //correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    //telefono: /^\d{7,14}$/ // 7 a 14 numeros.
+    //telefono: /^\d{7,10}$/ // 7 a 10 numeros.
 }
 
 const campos = {
@@ -35,10 +35,6 @@ const campos = {
     celular: false,
     email1: false,
     email2: false
-    //nombre: false,
-    //password: false,
-    //correo: false,
-    //telefono: false
 }
 
 
@@ -80,19 +76,6 @@ const validarFormulario = (e) => {
         case "email2":
             validarCampo(expresiones.email2, e.target, 'txtEmail2');
             break;
-        //case "password":
-        //    validarCampo(expresiones.password, e.target, 'password');
-        //    validarPassword2();
-        //    break;
-        //case "password2":
-        //    validarPassword2();
-        //    break;
-        //case "correo":
-        //    validarCampo(expresiones.correo, e.target, 'correo');
-        //    break;
-        //case "telefono":
-        //    validarCampo(expresiones.telefono, e.target, 'telefono');
-        //    break;
     }
 }
 
@@ -129,8 +112,6 @@ const validarCampo = (expresion, input, campo) => {
 inputs.forEach((input) => {
     input.addEventListener('keyup', validarFormulario); 
     input.addEventListener('blur', validarFormulario);
-  //  input.addEventListener('change', validarFormulario);
-    //input.addEventListener('click', validarFormulario);
 });
 
 

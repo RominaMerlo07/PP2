@@ -47,6 +47,7 @@
     <Compile Include="DAEspecialidades.cs" />
     <Compile Include="DAObrasSociales.cs" />
     <Compile Include="DAPaciente.cs" />
+    <Compile Include="DAPersonal.cs" />
     <Compile Include="DAProfesional.cs" />
     <Compile Include="DAProfesionalDetalle.cs" />
     <Compile Include="DATurno.cs" />

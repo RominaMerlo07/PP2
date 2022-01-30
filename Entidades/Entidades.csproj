@@ -58,7 +58,11 @@
     <Compile Include="ent\Rol.cs" />
     <Compile Include="ent\Turno.cs" />
     <Compile Include="ent\Usuario.cs" />
+    <Compile Include="ent\Personal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
