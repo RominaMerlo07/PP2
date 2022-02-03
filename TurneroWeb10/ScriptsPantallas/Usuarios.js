@@ -12,6 +12,10 @@ $(document).ready(function () {
         $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
     });
 
+    $('#show_passwordA').click(function () {
+        $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+    });
+    
     sendDataUsuarios();
 
 });
@@ -384,10 +388,10 @@ function UpdateDataUsuarios(id_usuario, rolE) {
           
         }
     })
-}
+};
 
-function mostrarPassword() {
-    var cambio = document.getElementById("id__txtPasswordE");
+function mostrarPassword(password) {
+    var cambio = document.getElementById(password);
     if (cambio.type == "password") {
         cambio.type = "text";
         $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');

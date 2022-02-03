@@ -119,6 +119,9 @@
                                                                 <span class="input-group-text">Contraseña</span>
                                                             </div>
                                                             <input type="password" name="password" style="text-align: left" class="form-control" id="id__txtPassword" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                             <div class="input-group-append">
+                                                            <button id="show_passwordA" class="btn btn-primary" type="button" onclick="mostrarPassword('id__txtPassword')"><span class="fa fa-eye-slash icon"></span></button>
+                                                            </div>
                                                             <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>--%>
                                                         </div>
                                                         <%--  <p class="formulario__error" id="p__txtPassword">Por favor, ingrese una contraseña</p>--%>
@@ -183,7 +186,7 @@
                                     </div>
                                     <input type="password" name="password" style="text-align: left" class="form-control" id="id__txtPasswordE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                     <div class="input-group-append">
-                                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"><span class="fa fa-eye-slash icon"></span></button>
+                                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword('id__txtPasswordE')"><span class="fa fa-eye-slash icon"></span></button>
                                     </div>
                                     <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>--%>
                                 </div>
