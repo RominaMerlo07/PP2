@@ -1,12 +1,17 @@
-﻿var id_personal, cargo, id_per, id_prof, user, password, rol;
+﻿var id_personal, cargo, id_per, id_prof, user, password, rol, id_usuario, rolE;
 
 
 $(document).ready(function () {
 
     $('#btnRegistrarModal').click(function () {
         $("#modalRegistrar").modal('show');
-        $("#ddlRol").prop("disabled", true);         
+        $("#ddlRol").prop("disabled", true);    
     });
+
+    $('#ShowPassword').click(function () {
+        $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+    });
+
     sendDataUsuarios();
 
 });
@@ -177,7 +182,7 @@ $('#btnRegistrar').click(function () {
         }
        
         registrarUsuario(usuario);
-        sendDataUsuarios();
+        
     }
 
 });
@@ -200,8 +205,9 @@ function registrarUsuario(usuario) {
                            
                 $("#modalRegistrar").modal('hide');
                 swal("Hecho", "Usuario registrado con Éxito!", "success"); //error
-               
-                //sendDataProfesionales();
+                sendDataUsuarios();
+                limpiarCampos();
+
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -226,21 +232,14 @@ function sendDataUsuarios() {
 
             datos.forEach(function (e) {
 
-                //var idEspecialidad = e.ID_ESPECIALIDAD;
-                //var especialidades = e.ESPECIALIDAD;
-                //var estado = e.ESTADO;
-
                 var Numero = e.ID_USUARIO;
                 var DNI = e.Documento;
                 var Personal = (e.NOMBRE + ", " + e.APELLIDO);
                 var Usuario = e.NOMBRE_USUARIO;
                 var Rol = e.Rol;
 
-              //  var jsonStr = '["' + Numero + '", "' + DNI + '", "' + Personal + '", "' + Usuario + '","' + Rol + '"]';
-                //const array = JSON.parse(jsonStr);
-
-
-                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
+              
+                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ",'" + Personal + "'" + ",'" + Rol + "'" + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
                     '<a href="#" onclick="return inactivar(' + Numero + ",'" + Personal + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
 
                 //' + "'"+ Numero +"'"+ '
@@ -292,4 +291,131 @@ function sendDataUsuarios() {
             //console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
         }
     })
+};
+
+
+
+function actualizar(idBuscar, personal, rol) {   
+
+    id_usuario = idBuscar;
+    $("#ddlRol").prop("disabled", true);   
+    $("#id__txtUsuarioE").prop("disabled", true);      
+    $("#id__txtPasswordE").attr('type', 'password'); 
+
+    var texto;
+
+    if (rol === "DIRECTIVO" || rol === "PROFESIONAL") {
+
+        texto = "Profesional: " + personal;
+    }
+    else {
+        texto = "Personal: " + personal;
+    }
+       
+    $("#infoProfesional").text(texto);
+    cargarComboRoles('#ddlRolE'); 
+
+    $.ajax({
+        type: "POST",
+        url: "Usuarios.aspx/buscarUsuarios",
+        data: "{idUsuario: '" + idBuscar + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+                        
+            var datos = JSON.parse(data.d); 
+
+            datos.forEach(function (e) {
+
+                $("#id__txtUsuarioE").val(e.NOMBRE_USUARIO);
+                $("#id__txtPasswordE").val(e.CLAVE_USUARIO);
+                $("#ddlRolE").val(e.ID_ROL);          
+                $("#modalEditar").modal('show');
+                
+            });
+                                             
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+    })
+}
+
+$('#btnActualizar').click(function (e) {
+
+    e.preventDefault();
+    rolE = $('#ddlRolE').val();
+    UpdateDataUsuarios(id_usuario, rolE);
+    $("#modalEditar").modal('hide');
+    
+
+});
+
+function UpdateDataUsuarios(id_usuario, rolE) {
+
+    var obj = JSON.stringify({
+        id: id_usuario,
+        user: $("#id__txtUsuarioE").val(),
+        password: $("#id__txtPasswordE").val(),
+        rol: rolE      
+    })
+    
+    $.ajax({
+        type: "POST",
+        url: "Usuarios.aspx/actualizarUsuario",
+        data: obj,
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr, ajaxOptions, thrownError) {
+        
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        success: function (response) {
+
+            if (response.d != 'OK') {
+                swal("Hubo un problema", "Error al actualizar los datos del Usuario.", "error");
+            }
+            else {
+             
+                swal("Hecho", "Los datos del usuario se actualizaron con Éxito.", "success");
+                sendDataUsuarios();
+            }
+          
+        }
+    })
+}
+
+function mostrarPassword() {
+    var cambio = document.getElementById("id__txtPasswordE");
+    if (cambio.type == "password") {
+        cambio.type = "text";
+        $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    } else {
+        cambio.type = "password";
+        $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+};
+
+function inactivar(id, nombre) {
+
+    var IdUsuario = id;
+    var nomPersonal = nombre;
+
+    $.ajax({
+        url: "Usuarios.aspx/darBajaUsuario",
+        data: "{IdUsuario: '" + IdUsuario + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            swal("Hecho", "Se dio de baja exitosamente el usuario de " + nomPersonal + ".", "success");
+
+            sendDataUsuarios();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+        }
+    });
 }

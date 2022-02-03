@@ -132,5 +132,99 @@ namespace TurneroWeb10
             }
         }
 
+
+        [WebMethod]
+        public static string buscarUsuarios(int idUsuario)
+        {
+            try
+            {
+                GestorUsuarios gUsuarios = new GestorUsuarios();
+                DataTable dt = gUsuarios.buscarUsuarios(idUsuario);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
+        [WebMethod]
+        public static string actualizarUsuario(string id, string user, string password, string rol)
+        {
+
+            Usuario usuario = new Usuario();
+            GestorUsuarios gUsuarios = new GestorUsuarios();
+
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad usuario
+
+                if (!string.IsNullOrEmpty(user))
+                {
+                    usuario.NombreUsuario = user;
+                }
+
+                if (!string.IsNullOrEmpty(password))
+                {
+                    usuario.ClaveUsuario = password;
+                }
+                
+
+                usuario.IdUsuario = Convert.ToInt32(id);
+                int IdRol = Convert.ToInt32(rol);
+
+                usuario.UsuarioMod = 1;
+                usuario.FechaMod = DateTime.Today;
+
+                #endregion
+
+                gUsuarios.actualizarUsuario(usuario, IdRol);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del usuario " + e.Message;
+                return error;
+            }
+
+        }
+
+        [WebMethod]
+        public static string darBajaUsuario(string IdUsuario)
+        {
+
+            Usuario usuario = new Usuario();
+            GestorUsuarios gUsuarios = new GestorUsuarios();
+
+            try
+            {
+                string mensaje = "OK";
+
+                usuario.IdUsuario = Convert.ToInt32(IdUsuario);
+
+                usuario.UsuarioBaja = 1;
+                usuario.FechaBaja = DateTime.Today;
+
+                mensaje = gUsuarios.darBajaUsuario(usuario);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al dar de baja el usuario " + e.Message;
+                return error;
+            }
+
+        }
+
+
     }
 }

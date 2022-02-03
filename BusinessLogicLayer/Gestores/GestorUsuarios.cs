@@ -82,6 +82,44 @@ namespace BusinessLogicLayer.Gestores
         }
 
 
+        public DataTable buscarUsuarios(int idUsuario)
+        {
+            try
+            {
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.buscarUsuarios(idUsuario);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
+
+        public string actualizarUsuario(Usuario usuario, int rol)
+        {
+            try
+            {
+                DAUsuarios DAUsuario = new DAUsuarios();
+                return DAUsuario.actualizarUsuario(usuario, rol);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string darBajaUsuario(Usuario usuario)
+        {
+            try
+            {
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.darBajaUsuario(usuario);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

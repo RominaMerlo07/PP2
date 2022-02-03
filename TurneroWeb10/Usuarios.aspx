@@ -44,7 +44,7 @@
             <div class="modal-content">
                 <div class="modal-header text-white bg-info">
                     <h4 class="modal-title" id="lblRegistrar">Generar Usuario</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="return limpiarCampos();"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body" id="formularioRegistrar">
                     <div class="row">
@@ -139,6 +139,68 @@
         </div>
     </div>
     <%--final Modal registrar--%>
+
+       
+    <%--Modal Editar--%>
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-info">
+                    <h4 class="modal-title" id="myModalLabel">Actualizar datos del Usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" id="formularioEditar">
+                    <div>
+                        <h4 class="modal-title" id="infoProfesional">Personal</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Seleccionar Rol </span>
+                                    </div>
+                                    <select class="custom-select form-control" id="ddlRolE">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Usuario</span>
+                                    </div>
+                                    <input type="text" name="usuario" style="text-align: left" class="form-control" id="id__txtUsuarioE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtUsuario"></i>--%>
+                                </div>
+                                <%--<p class="formulario__error" id="p__txtUsuario">Por favor, ingrese el Barrio</p>--%>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Contraseña</span>
+                                    </div>
+                                    <input type="password" name="password" style="text-align: left" class="form-control" id="id__txtPasswordE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <div class="input-group-append">
+                                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"><span class="fa fa-eye-slash icon"></span></button>
+                                    </div>
+                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>--%>
+                                </div>
+                                <%--  <p class="formulario__error" id="p__txtPassword">Por favor, ingrese una contraseña</p>--%>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--End Modal Editar--%>
+
 
 
    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Usuarios.js"%>"></script>

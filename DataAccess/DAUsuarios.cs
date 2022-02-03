@@ -229,21 +229,7 @@ namespace DataAccess
                 else
                     cmd.Parameters.AddWithValue("@CLAVE_USUARIO", DBNull.Value);
 
-                //if (!string.IsNullOrEmpty(Convert.ToString(usuario.Rol.IdRol)))
-                //    cmd.Parameters.AddWithValue("@ID_ROL", usuario.Rol.IdRol);
-                //else
-                //    cmd.Parameters.AddWithValue("@ID_ROL", DBNull.Value);
-
-                //if (!string.IsNullOrEmpty(Convert.ToString(usuario.Personal.IdPersonal)))
-                //    cmd.Parameters.AddWithValue("@ID_PERSONAL", usuario.Personal.IdPersonal);
-                //else
-                //    cmd.Parameters.AddWithValue("@ID_PERSONAL", DBNull.Value);
-
-                //if (!string.IsNullOrEmpty(Convert.ToString(usuario.Profesional.IdProfesional)))
-                //    cmd.Parameters.AddWithValue("@ID_PROFESIONAL", usuario.Profesional.IdProfesional);
-                //else
-                //    cmd.Parameters.AddWithValue("@ID_PROFESIONAL", DBNull.Value);
-
+             
                 cmd.Parameters.AddWithValue("@ID_ROL", IdRol);
                 cmd.Parameters.AddWithValue("@ID_PERSONAL", idPersonal);
                 cmd.Parameters.AddWithValue("@ID_PROFESIONAL", IdProfesional);
@@ -304,8 +290,144 @@ namespace DataAccess
             }
         }
 
+
+        public DataTable buscarUsuarios(int idUsuario)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT u.NOMBRE_USUARIO, u.CLAVE_USUARIO, u.ID_ROL, r.NOMBRE_ROL
+									  FROM T_USUARIOS u, T_ROLES r
+									 WHERE u.ID_ROL = r.ID_ROL
+                                       AND u.ID_USUARIO = @idUsuario
+									   AND u.FECHA_BAJA is null
+									   AND r.FECHA_BAJA is null;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string actualizarUsuario(Usuario usuario, int rol)
+        {
+
+            string result;
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_USUARIOS " +
+                                     "SET NOMBRE_USUARIO = @NOMBRE_USUARIO, " +
+                                          "CLAVE_USUARIO = @CLAVE_USUARIO, " +
+                                          "ID_ROL = @ID_ROL, " +
+                                          "USUARIO_MOD = @USUARIO_MOD, " +
+                                          "FECHA_MOD = @FECHA_MOD " +
+                                   "WHERE ID_USUARIO = @ID_USUARIO; SELECT SCOPE_IDENTITY();";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(usuario.NombreUsuario))
+                    cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", usuario.NombreUsuario);
+                else
+                    cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", DBNull.Value);
+
+                if (!string.IsNullOrEmpty(usuario.ClaveUsuario))
+                    cmd.Parameters.AddWithValue("@CLAVE_USUARIO", usuario.ClaveUsuario);
+                else
+                    cmd.Parameters.AddWithValue("@CLAVE_USUARIO", DBNull.Value);
+
+                cmd.Parameters.AddWithValue("@ID_ROL", rol);
+                cmd.Parameters.AddWithValue("@ID_USUARIO", usuario.IdUsuario);
+                cmd.Parameters.AddWithValue("@USUARIO_MOD", usuario.UsuarioMod);
+                cmd.Parameters.AddWithValue("@FECHA_MOD", usuario.FechaMod);
+
+                cmd.ExecuteNonQuery();
+                //int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+                trans.Commit();
+                con.Close();
+
+                result = "OK";
+
+            }
+            catch (Exception e)
+            {
+                result = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+            return result;
+
+        }
+
+
+        public string darBajaUsuario(Usuario usuario)
+        {
+
+            string result;
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_USUARIOS " +
+                                     "SET USUARIO_BAJA = @USUARIO_BAJA, " +
+                                          "FECHA_BAJA = @FECHA_BAJA " +
+                                   "WHERE ID_USUARIO = @ID_USUARIO;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_USUARIO", usuario.IdUsuario);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuario.UsuarioBaja);
+                cmd.Parameters.AddWithValue("@FECHA_BAJA", usuario.FechaBaja);
+
+                cmd.ExecuteNonQuery();
+                //int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+                trans.Commit();
+                con.Close();
+
+                result = "OK";
+
+            }
+            catch (Exception e)
+            {
+                result = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+            return result;
+
+        }
+
+
     }
-
-
-    
+              
 }
