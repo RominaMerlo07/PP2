@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Entidades.ent;
 using DataAccess;
+using System.Data;
 
 namespace BusinessLogicLayer.Gestores
 {
@@ -23,5 +22,66 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+
+        public DataTable buscarPersonal(string idPersonal)
+        {
+            try
+            {
+
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.buscarPersonal(idPersonal);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string generarUsuario(string nombre, string apellido)
+        {
+
+            try
+            {
+
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.generarUsuario(nombre, apellido);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+
+        public int DaRegistrarUsuario(Usuario usuario, int IdRol, int idPersonal, int IdProfesional)
+        {
+            try
+            {
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.DaRegistrarUsuario(usuario, IdRol, idPersonal, IdProfesional);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable cargarUsuarios()
+        {
+            try
+            {
+                DAUsuarios daUsuarios = new DAUsuarios();
+                return daUsuarios.cargarUsuarios();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="Gestores\GestorTurno.cs" />
     <Compile Include="Gestores\GestorUsuarios.cs" />
     <Compile Include="Gestores\gestorPersonal.cs" />
+    <Compile Include="Gestores\GestorRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

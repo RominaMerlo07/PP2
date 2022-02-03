@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
 using Entidades.ent;
 using Newtonsoft.Json;
+
 namespace TurneroWeb10
 {
     public partial class RegistrarPersonal : System.Web.UI.Page

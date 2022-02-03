@@ -17,6 +17,7 @@ namespace Entidades.ent
         private int usuario_baja;
         private DateTime fecha_baja;
         private Profesional profesional;
+        private Personal personal;
 
         public int IdUsuario
         {
@@ -82,6 +83,13 @@ namespace Entidades.ent
         {
             get { return profesional; }
             set { profesional = value; }
+        }
+
+
+        public Personal Personal
+        {
+            get { return personal; }
+            set { personal = value; }
         }
 
         public Usuario() { }

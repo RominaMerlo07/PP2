@@ -58,7 +58,7 @@
                                         <div class="col">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">DNI DEL PERSONAL </span>
+                                                    <span class="input-group-text">DNI del Personal </span>
                                                 </div>
                                                 <input type="search" class="form-control rounded" id="txtDocumento" placeholder="Ingrese DNI" aria-label="Search"
                                                     aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
