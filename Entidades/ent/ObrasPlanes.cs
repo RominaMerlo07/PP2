@@ -1,46 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Entidades.ent
 {
-    public class Usuario
+    public class ObrasPlanes
     {
-        private int id_usuario;
-        private string nombre_usuario;
-        private string clave_usuario;
-        private Rol rol;
+        private int id_planes;
+        private string cod_plan;
+        private string descripcion;
+        private int id_obra_social;
         private int usuario_alta;
         private DateTime fecha_alta;
         private int usuario_mod;
         private DateTime fecha_mod;
         private int usuario_baja;
         private DateTime fecha_baja;
-        private Profesional profesional;
-        private Personal personal;
 
-        public int IdUsuario
+        public int IdPlanes
         {
-            get { return id_usuario; }
-            set { id_usuario = value; }
+            get { return id_planes; }
+            set { id_planes = value; }
         }
 
-        public string NombreUsuario
+        public string CodPlan
         {
-            get { return nombre_usuario; }
-            set { nombre_usuario = value; }
+            get { return cod_plan; }
+            set { cod_plan = value; }
         }
 
-        public string ClaveUsuario
+        public string Descripcion
         {
-            get { return clave_usuario; }
-            set { clave_usuario = value; }
+            get { return descripcion; }
+            set { descripcion = value; }
         }
 
-        public Rol Rol
+        public int IdObraSocial
         {
-            get { return rol; }
-            set { rol = value; }
+            get { return id_obra_social; }
+            set { id_obra_social = value; }
         }
 
         public int UsuarioAlta
@@ -78,20 +78,5 @@ namespace Entidades.ent
             get { return fecha_baja; }
             set { fecha_baja = value; }
         }
-
-        public Profesional Profesional
-        {
-            get { return profesional; }
-            set { profesional = value; }
-        }
-
-
-        public Personal Personal
-        {
-            get { return personal; }
-            set { personal = value; }
-        }
-
-        public Usuario() { }
     }
 }

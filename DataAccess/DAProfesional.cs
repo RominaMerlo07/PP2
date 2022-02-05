@@ -508,6 +508,115 @@ namespace DataAccess
                 throw e;
             }
         }
+
+
+        public DataTable especialidadPorProfesional(string idProfesional)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT DISTINCT PD.ID_ESPECIALIDAD, " +
+                                         "UPPER(E.DESCRIPCION) ESPECIALIDAD " +
+                                    "FROM T_PROFESIONALES P, " +
+                                         "T_PROFESIONALES_DETALLE PD, " +
+                                         "T_ESPECIALIDADES E " +
+                                   "WHERE P.ID_PROFESIONAL = PD.ID_PROFESIONAL " +
+                                     "AND PD.ID_ESPECIALIDAD = E.ID_ESPECIALIDADES " +
+                                     "AND PD.FECHA_BAJA IS NULL " +
+                                     "AND P.FECHA_BAJA IS NULL " +
+                                     "AND P.ID_PROFESIONAL = @idProfesional " +
+                                   "ORDER BY 2; ";
+
+                //DESCOMENTAR PARA MOSTRAR EN TABLA
+
+                //string consulta = @"SELECT DISTINCT PD.ID_ESPECIALIDAD, 
+                //                           UPPER(E.DESCRIPCION) ESPECIALIDAD, 
+                //                           'A' ESTADO 
+                //                      FROM T_PROFESIONALES P, 
+                //                           T_PROFESIONALES_DETALLE PD, 
+                //                           T_ESPECIALIDADES E 
+                //                     WHERE P.ID_PROFESIONAL = PD.ID_PROFESIONAL 
+                //                       AND PD.ID_ESPECIALIDAD = E.ID_ESPECIALIDADES 
+                //                       AND PD.FECHA_BAJA IS NULL 
+                //                       AND P.FECHA_BAJA IS NULL 
+                //                       AND P.ID_PROFESIONAL = @idProfesional 
+                //                   UNION 
+                //                    SELECT E.ID_ESPECIALIDADES, 
+                //                           E.DESCRIPCION, 
+                //                          'I' ESTADO 
+                //                      FROM T_ESPECIALIDADES E 
+                //                     WHERE ID_ESPECIALIDADES NOT IN (SELECT PD.ID_ESPECIALIDAD 
+                //                                                       FROM T_PROFESIONALES_DETALLE PD 
+                //                                                      WHERE PD.ID_ESPECIALIDAD = ID_ESPECIALIDADES 
+                //                                                       AND PD.ID_PROFESIONAL = @idProfesional)
+                //                    ORDER BY ESTADO DESC;";
+
+                cmd = new SqlCommand(consulta, con);                               
+                cmd.Parameters.AddWithValue("@idProfesional", idProfesional);
+                             
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaProfesionalE(string idProfesional, string idEspecialidad, int usuarioBaja, DateTime fechaBaja)
+        {
+
+            string result;
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"UPDATE T_PROFESIONALES_DETALLE 
+                                       SET FECHA_BAJA = @FECHA_BAJA, USUARIO_MOD = @USUARIO_BAJA 
+                                     WHERE ID_PROFESIONAL = @ID_PROFESIONAL 
+                                       AND ID_ESPECIALIDAD = @ID_ESPECIALIDAD 
+                                       AND FECHA_BAJA IS NULL;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDAD", idEspecialidad);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+                cmd.Parameters.AddWithValue("@FECHA_BAJA", fechaBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                result = "OK";
+
+            }
+            catch (Exception e)
+            {
+                result = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+            return result;
+
+        }
+
+
+
     }
 }
 

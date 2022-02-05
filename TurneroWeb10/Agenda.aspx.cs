@@ -20,6 +20,23 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
+        public static List<Centro> cargarCentros()
+        {
+            try
+            {
+                GestorCentros gestorCentros = new GestorCentros();
+                List<Centro> centros = gestorCentros.obtenerCentros();
+                return centros;
+                //string col = JsonConvert.SerializeObject(centros);
+                //return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
         public static string traerTurnosDelDia(string idCentro, string dia)
         {
             try
@@ -31,23 +48,6 @@ namespace TurneroWeb10
                 string col = JsonConvert.SerializeObject(dt);
 
                 return col;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        [WebMethod]
-        public static List<Centro> cargarCentros()
-        {
-            try
-            {
-                GestorCentros gestorCentros = new GestorCentros();
-                List<Centro> centros = gestorCentros.traerCentros();
-                return centros;
-                //string col = JsonConvert.SerializeObject(centros);
-                //return col;
             }
             catch (Exception e)
             {
@@ -78,6 +78,20 @@ namespace TurneroWeb10
             {
                 GestorTurno gestorTurno = new GestorTurno();
                 gestorTurno.ModificarEstadoEnTurno(idturno, estado);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static void modificarNroOrden(string idturno, string autorizacion)
+        {
+            try
+            {
+                GestorTurno gestorTurno = new GestorTurno();
+                gestorTurno.ModificarNroOrden(idturno, autorizacion);
             }
             catch (Exception e)
             {
