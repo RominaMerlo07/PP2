@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DACentros.cs" />
+    <Compile Include="DADDJJ.cs" />
     <Compile Include="DADisponibilidadHoraria.cs" />
     <Compile Include="DAEspecialidades.cs" />
     <Compile Include="DAObrasSociales.cs" />

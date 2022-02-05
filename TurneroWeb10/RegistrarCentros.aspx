@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarCentros.aspx.cs" Inherits="TurneroWeb10.RegistrarCentros" ClientIDMode="Static" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-</asp:Content>
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
+</asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <section class="content-header">
@@ -104,6 +104,91 @@
         <!-- End Datatable -->
 
            </section>
+
+     <div class="modal fade" id="modalEditarCentro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-info">
+                    <h4 class="modal-title" id="myModalLabel">Actualizar datos del Centro</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h4 class="modal-title" id="DatosCentro">Datos Centro</h4>
+                    </div>
+                    <br />
+                    <div class="form-row">
+                        <div class="col-sm">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Nombre</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtNombre" maxlength="8" onpaste="return false"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Domicilio</span>
+                                        </div>
+                                        <input type="text" style="text-align: left" class="form-control" id="txtDomicilio" maxlength="10"  onpaste="return false"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="">Localidad</span>
+                                </div>
+                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidad"  maxlength="150" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                <%--<input type="text" style="text-align: left" class="form-control" id="txtApellidoA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">E-mail</span>
+                                </div>
+                                <div>
+                                    <input type="text" style="text-align: left" class="form-control" id="txtEmail" maxlength="10" onpaste="return false"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">N° Contacto</span>
+                                </div>
+                                <input type="text" style="text-align: left" class="form-control" id="txtNcontacto1"  maxlength="160" "/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">N° Contacto Alternativo</span>
+                                </div>
+                                <input type="text" style="text-align: left" class="form-control" id="txtNcontacto2" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnActualizarCentro">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Centros.js"%>"></script>
 
