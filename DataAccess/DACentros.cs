@@ -111,7 +111,7 @@ namespace DataAccess
                 {
                     foreach (DataRow dr in dt.Rows)
                     {
-                        
+
                         if (dr["ID_CENTRO"] != DBNull.Value)
                             centro.IdCentro = Convert.ToInt32(dr["ID_CENTRO"]);
                         if (dr["NOMBRE_CENTRO"] != DBNull.Value)
@@ -238,7 +238,7 @@ namespace DataAccess
 
         }
 
-        public string DaActualizarCentro(Centro centro) 
+        public string DaActualizarCentro(Centro centro)
         {
 
             string resultado = "OK";
@@ -258,7 +258,7 @@ namespace DataAccess
                                                         "NRO_CONTACTO_2 = @NRO_CONTACTO2, " +
                                                         "USUARIO_MOD = @USUARIO_MOD, " +
                                                         "FECHA_MOD = @FECHA_MOD " +
-                                                        "WHERE ID_CENTRO = @ID_CENTRO;";
+                                                        "WHERE ID_CENTRO = @ID_CENTRO; SELECT SCOPE_IDENTITY()";
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Transaction = trans;
@@ -293,7 +293,7 @@ namespace DataAccess
                 else
                     cmd.Parameters.AddWithValue("@NRO_CONTACTO2", DBNull.Value);
 
-                cmd.Parameters.AddWithValue("@ID_CENTROS", centro.IdCentro);
+                cmd.Parameters.AddWithValue("@ID_CENTRO", centro.IdCentro);
                 cmd.Parameters.AddWithValue("@USUARIO_MOD", centro.UsuarioMod);
                 cmd.Parameters.AddWithValue("@FECHA_MOD", centro.FechaMod);
 
@@ -314,8 +314,54 @@ namespace DataAccess
             }
 
             return resultado;
-        
+
         }
 
+        public string DaDarDeBajaCentro(Centro centro)
+        {
+
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_CENTROS SET USUARIO_BAJA = @USUARIO_BAJA," +
+                                                        "FECHA_BAJA = @FECHA_BAJA " +
+                                                        "WHERE ID_CENTRO = @ID_CENTRO;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_CENTRO", centro.IdCentro);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", centro.UsuarioBaja);
+                cmd.Parameters.AddWithValue("@FECHA_BAJA", centro.FechaBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+
+
+        }
     }
 }

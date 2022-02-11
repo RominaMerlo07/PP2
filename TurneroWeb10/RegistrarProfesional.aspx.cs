@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -7,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
 using Entidades.ent;
+using Newtonsoft.Json;
 
 namespace TurneroWeb10
 {
@@ -77,7 +79,7 @@ namespace TurneroWeb10
                     string email = p_email1 + "@" + p_email2;
                     profesional.EmailContacto = email;
                 }
-
+                    
                 profesional.UsuarioAlta = 1;
                 profesional.FechaAlta = DateTime.Today;
 
@@ -236,6 +238,7 @@ namespace TurneroWeb10
             }
 
         }
+
         [WebMethod]
         public static Profesional buscaProfesional(int idProf)
         {
@@ -252,7 +255,98 @@ namespace TurneroWeb10
                 throw e;
             }
         }
-            
+
+        [WebMethod]
+        public static string especialidadPorProfesional(string idProfesional)
+        {
+            try
+            {
+                GestorProfesionales gProfesionales = new GestorProfesionales();
+                DataTable dt = gProfesionales.especialidadPorProfesional(idProfesional);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+               
+
+
+        [WebMethod]
+        public static List<Especialidad> cargarEspecialidadesNotInProfesional(string idProfesional)
+        {
+            try
+            {
+                GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+                List<Especialidad> especialidades = gestorEspecialidades.traerEspecialidadesNotInProfesional(idProfesional);
+                return especialidades;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string registrarEspeProfesional(string p_numero, List<string> p_especialidadesP)
+        {
+
+            Profesional profesional = new Profesional();
+            GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+            try
+            {
+                string mensaje = "OK";
+
+                profesional.IdProfesional = Convert.ToInt32(p_numero);
+                profesional.UsuarioAlta = 1;
+                profesional.FechaAlta = DateTime.Today;
+
+                gestorProfesionales.RegistrarEspeProfesional(profesional, p_especialidadesP);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al registrar el profesional " + e.Message;
+                return error;
+            }
+        }
+
+
+        [WebMethod]
+        public static string darBajaProfesionalE(string IdProfesional, string idEspecialidad)
+        {
+
+            Profesional profesional = new Profesional();
+            GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+            try
+            {
+                string mensaje = "OK";
+
+                var usuarioBaja = 1;
+                var fechaBaja = DateTime.Today;
+
+                mensaje = gestorProfesionales.DarBajaProfesionalE(IdProfesional, idEspecialidad, usuarioBaja, fechaBaja);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del profesional " + e.Message;
+                return error;
+            }
+
+        }
+
+
+
+
 
     }
 }

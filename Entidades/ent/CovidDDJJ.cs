@@ -9,7 +9,7 @@ namespace Entidades.ent
         private int id_covid_ddjj;
         private Paciente paciente;
         private decimal temperatura;
-        private bool sintomas;
+        private string sintomas;
         private bool contacto_estrecho;
         private bool caso_sospechoso;
         private bool viaje;
@@ -41,7 +41,7 @@ namespace Entidades.ent
             set { temperatura = value; }
         }
 
-        public bool Sintomas
+        public string Sintomas
         {
             get { return sintomas; }
             set { sintomas = value; }

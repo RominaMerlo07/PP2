@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorCentros
     {
-        public List<Centro> obtenerCentros()
+        public List<Centro> traerCentros()
         {
             try
             {
@@ -59,10 +59,44 @@ namespace BusinessLogicLayer.Gestores
         }
 
 
+        public Centro obtenerCentro(int IdCentro)
+        {
+            try
+            {
+                DACentros daCentros = new DACentros();
+                return daCentros.obtenerCentro(IdCentro);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public string  DarDeBajaCentro(Centro centro)
+        {
+            try 
+            
+            {
+
+                DACentros daCentros = new DACentros();
+                return daCentros.DaDarDeBajaCentro(centro);
+            
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+        }
+
     }
 
-    
-        
-    }
+
+
+
+}
 
 
