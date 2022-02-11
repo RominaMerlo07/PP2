@@ -25,6 +25,7 @@ namespace Entidades.ent
         private DateTime fecha_baja;
         private string nroAfiliado;
         private string nroAutorizacionObra;
+        private int id_planTratamiento;
 
         public int IdTurno
         {
@@ -138,6 +139,12 @@ namespace Entidades.ent
         {
             get { return nroAutorizacionObra; }
             set { nroAutorizacionObra = value; }
+        }
+
+        public int Id_PlanTratamiento
+        {
+            get { return id_planTratamiento; }
+            set { id_planTratamiento = value; }
         }
         
         public Turno() { }

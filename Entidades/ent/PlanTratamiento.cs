@@ -9,8 +9,6 @@ namespace Entidades.ent
         private int id_tratamiento;
         private string descripcion;
         private DateTime fecha;
-        private Turno turno;
-        private HistoriaClinica historia_clinica;
         private int usuario_alta;
         private DateTime fecha_alta;
         private int usuario_mod;
@@ -34,18 +32,6 @@ namespace Entidades.ent
         {
             get { return fecha; }
             set { fecha = value; }
-        }
-
-        public Turno Turno
-        {
-            get { return turno; }
-            set { turno = value; }
-        }
-
-        public HistoriaClinica HistoriaClinica
-        {
-            get { return historia_clinica; }
-            set { historia_clinica = value; }
         }
 
         public int UsuarioAlta

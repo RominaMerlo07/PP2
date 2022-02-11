@@ -104,8 +104,8 @@
     }
 
     function cambioDeEstado(idturno) {
-        
-        var estado = $("#" + idturno).val();
+        debugger;
+        var estado = $("#SELECT-" + idturno).val();
 
         $.ajax({
             url: "Agenda.aspx/modificarEstadoEnTurno",
@@ -199,13 +199,13 @@
                     var Orden = '<input type="text" style="text-align: left" class="form-control" id="' + e.ID_TURNO + '" placeholder="Completar..." value="' + NroAutObra + '" onkeypress="return soloNumeros(event)" onchange="cambioNroOrden(' + e.ID_TURNO + ')" />';
 
                     var comboEstado =
-                        '<select class="custom-select form-control" id="' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ')">';
+                        '<select class="custom-select form-control" id="SELECT-' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ')">';
                     var comboEstadosItems = '';
                     estados.forEach(function (f) {
                         if (e.ESTADO == f.ESTADO) {
 
                             if (e.ESTADO == 'ATENDIDO') {
-                                comboEstado = '<select class="custom-select form-control" id="' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ') "disabled="true">';
+                                comboEstado = '<select class="custom-select form-control" id="SELECT-' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ') "disabled="true">';
                             }
 
                             comboEstadosItems += ' <option selected value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
@@ -248,7 +248,7 @@
                         { title: "Nro. Afiliado" },
                         { title: "Orden"},
                         { title: "Estado", visible: false },
-                        { title: "Estado"}
+                        { title: "Estado", width:"20%"}
                     ],
                     //dom: 'Bfrtip',
                     dom: '<"top"B>rti<"bottom"fp><"clear">',
