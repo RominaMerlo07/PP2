@@ -241,6 +241,10 @@
                                 <i class="fa fa-calendar"></i>
                                 <span>Consultar Turnos</span>
                             </a>
+                            <a class="dropdown-item" id="idGestionTratamientos" href="GestionTratamientos.aspx">
+                                <i class="fa fa-calendar"></i>
+                                <span>Tratamientos</span>
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item dropdown" id="idGestionPacientes">

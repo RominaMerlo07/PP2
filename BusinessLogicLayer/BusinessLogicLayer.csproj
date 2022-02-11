@@ -45,6 +45,7 @@
     <Compile Include="Gestores\GestorEspecialidades.cs" />
     <Compile Include="Gestores\GestorObrasSociales.cs" />
     <Compile Include="Gestores\GestorPacientes.cs" />
+    <Compile Include="Gestores\GestorPlanTratamiento.cs" />
     <Compile Include="Gestores\GestorProfesionales.cs" />
     <Compile Include="Gestores\GestorDisponibilidadHoraria.cs" />
     <Compile Include="Gestores\GestorTurno.cs" />

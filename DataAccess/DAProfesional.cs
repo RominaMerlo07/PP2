@@ -466,7 +466,7 @@ namespace DataAccess
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
 
-                string consulta = @"select dh.*
+                string consulta = @"select top 1 dh.*
                                     from t_profesionales_detalle pd, t_disponibilidad_horaria dh
                                     where pd.id_profesionales_detalle = dh.id_Profesionales_detalle
                                     and pd.FECHA_BAJA is null
@@ -474,6 +474,7 @@ namespace DataAccess
                                     and pd.ID_CENTRO = @idCentro
                                     and pd.ID_PROFESIONAL = @idProfesional
                                     and pd.ID_ESPECIALIDAD = @idEspecialidad
+                                    order by ID_DISPONIBILIDAD desc
                                      ";
 
                 cmd = new SqlCommand(consulta, con);

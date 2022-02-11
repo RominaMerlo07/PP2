@@ -485,6 +485,7 @@
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Estilos\styleRegistrarProfesional.css" />
     <Content Include="Estilos\styleLogin.css" />
+    <Content Include="GestionTratamientos.aspx" />
     <Content Include="Global.asax" />
     <Content Include="InformeObras.aspx" />
     <Content Include="InstructivosObras.aspx" />
@@ -1140,6 +1141,13 @@
     </Compile>
     <Compile Include="DisponibilidadHoraria.aspx.designer.cs">
       <DependentUpon>DisponibilidadHoraria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionTratamientos.aspx.cs">
+      <DependentUpon>GestionTratamientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionTratamientos.aspx.designer.cs">
+      <DependentUpon>GestionTratamientos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

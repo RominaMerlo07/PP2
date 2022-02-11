@@ -44,7 +44,9 @@ namespace DataAccess
                                         "USUARIO_ALTA, " +
                                         "FECHA_ALTA, " +
                                         "ID_PLAN_OBRA, " +
-                                        "NRO_AFILIADO " +
+                                        "NRO_AFILIADO, " +
+                                        "NRO_AUTORIZACION_OBRA," +
+                                        "ID_PLAN_TRATAMIENTO" +
                                     ") VALUES ( " +
                                         "@ID_PACIENTE, " +
                                         "@ID_PROFESIONAL, " +
@@ -59,7 +61,9 @@ namespace DataAccess
                                         "@USUARIO_ALTA, " +
                                         "@FECHA_ALTA, " +
                                         "@ID_PLAN_OBRA, " +
-                                        "@NRO_AFILIADO " +
+                                        "@NRO_AFILIADO, " +
+                                        "@NRO_AUTORIZACION_OBRA," +
+                                        "@ID_PLAN_TRATAMIENTO" +
                                         ")";
 
 
@@ -101,6 +105,15 @@ namespace DataAccess
                 else
                     cmd.Parameters.AddWithValue("@NRO_AFILIADO", DBNull.Value);
 
+                if (!string.IsNullOrEmpty(turno.NroAutorizacionObra))
+                    cmd.Parameters.AddWithValue("@NRO_AUTORIZACION_OBRA", turno.NroAutorizacionObra);
+                else
+                    cmd.Parameters.AddWithValue("@NRO_AUTORIZACION_OBRA", DBNull.Value);
+
+                if (turno.Id_PlanTratamiento != 0)
+                    cmd.Parameters.AddWithValue("@ID_PLAN_TRATAMIENTO", turno.Id_PlanTratamiento);
+                else
+                    cmd.Parameters.AddWithValue("@ID_PLAN_TRATAMIENTO", DBNull.Value);
 
                 cmd.Parameters.AddWithValue("@FECHA_TURNO", turno.FechaTurno);
                 cmd.Parameters.AddWithValue("@HORA_DESDE", turno.HoraDesde);
@@ -518,6 +531,128 @@ namespace DataAccess
                 dta.Fill(dt);
 
                 return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool VerificarTurnoDisponible(Turno turno)
+        {
+            try
+            {
+                bool validacion = false;
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"
+                                    select * from T_TURNOS t
+                                    where t.ID_CENTRO = @idCentro
+                                    and t.ID_ESPECIALIDAD = @idEspecialidad
+                                    and t.ID_PROFESIONAL = @idProfesional
+                                    and t.FECHA_TURNO = @diaTurno
+                                    and t.HORA_DESDE = @horaTurno 
+                                    and t.ESTADO != 'CANCELADO'
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (turno.Centro.IdCentro != 0)
+                    cmd.Parameters.AddWithValue("@idCentro", turno.Centro.IdCentro);
+                else
+                    cmd.Parameters.AddWithValue("@idCentro", DBNull.Value);
+
+                if (turno.Especialidad.IdEspecialidad != 0)
+                    cmd.Parameters.AddWithValue("@idEspecialidad", turno.Especialidad.IdEspecialidad);
+                else
+                    cmd.Parameters.AddWithValue("@idEspecialidad", DBNull.Value);
+
+                if (turno.Profesional.IdProfesional != 0)
+                    cmd.Parameters.AddWithValue("@idProfesional", turno.Profesional.IdProfesional);
+                else
+                    cmd.Parameters.AddWithValue("@idProfesional", DBNull.Value);
+
+                cmd.Parameters.AddWithValue("@diaTurno", turno.FechaTurno);
+                cmd.Parameters.AddWithValue("@horaTurno", turno.HoraDesde);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    validacion = false;
+                }
+                else
+                {
+                    validacion = true;
+                }
+                return validacion;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool ValidacionDelDiaTurno(Turno turno)
+        {
+            try
+            {
+                bool validacion = false;
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"
+                                    select * from T_TURNOS t
+                                    where t.ID_CENTRO = @idCentro
+                                    and t.ID_ESPECIALIDAD = @idEspecialidad
+                                    and t.ID_PROFESIONAL = @idProfesional
+                                    and t.ID_PACIENTE = @idPaciente
+                                    and t.FECHA_TURNO = @diaTurno
+                                    and t.ESTADO != 'CANCELADO'
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (turno.Centro.IdCentro != 0)
+                    cmd.Parameters.AddWithValue("@idCentro", turno.Centro.IdCentro);
+                else
+                    cmd.Parameters.AddWithValue("@idCentro", DBNull.Value);
+
+                if (turno.Especialidad.IdEspecialidad != 0)
+                    cmd.Parameters.AddWithValue("@idEspecialidad", turno.Especialidad.IdEspecialidad);
+                else
+                    cmd.Parameters.AddWithValue("@idEspecialidad", DBNull.Value);
+
+                if (turno.Profesional.IdProfesional != 0)
+                    cmd.Parameters.AddWithValue("@idProfesional", turno.Profesional.IdProfesional);
+                else
+                    cmd.Parameters.AddWithValue("@idProfesional", DBNull.Value);
+
+                if (turno.Paciente.IdPaciente != 0)
+                    cmd.Parameters.AddWithValue("@idPaciente", turno.Paciente.IdPaciente);
+                else
+                    cmd.Parameters.AddWithValue("@idPaciente", DBNull.Value);
+
+                cmd.Parameters.AddWithValue("@diaTurno", turno.FechaTurno);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    validacion = false;
+                }
+                else
+                {
+                    validacion = true;
+                }
+                return validacion;
+
             }
             catch (Exception ex)
             {

@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorCentros
     {
-        public List<Centro> obtenerCentro()
+        public List<Centro> obtenerCentros()
         {
             try
             {

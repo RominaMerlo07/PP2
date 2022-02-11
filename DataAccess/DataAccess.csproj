@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +50,7 @@
     <Compile Include="DAObrasSociales.cs" />
     <Compile Include="DAPaciente.cs" />
     <Compile Include="DAPersonal.cs" />
+    <Compile Include="DAPlanTratamiento.cs" />
     <Compile Include="DAProfesional.cs" />
     <Compile Include="DAProfesionalDetalle.cs" />
     <Compile Include="DARoles.cs" />

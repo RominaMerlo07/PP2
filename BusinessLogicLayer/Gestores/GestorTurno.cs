@@ -134,5 +134,31 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+        public bool VerificarTurnoDisponible(Turno turno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.VerificarTurnoDisponible(turno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool ValidacionDelDiaTurno(Turno turno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.ValidacionDelDiaTurno(turno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
