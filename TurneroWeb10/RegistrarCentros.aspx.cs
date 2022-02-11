@@ -87,7 +87,7 @@ namespace TurneroWeb10
             try
             {
                 GestorCentros gestorCentros = new GestorCentros();
-                List<Centro> centros = new List<Centro>();//gestorCentros.traerCentros();
+                List<Centro> centros =  gestorCentros.obtenerCentro();//;new List<Centro>();
                 return centros;
             }
             catch (Exception e)

@@ -77,7 +77,7 @@ namespace TurneroWeb10
             try
             {
                 GestorCentros gestorCentros = new GestorCentros();
-                List<Centro> centros = gestorCentros.traerCentros();
+                List<Centro> centros = gestorCentros.obtenerCentro();
                 return centros;
                 //string col = JsonConvert.SerializeObject(centros);
                 //return col;
