@@ -254,7 +254,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" id="idPacientes" href="RegistrarPaciente.aspx">
-                                <i class="fa fa-user-plus"></i>
+                                <i class="fa fa-user"></i>
                                 <span>Pacientes</span>
                             </a>
                             <a class="dropdown-item" id="idHistoriasClinicas" href="#">
@@ -270,7 +270,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" id="idProfesionales" href="RegistrarProfesional.aspx">
-                                <i class="fa fa-user-plus"></i>
+                                <i class="fa fa-user-md"></i>
                                 <span>Profesionales</span>
                             </a>
                             <a class="dropdown-item" id="idEspecialidades" href="RegistrarEspecialidades.aspx">
