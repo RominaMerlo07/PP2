@@ -159,5 +159,34 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int inactivarPaciente(Paciente paciente)
+        {
+            try
+            {
+                DAPaciente DaPaciente = new DAPaciente();
+                paciente.IdPaciente = DaPaciente.inactivarPaciente(paciente);
+
+
+                if (paciente.IdPaciente > 0)
+                {
+                    ObrasPacientes obraPaciente = new ObrasPacientes();
+
+                    obraPaciente.IdPaciente = paciente.IdPaciente;
+                    obraPaciente.UsuarioBaja = paciente.UsuarioBaja;
+                    obraPaciente.FechaBaja = paciente.FechaBaja;
+
+                    DAObraPaciente DaObraPaciente = new DAObraPaciente();
+                    int idObraPaciente = DaObraPaciente.inactivarObraPaciente(obraPaciente);
+
+                }
+                return paciente.IdPaciente;
+            }
+
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

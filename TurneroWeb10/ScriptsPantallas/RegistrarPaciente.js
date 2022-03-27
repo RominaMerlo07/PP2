@@ -409,9 +409,18 @@ function sendDataPacienteOS(numero) {
                 var CodigoPlan = e.COD_PLAN;
                 var Plan = e.PLAN;
                 var NumAfiliado = e.NRO_AFILIADO;
+                var Acciones;
 
-                var Acciones = '<a href="#" onclick="return actualizarOS(' + idObraPaciente + ",'" + NumAfiliado + "'" + ')"  class="btn btn-primary btnEditarOS" > <span class="fa-solid fa-pen-to-square"></span></a> ' +
-                               '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+                if (ObraSocial != "PARTICULAR") {
+
+                    Acciones = '<a href="#" onclick="return actualizarOS(' + idObraPaciente + ",'" + NumAfiliado + "'" + ')"  class="btn btn-primary btnEditarOS" > <span class="fa-solid fa-pen-to-square"></span></a> ' +
+                        '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+
+                }
+                else {
+                    Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+                }
+
 
             
                 arrayPacienteOS.push([
@@ -502,7 +511,6 @@ $("#btnCancelarOS").click(function () {
     $("#editarObraSocial").hide();
     document.getElementById("agregar").style.display = "block";
 });
-
 
 
 function inactivarE(idPaciente, idObraPaciente) {
@@ -693,4 +701,37 @@ $("#btnActualizarOS").click(function (e) {
     actualizarOSPaciente(obraPaciente);
 
 })
+
+
+function inactivar(idPaciente, paciente) {
+
+    console.log(idPaciente, paciente);
+
+    $.ajax({
+        type: "POST",
+        url: "RegistrarPaciente.aspx/inactivarPaciente",
+        data: "{idPaciente: '" + idPaciente + "'}",       
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr, ajaxOptions, thrownError) {
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        success: function (response) {
+
+            console.log(response.d);
+
+            if (response.d != 'OK') {
+                swal("Hubo un problema", "Error al dar de baja el paciente.", "error");
+            }
+            else {
+                $('#btnActfProfesional').show();
+                swal("Hecho", "El paciente fue dado de baja.", "success");
+                sendDataPacientes();
+            }
+
+        }
+    })
+}
 

@@ -185,6 +185,47 @@ namespace DataAccess
 
         }
 
+        public int inactivarObraPaciente(ObrasPacientes obraPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_OBRAS_PACIENTES " +
+                                     "SET FECHA_BAJA = @FECHA_BAJA, " +
+                                         "USUARIO_BAJA = @USUARIO_BAJA " +
+                                   "WHERE ID_PACIENTE = @ID_PACIENTE " +
+                                     "AND FECHA_BAJA is NULL;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", obraPaciente.IdPaciente);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", obraPaciente.UsuarioBaja);
+                cmd.Parameters.AddWithValue("@FECHA_BAJA", obraPaciente.FechaBaja);
+
+                //cmd.ExecuteNonQuery();
+                int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+                trans.Commit();
+
+                con.Close();
+
+                return devolver;
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+        }
+
 
     }
 }

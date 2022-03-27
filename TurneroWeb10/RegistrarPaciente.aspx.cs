@@ -377,6 +377,36 @@ namespace TurneroWeb10
 
         }
 
+
+        [WebMethod]
+        public static string inactivarPaciente(string idPaciente)
+        {
+
+            Paciente paciente = new Paciente();
+            GestorPacientes gestorPacientes = new GestorPacientes();
+
+            try
+            {
+                string mensaje = "OK";
+
+
+                paciente.IdPaciente = Convert.ToInt32(idPaciente);
+                paciente.UsuarioBaja = 1;
+                paciente.FechaBaja = DateTime.Today;
+
+
+                gestorPacientes.inactivarPaciente(paciente);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al registrar el paciente " + e.Message;
+                return error;
+            }
+
+        }
+
     }
 
 
