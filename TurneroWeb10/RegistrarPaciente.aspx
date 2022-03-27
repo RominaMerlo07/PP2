@@ -5,295 +5,377 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <%--<p>"ABM REGISTRAR PACIENTE"</p>--%>
 
-    <section class="content-header">
-        <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Pacientes</button>
-        <h1 style="text-align: left">REGISTRO DE PACIENTES</h1>
+    <section class="content-header">      
+        <h1 style="text-align: center">PACIENTES</h1>
     </section>
     <section class="content">
+         <div class="row">
+            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"> <i class="fas fa-user-plus"></i>  | Registrar Paciente</button>
+        </div>
+        <br />
+
+          <!-- Lista pacientes -->
+        <!-- Datatable Part -->
         <div class="row">
-            <div class="col-md-6" id="crdDatosPersonales">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos personales</h4>
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h1 class="box-title">Listado de Pacientes</h1>
+                </div>
+                <div class="box-body table-responsive">
+                    <div class="col-md-12">
+                        <table style="width:100%" id="tabla_pacientes" class="table table-bordered table-hover">
+                            <tbody id="tbl_body_table">
+                                <!-- DATA POR MEDIO DE AJAX-->
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-sm4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">DNI</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)"/>
+                </div>
+            </div>
+        </div>
+        <!-- End Datatable -->
+        <!-- End Lista pacientes -->                                   
+       
+    </section>
+
+
+    <%--Modal Registrar--%>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalRegistrar" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h4 class="modal-title " id="lblTituloTurno">Registrar Paciente</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" id="formularioRegistrar">
+                    <div class="row">
+                        <div class="col-md" id="crdPaciente2">
+                            <div class="card text-white">
+                                <div class="card-header bg-info">
+                                    <h4 class="modal-title text-white ">Datos Personales</h4>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="">Nombre y Apellido</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtNombre" />
-                                    <input type="text" style="text-align: left" class="form-control" id="txtApellido" />
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Fecha de Nacimiento</span>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-sm">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">DNI: </span>
+                                                </div>
+                                                <input type="text" name="dni" style="text-align: left" class="formulario-input form-control" id="id__txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtDocumento"></i>--%>
+                                            </div>
+                                            <%-- <p class="formulario__error" id="p__txtDocumento"> Por favor, ingrese el DNI sin puntos.</p>--%>
                                         </div>
-                                        <div>
-                                            <input type='text' class="form-control datepicker date" id="dtpFechaNac"
-                                                placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                                data-date-format="dd/mm/yyyy" />
+                                        <div class="col ">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Celular:</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="id__txtCelular" onkeypress="return soloNumeros(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Nombre y Apellido:</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="id__txtNombre" onkeypress="return soloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <input type="text" style="text-align: left" class="form-control" id="id__txtApeliido" onkeypress="return soloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col ">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Email: </span>
+                                                </div>
+                                                <input type="text" class="form-control" id="id__txtEmail1" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">@</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="id__txtEmail2" placeholder="gmail.com" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md" id="crdDatosContacto">
+                                        <div class="card text-white bg-light">
+                                            <div class="card-header text-white bg-info">
+                                                <h4>Datos Obra Social</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <div class="form-row">
+                                                            <div class="col ">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Obra Social: </span>
+                                                                    </div>
+                                                                    <select class="custom-select form-control" id="ddlObraSocial">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col ">
+                                                                <div class="input-group mb-3" id="frmPlanObra">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Plan: </span>
+                                                                    </div>
+                                                                    <select class="custom-select form-control" id="ddlPlanObra">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-row">
+                                                            <div class="col ">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Nro. Afiliado:</span>
+                                                                    </div>
+                                                                    <input type="text" style="text-align: left" class="form-control" id="id__txtNroAfiliado" onkeypress="return soloNumeros(event)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Obra Social: </span>
-                                    </div>
-                                    <select class="custom-select form-control" id="ddlObraSocial">
-                                        <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                        <option value="1">Particular</option>
-                                        <option value="2">Omint</option>
-                                        <option value="3">Sancor</option>
-                                        <option value="3">Swiss Medical</option>
-                                        <option value="3">Sipssa</option>
-                                    </select>
+                            
+                         </div>
+                            <div class="modal-footer">
+                                <div class="row float-right">
+                                    <button class="btn btn-success btn-lg " type="button" id="btnRegistrar">Registrar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>   
+    <%--final Modal registrar--%>
 
-            <div class="col-md-6" id="crdDatosContacto">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos de Contacto</h4>
+
+    <%--Modal Editar--%>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalEditar" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h4 class="modal-title " id="">Actualizar datos del Paciente</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" id="formularioEditar">
+                    <div class="row">
+                        <div class="col-md" id="crdPacienteE">
+                            <div class="card text-white bg-white">
+                                <div class="card-header bg-light">
+                                    <h4 class="modal-title text-black">Datos Personales</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-sm">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">DNI: </span>
+                                                </div>
+                                                <input type="text" name="dni" style="text-align: left" class="formulario-input form-control" id="id__txtDocumentoE" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtDocumento"></i>--%>
+                                            </div>
+                                            <%-- <p class="formulario__error" id="p__txtDocumento"> Por favor, ingrese el DNI sin puntos.</p>--%>
+                                        </div>
+                                        <div class="col ">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Celular:</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="id__txtCelularE" onkeypress="return soloNumeros(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Nombre y Apellido:</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="id__txtNombreE" onkeypress="return soloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <input type="text" style="text-align: left" class="form-control" id="id__txtApeliidoE" onkeypress="return soloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col ">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Email: </span>
+                                                </div>
+                                                <input type="text" class="form-control" id="id__txtEmail1E" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">@</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="id__txtEmail2E" placeholder="gmail.com" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Calle</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtCalle" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Numero</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtNumero" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Barrio</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtBarrio" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Localidad</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtLocalidad" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Celular</span>
-                                    </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtCelular" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Email: </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="txtEmail1" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">@</span>
-                                    </div>
-                                    <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" />
-                                </div>
-                            </div>
+                    <div class="modal-footer">
+                        <div class="row float-right">
+                            <button class="btn btn-success btn-lg " type="button" id="btnEditar">Actualizar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <br />
-        <!--VER COMO ALINEAR DOS BOTONES AL CENTRO O A LA DERECHA-->
-        <%--<button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>--%>
-        <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
-    </section>
-    <script type="text/javascript">
-        var dni;
-        var nombre;
-        var apellido;
-        var fechaNac;
-        var obraSocial;
+    </div>
+    <%--final Modal Editar--%>
 
-        var calle;
-        var numero;
-        var barrio;
-        var localidad;
-        var celular;
-        var email1;
-        var email2;
-
-        $(document).ready(function () {
-
-            $('.date').datepicker({
-                autoclose: true,
-                format: "dd/mm/yyyy"
-            });
-
-            $('#btnRegistrar').click(function () {
-
-                dni = $('#txtDocumento').val();
-                nombre = $('#txtNombre').val();
-                apellido = $('#txtApellido').val();
-                fechaNac = $('#dtpFechaNac').val();
-                obraSocial = $('#ddlObraSocial').val();
-                calle = $('#txtCalle').val();
-                numero = $('#txtNumero').val();
-                barrio = $('#txtBarrio').val();
-                localidad = $('#txtLocalidad').val();
-                celular = $('#txtCelular').val();
-                email1 = $('#txtEmail1').val();
-                email2 = $('#txtEmail2').val();
-
-                var validacion = validarDatosPaciente();
-
-                if (validacion === true) {
-
-                    var paciente = {
-
-                        p_dni: dni,
-                        p_nombre: nombre,
-                        p_apellido: apellido,
-                        p_fechaNac: fechaNac,
-                        p_obraSocial: obraSocial,
-                        p_calle: calle,
-                        p_numero: numero,
-                        p_barrio: barrio,
-                        p_localidad: localidad,
-                        p_celular: celular,
-                        p_email1: email1,
-                        p_email2: email2
-                    }                 
-                    registrarPaciente(paciente);                 
-                }              
-
-            });
-
-        });
-
-
-        function registrarPaciente(datosPaciente) {
-            $.ajax({
-                url: "RegistrarPaciente.aspx/registrarPaciente",
-                data: JSON.stringify(datosPaciente),
-                type: "post",
-                contentType: "application/json",
-                async: false,
-                success: function (data) {
-
-                    if (data.d != 'OK') {
-                        alert('Error al registrar el paciente.')
-                    } else {
-                        $('#btnConfPaciente').show();
-                        alert('Paciente registrado con Éxito.')
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(data.error);
-                }
-
-            });
-
-        }
-              
-
-        function validarDatosPaciente() {
-
-            if (dni == null) {
-                alert("Por favor, ingrese DNI");
-                return false;
-            }
-            else if (nombre == null) {
-                alert("Por favor, ingrese Nombre");
-                return false;
-            }
-            else if (apellido == null) {
-                alert("Por favor, ingrese Apellido");
-                return false;
-            }
-            else if (fechaNac == "") {
-                alert("Por favor, ingrese Fecha de Nacimiento");
-                return false;
-            }
-            else if (obraSocial == null) {
-                alert("Por favor, seleccione una obra social o particular");
-                return false;
-            }
-            else if (calle == "") {
-                alert("Por favor, ingrese Calle");
-                return false;
-            }
-            else if (numero == "") {
-                alert("Por favor, ingrese Numero");
-                return false;
-            }
-            else if (barrio == "") {
-                alert("Por favor, ingrese Barrio");
-                return false;
-            }
-            else if (localidad == "") {
-                alert("Por favor, ingrese Localidad");
-                return false;
-            }
-            else if (celular == "") {
-                alert("Por favor, ingrese un telefono de contacto");
-                return false;
-            }
-            else if (email1 == "") {
-                alert("Por favor, ingrese un E-mail válido");
-                return false;
-            }
-            else if (email2 == "") {
-                alert("Por favor, ingrese un E-mail válido");
-                return false;
-            }
-            else {
-                return true;
-            };
-        };
+    <%--Modal ObrasSociales--%>
+    <div class="modal fade" id="modalObrasSociales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-info">
+                    <h4 class="modal-title" id="lblObraSocial">Obras Sociales por Paciente</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <%--  <div class="row">--%>
+                    <div class="col-md-12" id="crdDatosObraSocial">
+                        <div class="card text-white">
+                            <div class="card-header ">
+                                <h4 class="modal-title text-dark" id="infoPaciente">Paciente - Documento</h4>
+                            </div>
+                            <div class="card-body">
+                                <!-- Datatable Part -->
+                                <div class="row">
+                                    <div class="col-md" id="agregar">
+                                        <button class="btn btn-success" type="button" id="btnRegistrarOS"><i class="fas fa-plus-square"></i>| Agregar Obra Social</button>
+                                        <br />
+                                        <br />
+                                        <div class="card-body bg-light border-info" id="agregarObraSocial">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="form-row">
+                                                        <div class="col ">
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">Obra Social: </span>
+                                                                </div>
+                                                                <select class="custom-select form-control" id="ddlObraSocialE">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col ">
+                                                            <div class="input-group mb-3" id="frmPlanObraE">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">Plan: </span>
+                                                                </div>
+                                                                <select class="custom-select form-control" id="ddlPlanObraE">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col ">
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">Nro. Afiliado:</span>
+                                                                </div>
+                                                                <input type="text" style="text-align: left" class="form-control" id="id__txtNroAfiliadoE" onkeypress="return soloNumeros(event)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10 col-xs-6">
+                                                    <button class="btn btn-success float-right" type="button" id="btnAgregar">Agregar</button>
+                                                </div>
+                                                <div class="col-md-2 col-xs-6">
+                                                    <button class="btn btn-secondary float-right" type="button" id="btnCancelar">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="card-body bg-light border-info" id="editarObraSocial">
+                                        <div class="card-header bg-info">
+                                            <h6 class="modal-title text-white" id="editar">Actualizar obra social</h6>
+                                        </div>
+                                        <br />
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-row">
+                                                    <div class="col ">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Obra Social: </span>
+                                                            </div>
+                                                            <select class="custom-select form-control" id="ddlObraSocialOS">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col ">
+                                                        <div class="input-group mb-3" id="frmPlanObraOS">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Plan: </span>
+                                                            </div>
+                                                            <select class="custom-select form-control" id="ddlPlanObraOS">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col ">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Nro. Afiliado:</span>
+                                                            </div>
+                                                            <input type="text" style="text-align: left" class="form-control" id="id__txtNroAfiliadoOS" onkeypress="return soloNumeros(event)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10 col-xs-6">
+                                                <button class="btn btn-success float-right" type="button" id="btnActualizarOS">Actualizar</button>
+                                            </div>
+                                            <div class="col-md-2 col-xs-6">
+                                                <button class="btn btn-secondary float-right" type="button" id="btnCancelarOS">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-body table-responsive text-dark">
+                                        <div class="col-md-12 ">
+                                            <table style="width: 100%" id="tabla_obrasSociales" class="table table-bordered table-hover">
+                                                <tbody id="tbl_body_table_E">
+                                                    <!-- DATA POR MEDIO DE AJAX-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>                                                                  
+                             
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Datatable -->
+                    </div>
+                </div>
+            </div>
+            <%-- </div> --%>
+        </div>
+    </div>
+    <%--End Modal ObrasSociales--%>
 
 
-    </script>
+
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarPaciente.js"%>"></script>
+
 </asp:Content>

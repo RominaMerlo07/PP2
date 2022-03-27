@@ -250,9 +250,9 @@ function actualizar(idBuscar) {
 
             $("#txtNombreA").val(data.d.Nombre);
             $("#txtApellidoA").val(data.d.Apellido);
-            $("#txtDocumentoA").val(data.d.Documento);            
+            $("#id__txtDocumentoE").val(data.d.Documento);            
             $("#txtLocalidadA").val(data.d.Localidad);
-            $("#dtpFechaNacA").val(mostrarFecha(data.d.FechaNacimiento));
+            $("#id__dtpFechaNacE").val(mostrarFecha(data.d.FechaNacimiento));
             var direccion = data.d.Domicilio.split('Barrio:')
             $("#txtDomicilio").val(direccion[0]);
             $("#txtBarrioA").val(direccion[1]);
@@ -274,7 +274,7 @@ $("#btnActualizar").click(function (e) {
     UpdateDataPersonal(id);
 
     //$("#tabla_profesionales").DataTable().fnClearTable();
-    sendDataPersonal();
+    
     $("#modalEditar").modal('hide');
 
 });
@@ -286,8 +286,8 @@ function UpdateDataPersonal(id) {
         id: id,
         nombre: $("#txtNombreA").val(),
         apellido: $("#txtApellidoA").val(),
-        dni: $("#txtDocumentoA").val(),       
-        fechaNacimiento: $("#dtpFechaNacA").val(),
+        dni: $("#id__txtDocumentoE").val(),       
+        fechaNacimiento: $("#id__dtpFechaNacE").val(),
         localidad: $("#txtLocalidadA").val(),
         barrio: $("#txtBarrioA").val(),
         direccion: $("#txtDomicilio").val(),
@@ -315,6 +315,7 @@ function UpdateDataPersonal(id) {
             else {
                 $('#btnActfProfesional').show();
                 swal("Hecho", "Los datos del personal se actualizaron con Éxito.", "success");
+                sendDataPersonal();
             }
             //console.log(response);
         }

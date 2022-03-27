@@ -11,7 +11,7 @@
         <div class="row">
             <button class="btn btn-success btn-lg float-right" type="button" id="btnModalCreaTratamiento">Crear Tratamiento</button>
         </div>
-        </br>
+        <br/>
 
         <!-- Datatable Part -->
         <div class="row justify-content-md-center">           

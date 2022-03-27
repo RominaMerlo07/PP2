@@ -27,8 +27,7 @@ namespace DataAccess
                 string consulta = @"select  os.ID_OBRA_SOCIAL,
                                             os.DESCRIPCION
                                         from t_obras_sociales os
-                                        where os.fecha_baja is null
-                                        
+                                        where os.fecha_baja is null                                        
                                         ;";
                 //and os.id_centro = @idCentro
 
@@ -244,6 +243,179 @@ namespace DataAccess
                 trans.Commit();
                 con.Close();
 
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public List<ObraSocial> obtenerOSPacientes()
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT ID_OBRA_SOCIAL, 
+	                                       CONCAT(DESCRIPCION, ' - Centro: ', NOMBRE_CENTRO) DESCRIPCION
+                                      FROM T_OBRAS_SOCIALES OS, T_CENTROS C
+                                     WHERE OS.ID_CENTRO = C.ID_CENTRO
+                                       AND OS.FECHA_BAJA IS NULL
+                                       AND C.FECHA_BAJA IS NULL
+                                     ORDER BY DESCRIPCION;";
+            
+
+                cmd = new SqlCommand(consulta, con);
+          
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<ObraSocial> listaObrasSociales = new List<ObraSocial>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ObraSocial obraSocial = new ObraSocial();
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                            obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                    
+                        listaObrasSociales.Add(obraSocial);
+                    }
+
+                    return listaObrasSociales;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public List<ObraSocial> obtenerOSxPaciente(string idPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT ID_OBRA_SOCIAL, 
+	                                       CONCAT(DESCRIPCION, ' - Centro: ', NOMBRE_CENTRO) DESCRIPCION
+                                      FROM T_OBRAS_SOCIALES OS, 
+                                           T_CENTROS C
+                                     WHERE OS.ID_CENTRO = C.ID_CENTRO
+                                       AND OS.FECHA_BAJA IS NULL
+                                       AND C.FECHA_BAJA IS NULL
+                                    EXCEPT
+                                    SELECT os.ID_OBRA_SOCIAL, 
+	                                       CONCAT(OS.DESCRIPCION, ' - Centro: ', NOMBRE_CENTRO) DESCRIPCION 
+                                      FROM T_OBRAS_SOCIALES OS, 
+                                           T_CENTROS C, 
+                                           T_OBRAS_PACIENTES OP, 
+                                           T_OBRAS_PLANES OPL
+                                     WHERE OS.ID_CENTRO = C.ID_CENTRO
+                                       AND OS.ID_OBRA_SOCIAL = OP.ID_OBRA_SOCIAL
+                                       AND OP.ID_PLAN =  OPL.ID_PLANES
+                                       AND OP.ID_PACIENTE = @ID_PACIENTE                                       
+                                       AND OP.FECHA_BAJA IS NULL
+                                     ORDER BY DESCRIPCION;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<ObraSocial> listaObrasSociales = new List<ObraSocial>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ObraSocial obraSocial = new ObraSocial();
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                            obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+
+                        listaObrasSociales.Add(obraSocial);
+                    }
+
+                    return listaObrasSociales;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<ObraSocial> obtenerOSePaciente(string idObraPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT OS.ID_OBRA_SOCIAL, 
+                                           OS.DESCRIPCION DESCRIPCION
+                                      FROM T_OBRAS_SOCIALES OS, 
+                                           T_CENTROS C, 
+                                           T_OBRAS_PACIENTES OP, 
+                                           T_OBRAS_PLANES OPL
+                                     WHERE OS.ID_CENTRO = C.ID_CENTRO
+                                       AND OS.ID_OBRA_SOCIAL = OP.ID_OBRA_SOCIAL
+                                       AND OP.ID_PLAN =  OPL.ID_PLANES
+                                       AND OP.ID_OBRA_PACIENTE = @ID_OBRA_PACIENTE
+                                       AND OS.FECHA_BAJA IS NULL
+                                       AND C.FECHA_BAJA IS NULL
+                                       AND OP.FECHA_BAJA IS NULL;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@ID_OBRA_PACIENTE", idObraPaciente);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<ObraSocial> listaObrasSociales = new List<ObraSocial>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ObraSocial obraSocial = new ObraSocial();
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                            obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+
+                        listaObrasSociales.Add(obraSocial);
+                    }
+
+                    return listaObrasSociales;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception e)
             {

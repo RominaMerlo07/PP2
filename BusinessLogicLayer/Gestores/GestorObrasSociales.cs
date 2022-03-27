@@ -95,7 +95,67 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
-        
+
+        public List<ObraSocial> obtenerOSPacientes()
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                List<ObraSocial> list = daObrasSociales.obtenerOSPacientes();
+
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<ObraSocial> obtenerOSxPaciente(string idPaciente)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                List<ObraSocial> list = daObrasSociales.obtenerOSxPaciente(idPaciente);
+
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<ObraSocial> obtenerOSePaciente(string idObraPaciente)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                List<ObraSocial> list = daObrasSociales.obtenerOSePaciente(idObraPaciente);
+
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 
 
