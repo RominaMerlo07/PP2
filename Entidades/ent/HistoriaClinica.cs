@@ -7,12 +7,23 @@ namespace Entidades.ent
     public class HistoriaClinica
     {
         private int id_historia_clinica;
-        private int id_paciente;
-        private int id_profesional;
-        private string derivante;
-        private string mat_derivante;
-        private string especialidad_derivante;
-        private DateTime fecha_ingreso;
+
+        private bool tension;
+        private string tension_valores;
+        private bool diabetes;
+        private bool fumador;
+        private bool cardiaco;
+        private bool cirrosis;
+        private bool artrosis;
+        private bool artritis_rematoidea;
+        private bool hemiplejia;
+        private bool asma;
+        private bool marcapasos;
+        private bool protesis;
+        private bool cadera_derecha;
+        private bool cadera_izquierda;
+        private string otros;
+        private string antecedentes;
         private int usuario_alta;
         private DateTime fecha_alta;
         private int usuario_mod;
@@ -26,40 +37,100 @@ namespace Entidades.ent
             set { id_historia_clinica = value; }
         }
 
-        public int IdPaciente
+        public bool Tension
         {
-            get { return id_paciente; }
-            set { id_paciente = value; }
+            get { return tension; }
+            set { tension = value; }
         }
 
-        public int IdProfesional
+        public string TensionValores
         {
-            get { return id_profesional; }
-            set { id_profesional = value; }
+            get { return tension_valores; }
+            set { tension_valores = value; }
         }
 
-        public string Derivante
+        public bool Diabetes
         {
-            get { return derivante; }
-            set { derivante = value; }
+            get { return diabetes; }
+            set { diabetes = value; }
         }
 
-        public string MatDerivante
+        public bool Fumador
         {
-            get { return mat_derivante; }
-            set { mat_derivante = value; }
+            get { return fumador; }
+            set { fumador = value; }
         }
 
-        public string EspecialidadDerivante
+        public bool Cardiaco
         {
-            get { return especialidad_derivante; }
-            set { especialidad_derivante = value; }
+            get { return cardiaco; }
+            set { cardiaco = value; }
         }
 
-        public DateTime FechaIngreso
+        public bool Cirrosis
         {
-            get { return fecha_ingreso; }
-            set { fecha_ingreso = value; }
+            get { return cirrosis; }
+            set { cirrosis = value; }
+        }
+
+        public bool Artrosis
+        {
+            get { return artrosis; }
+            set { artrosis = value; }
+        }
+
+        public bool ArtritisRematoidea
+        {
+            get { return artritis_rematoidea; }
+            set { artritis_rematoidea = value; }
+        }
+
+        public bool Hemiplejia
+        {
+            get { return hemiplejia; }
+            set { hemiplejia = value; }
+        }
+
+        public bool Asma
+        {
+            get { return asma; }
+            set { asma = value; }
+        }
+
+        public bool Marcapasos
+        {
+            get { return marcapasos; }
+            set { marcapasos = value; }
+        }
+
+        public bool Protesis
+        {
+            get { return protesis; }
+            set { protesis = value; }
+        }
+
+        public bool CaderaDerecha
+        {
+            get { return cadera_derecha; }
+            set { cadera_derecha = value; }
+        }
+
+        public bool CaderaIzquierda
+        {
+            get { return cadera_izquierda; }
+            set { cadera_izquierda = value; }
+        }
+
+        public string Otros
+        {
+            get { return otros; }
+            set { otros = value; }
+        }
+
+        public string Antecedentes
+        {
+            get { return antecedentes; }
+            set { antecedentes = value; }
         }
 
         public int UsuarioAlta

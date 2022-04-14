@@ -55,6 +55,9 @@
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/select2.min.js"%>"></script>
     
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/moment.min.js"%>"></script>
+
+    <link rel="stylesheet" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/css/iCheck/flat/green.css"%>"/>
+    <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/iCheck/icheck.js"%>"></script>
     
     <style>
         html, body {
@@ -257,9 +260,9 @@
                                 <i class="fa fa-user-plus"></i>
                                 <span>Pacientes</span>
                             </a>
-                            <a class="dropdown-item" id="idHistoriasClinicas" href="#">
+                            <a class="dropdown-item" id="idSeguimientoPaciente" href="GestionSeguimientoPacientes.aspx">
                                 <i class="fa fa-notes-medical"></i>
-                                <span>Historias Clínicas</span>
+                                <span>Seguimiento de Pacientes</span>
                             </a>
                         </div>
                     </li>
@@ -347,7 +350,7 @@
             var rol = traerRol();
 
             if (rol == 'ADMINISTRATIVO') {
-                $("#idHistoriasClinicas").hide();
+                $("#idSeguimientoPaciente").hide();
                 $("#idGestionUsuarios").hide();
                 $("#idGestionSucursales").hide();
             }

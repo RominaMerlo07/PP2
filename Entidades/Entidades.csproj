@@ -47,8 +47,6 @@
     <Compile Include="ent\DisponibilidadHoraria.cs" />
     <Compile Include="ent\Especialidad.cs" />
     <Compile Include="ent\HistoriaClinica.cs" />
-    <Compile Include="ent\HistoriaClinicaDetalle.cs" />
-    <Compile Include="ent\ItemHistoriaClinica.cs" />
     <Compile Include="ent\ObraSocial.cs" />
     <Compile Include="ent\ObrasPlanes.cs" />
     <Compile Include="ent\Paciente.cs" />

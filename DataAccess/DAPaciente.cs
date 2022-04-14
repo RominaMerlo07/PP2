@@ -48,7 +48,7 @@ namespace DataAccess
                                         "@EMAIL_CONTACTO, " +
                                         "@USUARIO_ALTA, " +
                                         "@FECHA_ALTA " +
-                                        "); ; SELECT SCOPE_IDENTITY()";
+                                        "); SELECT SCOPE_IDENTITY()";
 
 
                 cmd = new SqlCommand(consulta, con);
@@ -111,17 +111,22 @@ namespace DataAccess
 
                 string consulta = @" 
                     update T_PACIENTES
-                    set NOMBRE = @NOMBRE,
+                    set 
+                        NOMBRE = @NOMBRE,
                         APELLIDO = @APELLIDO, 
                         NRO_CONTACTO = @NRO_CONTACTO, 
                         EMAIL_CONTACTO = @EMAIL_CONTACTO,
                         USUARIO_MOD = @USUARIO_MOD,
-                        FECHA_MOD = FECHA_MOD
-                    where DOCUMENTO = @DOCUMENTO 
-                    and fecha_baja is null
-                    ; ";
-                    //SELECT * from T_PACIENTES where DOCUMENTO = @DOCUMENTO and fecha_baja is null ;
+                        FECHA_MOD = @FECHA_MOD
+                    ";
 
+                if (paciente.HistoriaClinica.IdHistoriaClinica != 0)
+                    consulta += @", ID_HISTORIA = @ID_HISTORIA";
+
+                consulta += @"
+                                where DOCUMENTO = @DOCUMENTO 
+                                and fecha_baja is null
+                    ; ";
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Transaction = trans;
@@ -150,6 +155,11 @@ namespace DataAccess
                     cmd.Parameters.AddWithValue("@EMAIL_CONTACTO", paciente.EmailContacto);
                 else
                     cmd.Parameters.AddWithValue("@EMAIL_CONTACTO", DBNull.Value);
+
+                if (paciente.HistoriaClinica.IdHistoriaClinica != 0)
+                    cmd.Parameters.AddWithValue("@ID_HISTORIA", paciente.HistoriaClinica.IdHistoriaClinica);
+                else
+                    cmd.Parameters.AddWithValue("@ID_HISTORIA", DBNull.Value);
 
                 cmd.Parameters.AddWithValue("@USUARIO_MOD", paciente.UsuarioMod);
                 cmd.Parameters.AddWithValue("@FECHA_MOD", paciente.FechaMod);
@@ -216,6 +226,12 @@ namespace DataAccess
                             paciente.Domicilio = Convert.ToString(dr["DOMICILIO"]);
                         if (dr["LOCALIDAD"] != DBNull.Value)
                             paciente.Localidad = Convert.ToString(dr["LOCALIDAD"]);
+                        if (dr["ID_HISTORIA"] != DBNull.Value)
+                        {
+                            DAHistoriaClinica DaHC = new DAHistoriaClinica();
+                            HistoriaClinica histClinica = DaHC.completarHistClinica(paciente.IdPaciente);
+                            paciente.HistoriaClinica = histClinica;
+                        }
 
                     }
 

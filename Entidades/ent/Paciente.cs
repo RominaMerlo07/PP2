@@ -22,6 +22,7 @@ namespace Entidades.ent
         private DateTime fecha_mod;
         private int usuario_baja;
         private DateTime fecha_baja;
+        private HistoriaClinica historia_clinica;
 
         public int IdPaciente
         {
@@ -117,6 +118,12 @@ namespace Entidades.ent
         {
             get { return fecha_baja; }
             set { fecha_baja = value; }
+        }
+
+        public HistoriaClinica HistoriaClinica
+        {
+            get { return historia_clinica; }
+            set { historia_clinica = value; }
         }
 
         public Paciente() { }

@@ -47,6 +47,7 @@
     <Compile Include="DADDJJ.cs" />
     <Compile Include="DADisponibilidadHoraria.cs" />
     <Compile Include="DAEspecialidades.cs" />
+    <Compile Include="DAHistoriaClinica.cs" />
     <Compile Include="DAObrasSociales.cs" />
     <Compile Include="DAPaciente.cs" />
     <Compile Include="DAPersonal.cs" />

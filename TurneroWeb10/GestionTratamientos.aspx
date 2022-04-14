@@ -4,7 +4,6 @@
     <style>
     </style>
     <section class="content-header">
-        <%--<button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>--%>
         <h1 style="text-align: left">GESTIÓN DE TRATAMIENTOS</h1>
     </section>
     <div class="content" id="sectionEspecialidad">
@@ -51,11 +50,15 @@
                             </div> 
                         </div>
                     </div>
-                    <div class="table table-striped table-bordered">   
-                        <div id="tGestionTratamiento" >
-                            <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaTratamientos">
-                            </table>
-                        </div>  
+                    <div class="box-body table-responsive">
+                        <div class="col-md-12">
+                            <div class="table table-striped table-hover">   
+                                <div id="tGestionTratamiento" >
+                                    <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaTratamientos">
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -77,7 +80,7 @@
                             <div class="card-header ">
                                 <h4 class="modal-title text-dark">Datos del Paciente</h4>
                             </div>
-                            <div class="card-body">               
+                            <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-sm-4 col-md-4 col-lg-4">
                                         <div class="input-group mb-3">
@@ -247,7 +250,7 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <div id="tListarTurnos">
-                                            <table style="width:100%" class="table table-striped table-bordered" id="tablaTurnosTratamiento" >
+                                            <table style="width:100%" class="table table-striped " id="tablaTurnosTratamiento" >
                                             </table>
                                         </div>
                                     </div>
@@ -447,7 +450,7 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <div id="tListarTurnosEditar">
-                                            <table style="width:100%" class="table table-striped table-bordered" id="tablaTurnosEditar" >
+                                            <table style="width:100%" class="table table-striped " id="tablaTurnosEditar" >
                                             </table>
                                         </div>
                                     </div>

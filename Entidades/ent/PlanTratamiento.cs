@@ -8,6 +8,16 @@ namespace Entidades.ent
     {
         private int id_tratamiento;
         private string descripcion;
+
+        private string profesional_derivante;
+        private string matricula;
+        private string especialidad;
+        private string diagnostico_ingreso;
+        private string evaluacion_ingreso;
+        private string descripcion_plan;
+        private string objetivo_plan;
+        private bool consentimiento_firmado;
+
         private DateTime fecha;
         private int usuario_alta;
         private DateTime fecha_alta;
@@ -26,6 +36,54 @@ namespace Entidades.ent
         {
             get { return descripcion; }
             set { descripcion = value; }
+        }
+
+        public string ProfesionalDerivante
+        {
+            get { return profesional_derivante; }
+            set { profesional_derivante = value; }
+        }
+
+        public string Matricula
+        {
+            get { return matricula; }
+            set { matricula = value; }
+        }
+
+        public string Especialidad
+        {
+            get { return especialidad; }
+            set { especialidad = value; }
+        }
+
+        public string DiagnosticoIngreso
+        {
+            get { return diagnostico_ingreso; }
+            set { diagnostico_ingreso = value; }
+        }
+
+        public string EvaluacionIngreso
+        {
+            get { return evaluacion_ingreso; }
+            set { evaluacion_ingreso = value; }
+        }
+
+        public string DescripcionPlan
+        {
+            get { return descripcion_plan; }
+            set { descripcion_plan = value; }
+        }
+
+        public string ObjetivoPlan
+        {
+            get { return objetivo_plan; }
+            set { objetivo_plan = value; }
+        }
+
+        public bool ConsentimientoFirmado
+        {
+            get { return consentimiento_firmado; }
+            set { consentimiento_firmado = value; }
         }
 
         public DateTime Fecha
