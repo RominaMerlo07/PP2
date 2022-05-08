@@ -31,6 +31,26 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public List<ObraSocial> cargarObrasSocialesById(string idCentro)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                List<ObraSocial> list = daObrasSociales.cargarObrasSocialesById(idCentro);
+
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void DarBajaObraSocial(ObraSocial obraSocial)
         {
             try

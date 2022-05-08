@@ -84,6 +84,63 @@ namespace DataAccess
             }
         }
 
+
+        public List<ObraSocial> cargarObrasSocialesById(string idCentro)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select  os.ID_OBRA_SOCIAL,
+                                            os.DESCRIPCION
+                                        from t_obras_sociales os
+                                        where os.fecha_baja is null
+                                          and os.id_centro = @idCentro
+                                        ;";
+                
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!string.IsNullOrEmpty(idCentro))
+                    cmd.Parameters.AddWithValue("@idCentro", idCentro);
+                else
+                    cmd.Parameters.AddWithValue("@idCentro", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<ObraSocial> listaObrasSociales = new List<ObraSocial>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ObraSocial obraSocial = new ObraSocial();
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                            obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                                              
+
+                        listaObrasSociales.Add(obraSocial);
+
+                    }
+
+                    return listaObrasSociales;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void DarBajaObraSocial(ObraSocial obraSocial)
         {
             try
@@ -125,7 +182,8 @@ namespace DataAccess
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
                 string consulta = @"SELECT * FROM T_OBRAS_PLANES
-                                        WHERE ID_OBRA_SOCIAL = @idObraSocial ";
+                                        WHERE ID_OBRA_SOCIAL = @idObraSocial
+                                          AND FECHA_BAJA IS NULL"; /*CONSULTAR A GAS SI GENERA PROBLEMAS EN OTRO LADO*/
 
                 cmd = new SqlCommand(consulta, con);
 

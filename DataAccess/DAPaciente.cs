@@ -396,6 +396,8 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
 
                 string consulta = @"SELECT op.ID_OBRA_PACIENTE,
+	                                       op.ID_OBRA_SOCIAL,
+	                                       op.ID_PLAN,
 	                                       os.DESCRIPCION,
 	                                       opl.COD_PLAN,
 	                                       opl.DESCRIPCION 'PLAN',
@@ -407,8 +409,12 @@ namespace DataAccess
                                        AND OP.ID_PLAN = OPL.ID_PLANES
                                        AND op.ID_PACIENTE = @ID_PACIENTE
                                        AND op.FECHA_BAJA IS NULL
-                                     UNION
+	                                   AND opl.FECHA_BAJA IS NULL
+	                                   AND os.FECHA_BAJA IS NULL
+                                   UNION
                                     SELECT op.ID_OBRA_PACIENTE,
+	                                       op.ID_OBRA_SOCIAL,
+	                                       op.ID_PLAN,
 	                                       os.DESCRIPCION,
 	                                       NULL COD_PLAN,
 	                                       NULL 'PLAN',
@@ -418,7 +424,8 @@ namespace DataAccess
                                      WHERE op.ID_OBRA_SOCIAL = os.ID_OBRA_SOCIAL
                                        AND os.DESCRIPCION = 'PARTICULAR'
                                        AND op.ID_PACIENTE = @ID_PACIENTE
-                                       AND op.FECHA_BAJA IS NULL;";
+                                       AND op.FECHA_BAJA IS NULL	
+	                                   AND os.FECHA_BAJA IS NULL;";
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
