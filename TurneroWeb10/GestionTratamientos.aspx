@@ -708,7 +708,7 @@
                         "bDestroy": true,
                         "bAutoWidth": true,
                         columns: [
-                            { title: "NRO. TRATAMIENTO" },
+                            { title: "NRO. TRATAMIENTO", visible: false },
                             { title: "FECHA ALTA" },
                             { title: "CENTRO" },
                             { title: "ESPECIALIDAD" },

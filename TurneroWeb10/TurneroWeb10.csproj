@@ -609,6 +609,7 @@
     <Content Include="RegistrarProfesional.aspx" />
     <Content Include="RegistrarTurno.aspx" />
     <Content Include="ScriptsPantallas\Centros.js" />
+    <Content Include="ScriptsPantallas\impresorPDF.js" />
     <Content Include="ScriptsPantallas\Personal.js" />
     <Content Include="ScriptsPantallas\RegistrarProfesionales_validacion.js" />
     <Content Include="ScriptsPantallas\Usuarios.js" />
@@ -1119,10 +1120,12 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="ScriptsPantallas\login.js" />
     <Content Include="ScriptsPantallas\RegistrarProfesional.js" />
+    <Content Include="Scripts\pdfmake.min.js" />
     <Content Include="Scripts\select2-bootstrap.min.css" />
     <Content Include="Scripts\select2.min.css" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\vfs_fonts.js" />
     <Content Include="UserControls\AgendaTurnos.ascx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="Web.config">

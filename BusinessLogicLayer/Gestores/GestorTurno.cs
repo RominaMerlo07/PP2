@@ -160,5 +160,19 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+        public void EditarObservacionTurno(Turno turno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                Daturno.EditarObservacionTurno(turno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }

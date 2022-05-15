@@ -29,5 +29,19 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public void EditarHistClinica(Paciente paciente)
+        {
+            try
+            {
+                DAHistoriaClinica daHC = new DAHistoriaClinica();
+                daHC.EditarHistoriaClinica(paciente);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
     }
 }
