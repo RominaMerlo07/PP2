@@ -209,5 +209,88 @@ namespace DataAccess
                 throw e;
             }
         }
+
+        public void EditarHistoriaClinica(Paciente paciente)
+        {
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+
+                string consulta = @"
+                                update T_HISTORIA_CLINICA
+                                    set TENSION = @TENSION
+                                    ,TENSION_VALORES = @TENSION_VALORES
+                                    ,DIABETES = @DIABETES
+                                    ,FUMADOR = @FUMADOR
+                                    ,CARDIACO = @CARDIACO
+                                    ,CIRROSIS = @CIRROSIS
+                                    ,ARTROSIS = @ARTROSIS
+                                    ,ARTRITIS_REUMATOIDEA = @ARTRITIS_REUMATOIDEA
+                                    ,HEMIPLEJIA = @HEMIPLEJIA
+                                    ,ASMA = @ASMA
+                                    ,MARCAPASOS = @MARCAPASOS
+                                    ,PROTESIS = @PROTESIS
+                                    ,CADERA_DERECHA = @CADERA_DERECHA
+                                    ,CADERA_IZQUIERDA = @CADERA_IZQUIERDA
+                                    ,OTROS = @OTROS
+                                    ,ANTECEDENTES = @ANTECEDENTES
+                                    ,USUARIO_MOD = @USUARIO_MOD
+                                    ,FECHA_MOD = @FECHA_MOD
+                                where id_historia in (
+                                select id_historia from t_pacientes 
+                                where ID_PACIENTE = @ID_PACIENTE
+                                );";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@TENSION", paciente.HistoriaClinica.Tension);
+                if (paciente.HistoriaClinica.TensionValores != "False")
+                    cmd.Parameters.AddWithValue("@TENSION_VALORES", paciente.HistoriaClinica.TensionValores);
+                else
+                    cmd.Parameters.AddWithValue("@TENSION_VALORES", DBNull.Value);
+
+                cmd.Parameters.AddWithValue("@DIABETES", paciente.HistoriaClinica.Diabetes);
+                cmd.Parameters.AddWithValue("@FUMADOR", paciente.HistoriaClinica.Fumador);
+                cmd.Parameters.AddWithValue("@CARDIACO", paciente.HistoriaClinica.Cardiaco);
+                cmd.Parameters.AddWithValue("@CIRROSIS", paciente.HistoriaClinica.Cirrosis);
+                cmd.Parameters.AddWithValue("@ARTROSIS", paciente.HistoriaClinica.Artrosis);
+                cmd.Parameters.AddWithValue("@ARTRITIS_REUMATOIDEA", paciente.HistoriaClinica.ArtritisRematoidea);
+                cmd.Parameters.AddWithValue("@HEMIPLEJIA", paciente.HistoriaClinica.Hemiplejia);
+                cmd.Parameters.AddWithValue("@ASMA", paciente.HistoriaClinica.Asma);
+                cmd.Parameters.AddWithValue("@MARCAPASOS", paciente.HistoriaClinica.Marcapasos);
+                cmd.Parameters.AddWithValue("@PROTESIS", paciente.HistoriaClinica.Protesis);
+                cmd.Parameters.AddWithValue("@CADERA_DERECHA", paciente.HistoriaClinica.CaderaDerecha);
+                cmd.Parameters.AddWithValue("@CADERA_IZQUIERDA", paciente.HistoriaClinica.CaderaIzquierda);
+                if (paciente.HistoriaClinica.Otros != "False")
+                    cmd.Parameters.AddWithValue("@OTROS", paciente.HistoriaClinica.Otros);
+                else
+                    cmd.Parameters.AddWithValue("@OTROS", DBNull.Value);
+                if (paciente.HistoriaClinica.Antecedentes != "False")
+                    cmd.Parameters.AddWithValue("@ANTECEDENTES", paciente.HistoriaClinica.Antecedentes);
+                else
+                    cmd.Parameters.AddWithValue("@ANTECEDENTES", DBNull.Value);
+                cmd.Parameters.AddWithValue("@USUARIO_MOD", paciente.HistoriaClinica.UsuarioMod);
+                cmd.Parameters.AddWithValue("@FECHA_MOD", paciente.HistoriaClinica.FechaMod);
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", paciente.IdPaciente);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+        }
     }
 }

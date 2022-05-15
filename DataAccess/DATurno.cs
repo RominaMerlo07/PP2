@@ -665,5 +665,48 @@ namespace DataAccess
                 throw ex;
             }
         }
+
+        public void EditarObservacionTurno(Turno turno)
+        {
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    update T_TURNOS
+                                    set OBSERVACIONES = @observacion,
+                                        USUARIO_MOD = @usuarioMod,
+                                        FECHA_MOD = @fechaMod
+                                    where ID_TURNO = @idTurnos
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(turno.Observaciones))
+                    cmd.Parameters.AddWithValue("@observacion", turno.Observaciones);
+                else
+                    cmd.Parameters.AddWithValue("@observacion", DBNull.Value);
+
+
+                cmd.Parameters.AddWithValue("@usuarioMod", turno.UsuarioMod);
+                cmd.Parameters.AddWithValue("@fechaMod", turno.FechaMod);
+
+                cmd.Parameters.AddWithValue("@idTurnos", turno.IdTurno);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }

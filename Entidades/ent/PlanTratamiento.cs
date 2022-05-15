@@ -17,7 +17,7 @@ namespace Entidades.ent
         private string descripcion_plan;
         private string objetivo_plan;
         private bool consentimiento_firmado;
-
+        private Turno[] turnos; 
         private DateTime fecha;
         private int usuario_alta;
         private DateTime fecha_alta;
@@ -84,6 +84,12 @@ namespace Entidades.ent
         {
             get { return consentimiento_firmado; }
             set { consentimiento_firmado = value; }
+        }
+
+        public Turno[] Turnos
+        {
+            get { return Turnos; }
+            set { Turnos = value; }
         }
 
         public DateTime Fecha

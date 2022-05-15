@@ -104,5 +104,71 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+        public DataTable BuscarPlanTratamiento(string idPaciente)
+        {
+            try
+            {
+                DAPlanTratamiento daTratamientos = new DAPlanTratamiento();
+                return daTratamientos.BuscarPlanTratamiento(idPaciente);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string EditarTratamientoSeguimiento(PlanTratamiento tratamiento)
+        {
+            try
+            {
+                DAPlanTratamiento daTratamientos = new DAPlanTratamiento();
+                return daTratamientos.EditarTratamientoSeguimiento(tratamiento);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable TraerTratamientoDetalle(string idTratamiento)
+        {
+            try
+            {
+                DAPlanTratamiento daTratamientos = new DAPlanTratamiento();
+                return daTratamientos.TraerTratamientoDetalle(idTratamiento);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string CambiarEstadoConsentimiento(PlanTratamiento tratamiento)
+        {
+            try
+            {
+                DAPlanTratamiento daTratamientos = new DAPlanTratamiento();
+                return daTratamientos.CambiarEstadoConsentimiento(tratamiento);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable TraerDatosHCImprimir(string idTratamiento)
+        {
+            try
+            {
+                DAPlanTratamiento daTratamientos = new DAPlanTratamiento();
+                return daTratamientos.TraerDatosHCImprimir(idTratamiento);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }
