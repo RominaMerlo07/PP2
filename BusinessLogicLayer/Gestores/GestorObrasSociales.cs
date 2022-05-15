@@ -31,6 +31,28 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+
+        public List<ObraSocial> cargarObrasSocialesPaciente(string IdPaciente)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                List<ObraSocial> list = daObrasSociales.cargarObrasSocialesPaciente(IdPaciente);
+
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                    return null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
         public List<ObraSocial> cargarObrasSocialesById(string idCentro)
         {
             try
@@ -70,6 +92,20 @@ namespace BusinessLogicLayer.Gestores
             {
                 DAObrasSociales daObrasSociales = new DAObrasSociales();
                 return daObrasSociales.TraerPlanes(idObraSocial);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public DataTable cargarPlanesPacientes(string idObraSocial, string idPaciente)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                return daObrasSociales.cargarPlanesPacientes(idObraSocial, idPaciente);
             }
             catch (Exception ex)
             {

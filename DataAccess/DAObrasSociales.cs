@@ -85,6 +85,70 @@ namespace DataAccess
         }
 
 
+        public List<ObraSocial> cargarObrasSocialesPaciente(string idPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT os.ID_OBRA_SOCIAL, 
+                                           os.DESCRIPCION
+                                      FROM t_pacientes p, T_OBRAS_PACIENTES op, T_OBRAS_SOCIALES os, T_OBRAS_PLANES opl
+                                     WHERE p.ID_PACIENTE = op.ID_PACIENTE
+                                       AND os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+									   AND op.ID_PLAN = opl.ID_PLANES
+                                       AND p.FECHA_BAJA IS NULL
+                                       AND op.FECHA_BAJA IS NULL
+                                       AND os.FECHA_BAJA IS NULL
+									   AND opl.FECHA_BAJA IS NULL
+                                       AND p.ID_PACIENTE = @ID_PACIENTE";
+
+            
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!string.IsNullOrEmpty(idPaciente))
+                    cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+                else
+                    cmd.Parameters.AddWithValue("@ID_PACIENTE", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<ObraSocial> listaObrasSociales = new List<ObraSocial>();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        ObraSocial obraSocial = new ObraSocial();
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                            obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                                 
+
+                        listaObrasSociales.Add(obraSocial);
+
+                    }
+
+                    return listaObrasSociales;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
         public List<ObraSocial> cargarObrasSocialesById(string idCentro)
         {
             try
@@ -191,6 +255,52 @@ namespace DataAccess
                     cmd.Parameters.AddWithValue("@idObraSocial", idObraSocial);
                 else
                     cmd.Parameters.AddWithValue("@idObraSocial", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public DataTable cargarPlanesPacientes(string idObraSocial, string idPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"SELECT opl.ID_PLANES, 
+                                           opl.DESCRIPCION, 
+                                           op.NRO_AFILIADO
+                                      FROM t_pacientes p, 
+                                           T_OBRAS_PACIENTES op, 
+                                           T_OBRAS_PLANES opl
+                                     WHERE p.ID_PACIENTE = op.ID_PACIENTE
+                                       AND opl.ID_PLANES = op.ID_PLAN
+                                       AND p.FECHA_BAJA IS NULL
+                                       AND op.FECHA_BAJA IS NULL
+                                       AND opl.FECHA_BAJA IS NULL
+                                       AND p.ID_PACIENTE = @idPaciente
+                                       AND opl.ID_OBRA_SOCIAL = @idObraSocial"; /*CONSULTAR A GAS SI GENERA PROBLEMAS EN OTRO LADO*/
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!String.IsNullOrEmpty(idObraSocial))
+                    cmd.Parameters.AddWithValue("@idObraSocial", idObraSocial);
+                else
+                    cmd.Parameters.AddWithValue("@idObraSocial", DBNull.Value);
+
+                if (!String.IsNullOrEmpty(idPaciente))
+                    cmd.Parameters.AddWithValue("@idPaciente", idPaciente);
+                else
+                    cmd.Parameters.AddWithValue("@idPaciente", DBNull.Value);
 
                 dta = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
