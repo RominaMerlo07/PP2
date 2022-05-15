@@ -9,39 +9,99 @@ namespace BusinessLogicLayer.Gestores
 {
     public class GestorTurno
     {
-        public string RegistrarTurno(Turno turno, Paciente paciente, bool es_edicion)
+        //public string RegistrarTurno(Turno turno, Paciente paciente, string p_obraSocial, string p_planObra, bool es_edicion)
+        //{
+        //    string mensaje = "OK";
+
+        //    int idPaciente;
+
+        //    try
+        //    {
+        //        if (es_edicion)
+        //        {
+        //            DAPaciente DaPaciente = new DAPaciente();
+        //            paciente.UsuarioMod = 1; //hardcode
+        //            paciente.FechaMod = DateTime.Now;
+        //            idPaciente = DaPaciente.DaEditarPaciente(paciente);
+        //        }
+        //        else
+        //        {
+        //            DAPaciente DaPaciente = new DAPaciente();
+        //            idPaciente = DaPaciente.DaRegistrarPaciente(paciente);                  
+
+        //        }
+
+        //        ObrasPacientes obraPaciente = new ObrasPacientes();
+
+        //        obraPaciente.IdObraSocial = Convert.ToInt32(p_obraSocial);
+        //        obraPaciente.IdPaciente = idPaciente;
+        //        obraPaciente.IdPlan = Convert.ToInt32(p_planObra);
+        //        obraPaciente.nroAfiliado = turno.NroAfiliado;
+        //        obraPaciente.UsuarioAlta = paciente.UsuarioAlta;
+        //        obraPaciente.FechaAlta = paciente.FechaAlta;
+
+        //        DAObraPaciente DaObraPaciente = new DAObraPaciente();
+        //        int idObraPaciente = DaObraPaciente.RegistrarObraPaciente(obraPaciente);
+
+        //        turno.Paciente = paciente;
+        //        turno.Paciente.IdPaciente = idPaciente;
+
+        //        DATurno Daturno = new DATurno();
+        //        Daturno.DaRegistraTurno(turno);
+
+        //        return mensaje;
+        //    } catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+
+        //}
+
+
+        public string RegistrarTurnoNew(Turno turno, Paciente paciente, string p_obraSocial, string p_planObra, bool es_edicion)
         {
             string mensaje = "OK";
 
-            int idPaciente;
+            int idObraPaciente = 0;
 
             try
             {
-                if (es_edicion)
-                {
-                    DAPaciente DaPaciente = new DAPaciente();
-                    paciente.UsuarioMod = 1; //hardcode
-                    paciente.FechaMod = DateTime.Now;
-                    idPaciente = DaPaciente.DaEditarPaciente(paciente);
-                }
-                else
-                {
-                    DAPaciente DaPaciente = new DAPaciente();
-                    idPaciente = DaPaciente.DaRegistrarPaciente(paciente);                    
-                }
+                DAPaciente DaPaciente = new DAPaciente();
+                paciente.IdPaciente = DaPaciente.DaRegistrarPaciente(paciente);
 
-                turno.Paciente = paciente;
-                turno.Paciente.IdPaciente = idPaciente;
+                if (paciente.IdPaciente > 0)
+                {
+                    ObrasPacientes obraPaciente = new ObrasPacientes();
 
-                DATurno Daturno = new DATurno();
-                Daturno.DaRegistraTurno(turno);
+                    obraPaciente.IdObraSocial = Convert.ToInt32(p_obraSocial);
+                    obraPaciente.IdPaciente = paciente.IdPaciente;
+                    obraPaciente.IdPlan = Convert.ToInt32(p_planObra);
+                    obraPaciente.nroAfiliado = turno.NroAfiliado;
+                    obraPaciente.UsuarioAlta = paciente.UsuarioAlta;
+                    obraPaciente.FechaAlta = paciente.FechaAlta;
+
+                    DAObraPaciente DaObraPaciente = new DAObraPaciente();
+                    idObraPaciente = DaObraPaciente.RegistrarObraPaciente(obraPaciente);
+
+                }
+                
+                if (idObraPaciente > 0 && paciente.IdPaciente > 0)
+                {
+                    turno.Paciente = paciente;
+                    turno.Paciente.IdPaciente = paciente.IdPaciente;
+
+                    DATurno Daturno = new DATurno();
+                    Daturno.DaRegistraTurno(turno);
+
+                }
 
                 return mensaje;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
-            
+
         }
 
         public DataTable TraerTurnos(string idProfesionalDetalle)
@@ -160,5 +220,28 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+
+
+        public string RegistrarSoloTurno(Turno turno)
+        {
+           string mensaje = "OK";
+
+            try
+            {
+                DATurno Daturno = new DATurno();
+                Daturno.DaRegistraTurno(turno);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
+
     }
 }

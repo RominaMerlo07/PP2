@@ -105,6 +105,22 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
+        public static List<ObraSocial> cargarObrasSocialesPaciente(string idPaciente)
+        {
+            try
+            {
+                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.cargarObrasSocialesPaciente(idPaciente);
+                return obrasSociales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
         public static string cargarPlanes(string idObraSocial)
         {
             try
@@ -120,6 +136,24 @@ namespace TurneroWeb10
                 throw ex;
             }
         }
+
+        [WebMethod]
+        public static string cargarPlanesPacientes(string p_idObraSocial, string p_idPaciente)
+        {
+            try
+            {
+                GestorObrasSociales gObras = new GestorObrasSociales();
+                DataTable obras = gObras.cargarPlanesPacientes(p_idObraSocial, p_idPaciente);
+                string col = JsonConvert.SerializeObject(obras);
+
+                return col;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [WebMethod]
         public static string traerDisponibilidadHoraria(string idProfesional, string idEspecialidad, string idCentro, string dia = null)

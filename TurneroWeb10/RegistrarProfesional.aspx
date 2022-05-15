@@ -21,7 +21,7 @@
         <div class="row">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h1 class="box-title">Lista de Profesionales</h1>
+                    <h1 class="box-title">Listado de Profesionales</h1>
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
@@ -223,123 +223,138 @@
 
     <%--Modal Editar--%>
     <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header text-white bg-info">
                     <h4 class="modal-title" id="myModalLabel">Actualizar datos del Profesional</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body" id="formularioEditar">   
-                    <div>
-                        <h4 class="modal-title" id="DatosPersonales">Datos Personales</h4>
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-sm">
+                <div class="modal-body" id="formularioEditar">
+                    <div class="row">
+                        <div class="col-md" id="crdDatosPersonalesE">
+                            <div class="card text-white bg-white">
+                                <div class="card-header text-black bg-light">
+                                    <h4>Datos personales</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-sm">
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">DNI</span>
+                                                        </div>
+                                                        <input type="text" style="text-align: left" class="form-control" id="txtDocumentoA" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Matricula</span>
+                                                        </div>
+                                                        <input type="text" style="text-align: left" class="form-control" id="txtMatriculaA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Nombre y Apellido</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtNombreA" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <input type="text" style="text-align: left" class="form-control" id="txtApellidoA" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Fecha de Nacimiento</span>
+                                                </div>
+                                                <div>
+                                                    <input type='text' class="form-control datepicker date" id="dtpFechaNacA"
+                                                        placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                                        data-date-format="dd/mm/yyyy" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-sm">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">DNI</span>
+                                <div class="col-md" id="crdDatosContactoE">
+                                    <div class="card text-white bg-white">
+                                        <div class="card-header text-black bg-light">
+                                            <h4>Datos de Contacto</h4>
                                         </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtDocumentoA" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                        <div class="card-body">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Direccion</span>
+                                                        </div>
+                                                        <input type="text" style="text-align: left" class="form-control" id="txtDomicilio" maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Barrio</span>
+                                                        </div>
+                                                        <input type="text" style="text-align: left" class="form-control" id="txtBarrioA" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Localidad</span>
+                                                        </div>
+                                                        <input type="text" style="text-align: left" class="form-control" id="txtLocalidadA" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-sm-6">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Celular</span>
+                                                        </div>
+                                                        <input type="text" style="text-align: left" class="form-control" id="txtCelularA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Email: </span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="txtEmail1A" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">@</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="txtEmail2A" placeholder="gmail.com" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Matricula</span>
-                                        </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtMatriculaA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
-                                    </div>
-                                </div>
                             </div>
                         </div>
+
                     </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">Nombre y Apellido</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtNombreA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                                <input type="text" style="text-align: left" class="form-control" id="txtApellidoA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
                     </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Fecha de Nacimiento</span>
-                                </div>
-                                <div>
-                                    <input type='text' class="form-control datepicker date" id="dtpFechaNacA"
-                                        placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                        data-date-format="dd/mm/yyyy" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="modal-title" id="DatosContacto">Datos de Contacto</h4>
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Direccion</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtDomicilio"  maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Barrio</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtBarrioA" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Localidad</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidadA" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Celular</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtCelularA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Email: </span>
-                                </div>
-                                <input type="text" class="form-control" id="txtEmail1A" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="text" class="form-control" id="txtEmail2A" placeholder="gmail.com" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -347,86 +362,74 @@
     <%--End Modal Editar--%>
 
 
-     <%--Modal Especialidades--%>
-        <div class="modal fade" id="modalEspecialidades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content">
-                    <div class="modal-header text-white bg-info">
-                        <h4 class="modal-title" id="lblEspecialidad">Especialidades por profesional</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md" id="crdDatosEspecialidad">
-                                <div class="card text-white bg-light">
-                             
-                                    <div class="card-body">
-                                        <!-- Datatable Part -->
-                                        <div class="row">
-                                            <div class="box box-primary">
-                                                <div class="box-header">
-                                                    <h1 class="box-title" id="infoProfesional">Profesional - Matrícula</h1>                                                                         
-                                                </div>
-                                             
-                                                <div class="col-md">
-                                                    <button class="btn btn-success btn-sm" type="button" id="btnRegistrarEsp"><i class="fas fa-plus-square"></i>  | Agregar Nueva Especialidad</button>
-                                                </div>
-                                         
-                                                <div class="box-body table-responsive">
-                                                    <div class="col">
-                                                        <table id="tabla_especialidades" class="table table-bordered table-hover">
-                                                            <tbody id="tbl_body_table_E">
-                                                                <!-- DATA POR MEDIO DE AJAX-->
-                                                            </tbody>
-                                                        </table>
+    <%--Modal Especialidades--%>
+    <div class="modal fade" id="modalEspecialidades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-info">
+                    <h4 class="modal-title" id="lblEspecialidad">Especialidades por profesional</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <%--  <div class="row">--%>
+                    <div class="col-md-12" id="crdDatosEspecialidad">
+                        <div class="card text-white">
+                            <div class="card-header ">
+                                <h4 class="modal-title text-dark" id="infoProfesional">Profesional - Matrícula</h4>
+                            </div>
+                            <div class="card-body">
+                                <!-- Datatable Part -->
+                                <div class="row">
+                                    <div class="col-md">
+                                        <button class="btn btn-success" type="button" id="btnRegistrarEsp"><i class="fas fa-plus-square"></i>|  Agregar Especialidad</button>
+                                        <br />
+                                        <br />
+                                        <div class="card-body bg-light border-info" id="agregarEspecialidad">
+                                            <div class="form-row">
+                                                <div class="col-sm multiselect">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Especialidad: </span>
+                                                        </div>
+                                                        <select multiple class="form-control select2" id="ddlAddEspecialidad">
+                                                            <option value="0" disabled="disabled" selected="" hidden="hidden">--Seleccione--</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- End Datatable -->                                                                                          
+                                            <div class="row">
+                                                <div class="col-md-10 col-xs-6">
+                                                    <button class="btn btn-success float-right" type="button" id="btnAgregar">Agregar</button>
+                                                </div>
+                                                <div class="col-md-2 col-xs-6">
+                                                    <button class="btn btn-secondary float-right" type="button" id="btnCancelar">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>                                    
                                     </div>
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-        </div>
-     <%--End Modal Especialidades--%>
 
-           
-     <%--Modal Add Especialidades--%>
-    <div class="modal fade" id="modalAddEspecialidades" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-info">
-                    <h4 class="modal-title" id="lblAddEspecialidad">Seleccionar Especialidades para el Profesional</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body bg-gradient-light">
-                    <div class="row">
-                        <div class="card-body text-black">
-                            <div class="form-row">
-                                <div class="col-sm multiselect">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Especialidad: </span>
+                                    <div class="box-body table-responsive">
+                                        <div class="col-md-12">
+                                            <table style="width: 100%" id="tabla_especialidades" class="table table-bordered table-hover">
+                                                <tbody id="tbl_body_table_E">
+                                                    <!-- DATA POR MEDIO DE AJAX-->
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <select multiple class="form-control select2" id="ddlAddEspecialidad">
-                                            <option value="0" disabled="disabled" selected="" hidden="hidden">--Seleccione--</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
-                             <button class="btn btn-success btn-lg float-right" type="button" id="btnAgregar">Agregar</button>                       
+                            <!-- End Datatable -->
                         </div>
                     </div>
                 </div>
+                <%-- </div> --%>
             </div>
         </div>
     </div>
-     <%--End Modal Add Especialidades--%>
 
+    <%--End Modal Especialidades--%>           
+    
 
 
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />

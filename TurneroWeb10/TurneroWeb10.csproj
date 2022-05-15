@@ -610,7 +610,10 @@
     <Content Include="RegistrarTurno.aspx" />
     <Content Include="ScriptsPantallas\Centros.js" />
     <Content Include="ScriptsPantallas\Personal.js" />
+    <Content Include="ScriptsPantallas\RegistrarPaciente.js" />
     <Content Include="ScriptsPantallas\RegistrarProfesionales_validacion.js" />
+    <Content Include="ScriptsPantallas\registrarTurnos.js" />
+    <Content Include="ScriptsPantallas\Tratamientos.js" />
     <Content Include="ScriptsPantallas\Usuarios.js" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.css" />
     <Content Include="Scripts\DataTable\AutoFill-2.3.7\css\autoFill.bootstrap.min.css" />

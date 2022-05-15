@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -7,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
 using Entidades.ent;
+using Newtonsoft.Json;
 
 
 namespace TurneroWeb10
@@ -19,8 +21,7 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string registrarPaciente(string p_dni, string p_nombre, string p_apellido, string p_fechaNac, string p_obraSocial,
-                                               string p_calle, string p_numero, string p_barrio, string p_localidad, string p_celular, string p_email1, string p_email2)
+        public static string registrarPaciente(string p_dni, string p_celular, string p_nombre, string p_apellido, string p_email1, string p_email2, string p_obraSocial, string p_plan, string p_nroAfiliado)
         {
                    
             Paciente paciente = new Paciente();
@@ -46,23 +47,7 @@ namespace TurneroWeb10
                 {
                     paciente.Apellido = p_apellido;
                 }
-
-                if (!string.IsNullOrEmpty(p_fechaNac))
-                {
-                    paciente.FechaNacimiento = Convert.ToDateTime(p_fechaNac);
-                }
-
-                if ((!string.IsNullOrEmpty(p_calle)) && (!string.IsNullOrEmpty(p_numero)))
-                {
-                    string domicilio = p_calle + " " + p_numero + " Barrio: " + p_barrio;
-                    paciente.Domicilio = domicilio;
-                }
-
-                if (!string.IsNullOrEmpty(p_localidad))
-                {
-                    paciente.Localidad = p_localidad;
-                }
-
+                         
                 if (!string.IsNullOrEmpty(p_celular))
                 {
                     paciente.NroContacto = p_celular;
@@ -77,18 +62,340 @@ namespace TurneroWeb10
                 paciente.UsuarioAlta = 1;
                 paciente.FechaAlta = DateTime.Today;
 
-                //Sumar Campo de Obra Social
+           
+                #endregion
 
-                //if (!string.IsNullOrEmpty(p_obra_social))   
-                //{
-                //    ObraSocial obraSocial = new ObraSocial(p_obra_social, centro.IdCentro);
-                //    turno.ObraSocial = obraSocial;
-                //}                
+                gestorPacientes.RegistrarPacientes(paciente, p_obraSocial, p_plan, p_nroAfiliado);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al registrar el paciente " + e.Message;
+                return error;
+            }
+
+        }
+
+
+        [WebMethod]
+        public static List<ObraSocial> cargarObrasSociales()
+        {
+            try
+            {
+                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerOSPacientes();
+                return obrasSociales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string cargarPlanes(string idObraSocial)
+        {
+            try
+            {
+                GestorObrasSociales gObras = new GestorObrasSociales();
+                DataTable obras = gObras.TraerPlanes(idObraSocial);
+                string col = JsonConvert.SerializeObject(obras);
+
+                return col;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [WebMethod]
+        public static string cargarPacientes()
+        {
+            try
+            {
+                GestorPacientes gestorPacientes = new GestorPacientes();
+                DataTable dt = gestorPacientes.cargarPacientes();
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string buscarPaciente(string idPaciente)
+        {
+            try
+            {
+                GestorPacientes gestorPacientes = new GestorPacientes();
+                DataTable dt = gestorPacientes.buscarPaciente(idPaciente);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string actualizarPaciente(string id, string nombre, string apellido, string dni, string celular, string email1, string email2)
+        {
+
+            Paciente paciente = new Paciente();
+            GestorPacientes gestorPaciente = new GestorPacientes();
+
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad Paciente
+
+                if (!string.IsNullOrEmpty(dni))
+                {
+                    paciente.Documento = dni;
+                }
+
+                if (!string.IsNullOrEmpty(nombre))
+                {
+                    paciente.Nombre = nombre;
+                }
+
+                if (!string.IsNullOrEmpty(apellido))
+                {
+                    paciente.Apellido = apellido;
+                }
+
+                if (!string.IsNullOrEmpty(celular))
+                {
+                    paciente.NroContacto = celular;
+                }
+
+                if ((!string.IsNullOrEmpty(email1)) && (!string.IsNullOrEmpty(email2)))
+                {
+                    string email = email1 + "@" + email2;
+                    paciente.EmailContacto = email;
+                }
+
+                paciente.IdPaciente = Convert.ToInt32(id);
+
+                paciente.UsuarioMod = 1;
+                paciente.FechaMod = DateTime.Today;
+
+                #endregion
+
+                gestorPaciente.actualizarPaciente(paciente);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del personal " + e.Message;
+                return error;
+            }
+
+        }
+
+        [WebMethod]
+        public static string obraSocialPaciente(string idPaciente)
+        {
+            try
+            {
+                GestorPacientes gestorPaciente = new GestorPacientes();
+                DataTable dt = gestorPaciente.obraSocialPaciente(idPaciente);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static List<ObraSocial> obtenerOSxPaciente(string idPaciente)
+        {
+            try
+            {
+                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerOSxPaciente(idPaciente);
+                return obrasSociales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string registrarOSPaciente(string p_idPaciente, string p_obraSocial, string p_plan, string p_nroAfiliado)
+        {
+
+            ObrasPacientes obrasPaciente = new ObrasPacientes();
+            GestorPacientes gestorPacientes = new GestorPacientes();
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad obrasPaciente
+
+                if (!string.IsNullOrEmpty(p_obraSocial))
+                {
+                    obrasPaciente.IdObraSocial = Convert.ToInt32(p_obraSocial);
+                }
+
+                if (!string.IsNullOrEmpty(p_plan))
+                {
+                    obrasPaciente.IdPlan = Convert.ToInt32(p_plan);
+                }
+
+                if (!string.IsNullOrEmpty(p_nroAfiliado))
+                {
+                    obrasPaciente.nroAfiliado = p_nroAfiliado;
+                }
+                                             
+                obrasPaciente.IdPaciente = Convert.ToInt32(p_idPaciente);
+                obrasPaciente.UsuarioAlta = 1;
+                obrasPaciente.FechaAlta = DateTime.Today;
 
 
                 #endregion
 
-                gestorPacientes.RegistrarPaciente(paciente);
+                gestorPacientes.registrarOSPaciente(obrasPaciente);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al registrar el paciente " + e.Message;
+                return error;
+            }
+
+        }
+
+        [WebMethod]
+        public static string inactivarOSPaciente(string idObraPaciente)
+        {
+
+            ObrasPacientes obraPaciente = new ObrasPacientes();
+            GestorPacientes gestorPaciente = new GestorPacientes();
+
+            try
+            {
+                string mensaje = "OK";
+
+
+                obraPaciente.IdObraPaciente = Convert.ToInt32(idObraPaciente);
+
+                obraPaciente.UsuarioBaja = 1;
+                obraPaciente.FechaBaja = DateTime.Today;
+
+                gestorPaciente.inactivarOSPaciente(obraPaciente);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del personal " + e.Message;
+                return error;
+            }
+
+        }
+
+
+        [WebMethod]
+        public static List<ObraSocial> obtenerOSePaciente(string idObraPaciente)
+        {
+            try
+            {
+                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerOSePaciente(idObraPaciente);
+                return obrasSociales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string actualizarOSPaciente(string p_idObraPaciente, string p_plan, string p_nroAfiliado)
+        {
+
+            ObrasPacientes obrasPaciente = new ObrasPacientes();
+            GestorPacientes gestorPacientes = new GestorPacientes();
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad obrasPaciente
+
+                if (!string.IsNullOrEmpty(p_idObraPaciente))
+                {
+                    obrasPaciente.IdObraPaciente = Convert.ToInt32(p_idObraPaciente);
+                }
+
+                if (!string.IsNullOrEmpty(p_plan))
+                {
+                    obrasPaciente.IdPlan = Convert.ToInt32(p_plan);
+                }
+
+                if (!string.IsNullOrEmpty(p_nroAfiliado))
+                {
+                    obrasPaciente.nroAfiliado = p_nroAfiliado;
+                }
+
+                obrasPaciente.UsuarioMod = 1;
+                obrasPaciente.FechaMod = DateTime.Today;
+
+
+                #endregion
+
+                gestorPacientes.actualizarOSPaciente(obrasPaciente);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar la obra social del paciente " + e.Message;
+                return error;
+            }
+
+        }
+
+
+        [WebMethod]
+        public static string inactivarPaciente(string idPaciente)
+        {
+
+            Paciente paciente = new Paciente();
+            GestorPacientes gestorPacientes = new GestorPacientes();
+
+            try
+            {
+                string mensaje = "OK";
+
+
+                paciente.IdPaciente = Convert.ToInt32(idPaciente);
+                paciente.UsuarioBaja = 1;
+                paciente.FechaBaja = DateTime.Today;
+
+
+                gestorPacientes.inactivarPaciente(paciente);
 
                 return mensaje;
             }

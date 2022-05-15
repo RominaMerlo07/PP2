@@ -93,9 +93,9 @@ $(document).ready(function () {
         e.preventDefault();
         UpdateDataCentros(id);
        /* $("#tabla_centros").DataTable().fnClearTable();*/
-        sendDataCentros();
+        
         $("#modalEditarCentro").modal('hide');
-
+        sendDataCentros();
 
     });
 
@@ -152,12 +152,13 @@ $(document).ready(function () {
         else {
             return true;
         };
-    };
+};
+
     function sendDataCentros() {
         $.ajax(
             {
                 type: "POST",
-                url: "RegistrarCentros.aspx/traerCentros",
+                url: "RegistrarCentros.aspx/obtenerCentro",
                 data: {},
                 contentType: 'application/json; charset=utf-8',
                 async: false,

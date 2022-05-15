@@ -19,7 +19,7 @@
         <div class="row">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h1 class="box-title">Lista del Personal Administrativo</h1>
+                    <h1 class="box-title">Listado del Personal Administrativo</h1>
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
@@ -202,115 +202,132 @@
 
     <%--Modal Editar--%>
     <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header text-white bg-info">
                     <h4 class="modal-title" id="myModalLabel">Actualizar datos del Personal</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body" id="formularioEditar">   
-                    <div>
-                        <h4 class="modal-title" id="DatosPersonales">Datos Personales</h4>
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-sm">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">DNI</span>
+                <div class="modal-body" id="formularioEditar">
+                    <div class="row">
+                        <div class="col-md" id="crdDatosPersonalesE">
+                            <div class="card text-white bg-white">
+                                <div class="card-header text-black bg-light">
+                                    <h4>Datos personales</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                            <div class="col-sm">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <div class="input-group mb-3">                                                            
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">DNI</span>
+                                                            </div>
+                                                            <input type="text" name="dni" style="text-align: left" class="formulario-input form-control" id="id__txtDocumentoE" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                                            <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtDocumento"></i>--%>
+                                                        </div>
+                                                       <%-- <p class="formulario__error" id="p__txtDocumento"> Por favor, ingrese el DNI sin puntos.</p>--%>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-sm">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Fecha de Nacimiento</span>
+                                                    </div>
+                                                  <%--  <div>--%>
+                                                        <input type='text' name="fechaNac" class="form-control datepicker date" id="id__dtpFechaNacE"
+                                                            placeholder="DD/MM/YYYY" data-provide="datepicker"
+                                                            data-date-format="dd/mm/yyyy" />
+                                                      <%--  <i class="formulario__validacion fas fa-times-circle" id="icon__dtpFechaNac"></i>--%>
+                                                    <%--</div>--%>
+                                                </div>
+                                                   <%-- <p class="formulario__error" id="p__dtpFechaNac"> Por favor, ingrese la fecha de nacimiento</p>--%>
+                                            </div>
+                                        </div>       
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Nombre y Apellido</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtNombreA" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <input type="text" style="text-align: left" class="form-control" id="txtApellidoA" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
                                         </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtDocumentoA" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false"/>
+                                    </div>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md" id="crdDatosContactoE">
+                            <div class="card text-white bg-white">
+                                <div class="card-header text-black bg-light">
+                                    <h4>Datos de Contacto</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Direccion</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtDomicilio" maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>                             
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Barrio</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtBarrioA" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Localidad</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidadA" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-sm-6">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Celular</span>
+                                                </div>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtCelularA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Email: </span>
+                                                </div>
+                                                <input type="text" class="form-control" id="txtEmail1A" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">@</span>
+                                                </div>
+                                                <input type="text" class="form-control" id="txtEmail2A" placeholder="gmail.com" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">Nombre y Apellido</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtNombreA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                                <input type="text" style="text-align: left" class="form-control" id="txtApellidoA"  maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Fecha de Nacimiento</span>
-                                </div>
-                                <div>
-                                    <input type='text' class="form-control datepicker date" id="dtpFechaNacA"
-                                        placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                        data-date-format="dd/mm/yyyy" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="modal-title" id="DatosContacto">Datos de Contacto</h4>
-                    </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Direccion</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtDomicilio"  maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Barrio</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtBarrioA" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Localidad</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidadA" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Celular</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtCelularA" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Email: </span>
-                                </div>
-                                <input type="text" class="form-control" id="txtEmail1A" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="text" class="form-control" id="txtEmail2A" placeholder="gmail.com" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -318,7 +335,7 @@
     <%--End Modal Editar--%>
 
 
-  <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Personal.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Personal.js"%>"></script>
 
 
 </asp:Content>

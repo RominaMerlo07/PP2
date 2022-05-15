@@ -20,9 +20,9 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string registrarTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, //string p_obra_social, string p_minTurno,
-                                            string p_nombre, string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2, 
-                                            string p_obraSocial, string p_planObra, string p_nroAfiliado, string p_profesional, string es_edicion)
+        public static string registrarTurnoNew(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno, string p_nombre, 
+                                               string p_apellido, string p_documento, string p_celular, string p_email1, string p_email2, 
+                                               string p_obraSocial, string p_planObra, string p_nroAfiliado, string p_profesional, string es_edicion)
         {
 
             Turno turno = new Turno();
@@ -128,7 +128,7 @@ namespace TurneroWeb10
                 #endregion
 
 
-                gestorTurno.RegistrarTurno(turno, paciente, Convert.ToBoolean(es_edicion));
+                gestorTurno.RegistrarTurnoNew(turno, paciente, p_obraSocial, p_planObra, Convert.ToBoolean(es_edicion));
 
                 return mensaje;
             }
@@ -237,6 +237,21 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
+        public static List<ObraSocial> cargarObrasSocialesById(string idCentro)
+        {
+            try
+            {
+                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.cargarObrasSocialesById(idCentro);
+                return obrasSociales;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
         public static string traerDisponibilidadHoraria(string idProfesional, string idEspecialidad, string idCentro, string dia = null)
         {
             try
@@ -287,5 +302,114 @@ namespace TurneroWeb10
                 throw ex;
             }
         }
+
+        [WebMethod]
+        public static string obraSocialPaciente(string idPaciente)
+        {
+            try
+            {
+                GestorPacientes gestorPaciente = new GestorPacientes();
+                DataTable dt = gestorPaciente.obraSocialPaciente(idPaciente);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string RegistrarSoloTurno(string p_centro, string p_especialidad, string p_fechaTurno, string p_horaTurno,
+                                                string p_idPaciente, string p_idObraSocial, string p_idPlan, string p_nroAfiliado, string p_profesional)
+        {
+
+
+            ObraSocial obraSocial = new ObraSocial();
+            Turno turno = new Turno();
+            GestorTurno gestorTurno = new GestorTurno();
+
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad Turno
+
+                if (!string.IsNullOrEmpty(p_idPaciente))
+                {
+                    Paciente paciente = new Paciente();
+                    paciente.IdPaciente = Convert.ToInt32(p_idPaciente);
+                    turno.Paciente = paciente;
+                }
+
+                if (!string.IsNullOrEmpty(p_centro))
+                {
+                    Centro centro = new Centro();
+                    centro.IdCentro = Convert.ToInt32(p_centro);
+                    turno.Centro = centro;
+                }
+
+                if (!string.IsNullOrEmpty(p_profesional))
+                {
+                    Profesional profesional = new Profesional();
+                    profesional.IdProfesional = Convert.ToInt32(p_profesional);
+                    turno.Profesional = profesional;
+                }
+
+                if (!string.IsNullOrEmpty(p_especialidad))
+                {
+                    Especialidad especialidad = new Especialidad();
+                    especialidad.IdEspecialidad = Convert.ToInt32(p_especialidad);
+                    turno.Especialidad = especialidad;
+                }
+
+                if (!string.IsNullOrEmpty(p_idObraSocial))
+                {
+                    obraSocial.IdObraSocial = Convert.ToInt32(p_idObraSocial);
+                    turno.ObraSocial = obraSocial;
+                }
+
+                if (!string.IsNullOrEmpty(p_idPlan))
+                {
+                    obraSocial.IdPlanObra = Convert.ToInt32(p_idPlan);
+                    turno.ObraSocial = obraSocial;
+                }
+
+                if (!string.IsNullOrEmpty(p_nroAfiliado))
+                {
+                    turno.NroAfiliado = p_nroAfiliado;
+                }
+
+                if (!string.IsNullOrEmpty(p_fechaTurno))
+                {
+                    turno.FechaTurno = Convert.ToDateTime(p_fechaTurno);
+                }
+
+                if (!string.IsNullOrEmpty(p_horaTurno))
+                {
+                    TimeSpan ts = TimeSpan.Parse(p_horaTurno);
+                    turno.HoraDesde = ts;
+                }
+
+
+                turno.UsuarioAlta = 1;
+                turno.FechaAlta = DateTime.Today;
+
+                #endregion
+
+                gestorTurno.RegistrarSoloTurno(turno);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "error al registrar turno " + e.Message;
+                return error;
+            }
+
+        }
+
     }
 }

@@ -335,7 +335,13 @@ namespace DataAccess
                                     FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
                                     WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
                                     and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
-                                    and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL,
+                                    and op.ID_PLANES = t.ID_PLAN_OBRA
+                                    UNION
+	                                SELECT os.DESCRIPCION
+	                                  FROM T_OBRAS_SOCIALES os, T_OBRAS_PACIENTES op
+	                                 WHERE op.ID_OBRA_SOCIAL = os.ID_OBRA_SOCIAL
+	                                   AND os.DESCRIPCION = 'PARTICULAR'
+	                                   AND op.ID_PACIENTE = T.ID_PACIENTE) as OBRA_SOCIAL,
                                     t.NRO_AFILIADO,
                                     t.NRO_AUTORIZACION_OBRA
                                         from T_TURNOS t

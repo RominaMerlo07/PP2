@@ -22,12 +22,15 @@ $(document).ready(function () {
 
     sendDataProfesionales();    
     cargarEspecialidades("#ddlEspecialidad");
+    $("#agregarEspecialidad").hide();
 
+   
     $('.date').datepicker({
         autoclose: true,
         format: "dd/mm/yyyy"
     });
 
+   
     $('#btnRegistrar').click(function () {
 
         dni = $('#id__txtDocumento').val();
@@ -306,7 +309,7 @@ function sendDataProfesionales() {
                 var jsonStr = '["' + DateFechaNac + '", "' + Numero + '", "' + Profesional + '", "' + DNI + '", "' + Matricula + '", "' + Nacimiento + '","' + Contacto + '","' + Email + '","' + Domicilio + '"]';
                 //const array = JSON.parse(jsonStr);
 
-                var Especialidad = '<button id="btnEspecialidades" class="btn btn-warning btn-especialidades" type="reset" onclick= "return especialidades(' + Numero + ",'" + Profesional + "'," + Matricula + ')" ><i class="fas fa-user-tag aria-hidden="true"></i> Consultar </button>';
+                var Especialidad = '<button id="btnEspecialidades" class="btn btn-warning btn-especialidades" type="reset" onclick= "return especialidades(' + Numero + ",'" + Profesional + "'," + Matricula + ')" ><i class="fa-solid fa-hospital-user"></i> Consultar </button>';
              
                 var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
                     '<a href="#" onclick="return inactivar(' + Numero + ",'" + Profesional + "'" +')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
@@ -482,22 +485,7 @@ function sendDataProfesional_Especialidades(numero) {
                 //var Acciones;
 
                 var Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idEspecialidad + "'" +')" class="btn btn-danger btn-sm btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
-
-                //DESCOMENTAR PARA MOSTRAR EN FORMA DE TABLA
-
-               // console.log(especialidades + e.ESTADO);
-
-                //if (estado == 'A') {
-                //    estado = "ACTIVA";
-                //    Acciones = '<a href="#" class="btn btn-danger btn-sm btnInactivar"> <span class="fas fa-minus-square"></span></a >';
-                //}
-                //else
-                //{
-                //    estado = "INACTIVA";
-                //    Acciones = '<a href="#" class="btn btn-success btn-sm btnActivar"> <span class="fas fa-plus-square"></span></a >';
-                //}
-                
-
+                            
                 arrayEspecialidades.push([
                     idEspecialidad, especialidades, /*estado,*/ Acciones
                 ])
@@ -542,16 +530,10 @@ function sendDataProfesional_Especialidades(numero) {
 
 
             $('#btnRegistrarEsp').click(function () {
-                $("#modalAddEspecialidades").modal({
-                    backdrop: 'static',
-                    keyboard: true,
-                    show: true
-                }); 
+                $("#agregarEspecialidad").show();       
                
                 return cargarEspecialidadesProfesional("#ddlAddEspecialidad", numero);
-            });
-
-                
+            });                           
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -609,6 +591,10 @@ $("#btnAgregar").click(function (e) {
 });
 
 
+$("#btnCancelar").click(function () {
+    $("#agregarEspecialidad").hide();
+});
+
 function agregarEspecialidadesProfesional(espeProfesional) {
     $.ajax({
         url: "RegistrarProfesional.aspx/registrarEspeProfesional",
@@ -623,7 +609,7 @@ function agregarEspecialidadesProfesional(espeProfesional) {
                 swal("Hubo un problema", "Error al cargar las especialidades para el profesional!", "error"); //error
 
             } else {                
-                $("#modalAddEspecialidades").modal('hide');
+                $("#agregarEspecialidad").hide();                
                 swal("Hecho", "Especialidades registradas con Éxito!", "success"); //error
                 sendDataProfesional_Especialidades(espeProfesional.p_numero);
             }

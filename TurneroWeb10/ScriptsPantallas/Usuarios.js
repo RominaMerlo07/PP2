@@ -243,8 +243,7 @@ function sendDataUsuarios() {
                 var Rol = e.Rol;
 
               
-                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ",'" + Personal + "'" + ",'" + Rol + "'" + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
-                    '<a href="#" onclick="return inactivar(' + Numero + ",'" + Personal + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
+                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ",'" + Personal + "'" + ",'" + Rol + "'" + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ';
 
                 //' + "'"+ Numero +"'"+ '
                 arrayUsuarios.push([
@@ -401,25 +400,25 @@ function mostrarPassword(password) {
     }
 };
 
-function inactivar(id, nombre) {
+//function inactivar(id, nombre) {
 
-    var IdUsuario = id;
-    var nomPersonal = nombre;
+//    var IdUsuario = id;
+//    var nomPersonal = nombre;
 
-    $.ajax({
-        url: "Usuarios.aspx/darBajaUsuario",
-        data: "{IdUsuario: '" + IdUsuario + "'}",
-        type: "post",
-        contentType: "application/json",
-        async: false,
-        success: function (data) {
+//    $.ajax({
+//        url: "Usuarios.aspx/darBajaUsuario",
+//        data: "{IdUsuario: '" + IdUsuario + "'}",
+//        type: "post",
+//        contentType: "application/json",
+//        async: false,
+//        success: function (data) {
 
-            swal("Hecho", "Se dio de baja exitosamente el usuario de " + nomPersonal + ".", "success");
+//            swal("Hecho", "Se dio de baja exitosamente el usuario de " + nomPersonal + ".", "success");
 
-            sendDataUsuarios();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
-        }
-    });
-}
+//            sendDataUsuarios();
+//        },
+//        error: function (xhr, ajaxOptions, thrownError) {
+//            alert(data.error);
+//        }
+//    });
+//}

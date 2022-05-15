@@ -48,6 +48,7 @@
     <Compile Include="ent\Especialidad.cs" />
     <Compile Include="ent\HistoriaClinica.cs" />
     <Compile Include="ent\ObraSocial.cs" />
+    <Compile Include="ent\ObrasPacientes.cs" />
     <Compile Include="ent\ObrasPlanes.cs" />
     <Compile Include="ent\Paciente.cs" />
     <Compile Include="ent\PlanTratamiento.cs" />
