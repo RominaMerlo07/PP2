@@ -1074,7 +1074,7 @@ function cargarComboPlanesPaciente(idObraSocial, ddl, idPaciente) {
                     
                 });
                 $("#ddlPlanObra").prop("disabled", false);
-                $('#txtNroAfiliado').prop('disabled', false);
+                $('#txtNroAfiliado').prop('disabled', true);
                 $('#txtNroAutorizacion').prop('disabled', false);              
 
             }
