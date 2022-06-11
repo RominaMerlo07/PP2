@@ -17,9 +17,10 @@
 
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleLogin.css"%>" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
+      <script src="https://smtpjs.com/v3/smtp.js"></script>
 
 
-    <title>LOGIN</title>
+    <title>RECUPERAR CONTRASEÑA</title>
 </head>
 <body>
     <div class="modal-dialog text-center">
@@ -28,27 +29,24 @@
                 <div class="col-12 user-img">
                     <img src="Estilos/img/user3.png" />
                 </div>
-                <form class="col-12" id="form-login" action="">
-                    <label for="usuario">Usuario</label>
-                    <div class="form-group" id="user-group">
-                        <input type="text" name="usuario" id="txtUsuario" />
-                    </div>
-                    <label for="password">Contraseña</label>
-                    <div class="form-group" id="password-group">
-                        <input type="password" name="password" id="txtPassword" />
-                    </div>
-                    <button type="submit" class="btn btn-info" id="btnIngresar"><i class="fas fa-sign-in-alt"></i> INGRESAR</button>
+                <form id="form" method="post">
+                    <input type="button" class="btn btn-primary" id="button" value="Enviar Email" />
+                    <%--     <button type="submit"  id="btnRecuperar">RECUPERAR</button>--%>
+                    <%-- <form class="col-12" id="form-login" action="">
+                    <label for="email">Ingrese su Email</label>
+                    <div class="form-group" id="email-group">
+                        <input type="text" name="email" id="txtEmail" />
+                    </div>                    
+                    <button type="submit" class="btn btn-primary" id="btnRecuperar">RECUPERAR</button>
+                    <label id="lblResult"></label>
+                </form>--%>
                 </form>
-                <div>
-                    <a href="RecuperarPassword.aspx">Recuperar Contraseña</a>
-                </div>
-                <br />
+               
+
             </div>
         </div>
     </div>
-    
-    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Login.js"%>"></script>
-    
-
+  
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RecuperarPassword.js"%>"></script>
 </body>
 </html>

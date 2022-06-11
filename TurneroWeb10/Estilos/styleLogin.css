@@ -114,6 +114,12 @@ button {
 
 
 
+.form-group#email-group::before {
+    content: "\f0e0";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 800;
+    color: #08748C;
+}
 
 
 
