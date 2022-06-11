@@ -527,6 +527,7 @@
     <Content Include="Estilos\FullCalendar\examples\json\events.json" />
     <Content Include="Estilos\FullCalendar\README.md" />
     <Content Include="Archivos\CONSENTIMIENTO_INFORMADO.pdf" />
+    <Content Include="zzEjemploEnviadorMail.aspx" />
     <None Include="Estilos\Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Estilos\Scripts\jquery-3.0.0.js" />
     <Content Include="Estilos\Scripts\jquery-3.0.0.min.js" />
@@ -1275,6 +1276,13 @@
     </Compile>
     <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="zzEjemploEnviadorMail.aspx.cs">
+      <DependentUpon>zzEjemploEnviadorMail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="zzEjemploEnviadorMail.aspx.designer.cs">
+      <DependentUpon>zzEjemploEnviadorMail.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
