@@ -21,14 +21,14 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string enviarMail (string destinatario, string mensaje, bool esHtml)
+        public static string enviarMail (string destinatario, string asunto, string mensaje, bool esHtml)
         {
            
             try
             {
                 string exito = "OK";
                 EnviadorMail enviador = new EnviadorMail();
-                enviador.EnviarCorreo(destinatario, "Asunto Hardcodeado", mensaje, esHtml);
+                enviador.EnviarCorreo(destinatario, asunto , mensaje, esHtml);
 
                 return exito;
             }

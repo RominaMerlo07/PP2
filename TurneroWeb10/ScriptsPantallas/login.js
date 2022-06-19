@@ -1,4 +1,13 @@
-﻿var usuario, password;
+﻿var usuario, password, passOld, idResetPass, idPersonal, idProfesional;
+
+//$("#btnAbrir").click(function () {
+//    $("#modalChangePassword").modal('show');
+//});
+
+$("#btnCancelar").click(function () {
+    $("#modalChangePassword").modal('hide');
+});
+
 
 const form = document.getElementById('form-login');
 const inputs = document.querySelectorAll('#form-login input');
@@ -7,6 +16,7 @@ const inputs = document.querySelectorAll('#form-login input');
 //    input.addEventListener('keyup', validarFormulario);
 //    input.addEventListener('blur', validarFormulario);
 //});
+
 
 
 form.addEventListener('submit', function (e) {
@@ -23,7 +33,8 @@ form.addEventListener('submit', function (e) {
             p_password: password
         }
         // alert("Pase la validacion");
-        accesoUsuario(user);
+        validaClaveProvisoria(user);
+        //accesoUsuario(user);
     }
     else {
         alert("No valide datos o sali por error");
@@ -74,6 +85,132 @@ function accesoUsuario(user) {
     });
 }
 
+function validaClaveProvisoria(user) {
+    //  console.log("entre accceso usuario");
+    $.ajax({
+        url: "../Login.aspx/validaClaveProvisoria",
+        data: JSON.stringify(user),
+        type: "POST",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+                       
+ 
+            var info = JSON.parse(data.d);   
+
+            if (info.length == 0)
+            {
+                console.log("debo ir a validar con la tabla t_usuarios");
+                accesoUsuario(user);
+            }
+
+            info.forEach(function (e) {
+
+                if (e.CLAVE_USUARIO != null) {
+                    console.log("debo ir por pop up de cambio de pass, para eliminarla y updatear en la t_usuarios");
+                    idResetPass = e.ID_RESETPASS;
+                    passOld = e.CLAVE_USUARIO;
+                    idPersonal = e.id_personal;
+                    idProfesional = e.id_profesional;
+                    $("#modalChangePassword").modal('show');
+                }
+             
+            });
+           },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+        }
+
+    });
+}
+
+$("#btnActualizar").click(function () {
+
+    var claveOld = $('#txtPasswordProv').val();
+    var claveNew = $('#txtpassNewUno').val();
+    var claveNewRepeat = $('#txtpassNewDos').val();
+
+    var resul = validaClavesOldNew(claveOld, claveNew, claveNewRepeat);
+    if (resul) {
+
+        var datosUsuario = {
+            p_user: usuario,
+            p_password: claveNew            
+        }
+       
+      bajaResetClave(idResetPass, datosUsuario);
+
+    }
+});
 
 
+function validaClavesOldNew(claveOld, claveNew, claveNewRepeat) {
+
+    if (claveOld != passOld || claveNew != claveNewRepeat || claveOld === claveNew || claveNewRepeat === claveOld)
+    {
+      return false;
+    }
+    else if (claveOld === passOld && claveNew === claveNewRepeat && claveOld != claveNew || claveNewRepeat != claveOld)
+    {
+      return true;
+    }
+    
+};
+
+function bajaResetClave(id_resetpass, datosUsuario) {
+
+    $.ajax({
+        type: "POST",
+        url: "RecuperarPassword.aspx/bajaResetClave",
+        data: "{id_resetpass: '" + id_resetpass + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        success: function (response) {
+
+            if (response.d != 'OK') {
+                console.log("error al dar de baja la clave");
+            }
+            else {
+
+                console.log("se dio de baja ok");
+                actualizarClaveUser(datosUsuario);
+            }
+
+        }
+    })
+};
+
+
+function actualizarClaveUser(datosUsuario) {
+      
+
+    $.ajax({
+        type: "POST",
+        url: "Login.aspx/actualizarClaveUser",
+        data: JSON.stringify(datosUsuario),
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        success: function (response) {
+
+            if (response.d != 'OK') {
+                console.log("Error al actualizar clave");
+                swal("Hubo un problema", "Error al actualizar la clave", "error");
+            }
+            else {
+                console.log("Se actualizo clave ok")
+                swal("Hecho", "Los datos del usuario se actualizaron con Éxito. Por favor, probá el ingreso con tus datos actualizados", "success");
+                //sendDataUsuarios();
+            }
+
+        }
+    })
+};
 

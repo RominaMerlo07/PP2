@@ -54,6 +54,7 @@
     <Compile Include="ent\PlanTratamiento.cs" />
     <Compile Include="ent\Profesional.cs" />
     <Compile Include="ent\ProfesionalDetalle.cs" />
+    <Compile Include="ent\ResetPass.cs" />
     <Compile Include="ent\Rol.cs" />
     <Compile Include="ent\Turno.cs" />
     <Compile Include="ent\Usuario.cs" />

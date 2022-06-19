@@ -9,6 +9,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
 using Entidades.ent;
+using System.Data;
+using Newtonsoft.Json;
 
 namespace TurneroWeb10
 {
@@ -48,6 +50,65 @@ namespace TurneroWeb10
             catch (Exception e)
             {
                 string error = "Se produjo un error al buscar los datos del usuario " + e.Message;
+                return error;
+            }
+
+        }
+
+        [WebMethod]
+        public static string validaClaveProvisoria(string p_usuario, string p_password)
+        {
+            try
+            {
+                GestorUsuarios gUsuarios = new GestorUsuarios();
+                DataTable dt = gUsuarios.validaClaveProvisoria(p_usuario, p_password);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string actualizarClaveUser(string p_user, string p_password)
+        {
+
+            Usuario usuario = new Usuario();
+            GestorUsuarios gUsuarios = new GestorUsuarios();
+
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad usuario
+
+                if (!string.IsNullOrEmpty(p_user))
+                {
+                    usuario.NombreUsuario = p_user;
+                }
+
+                if (!string.IsNullOrEmpty(p_password))
+                {
+                    usuario.ClaveUsuario = p_password;
+                }
+
+
+                usuario.UsuarioMod = 1;
+                usuario.FechaMod = DateTime.Today;
+
+                #endregion
+
+                gUsuarios.actualizarClaveUser(usuario);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al actualizar los datos del usuario " + e.Message;
                 return error;
             }
 

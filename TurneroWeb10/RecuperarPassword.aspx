@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TurneroWeb10.Login"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RecuperarPassword.aspx.cs" Inherits="TurneroWeb10.RecuperarPassword" %>
 
 <!DOCTYPE html>
 
@@ -13,11 +13,11 @@
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Scripts/bootstrap.min.js"%>"></script>
 
 
-        <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/AdminLTE/app.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/AdminLTE/app.js"%>"></script>
 
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleLogin.css"%>" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
-      <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/sweetalert.min.js"%>"></script>
 
 
     <title>RECUPERAR CONTRASEÑA</title>
@@ -29,24 +29,23 @@
                 <div class="col-12 user-img">
                     <img src="Estilos/img/user3.png" />
                 </div>
-                <form id="form" method="post">
-                    <input type="button" class="btn btn-primary" id="button" value="Enviar Email" />
-                    <%--     <button type="submit"  id="btnRecuperar">RECUPERAR</button>--%>
-                    <%-- <form class="col-12" id="form-login" action="">
-                    <label for="email">Ingrese su Email</label>
+                <form class="col-12" id="form-login" action="">
+                    <h6>Ingrese su email para enviarle las instrucciones de "Recuperación de Contraseña"</h6>
+                    <label for="email">Email</label>
                     <div class="form-group" id="email-group">
                         <input type="text" name="email" id="txtEmail" />
-                    </div>                    
-                    <button type="submit" class="btn btn-primary" id="btnRecuperar">RECUPERAR</button>
-                    <label id="lblResult"></label>
-                </form>--%>
+                    </div>
+                    <input type="button" class="btn btn-primary" id="button" value="Enviar Email" />
                 </form>
-               
-
+                <div>
+                     <br />
+                    <a href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Login.aspx"%>">Iniciar Sesion</a>
+                </div>
+                <br />
             </div>
         </div>
     </div>
-  
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/sweetalert.min.js"%>"></script>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RecuperarPassword.js"%>"></script>
 </body>
 </html>

@@ -121,5 +121,85 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public DataTable validarEmail(string email)
+        {
+            try
+            {
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.validarEmail(email);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public int registrarResetPass(ResetPass resetPass, int idPersonal, int idProfesional)
+        {
+            try
+            {
+                DAUsuarios DaUsuarios = new DAUsuarios();
+                return DaUsuarios.registrarResetPass(resetPass, idPersonal, idProfesional);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public DataTable validarResetPass(string emailContacto, string nombreUsuario)
+        {
+            try
+            {
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.validarResetPass(emailContacto, nombreUsuario);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string bajaResetClave(ResetPass resetPass)
+        {
+            try
+            {
+                DAUsuarios DAUsuario = new DAUsuarios();
+                return DAUsuario.bajaResetClave(resetPass);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable validaClaveProvisoria(string usuario, string password)
+        {
+            try
+            {
+                DAUsuarios DAUsuarios = new DAUsuarios();
+                return DAUsuarios.validaClaveProvisoria(usuario, password);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string actualizarClaveUser(Usuario usuario)
+        {
+            try
+            {
+                DAUsuarios DAUsuario = new DAUsuarios();
+                return DAUsuario.actualizarClaveUser(usuario);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }
