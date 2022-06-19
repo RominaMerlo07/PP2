@@ -83,6 +83,19 @@
                                         <p class="formulario__error" id="p__txtApellido">Por favor, ingrese el/los apellido/s</p>--%>
                                         </div>
                                     </div>
+                                     <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Email</span>
+                                                </div>
+                                                <input type="text" name="email" style="text-align: left" class="form-control" id="id__Email" maxlength="230" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtNombre"></i>--%>                                              
+                                            </div>
+                                            <%-- <p class="formulario__error" id="p__txtNombre">Por favor, ingrese el/los nombre/s</p>
+                                        <p class="formulario__error" id="p__txtApellido">Por favor, ingrese el/los apellido/s</p>--%>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md" id="crdDatosContacto">
@@ -113,19 +126,16 @@
                                                         </div>
                                                         <%--<p class="formulario__error" id="p__txtUsuario">Por favor, ingrese el Barrio</p>--%>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="input-group mb-3">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">Contraseña</span>
-                                                            </div>
-                                                            <input type="password" name="password" style="text-align: left" class="form-control" id="id__txtPassword" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                                             <div class="input-group-append">
+                                                   <%-- <div class="col">
+                                                        <div class="input-group mb-3">                                                          
+                                                            <button type="button" class="btn btn-info" id="btnEnviarPass">GENERAR CONTRASEÑA</button>
+                                                            <%-- <div class="input-group-append">
                                                             <button id="show_passwordA" class="btn btn-primary" type="button" onclick="mostrarPassword('id__txtPassword')"><span class="fa fa-eye-slash icon"></span></button>
-                                                            </div>
-                                                            <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>--%>
-                                                        </div>
-                                                        <%--  <p class="formulario__error" id="p__txtPassword">Por favor, ingrese una contraseña</p>--%>
-                                                    </div>
+                                                            </div>--%>
+                                                            <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>
+                                                        </div>--%>
+                                                        <%--  <p class="formulario__error" id="p__txtPassword">Por favor, ingrese una contraseña</p>
+                                                    </div>--%>
                                                 </div>
                                             </div>
                                         </div>

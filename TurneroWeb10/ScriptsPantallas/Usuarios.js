@@ -1,4 +1,4 @@
-﻿var id_personal, cargo, id_per, id_prof, user, password, rol, id_usuario, rolE;
+﻿var id_personal, cargo, id_per, id_prof, user, password, rol, id_usuario, rolE, pass;
 
 
 $(document).ready(function () {
@@ -50,8 +50,10 @@ function buscarPersonal(dniPersonal) {
                     $('#txtDocumento').prop('disabled', true);
                     $('#id__txtNombre').prop('disabled', true);
                     $('#id__txtApellido').prop('disabled', true);
+                    $('#id__Email').prop('disabled', true);
                     $('#id__txtNombre').val(e.nombre);
-                    $('#id__txtApellido').val(e.apellido);                    
+                    $('#id__txtApellido').val(e.apellido);
+                    $('#id__Email').val(e.EMAIL_CONTACTO);
 
                     generarUsuario(e.nombre, e.apellido);
 
@@ -162,6 +164,7 @@ $('#btnRegistrar').click(function () {
     user = $('#id__txtUsuario').val();
     password = $('#id__txtPassword').val();
     rol = $('#ddlRol').val();
+    email = $('#id__Email').val();
     var validacion = validarDatosUsuario();
 
     if (validacion === true) {
@@ -176,26 +179,83 @@ $('#btnRegistrar').click(function () {
             id_prof = null;
         }
 
+        pass = generatePass();
+
         var usuario = {
 
+            p_nombreUsuario : user,
+            p_claveUsuario: pass,
+            p_emailContacto : email,
             p_idPersonal : id_per,
             p_idProfesional : id_prof,
-            p_user : user,
-            p_password : password,
             p_rol : rol
         }
-       
-        registrarUsuario(usuario);
+
+        console.log("USUARIO: " + usuario.p_idPersonal + " " + usuario.p_idProfesional + " " + usuario.p_nombreUsuario + " " + usuario.p_claveUsuario + " " + usuario.p_rol + " " + usuario.p_emailContacto);
+        registrarResetPass(usuario);
         
     }
 
 });
 
+function registrarResetPass(usuario) {     
+
+    $.ajax({
+        url: "RecuperarPassword.aspx/registrarResetPass",
+        data: JSON.stringify(usuario),
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+            console.log(data.d);
+            if (data.d != 'OK') {
+                console.log("Error al registrar clave en base");
+
+            } else {
+                console.log("Se registro ok");                    
+                registrarUsuario(usuario);
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+
+    });
+
+}
+
+
+function generatePass() {
+    var pass = 'sp';
+    var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+        'abcdefghijklmnopqrstuvwxyz0123456789@#$';
+
+    for (i = 1; i <= 8; i++) {
+        var char = Math.floor(Math.random()
+            * str.length + 1);
+
+        pass += str.charAt(char)
+    }
+
+    return pass;
+}
 
 function registrarUsuario(usuario) {
+
+    var datosUsuario = {
+        p_idPersonal: usuario.p_idPersonal,
+        p_idProfesional: usuario.p_idProfesional,
+        p_user: usuario.p_nombreUsuario,
+        p_password: usuario.p_claveUsuario + "***",
+        p_rol: usuario.p_rol,
+        p_emailContacto: usuario.p_emailContacto
+    }
+       
+
    $.ajax({
         url: "Usuarios.aspx/registrarUsuario",
-        data: JSON.stringify(usuario),
+        data: JSON.stringify(datosUsuario),
         type: "post",
         contentType: "application/json",
         async: false,
@@ -208,7 +268,8 @@ function registrarUsuario(usuario) {
             } else {
                            
                 $("#modalRegistrar").modal('hide');
-                swal("Hecho", "Usuario registrado con Éxito!", "success"); //error
+               // swal("Hecho", "Usuario registrado con Éxito!.", "success"); //error
+                enviarMail(datosUsuario);
                 sendDataUsuarios();
                 limpiarCampos();
 
@@ -220,6 +281,53 @@ function registrarUsuario(usuario) {
 
     });
 };
+
+
+function enviarMail(datosUsuario) {
+    
+    var esHtml = true;
+
+    var email = datosUsuario.p_emailContacto;
+    var user = email.split("@");
+    user = user[0];
+    var passProvisoria = pass;
+    passProvisoria = passProvisoria.bold();
+    var usuario = datosUsuario.p_user;
+    usuario = usuario.bold();
+    var importante = "Recorda! que debes modificar la clave en el primer ingreso";
+    importante = importante.bold().fontcolor('#8c2708');
+    var urlSparring = " http://localhost:49513/Login.aspx ";
+    var firma = "Sparring Rehabilitación";
+    firma = firma.bold().fontcolor('#08748C').fontsize(6);
+    var asunto = "Sparring Rehabilitación - Registro Exitoso";
+
+
+    var mensaje = "Hola " + user + "<br>" + "Hemos procesado tu registro en nuestro sistema de manera exitosa. <br> <br> Por favor, ingresa con tu usuario " + usuario + " y la siguiente clave provisoria: " + passProvisoria + " en " + urlSparring + "<br>" + importante + ".<br> <br> En caso de que tengas problemas con el ingreso, comunicate con secretaría. <br> <br> Agradecemos tu compromiso y dedicación. <br> Saludos Cordiales <br>" + firma;
+
+    $.ajax({
+        url: "zzEjemploEnviadorMail.aspx/enviarMail",
+        data: "{destinatario: '" + email
+            + "', asunto: '" + asunto
+            + "', mensaje: '" + mensaje
+            + "', esHtml: '" + esHtml
+            + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d == "OK") {            
+                swal("USUARIO REGISTRADO", "Por favor solicita a tu personal que revise su correo y siga las instrucciones enviadas por email", "success");
+            } else {               
+                swal("Error", "No se ha podido enviar el E-mail", "warning");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+        }
+
+    });
+}
 
 
 function sendDataUsuarios() {

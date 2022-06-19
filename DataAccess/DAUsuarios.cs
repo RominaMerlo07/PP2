@@ -95,7 +95,7 @@ namespace DataAccess
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
                 //e.*, pd.*, dh.*
-                string consulta = @"SELECT p.ID_PERSONAL idPersonal, p.NOMBRE nombre, p.APELLIDO apellido, 'PERSONAL' cargo
+                string consulta = @"SELECT p.ID_PERSONAL idPersonal, p.NOMBRE nombre, p.APELLIDO apellido, 'PERSONAL' cargo, p.EMAIL_CONTACTO
                                       FROM T_PERSONAL p
                                      WHERE p.DOCUMENTO = @DNI_PERSONAL
                                        AND p.FECHA_BAJA is null
@@ -103,7 +103,7 @@ namespace DataAccess
 							                                       FROM T_USUARIOS
 							                                      WHERE ID_PERSONAL = p.ID_PERSONAL)
                                     UNION
-                                    SELECT p.ID_PROFESIONAL idPersonal, p.NOMBRE nombre, p.APELLIDO apellido, 'PROFESIONAL' cargo
+                                    SELECT p.ID_PROFESIONAL idPersonal, p.NOMBRE nombre, p.APELLIDO apellido, 'PROFESIONAL' cargo, p.EMAIL_CONTACTO
                                       FROM T_PROFESIONALES p
                                      WHERE p.DOCUMENTO = @DNI_PERSONAL
                                        AND p.FECHA_BAJA is null
