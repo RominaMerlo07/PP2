@@ -10,8 +10,17 @@
         <h1 style="text-align: left">DISPONIBILIDAD HORARIA</h1>
     </section>
     <section class="content">
+        <div class="row" id="alertNullProf" style="display:none">
+            <div class="col" >
+                <div class="alert alert-warning alert-dismissible" >
+                    <%--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--%>
+                    <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
+                    El sistema no tiene cargado ningún Profesional. Cargar Profesionales <a href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "RegistrarProfesional.aspx"%>">aquí</a>.
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-6" id="crdDatosContacto">
+            <div class="col-md-6" id="crdDatosContacto" style="display:none">
                 <div class="card text-white bg-light">
                     <div class="card-header bg-info">
                         <h4>Profesional</h4>
@@ -53,23 +62,14 @@
                                 </div>
                             </div>
                         </div>                            
-<%--                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                   <button type="button" class="btn btn-outline-primary">Agregar Especialidad</button> 
-                                </div>
-                            </div>
-                        </div> --%>
                          <div class="form-row">
                             <div class="col">
                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Desde: </span>
-                                    </div>
-                                    <div>
-                                        <input type='text' class="form-control datepicker date" id="dtpFechaDesde"
+                                    <input type='text' class="" id="dtpFechaDesde"
                                             placeholder="DD/MM/YYYY" data-provide="datepicker"
                                             data-date-format="dd/mm/yyyy" />
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Desde: </span>
                                     </div>
                                 </div>
                             </div>
@@ -156,11 +156,6 @@
                 <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
             </div>
             <br/>      
-            <%--<div class="card" style="width: 40rem;">
-                <div class="card-body">
-                    <div id='calendar'></div>
-                </div>
-            </div>--%>
         </div>
     </section>
     <script type="text/javascript">
@@ -263,7 +258,7 @@
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(data.error);
+                    //alert(data.error);
                 }
 
             });
@@ -291,7 +286,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $(ddl).prop("disabled", true);
-                    alert(data.error);
+                    //alert(data.error);
                 }
             });
         }
@@ -305,20 +300,31 @@
                 async: false,
                 success: function (data) {
 
-                    if (data.d.length > 0) {
-                        $(ddl).empty();
-                        $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
-                        
+                    $(ddl).empty();
+                    $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
+
+                    if (data.d != null) {
+
                         for (i = 0; i < data.d.length; i++) {
                             var nombre = data.d[i].Nombre + " " + data.d[i].Apellido;
                             $(ddl).append($("<option></option>").val(data.d[i].IdProfesional).html(nombre));
                         }
-                        $(ddl).prop("disabled", false);
+                        //$(ddl).prop("disabled", false);
+                        $('#alertNullProf').hide();
+                        $('#crdDatosContacto').show();
+                        
+                    }
+                    else {
+                        
+                        $('#alertNullProf').show();
+                        $('#crdDatosContacto').hide();
+                        //$(ddl).prop("disabled", true);
+
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $(ddl).prop("disabled", true);
-                    alert(data.error);
+                    //alert(data.error);
                 }
             });
         }
@@ -345,7 +351,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $(ddl).prop("disabled", true);
-                    alert(data.error);
+                    //alert(data.error);
                 }
             });
         }
