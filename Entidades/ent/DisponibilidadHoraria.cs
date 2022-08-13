@@ -7,7 +7,7 @@ namespace Entidades.ent
     public class DisponibilidadHoraria
     {
         private int id_disponibilidad_horaria;
-        private ProfesionalDetalle profesional_detalle;
+        //private ProfesionalDetalle profesional_detalle;
         private DateTime fecha_inic;
         private DateTime fecha_fin;
         private TimeSpan hora_desde;
@@ -19,6 +19,13 @@ namespace Entidades.ent
         private DateTime fecha_mod;
         private int usuario_baja;
         private DateTime fecha_baja;
+        private Centro centro;
+        private bool lunes;
+        private bool martes;
+        private bool miercoles;
+        private bool jueves;
+        private bool viernes;
+
 
 
         public int IdDisponibilidadHoraria
@@ -27,11 +34,11 @@ namespace Entidades.ent
             set { id_disponibilidad_horaria = value; }
         }
 
-        public ProfesionalDetalle ProfesionalDetalle
-        {
-            get { return profesional_detalle; }
-            set { profesional_detalle = value; }
-        }
+        //public ProfesionalDetalle ProfesionalDetalle
+        //{
+        //    get { return profesional_detalle; }
+        //    set { profesional_detalle = value; }
+        //}
 
         public DateTime FechaInic
         {
@@ -99,6 +106,41 @@ namespace Entidades.ent
             set { fecha_baja = value; }
         }
 
+        public Centro Centro
+        {
+            get { return centro; }
+            set { centro = value; }
+        }
+
+        public bool Lunes
+        {
+            get { return lunes; }
+            set { lunes = value; }
+        }
+
+        public bool Martes
+        {
+            get { return martes; }
+            set { martes = value; }
+        }
+
+        public bool Miercoles
+        {
+            get { return miercoles; }
+            set { miercoles = value; }
+        }
+
+        public bool Jueves
+        {
+            get { return jueves; }
+            set { jueves = value; }
+        }
+
+        public bool Viernes
+        {
+            get { return viernes; }
+            set { viernes = value; }
+        }
         public DisponibilidadHoraria() { }
     }
 }

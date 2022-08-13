@@ -12,7 +12,7 @@
     <section class="content-header">
         <h1 style="text-align: left">SEGUIMIENTO DEL PACIENTE</h1>
     </section>
-    <div class="content" id="sectionEspecialidad">
+    <div class="content">
         </br>
         <div class="justify-content-md-center">           
             <%--<div class="col-md">--%>

@@ -56,12 +56,7 @@ namespace BusinessLogicLayer.Gestores
                 DAProfesional daProf = new DAProfesional();
                 List<Profesional> list = daProf.traerProfesionales();
 
-                if (list.Count > 0)
-                {
-                    return list;
-                }
-                else
-                    return null;
+                return list;
             }
             catch (Exception e)
             {
