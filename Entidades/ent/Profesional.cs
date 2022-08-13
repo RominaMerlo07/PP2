@@ -22,6 +22,7 @@ namespace Entidades.ent
         private DateTime fecha_mod;
         private int usuario_baja;
         private DateTime fecha_baja;
+        private List<DisponibilidadHoraria> horariosProfesional;
 
         public int IdProfesional
         {
@@ -117,6 +118,12 @@ namespace Entidades.ent
         {
             get { return fecha_baja; }
             set { fecha_baja = value; }
+        }
+
+        public List<DisponibilidadHoraria> HorariosProfesional
+        {
+            get { return horariosProfesional; }
+            set { horariosProfesional = value; }
         }
 
         public Profesional() { }

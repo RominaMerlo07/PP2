@@ -32,10 +32,10 @@ namespace TurneroWeb10
 
                 #region Completa entidad Disponibilidad
 
-                if (!string.IsNullOrEmpty(p_profesional)) {
-                    profDetalle.IdProfesionalDetalle = Convert.ToInt32(p_especialidad);
-                    disponibilidad.ProfesionalDetalle = profDetalle;
-                }
+                //if (!string.IsNullOrEmpty(p_profesional)) {
+                //    profDetalle.IdProfesionalDetalle = Convert.ToInt32(p_especialidad);
+                //    disponibilidad.ProfesionalDetalle = profDetalle;
+                //}
 
                 if (!string.IsNullOrEmpty(p_fechaDesde))
                     disponibilidad.FechaInic = Convert.ToDateTime(p_fechaDesde);
@@ -59,7 +59,7 @@ namespace TurneroWeb10
 
                 #endregion
 
-                gestorDisponibilidad.RegistrarDisponibilidad(disponibilidad);
+                //gestorDisponibilidad.RegistrarDisponibilidad(disponibilidad);
 
                 return mensaje;
             }

@@ -707,6 +707,44 @@ namespace DataAccess
                 throw ex;
             }
         }
-        
+
+        public bool CambiarEstadoReprogramarTurnos(string idDisponibilidad, string idProfesional, int idUsuarioBaja)
+        {
+            try
+            {
+                bool result = false;
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    UPDATE T_DISPONIBILIDAD_HORARIA
+                                    SET USUARIO_BAJA = @usrBaja, FECHA_BAJA = GETDATE()
+                                    WHERE ID_DISPONIBILIDAD = @idDisponibilidad
+                                    AND ID_PROFESIONAL = @idProfesional
+                                    ;
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@usrBaja", idUsuarioBaja);
+                cmd.Parameters.AddWithValue("@idDisponibilidad", idDisponibilidad);
+                cmd.Parameters.AddWithValue("@idProfesional", idProfesional);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                result = true;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

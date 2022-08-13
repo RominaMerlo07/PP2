@@ -8,18 +8,29 @@
     </style>--%>
     <section class="content-header">
         <%-- <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Profesionales</button>--%>
-        <h1 style="text-align: center">PROFESIONALES</h1>
+        <h1>PROFESIONALES</h1>
     </section>
     <section class="content">
+        <div class="row" id="alertNullProf" style="display:none">
+            <div class="col">
+                <div class="alert alert-warning alert-dismissible" >
+                    <%--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--%>
+                    <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
+                    El sistema no tiene cargado ningún Profesional.
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"> <i class="fas fa-user-plus"></i>  | Registrar Profesional</button>
+            <div class="col">
+                <button class="btn btn-success btn-lg" type="button" id="btnRegistrarModal"> <i class="fas fa-user-plus"></i>  | Registrar Profesional</button>
+            </div>
         </div>
         <br />
 
         <!-- Lista profesionales -->
         <!-- Datatable Part -->
         <div class="row">
-            <div class="box box-primary">
+            <div class="box box-primary" id="bxMainTable">
                 <div class="box-header">
                     <h1 class="box-title">Listado de Profesionales</h1>
                 </div>
@@ -196,12 +207,12 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Email: </span>
                                                     </div>
-                                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toLowerCase();" />
                                                         <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail1"></i>  
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">@</span>
                                                     </div>
-                                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toLowerCase();" />
                                                     <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail2"></i>  
                                                 </div>                              
                                                 <p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>

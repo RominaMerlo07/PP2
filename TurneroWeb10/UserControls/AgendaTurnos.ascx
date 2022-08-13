@@ -61,7 +61,8 @@
             autoclose: true,
             format: "dd/mm/yyyy",
             //startDate: '+1d',
-            orientation: 'bottom'
+            orientation: 'bottom',
+            language: 'es'
         }).datepicker("setDate",'now');
 
         completarTurnosDelDia($('#ddlSucursal').val(), $('#dtpFecha').val());

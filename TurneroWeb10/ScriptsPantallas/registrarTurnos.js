@@ -17,7 +17,8 @@ $(document).ready(function () {
     $('#dtpFechaD').datepicker({
         autoclose: true,
         format: "dd/mm/yyyy",
-        startDate: '+1d'
+        startDate: '+1d',
+        language: 'es'
     });
 
     btnRegistrarExis.disabled = true;
