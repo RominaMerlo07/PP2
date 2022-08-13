@@ -489,6 +489,7 @@
     <Content Include="GestionSeguimientoPacientes.aspx" />
     <Content Include="GestionTratamientos.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HorariosProfesionales.aspx" />
     <Content Include="InformeObras.aspx" />
     <Content Include="InstructivosObras.aspx" />
     <Content Include="Login.aspx" />
@@ -1170,6 +1171,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HorariosProfesionales.aspx.cs">
+      <DependentUpon>HorariosProfesionales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HorariosProfesionales.aspx.designer.cs">
+      <DependentUpon>HorariosProfesionales.aspx</DependentUpon>
     </Compile>
     <Compile Include="InformeObras.aspx.cs">
       <DependentUpon>InformeObras.aspx</DependentUpon>

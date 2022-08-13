@@ -372,7 +372,7 @@ function traerDatosHC(idTratamiento) {
         success: function (data) {
 
             var valores = JSON.parse(data.d);
-            debugger;
+
             var profesional = valores[0]['PROFESIONAL'] == null ? 'Sin datos.' : valores[0]['PROFESIONAL'];
             var profesionalMatricula = valores[0]['MATRICULA_PROFESIONAL'] == null ? '' : valores[0]['MATRICULA_PROFESIONAL'];
             var profesionalDocumento = valores[0]['DOCUMENTO_PROFESIONAL'] == null ? '' : valores[0]['DOCUMENTO_PROFESIONAL'];

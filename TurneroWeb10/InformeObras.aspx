@@ -81,14 +81,16 @@
                 autoclose: true,
                 format: "dd/mm/yyyy",
                 //startDate: '-30d',
-                orientation: 'bottom'
+                orientation: 'bottom',
+                language: 'es'
             }).datepicker("setDate",'-30d');
 
             $('#dtpFechaHasta').datepicker({ 
                 autoclose: true,
                 format: "dd/mm/yyyy",
                 //startDate: '+1d',
-                orientation: 'bottom'
+                orientation: 'bottom',
+                language: 'es'
             }).datepicker("setDate",'now');
 
             cargarComboCentros('#ddlSucursal');
