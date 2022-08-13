@@ -275,6 +275,10 @@
                                     <i class="fa fa-calendar-plus"></i>
                                     <span>Disponibilidad Horaria</span>
                                 </a>
+                                <a class="dropdown-item" id="iddisponibilidadHoraria2" href="HorariosProfesionales.aspx">
+                                    <i class="fa fa-calendar-plus"></i>
+                                    <span>Disponibilidad Horaria 2</span>
+                                </a>
                             </div>
                         </li>
                         <li class="nav-item dropdown" id="idGestionObrasSociales">
