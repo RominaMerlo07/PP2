@@ -6,7 +6,7 @@
     <%--<p>"ABM REGISTRAR PACIENTE"</p>--%>
 
     <section class="content-header">      
-        <h1 style="text-align: center">PACIENTES</h1>
+        <h1 style="text-align: left">PACIENTES</h1>
     </section>
     <section class="content">
          <div class="row">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
-                        <table style="width:100%" id="tabla_pacientes" class="table table-bordered table-hover">
+                        <table style="width:100%" id="tabla_pacientes" class="table table-bordered table-hover table-striped">
                             <tbody id="tbl_body_table">
                                 <!-- DATA POR MEDIO DE AJAX-->
                             </tbody>

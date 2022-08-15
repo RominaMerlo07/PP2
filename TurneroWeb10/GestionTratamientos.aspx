@@ -54,7 +54,7 @@
                         <div class="col-md-12">
                             <div class="table table-striped table-hover">   
                                 <div id="tGestionTratamiento" >
-                                    <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaTratamientos">
+                                    <table style="width:100%" class="table table-striped table-hover table-bordered" id="tablaTratamientos">
                                     </table>
                                 </div>  
                             </div>

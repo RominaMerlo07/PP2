@@ -26,13 +26,13 @@ namespace BusinessLogicLayer.Gestores
 
         //}
 
-        public List<DisponibilidadHoraria> TraerHorariosProfesional(string idProfesional)
+        public List<DisponibilidadHoraria> TraerHorariosProfesional(string idProfesional, string centro = null)
         {
             try
             {
 
                 DADisponibilidadHoraria DADisponibilidad = new DADisponibilidadHoraria();
-                return DADisponibilidad.DaTraerHorariosProfesional(idProfesional);
+                return DADisponibilidad.DaTraerHorariosProfesional(idProfesional, centro);
                 
             }
             catch (Exception e)

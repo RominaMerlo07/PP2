@@ -34,7 +34,7 @@
                             </div> 
                         </div> --%>    
                         <div id="tListaObrasSociales" >
-                            <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaObrasSociales">
+                            <table style="width:100%" class="table table-striped table-hover table-bordered" id="tablaObrasSociales">
                             </table>
                         </div>  
                     </div>
