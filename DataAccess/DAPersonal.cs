@@ -178,7 +178,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    return null;
+                    return listaPersonal;
                 }
 
             }

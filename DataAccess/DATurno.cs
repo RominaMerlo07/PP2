@@ -707,6 +707,57 @@ namespace DataAccess
                 throw ex;
             }
         }
-        
+
+        public bool CambiarEstadoReprogramarTurnos(string idDisponibilidad, string idProfesional, int idUsuarioMod)
+        {
+            try
+            {
+                bool result = false;
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    update T_TURNOS
+                                    set
+	                                    FECHA_TURNO = NULL, HORA_DESDE = NULL, HORA_HASTA = NULL,
+	                                    ESTADO = 'REPROGRAMAR',
+	                                    USUARIO_MOD = @usrMod, FECHA_MOD = GETDATE()
+                                    where ID_TURNO in (
+                                    select T.ID_TURNO
+                                        from T_DISPONIBILIDAD_HORARIA DH, T_TURNOS T
+                                        WHERE DH.ID_PROFESIONAL = T.ID_PROFESIONAL
+                                        AND DH.ID_CENTRO = T.ID_CENTRO
+                                        AND T.FECHA_BAJA IS NULL
+                                        AND T.ESTADO NOT IN ('CANCELADO', 'REPROGRAMAR')
+                                        AND DH.ID_DISPONIBILIDAD = @idDisponibilidad
+                                        AND DH.ID_PROFESIONAL = @idProfesional
+                                        AND T.FECHA_TURNO BETWEEN DH.FECHA_INIC AND DH.FECHA_FIN
+                                        AND T.HORA_DESDE BETWEEN DH.HORA_DESDE AND DH.HORA_HASTA
+                                    )
+                                    ;
+                                        ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@usrMod", idUsuarioMod);
+                cmd.Parameters.AddWithValue("@idDisponibilidad", idDisponibilidad);
+                cmd.Parameters.AddWithValue("@idProfesional", idProfesional);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                result = true;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

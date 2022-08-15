@@ -17,7 +17,8 @@ $(document).ready(function () {
     $('#dtpFechaD').datepicker({
         autoclose: true,
         format: "dd/mm/yyyy",
-        startDate: '+1d'
+        startDate: '+1d',
+        language: 'es'
     });
 
     btnRegistrarExis.disabled = true;
@@ -96,6 +97,10 @@ $(document).ready(function () {
 
         centro = $('#ddlSucursal').val();
         cargarEspecialidades(centro, "#ddlEspecialidad");
+        $("#ddlProfesional").prop("disabled", true);
+        $("#calDisposicionHoraria").hide();
+        $("#calTurnos").hide();
+
         cargarObrasSociales("#ddlObraSocial", centro);
 
     });
@@ -104,6 +109,8 @@ $(document).ready(function () {
 
         var idEspecialidad = $('#ddlEspecialidad').val();
         cargarProfesionales(centro, idEspecialidad, "#ddlProfesional");
+        $("#calDisposicionHoraria").hide();
+        $("#calTurnos").hide();
 
     });
 
@@ -218,49 +225,91 @@ function buscarPaciente(dniPaciente) {
 }
 
 function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia = "") {
-    var disponibilidadHoraria;
+    var profesional;
 
     $.ajax({
         url: "RegistrarTurno.aspx/traerDisponibilidadHoraria",
-        data: "{idProfesional: '" + idProfesional + "', idEspecialidad: '" + idEspecialidad + "', idCentro: '" + centro + "', dia: '" + dia + "'}",
+        //data: "{idProfesional: '" + idProfesional + "', idEspecialidad: '" + idEspecialidad + "', idCentro: '" + centro + "', dia: '" + dia + "'}",
+        data: "{idProfesional: '" + idProfesional + "', centro: '" + centro +"'}",
         type: "post",
         contentType: "application/json",
         async: false,
         success: function (data) {
 
-            disponibilidadHoraria = JSON.parse(data.d);
+            profesional = JSON.parse(data.d);
 
         }
     });
 
-    return disponibilidadHoraria;
+    return profesional;
 }
 
 function CargarEventosFullCalendar(idProfesional, idEspecialidad, centro) {
     var eventos = [];
 
-    var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
+    //var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
 
-    disponibilidadHoraria.forEach(function (e) {
+    //disponibilidadHoraria.forEach(function (e) {
 
-        var dateInic = new Date(e.FECHA_INIC);
-        var dateFin = new Date(e.FECHA_FIN);
+    //    var dateInic = new Date(e.FECHA_INIC);
+    //    var dateFin = new Date(e.FECHA_FIN);
 
-        var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
+    //    var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
 
-        eventos = armarSemanasSinFindesemanas(diasArray);
+    //    eventos = armarSemanasSinFindesemanas(diasArray);
 
-    });
+    //});
 
-    calendarDisp.addEventSource(eventos);
+    //calendarDisp.addEventSource(eventos);
+    var profesional = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
+    if (!(profesional.HorariosProfesional === null)) {
+        profesional.HorariosProfesional.forEach(function (e) {
+
+            var Dias = [];
+
+            e.Lunes == true ? Dias.push('lunes') : '';
+            e.Martes == true ? Dias.push('martes') : '';
+            e.Miercoles == true ? Dias.push('miércoles') : '';
+            e.Jueves == true ? Dias.push('jueves') : '';
+            e.Viernes == true ? Dias.push('viernes') : '';
+
+            var dateInic = new Date(e.FechaInic);
+            var dateFin = new Date(e.FechaFin);
+
+            var descr = e.Centro.NombreCentro + " | " + e.HoraDesde.slice(0, -3) + " - " + e.HoraHasta.slice(0, -3);
+
+            var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin, Dias);
+            debugger;
+            eventos.push(armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria));
+
+        });
+        eventos.forEach(function (e) {
+            calendarDisp.addEventSource(e);
+        });
+    }
 }
 
-function obtenerDiasSinFindesemanas(startDate, stopDate) {
+function obtenerDiasSinFindesemanas(startDate, stopDate, Dias) {
+    //var diasArray = new Array();
+    //var currentDate = startDate;
+    //while (currentDate <= stopDate) {
+    //    var diaNombre = currentDate.toLocaleString('es-es', { weekday: 'long' });
+    //    if (!(diaNombre.startsWith('dom') || diaNombre.startsWith('sáb'))) {
+    //        diasArray.push(new Date(currentDate));
+    //        currentDate = currentDate.addDays(1);
+    //    }
+    //    else {
+    //        currentDate = currentDate.addDays(1);
+    //    }
+    //}
+    //return diasArray;
+
     var diasArray = new Array();
     var currentDate = startDate;
+
     while (currentDate <= stopDate) {
         var diaNombre = currentDate.toLocaleString('es-es', { weekday: 'long' });
-        if (!(diaNombre.startsWith('dom') || diaNombre.startsWith('sáb'))) {
+        if (Dias.includes(diaNombre)) {
             diasArray.push(new Date(currentDate));
             currentDate = currentDate.addDays(1);
         }
@@ -271,10 +320,10 @@ function obtenerDiasSinFindesemanas(startDate, stopDate) {
     return diasArray;
 }
 
-function armarSemanasSinFindesemanas(diasArray) {
+function armarSemanasSinFindesemanas(diasArray, descr, idEvent) {
     var dispHor = [];
-
-    var dispHorSemana = '{"title": "Disponibilidad", "start": "", "end":""}';
+    debugger;
+    var dispHorSemana = '{"title": "Disponible", "start": "", "end":"", "description": "", "id":"' + idEvent +'"}';
 
     for (i = 0; i < diasArray.length; i++) {
 
@@ -286,6 +335,7 @@ function armarSemanasSinFindesemanas(diasArray) {
             var diaFormated = getFormattedDateInversed(diaObj);
             obj.start = diaFormated;
             obj.end = diaFormated;
+            obj.description = descr;
             dispHor.push(obj);
         }
     }
@@ -310,26 +360,30 @@ function obtenerTurnosXDia(idProfesional, dia) {
     return turnosXIdProf;
 }
 
-function obtenerHorarios(idProfesional, idEspecialidad, dia) {
-
+function obtenerHorarios(idProfesional, idEspecialidad, dia, idDisponibilidad) {
+    debugger;
     var disponibilidad = [];
     var disponibilidadXDia = '{"title": "Disponible", "start": "", "end":"", "color":"green"}';
-    var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia);
-
+    var profesional = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia);
+    //profesional.HorariosProfesional
+    var disponibilidadHoraria = profesional.HorariosProfesional;
     for (i = 0; i < disponibilidadHoraria.length; i++) {
 
-        var horaInicio = disponibilidadHoraria[i].HORA_DESDE;
-        var horaHasta = disponibilidadHoraria[i].HORA_HASTA;
-        var dispStart = moment(dia + ' ' + horaInicio, 'YYYY-MM-DD HH:mm:ss');
-        var dispEnd = moment(dia + ' ' + horaHasta, 'YYYY-MM-DD HH:mm:ss');
 
-        for (i = 0; !dispStart.isSame(dispEnd); i++) {
-            var obj = JSON.parse(disponibilidadXDia);
+        if (disponibilidadHoraria[i].IdDisponibilidadHoraria == idDisponibilidad) {
+            var horaInicio = disponibilidadHoraria[i].HoraDesde;
+            var horaHasta = disponibilidadHoraria[i].HoraHasta;
+            var dispStart = moment(dia + ' ' + horaInicio, 'YYYY-MM-DD HH:mm:ss');
+            var dispEnd = moment(dia + ' ' + horaHasta, 'YYYY-MM-DD HH:mm:ss');
 
-            obj.start = dispStart.format();
-            obj.end = dispStart.add(15, 'm').format();
+            for (i = 0; !dispStart.isSame(dispEnd); i++) {
+                var obj = JSON.parse(disponibilidadXDia);
 
-            disponibilidad.push(obj);
+                obj.start = dispStart.format();
+                obj.end = dispStart.add(15, 'm').format();
+
+                disponibilidad.push(obj);
+            }
         }
     }
 
@@ -371,8 +425,8 @@ Date.prototype.addDays = function (days) {
     return date;
 }
 
-function dibujaCalendarioTurnos(dia, idEspecialidad) {
-    eventosDelDia = obtenerHorarios(idProfesional, idEspecialidad, dia);
+function dibujaCalendarioTurnos(dia, idEspecialidad, idDisponibilidad) {
+    eventosDelDia = obtenerHorarios(idProfesional, idEspecialidad, dia, idDisponibilidad);
 
     var calendarTurnos = document.getElementById('calendarioTurnos');
     calendarTur = new FullCalendar.Calendar(calendarTurnos, {
@@ -510,20 +564,30 @@ function dibujaCalendarioDisp(idEspecialidad) {
         },
         locale: 'ES',
         eventClick: function (info) {
+            debugger;
             var dia = info.event.startStr;
+            var idDisponibilidad = info.event.id;
+            dibujaCalendarioTurnos(dia, idEspecialidad, idDisponibilidad);
 
-            $("#calDisposicionHoraria").hide();
+            //$("#calDisposicionHoraria").hide();
             $("#calTurnos").show;
-            dibujaCalendarioTurnos(dia, idEspecialidad);
+        },
+        eventDidMount: function (info) {
+            $(info.el).tooltip({
+                title: info.event.extendedProps.description,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
         }
     });
     calendarDisp.render();
 }
 
-function volver() {
-    $("#calDisposicionHoraria").show();
-    $("#calTurnos").hide();
-}
+//function volver() {
+//    $("#calDisposicionHoraria").show();
+//    $("#calTurnos").hide();
+//}
 
 function limpiarCampos() {
 

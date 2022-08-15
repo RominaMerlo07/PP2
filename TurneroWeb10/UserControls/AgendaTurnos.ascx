@@ -61,7 +61,8 @@
             autoclose: true,
             format: "dd/mm/yyyy",
             //startDate: '+1d',
-            orientation: 'bottom'
+            orientation: 'bottom',
+            language: 'es'
         }).datepicker("setDate",'now');
 
         completarTurnosDelDia($('#ddlSucursal').val(), $('#dtpFecha').val());
@@ -266,6 +267,12 @@
                             $('td', row).eq(8).css('background-color', '#28a745');
                             $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
                         } else if (data[11] == 'EN ESPERA') {
+                            //#ffc107
+                            $('td', row).css('background-color', '#f7d260');
+                            //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
+                            $('td', row).eq(8).css('background-color', '#ffc107');
+                            $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
+                        } else if (data[11] == 'REPROGRAMAR') {
                             //#ffc107
                             $('td', row).css('background-color', '#f7d260');
                             //$('td', row).css('color', 'rgba(255, 255, 255, .8)');

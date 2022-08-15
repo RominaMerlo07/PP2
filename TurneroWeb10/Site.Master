@@ -57,10 +57,12 @@
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/select2.min.js"%>"></script>
     
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/moment.min.js"%>"></script>
+    <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "/Scripts/tooltip.min.js"%>"></script>--%>
 
     <link rel="stylesheet" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/css/iCheck/flat/green.css"%>"/>
     <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/iCheck/icheck.js"%>"></script>
-    
+    <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datepicker/locales/bootstrap-datepicker.es.js"%>" charset="UTF-8"></script>
+
     <style>
         html, body {
             min-height: 100%;
@@ -267,7 +269,11 @@
                                     <i class="fa-solid fa-hospital-user"></i>
                                     <span>Especialidades</span>
                                 </a>
-                                <a class="dropdown-item" id="iddisponibilidadHoraria" href="DisponibilidadHoraria.aspx">
+                                <%--<a class="dropdown-item" id="iddisponibilidadHoraria" href="DisponibilidadHoraria.aspx">
+                                    <i class="fa fa-calendar-plus"></i>
+                                    <span>Disponibilidad Horaria</span>
+                                </a>--%>
+                                <a class="dropdown-item" id="iddisponibilidadHoraria" href="HorariosProfesionales.aspx">
                                     <i class="fa fa-calendar-plus"></i>
                                     <span>Disponibilidad Horaria</span>
                                 </a>
