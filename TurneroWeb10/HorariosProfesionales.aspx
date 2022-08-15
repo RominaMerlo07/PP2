@@ -47,12 +47,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body">                    
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-6" id="tblTratamiento" >
+                            </br>
                             <div class="table-responsive"> 
                                 <div id="tHorarios" >
-                                    <table style=" width: 100% !important;" class="table table-striped table-hover table-bordered table-secondary" id="tablaHorarios">
+                                    <table style=" width: 100% !important;" class="table table-hover table-bordered  table-striped" id="tablaHorarios">
                                     </table>
                                 </div> 
                             </div>  
@@ -237,7 +238,7 @@
                             <button class="btn btn-warning text-white btn-lg float-right" type="button" id="btnValidar">Validar</button>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>  
         </div>  
     </div> 
@@ -457,14 +458,15 @@
                 dibujaCalendarioDisp(profesional);
             })
 
-
             $('#btnRegistrar').click(function ()
             {
                 var disponibilidad = armarDisponibilidadRegistrar();
 
                 var resultRegistrar = registrarDisponibilidad(disponibilidad);
+                var idProfesional = disponibilidad.p_idProfesional;
                 if (resultRegistrar == "OK") {
                     $('#modalAgregar').modal('hide');
+                    cargarTabla(idProfesional);
                     swal("Hecho", "Horario registrado con éxito!", "success");
                 } else {
                     $('#msgRegistrarError').text("Error al registrar el Horario. Revise los datos ingresados y vuelva a validarlos.");
@@ -482,13 +484,14 @@
 
             $('#btnBaja').click(function ()
             {
-                var idProfesional = $('#idProfesionalBaja').val(idProfesional);
-                var idDisponibilidad = $('#idDisponibilidadBaja').val(idDisponibilidad);
+                debugger;
+                var idProfesional = $('#idProfesionalBaja').val();
+                var idDisponibilidad = $('#idDisponibilidadBaja').val();
                 var cantidadTurnos = consultarTurnosEnDisponibilidad(idDisponibilidad, idProfesional);
 
                 swal({
                     title: "¿Desea dar de baja el Horario?",
-                    text: "Una vez dado de baja "+ cantidadTurnos +" turno(s) deberan reprogramarse. Esta operación no se podrá volver atrás.",
+                    text: cantidadTurnos +" turno(s) deberan reprogramarse una vez dado de baja el horario. Esta operación no se podrá volver atrás.",
                     icon: "warning",
                     buttons: [
                         'No, gracias!',
@@ -500,8 +503,12 @@
                     function (isConfirm) {
                         if (isConfirm) {
                             var result = darDeBajaDisponibilidad(idDisponibilidad, idProfesional);
-                            if (result =='OK')
+                            if (result == 'OK')
+                            {
+                                $('#modalBaja').modal('hide');
+                                cargarTabla(idProfesional);
                                 swal("Dado de Baja", "Baja del Horario exitosa.", "success");
+                            }
                             else
                                 swal("Cancelado", "Hubo un problema al dar de baja el Horario.", "error");
                         } else {
@@ -511,6 +518,12 @@
                 )
             });
         });
+
+        function cargarTabla(idProfesional) {
+            var profesional = traerHorariosProfesional(idProfesional);
+            crearTablaHorarios(profesional, idProfesional);
+            dibujaCalendarioDisp(profesional);
+        }
 
         function darDeBajaDisponibilidad(idDisponibilidad, idProfesional) {
             var result;
@@ -522,7 +535,6 @@
                 async: false,
                 success: function (data) {
                     result = data.d;
-                    debugger;
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     
@@ -539,10 +551,8 @@
                 type: "post",
                 contentType: "application/json",
                 async: false,
-                success: function (data) {
-                    
+                success: function (data) {                  
                     result = data.d;
-                    debugger;
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     
@@ -709,6 +719,12 @@
             $("#miercoles").iCheck("uncheck");
             $("#jueves").iCheck("uncheck");
             $("#viernes").iCheck("uncheck");
+            
+            $('#msgRegistrarError').text("");
+            $('#msgRegistrarError').hide();
+
+            $('#msgRegistrarExito').text("");
+            $('#msgRegistrarExito').hide();
 
             $('#btnRegistrar').hide();
         }
@@ -801,7 +817,7 @@
         function armarSemanasSinFindesemanas(diasArray, descr) {
             var dispHor = [];
 
-            var dispHorSemana = '{"title": "Disponibe", "start": "", "end":"", "description": ""}'; // TODO: , agregar color para distinguir por centro- "color":"green"
+            var dispHorSemana = '{"title": "Disponible", "start": "", "end":"", "description": ""}'; // TODO: , agregar color para distinguir por centro- "color":"green"
 
             for (i = 0; i < diasArray.length; i++) {
 
@@ -844,10 +860,10 @@
                     Dias += (e.Viernes == true ? 'Vie-' : '');
                     Dias = Dias.slice(0, -1);
 
-                    var Acciones = '<a href="#" onclick="return modalEditarHorario(' + Id + ')"  class="btn btn-primary text-white" > <span class="fa fa-pencil" title="Editar"></span></a > '
-                        + 
+                    var Acciones = 
                         '<a href="#" onclick="return modalBorrarHorario(' + Id + ', ' + idProfesional + ')"  class="btn btn-danger" > <span class="fa fa-trash" title="Dar de Baja"></span></a > ';
-
+                    //'<a href="#" onclick="return modalEditarHorario(' + Id + ')"  class="btn btn-primary text-white" > <span class="fa fa-pencil" title="Editar"></span></a > '
+                       
                     horarios.push([Id, Centro, Fecha,  Hora,  Dias, Acciones]);
                 });
             }
@@ -912,7 +928,7 @@
             //validaciones , pedir confirmacion, y borrar
             cargarModalBaja(idDisponibilidad, idProfesional);
 
-            $('#idProfesionalBaja').val(idDisponibilidad);
+            $('#idProfesionalBaja').val(idProfesional);
 
             $('#idDisponibilidadBaja').val(idDisponibilidad);
             $('#modalBaja').modal('show');
@@ -920,7 +936,7 @@
         }
 
         function cargarModalBaja(idDisponibilidad, idProfesional) {
-
+            debugger;
             cargarComboCentros('#ddlSucursalBaja');
             $('#idProfesionalBaja').val(idProfesional);
             $('#idDisponibilidadBaja').val(idDisponibilidad);
@@ -935,6 +951,7 @@
                     result = JSON.parse(data.d);
                     
                     $('#ddlSucursalBaja').val(result.Centro.IdCentro);
+                    $('#ddlSucursalBaja').prop("disabled", true);
                     $("#dtpFechaDesdeBaja").datepicker("update", new Date(result.FechaInic));
                     $("#dtpFechaHastaBaja").datepicker("update", new Date(result.FechaFin));
 

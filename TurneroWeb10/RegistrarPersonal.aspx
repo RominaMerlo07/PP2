@@ -23,7 +23,7 @@
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
-                        <table id="tabla_PersonalAdmin" class="table table-bordered table-hover">
+                        <table id="tabla_PersonalAdmin" style="width:100%" class="table table-bordered table-hover">
                             <tbody id="tbl_body_table">
                                 <!-- DATA POR MEDIO DE AJAX-->
                             </tbody>
@@ -48,9 +48,9 @@
                     <div class="modal-body" id="formularioRegistrar">                 
                         <div class="row">
                             <div class="col-md" id="crdDatosPersonales">
-                                <div class="card text-white bg-light">
-                                    <div class="card-header bg-info">
-                                        <h4>Datos personales</h4>
+                                <div class="card text-white ">
+                                    <div class="card-header ">
+                                        <h4 class="modal-title text-dark">Datos personales</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-row">
@@ -104,11 +104,12 @@
                                 </div>
                             </div>
                         </div>
+                        </br>
                         <div class="row">
                             <div class="col-md" id="crdDatosContacto">
                                 <div class="card text-white bg-light">
-                                    <div class="card-header bg-info">
-                                        <h4>Datos de Contacto</h4>
+                                    <div class="card-header">
+                                        <h4 class="modal-title text-dark">Datos de Contacto</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-row">
@@ -213,7 +214,7 @@
                         <div class="col-md" id="crdDatosPersonalesE">
                             <div class="card text-white bg-white">
                                 <div class="card-header text-black bg-light">
-                                    <h4>Datos personales</h4>
+                                    <h4 class="modal-title text-dark">Datos personales</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-row">
@@ -262,11 +263,12 @@
                             </div>
                         </div>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="col-md" id="crdDatosContactoE">
                             <div class="card text-white bg-white">
                                 <div class="card-header text-black bg-light">
-                                    <h4>Datos de Contacto</h4>
+                                    <h4 class="modal-title text-dark">Datos de Contacto</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-row">

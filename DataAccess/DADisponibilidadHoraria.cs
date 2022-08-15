@@ -81,21 +81,36 @@ namespace DataAccess
             }
         }
 
-        public List<DisponibilidadHoraria> DaTraerHorariosProfesional(string idProfesional)
+        public List<DisponibilidadHoraria> DaTraerHorariosProfesional(string idProfesional, string centro = null)
         {
             try
             {
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
 
-                string consulta = "SELECT * FROM T_DISPONIBILIDAD_HORARIA " +
-                                    "WHERE FECHA_BAJA IS NULL " +
-                                    "AND ID_PROFESIONAL = @ID_PROFESIONAL " +
-                                    "ORDER BY ID_DISPONIBILIDAD;";
+                string preConsulta = @"SELECT * FROM T_DISPONIBILIDAD_HORARIA 
+                                WHERE FECHA_BAJA IS NULL 
+                                AND ID_PROFESIONAL = @ID_PROFESIONAL 
+                                {0}
+                                ORDER BY ID_DISPONIBILIDAD;";
+
+                string filtroCentro = " AND ID_CENTRO = @ID_CENTRO ";
+                string consulta = "";
+                if (centro != null)
+                {
+                    consulta = String.Format(preConsulta, filtroCentro);
+                } else
+                {
+                    consulta = String.Format(preConsulta, " ");
+                }
 
                 cmd = new SqlCommand(consulta, con);
 
                 cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                if (centro != null) { 
+                    cmd.Parameters.AddWithValue("@ID_CENTRO", centro);
+                }
+
 
                 dta = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -138,8 +153,8 @@ namespace DataAccess
                         if (dr["ID_CENTRO"] != DBNull.Value)
                         {
                             DACentros daCentro = new DACentros();
-                            Centro centro = daCentro.obtenerCentro(Convert.ToInt32(dr["ID_CENTRO"]));
-                            disponibilidad.Centro = centro;
+                            Centro centroEnt = daCentro.obtenerCentro(Convert.ToInt32(dr["ID_CENTRO"]));
+                            disponibilidad.Centro = centroEnt;
                         }                          
 
                         if (dr["LUNES"] != DBNull.Value)
@@ -448,7 +463,7 @@ namespace DataAccess
             }
         }
 
-        public String DarDeBajaDisponibilidad(string idDisponibilidad, string idProfesional, int idUsuarioMod)
+        public String DarDeBajaDisponibilidad(string idDisponibilidad, string idProfesional, int idUsuarioBaja)
         {
             try
             {
@@ -458,16 +473,10 @@ namespace DataAccess
                 trans = con.BeginTransaction();
 
                 string consulta = @"
-                                    select COUNT(*)
-                                    from T_DISPONIBILIDAD_HORARIA DH, T_TURNOS T
-                                    WHERE DH.ID_PROFESIONAL = T.ID_PROFESIONAL
-                                    AND DH.ID_CENTRO = T.ID_CENTRO
-                                    AND T.FECHA_BAJA IS NULL
-                                    AND T.ESTADO NOT IN ('CANCELADO', 'REPROGRAMAR')
-                                    AND DH.ID_DISPONIBILIDAD = @idDisponibilidad
-                                    AND DH.ID_PROFESIONAL = @idProfesional
-                                    AND T.FECHA_TURNO BETWEEN DH.FECHA_INIC AND DH.FECHA_FIN
-                                    AND T.HORA_DESDE BETWEEN DH.HORA_DESDE AND DH.HORA_HASTA
+                                    UPDATE T_DISPONIBILIDAD_HORARIA
+                                    SET USUARIO_BAJA = @usrBaja, FECHA_BAJA = GETDATE()
+                                    WHERE ID_DISPONIBILIDAD = @idDisponibilidad
+                                    AND ID_PROFESIONAL = @idProfesional
                                     ;
                                     ";
 
@@ -475,6 +484,7 @@ namespace DataAccess
                 cmd = new SqlCommand(consulta, con);
                 cmd.Transaction = trans;
 
+                cmd.Parameters.AddWithValue("@usrBaja", idUsuarioBaja);
                 cmd.Parameters.AddWithValue("@idProfesional", idProfesional);
                 cmd.Parameters.AddWithValue("@idDisponibilidad", idDisponibilidad);
 

@@ -96,7 +96,8 @@ namespace DataAccess
                                     WHERE PT.ESTADO_PLAN != 'CANCELADO' 
                                     {0}
                                     GROUP BY ID_TRATAMIENTO, PT.FECHA, T.ID_CENTRO, T.ID_ESPECIALIDAD, T.ID_PROFESIONAL, 
-	                                    T.ID_PACIENTE,T.ID_OBRA_SOCIAL, T.ID_PLAN_OBRA, T.NRO_AFILIADO, T.NRO_AUTORIZACION_OBRA, PT.CONSENTIMIENTO_FIRMADO ";
+	                                    T.ID_PACIENTE,T.ID_OBRA_SOCIAL, T.ID_PLAN_OBRA, T.NRO_AFILIADO, T.NRO_AUTORIZACION_OBRA, PT.CONSENTIMIENTO_FIRMADO 
+                                    order by FECHA_ALTA desc";
 
                 string data = "";
                 if (!String.IsNullOrEmpty(idPaciente))

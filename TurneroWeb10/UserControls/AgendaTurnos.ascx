@@ -272,6 +272,12 @@
                             //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
                             $('td', row).eq(8).css('background-color', '#ffc107');
                             $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
+                        } else if (data[11] == 'REPROGRAMAR') {
+                            //#ffc107
+                            $('td', row).css('background-color', '#f7d260');
+                            //$('td', row).css('color', 'rgba(255, 255, 255, .8)');
+                            $('td', row).eq(8).css('background-color', '#ffc107');
+                            $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
                         } else if (data[11] == 'ATENDIDO') {
                             //#ffc107
                             $('td', row).css('background-color', '#adadd5');
