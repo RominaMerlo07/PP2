@@ -20,17 +20,22 @@ $(document).ready(function () {
 
     // #region editarTratamiento
     $("#ddlDiaTurnoEd").bind("change", function () {
-
-        cargarHorasEd(disponibilidadHoraria);
+        var valueArr = $("#ddlDiaTurnoEd").val().split('|');
+        cargarHorasEd(disponibilidadHoraria, valueArr[1]);
 
     });
 
     $('#btnAgregarTurnoEd').click(function () {
+        debugger;
+        if ($("#ddlDiaTurnoEd").val() != 0) {
+            var nuevoTurnoTratamiento;
+            nuevoTurnoTratamiento = armarArrayTurnoEd();
 
-        var nuevoTurnoTratamiento;
-        nuevoTurnoTratamiento = armarArrayTurnoEd();
-
-        agregarTurnoEditado(nuevoTurnoTratamiento);
+            agregarTurnoEditado(nuevoTurnoTratamiento);
+        } else {
+            swal("Cuidado!", "Seleccione el día!", "warning");
+        }
+        
     });
     // #endregion
 
@@ -98,8 +103,8 @@ $(document).ready(function () {
     });
 
     $("#ddlDiaTurno").bind("change", function () {
-
-        cargarHoras(disponibilidadHoraria);
+        var valueArr = $("#ddlDiaTurno").val().split('|');
+        cargarHoras(disponibilidadHoraria, valueArr[1]);
 
     });
 
@@ -405,54 +410,127 @@ function cargarDatosEditar(idTratamiento) {
 }
 
 function obtieneDisponibilidadHorariaEd(idProfesional, idEspecialidad, centro) {
-    var eventosDispHor = [];
-    var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
+    var eventosDispHorArr = [];
+    var profesional = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
 
-    disponibilidadHoraria.forEach(function (e) {
+    //disponibilidadHoraria.forEach(function (e) {
 
-        var dateInic = new Date(e.FECHA_INIC);
-        var dateFin = new Date(e.FECHA_FIN);
+    //    var dateInic = new Date(e.FECHA_INIC);
+    //    var dateFin = new Date(e.FECHA_FIN);
 
-        var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
+    //    var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
 
-        eventosDispHor = armarSemanasSinFindesemanas(diasArray);
+    //    eventosDispHor = armarSemanasSinFindesemanas(diasArray);
 
-    });
+    //});
+    if (!(profesional.HorariosProfesional === null)) {
+        profesional.HorariosProfesional.forEach(function (e) {
 
-    crearComboDiasEd(eventosDispHor);
+            var Dias = [];
+
+            e.Lunes == true ? Dias.push('lunes') : '';
+            e.Martes == true ? Dias.push('martes') : '';
+            e.Miercoles == true ? Dias.push('miércoles') : '';
+            e.Jueves == true ? Dias.push('jueves') : '';
+            e.Viernes == true ? Dias.push('viernes') : '';
+
+            var dateInic = new Date(e.FechaInic);
+            var dateFin = new Date(e.FechaFin);
+
+            var descr = e.Centro.NombreCentro + " | " + e.HoraDesde.slice(0, -3) + " - " + e.HoraHasta.slice(0, -3);
+
+            var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin, Dias);
+
+            eventosDispHorArr.push(armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria));
+            //eventosDispHor = armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria);
+        });
+    }
+
+    crearComboDiasEd(eventosDispHorArr);
 
 }
 
-function crearComboDiasEd(eventosDispHor) {
+function crearComboDiasEd(eventosDispHorArr) {
+    //var contadorEventos = Object.keys(eventosDispHor).length;
+    //if (contadorEventos > 0) {
+    //    $("#ddlDiaTurnoEd").append('<option value="0" selected="selected" hidden="hidden">--Seleccione--</option>');
+    //    eventosDispHor.forEach(function (e) {
+    //        var fecha_inicio = e.start;
+    //        //moment.locale('es');
 
-    var contadorEventos = Object.keys(eventosDispHor).length;
+    //        moment.lang('es', {
+    //            months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+    //            monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+    //            weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+    //            weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+    //            weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+    //        }
+    //        );
+
+    //        var momentDay = moment(fecha_inicio, 'YYYY-MM-DD');
+    //        //var diaFormat = momentDay.locale('es').format('LL');MMMM YYYY
+    //        var diaFormat2 = momentDay.locale('es').format('dddd DD') + ' de ' + momentDay.locale('es').format('MMMM') + ', ' + momentDay.locale('es').format('YYYY');
+
+    //        $("#ddlDiaTurnoEd").append($("<option></option>").val(fecha_inicio).html(diaFormat2));
+    //        $("#divDiaTurnoEd").show();
+    //    });
+    //} else {
+
+    //    $("#ddlDiaTurnoEd").empty();
+    //    $("#divDiaTurnoEd").hide();
+    //    //$("#divAlertMsg").show();
+
+    //}
+
+    var contadorEventos = Object.keys(eventosDispHorArr).length;
     if (contadorEventos > 0) {
-        $("#ddlDiaTurnoEd").append('<option value="0" selected="selected" hidden="hidden">--Seleccione--</option>');
-        eventosDispHor.forEach(function (e) {
-            var fecha_inicio = e.start;
-            //moment.locale('es');
+        $("#ddlDiaTurnoEd").empty().append('<option value="0" selected="selected" hidden="hidden">--Seleccione--</option>');
+        eventosDispHorArr.forEach(function (e) {
 
-            moment.lang('es', {
-                months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
-                monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
-                weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
-                weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
-                weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+            var contadorEventos2 = Object.keys(e).length;
+            if (contadorEventos2 > 0) {
+                e.forEach(function (d) {
+
+                    var fecha_inicio = d.start;
+                    var horaArr = d.description.split('|');
+                    moment.lang('es', {
+                        months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+                        monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+                        weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+                        weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+                        weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+                    }
+                    );
+
+                    var momentDay = moment(fecha_inicio, 'YYYY-MM-DD');
+                    //var diaFormat = momentDay.locale('es').format('LL');MMMM YYYY
+                    var diaFormat2 = momentDay.locale('es').format('dddd DD') + ' de ' + momentDay.locale('es').format('MMMM') + ', ' + momentDay.locale('es').format('YYYY');
+
+                    $("#ddlDiaTurnoEd").append($("<option></option>").val(fecha_inicio + "|" + d.id).html(diaFormat2 + " |" + horaArr[1]));
+
+                });
+
+
             }
-            );
-
-            var momentDay = moment(fecha_inicio, 'YYYY-MM-DD');
-            //var diaFormat = momentDay.locale('es').format('LL');MMMM YYYY
-            var diaFormat2 = momentDay.locale('es').format('dddd DD') + ' de ' + momentDay.locale('es').format('MMMM') + ', ' + momentDay.locale('es').format('YYYY');
-
-            $("#ddlDiaTurnoEd").append($("<option></option>").val(fecha_inicio).html(diaFormat2));
-            $("#divDiaTurnoEd").show();
         });
+        //ordena las opciones del select
+        var my_options = $("#ddlDiaTurnoEd option");
+        var selected = $("#ddlDiaTurnoEd").val();
+
+        my_options.sort(function (a, b) {
+            if (a.value > b.value) return 1;
+            if (a.value < b.value) return -1;
+            return 0
+        })
+
+        $("#ddlDiaTurnoEd").empty().append(my_options);
+        $("#ddlDiaTurnoEd").val(selected);
+        //fin
+        $("#ddlDiaTurnoEd").show();
     } else {
 
         $("#ddlDiaTurnoEd").empty();
-        $("#divDiaTurnoEd").hide();
-        //$("#divAlertMsg").show();
+        $("#ddlDiaTurnoEd").hide();
 
     }
 }
@@ -510,26 +588,29 @@ function dibujarTablaTurnosEditar(arrayTurnosEditar) {
     $('.dataTables_filter input').attr("placeholder", "Filtrar por...");
 }
 
-function cargarHorasEd(dispHoraria) {
+function cargarHorasEd(dispHoraria, idDisp) {
 
-    var contador = Object.keys(dispHoraria).length;
+    var dispHorariaArr = dispHoraria.HorariosProfesional;
+    var contador = Object.keys(dispHorariaArr).length;
     if (contador > 0) {
-        $("#ddlHoraDesdeEd").empty();
-        $("#divHoraTurnoEd").show();
-        $("#divBtnAgregarTurnoEd").show();
+        dispHorariaArr.forEach(function (e) {
+            if (e.IdDisponibilidadHoraria == idDisp) {
+                $("#ddlHoraDesdeEd").empty();
+                $("#divHoraTurnoEd").show();
+                $("#divBtnAgregarTurnoEd").show();
 
-        var horaDesde = parseInt(dispHoraria[0].HORA_DESDE.substring(0, 2), 10);
+                var horaDesde = parseInt(e.HoraDesde.substring(0, 2), 10);
 
-        var horaHasta = parseInt(dispHoraria[0].HORA_HASTA.substring(0, 2), 10);
+                var horaHasta = parseInt(e.HoraHasta.substring(0, 2), 10);
 
-        for (i = 0; horaDesde != horaHasta; i++) {
-            $("#ddlHoraDesdeEd").append($("<option></option>").val(horaDesde).html(horaDesde));
-            horaDesde += 1;
-        }
-
+                for (i = 0; horaDesde != horaHasta; i++) {
+                    $("#ddlHoraDesdeEd").append($("<option></option>").val(horaDesde).html(horaDesde));
+                    horaDesde += 1;
+                }
+            }
+        });
     }
     else {
-
         $("#ddlHoraDesdeEd").empty();
         $("#divHoraTurnoEd").hide();
         $("#divBtnAgregarTurnoEd").hide();
@@ -550,7 +631,8 @@ function armarArrayTurnoEd() {
     var nroAfiliado = $('#txtNroAfiliadoEd').val();
     var NroAutorizacion = $('#txtNroAutorizacionEd').val();
     var diaTurnoDdl = document.getElementById("ddlDiaTurnoEd");
-    var diaTurno = diaTurnoDdl.value;
+    var preDiaTurno = diaTurnoDdl.value.split('|');
+    var diaTurno = preDiaTurno[0];
 
     var horaTurnoDdl = document.getElementById("ddlHoraDesdeEd");
     var horaTurno = horaTurnoDdl.value;
@@ -590,7 +672,7 @@ function agregarTurnoEditado(turnoEditar) {
 
             if (resultado == "OK") {
                 swal("Hecho", "Tratamiento editado con éxito!", "success");
-            } else if (resultado == "Err1") {
+            } else if (resultado == "Err2") {
                 swal("Cuidado!", "Ya tiene un turno registrado ese día!", "warning");
             } else if (resultado == "Err1") {
                 swal("Cuidado!", "Turno no disponible!", "warning");
@@ -751,8 +833,10 @@ function armarArrayTurno() {
     var profesional = profesionalDdl.options[profesionalDdl.selectedIndex].text;
 
     var diaTurnoDdl = document.getElementById("ddlDiaTurno");
-    var diaTurno = diaTurnoDdl.value;
-    var diaTurnoText = diaTurnoDdl.options[diaTurnoDdl.selectedIndex].text;
+    var preDiaTurno = diaTurnoDdl.value.split('|');
+    var diaTurno = preDiaTurno[0];
+    var preDiaTurnoText = diaTurnoDdl.options[diaTurnoDdl.selectedIndex].text.split('|');
+    var diaTurnoText = preDiaTurnoText[0];
 
     var horaTurnoDdl = document.getElementById("ddlHoraDesde");
     var horaTurno = horaTurnoDdl.value;
@@ -793,29 +877,53 @@ function quitarTurno(numero) {
 }
 
 function obtieneDisponibilidadHoraria(idProfesional, idEspecialidad, centro) {
-    var eventosDispHor = [];
-    var disponibilidadHoraria = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
+    var eventosDispHorArr = [];
+    var profesional = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
 
-    disponibilidadHoraria.forEach(function (e) {
+    //disponibilidadHoraria.forEach(function (e) {
 
-        var dateInic = new Date(e.FECHA_INIC);
-        var dateFin = new Date(e.FECHA_FIN);
+    //    var dateInic = new Date(e.FECHA_INIC);
+    //    var dateFin = new Date(e.FECHA_FIN);
 
-        var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
+    //    var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
 
-        eventosDispHor = armarSemanasSinFindesemanas(diasArray);
+    //    eventosDispHor = armarSemanasSinFindesemanas(diasArray);
 
-    });
+    //});
 
-    crearComboDias(eventosDispHor);
+    if (!(profesional.HorariosProfesional === null)) {
+        profesional.HorariosProfesional.forEach(function (e) {
+
+            var Dias = [];
+
+            e.Lunes == true ? Dias.push('lunes') : '';
+            e.Martes == true ? Dias.push('martes') : '';
+            e.Miercoles == true ? Dias.push('miércoles') : '';
+            e.Jueves == true ? Dias.push('jueves') : '';
+            e.Viernes == true ? Dias.push('viernes') : '';
+
+            var dateInic = new Date(e.FechaInic);
+            var dateFin = new Date(e.FechaFin);
+
+            var descr = e.Centro.NombreCentro + " | " + e.HoraDesde.slice(0, -3) + " - " + e.HoraHasta.slice(0, -3);
+
+            var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin, Dias);
+
+            eventosDispHorArr.push(armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria));
+            //eventosDispHor = armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria);
+        });
+    }
+
+    crearComboDias(eventosDispHorArr);
 
 }
 
-function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia = "") {
+function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro) {
 
     $.ajax({
         url: "GestionTratamientos.aspx/traerDisponibilidadHoraria",
-        data: "{idProfesional: '" + idProfesional + "', idEspecialidad: '" + idEspecialidad + "', idCentro: '" + centro + "', dia: '" + dia + "'}",
+        //data: "{idProfesional: '" + idProfesional + "', idEspecialidad: '" + idEspecialidad + "', idCentro: '" + centro + "', dia: '" + dia + "'}",
+        data: "{idProfesional: '" + idProfesional + "', centro: '" + centro + "'}",
         type: "post",
         contentType: "application/json",
         async: false,
@@ -829,12 +937,27 @@ function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia
     return disponibilidadHoraria;
 }
 
-function obtenerDiasSinFindesemanas(startDate, stopDate) {
+function obtenerDiasSinFindesemanas(startDate, stopDate, Dias) {
+    //var diasArray = new Array();
+    //var currentDate = startDate;
+    //while (currentDate <= stopDate) {
+    //    var diaNombre = currentDate.toLocaleString('es-es', { weekday: 'long' });
+    //    if (!(diaNombre.startsWith('dom') || diaNombre.startsWith('sáb'))) {
+    //        diasArray.push(new Date(currentDate));
+    //        currentDate = currentDate.addDays(1);
+    //    }
+    //    else {
+    //        currentDate = currentDate.addDays(1);
+    //    }
+    //}
+    //return diasArray;
+
     var diasArray = new Array();
     var currentDate = startDate;
+
     while (currentDate <= stopDate) {
         var diaNombre = currentDate.toLocaleString('es-es', { weekday: 'long' });
-        if (!(diaNombre.startsWith('dom') || diaNombre.startsWith('sáb'))) {
+        if (Dias.includes(diaNombre)) {
             diasArray.push(new Date(currentDate));
             currentDate = currentDate.addDays(1);
         }
@@ -845,10 +968,10 @@ function obtenerDiasSinFindesemanas(startDate, stopDate) {
     return diasArray;
 }
 
-function armarSemanasSinFindesemanas(diasArray) {
+function armarSemanasSinFindesemanas(diasArray, descr, idEvent) {
     var dispHor = [];
 
-    var dispHorSemana = '{"title": "Disponibilidad", "start": "", "end":""}';
+    var dispHorSemana = '{"title": "Disponible", "start": "", "end":"", "description": "", "id":"' + idEvent + '"}';
 
     for (i = 0; i < diasArray.length; i++) {
 
@@ -860,6 +983,7 @@ function armarSemanasSinFindesemanas(diasArray) {
             var diaFormated = getFormattedDateInversed(diaObj);
             obj.start = diaFormated;
             obj.end = diaFormated;
+            obj.description = descr;
             dispHor.push(obj);
         }
     }
@@ -978,8 +1102,8 @@ function cargarObrasSocialesPaciente(ddl,idPaciente) {
         contentType: "application/json",
         async: false,
         success: function (data) {
-
-            if (data.d.length > 0) {
+            // TODO ¿ que pasa si el paciente no tiene cargada aun ninguna obra social ?
+            if (data.d != null) {
                 $(ddl).empty();
                 $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
 
@@ -1253,31 +1377,53 @@ function cargarProfesionales(idCentro, idEspecialidad, ddl) {
     });
 }
 
-function crearComboDias(eventosDispHor) { //"#ddlDiaTurno"
-
-    var contadorEventos = Object.keys(eventosDispHor).length;
+function crearComboDias(eventosDispHorArr) { //"#ddlDiaTurno"
+    
+    var contadorEventos = Object.keys(eventosDispHorArr).length;
     if (contadorEventos > 0) {
         $("#ddlDiaTurno").append('<option value="0" selected="selected" hidden="hidden">--Seleccione--</option>');
-        eventosDispHor.forEach(function (e) {
-            var fecha_inicio = e.start;
-            //moment.locale('es');
+        eventosDispHorArr.forEach(function (e) {
+            
+            var contadorEventos2 = Object.keys(e).length;
+            if (contadorEventos2 > 0) {
+                e.forEach(function (d) {
+                    
+                    var fecha_inicio = d.start;
+                    var horaArr = d.description.split('|');
+                    moment.lang('es', {
+                        months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+                        monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+                        weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+                        weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+                        weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+                    }
+                    );
 
-            moment.lang('es', {
-                months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
-                monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
-                weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
-                weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
-                weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+                    var momentDay = moment(fecha_inicio, 'YYYY-MM-DD');
+                    //var diaFormat = momentDay.locale('es').format('LL');MMMM YYYY
+                    var diaFormat2 = momentDay.locale('es').format('dddd DD') + ' de ' + momentDay.locale('es').format('MMMM') + ', ' + momentDay.locale('es').format('YYYY');
+
+                    $("#ddlDiaTurno").append($("<option></option>").val(fecha_inicio+"|"+d.id).html(diaFormat2 + " |"+ horaArr[1]));
+
+                });
+                
+
             }
-            );
-
-            var momentDay = moment(fecha_inicio, 'YYYY-MM-DD');
-            //var diaFormat = momentDay.locale('es').format('LL');MMMM YYYY
-            var diaFormat2 = momentDay.locale('es').format('dddd DD') + ' de ' + momentDay.locale('es').format('MMMM') + ', ' + momentDay.locale('es').format('YYYY');
-
-            $("#ddlDiaTurno").append($("<option></option>").val(fecha_inicio).html(diaFormat2));
-            $("#divDiaTurno").show();
         });
+        //ordena las opciones del select
+        var my_options = $("#ddlDiaTurno option");
+        var selected = $("#ddlDiaTurno").val();
+
+        my_options.sort(function (a, b) {
+            if (a.value > b.value) return 1;
+            if (a.value < b.value) return -1;
+            return 0
+        })
+
+        $("#ddlDiaTurno").empty().append(my_options);
+        $("#ddlDiaTurno").val(selected);
+        //fin
+        $("#divDiaTurno").show();
     } else {
 
         $("#ddlDiaTurno").empty();
@@ -1287,23 +1433,27 @@ function crearComboDias(eventosDispHor) { //"#ddlDiaTurno"
     }
 }
 
-function cargarHoras(dispHoraria) {
+function cargarHoras(dispHoraria, idDisp) {
 
-    var contador = Object.keys(dispHoraria).length;
+    var dispHorariaArr = dispHoraria.HorariosProfesional;
+    var contador = Object.keys(dispHorariaArr).length;
     if (contador > 0) {
-        $("#ddlHoraDesde").empty();
-        $("#divHoraTurno").show();
-        $("#divBtnAgregarTurno").show();
+        dispHorariaArr.forEach(function (e) {
+            if (e.IdDisponibilidadHoraria == idDisp) {
+                $("#ddlHoraDesde").empty();
+                $("#divHoraTurno").show();
+                $("#divBtnAgregarTurno").show();
 
-        var horaDesde = parseInt(dispHoraria[0].HORA_DESDE.substring(0, 2), 10);
+                var horaDesde = parseInt(e.HoraDesde.substring(0, 2), 10);
 
-        var horaHasta = parseInt(dispHoraria[0].HORA_HASTA.substring(0, 2), 10);
+                var horaHasta = parseInt(e.HoraHasta.substring(0, 2), 10);
 
-        for (i = 0; horaDesde != horaHasta; i++) {
-            $("#ddlHoraDesde").append($("<option></option>").val(horaDesde).html(horaDesde));
-            horaDesde += 1;
-        }
-
+                for (i = 0; horaDesde != horaHasta; i++) {
+                    $("#ddlHoraDesde").append($("<option></option>").val(horaDesde).html(horaDesde));
+                    horaDesde += 1;
+                }
+            }
+        });
     }
     else {
         $("#ddlHoraDesde").empty();

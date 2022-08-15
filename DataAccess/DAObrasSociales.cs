@@ -138,7 +138,7 @@ namespace DataAccess
                 }
                 else
                 {
-                    return null;
+                    return listaObrasSociales;
                 }
             }
             catch (Exception e)
