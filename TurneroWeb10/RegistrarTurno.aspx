@@ -43,11 +43,11 @@
         <div class="row justify-content-md-center">
 
             <div class="col-md">
-                <div class="card text-white bg-light">
-                    <div class="card-header bg-info">
-                        <h4>Datos del Turno</h4>
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h4 class="box-title">Datos del Turno</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="box-body">
                         <div class="form-row">
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="input-group mb-3">
@@ -80,18 +80,37 @@
                             </div>
                         </div>
                     </div>
+                    <div class="box-body">                    
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xl-6" id="calDisposicionHoraria">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id='calendarioDispHor'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xl-6" id="calTurnos">
+                                <div class="card">
+                                    <%--<button class="btn btn-secondary btn-lg " type="button" onclick="volver()" id="btnVolver">Volver a la Disponibilidad Horaria</button>--%>
+                                    <div class="card-body">
+                                        <div id='calendarioTurnos'></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card text-white bg-light" id="ocultoSiempre" style="display: none">
+                <%--<div class="card text-white bg-light" id="ocultoSiempre" style="display: none">
                     <div class="card-header bg-info">
                         <h4></h4>
                     </div>
                     <div class="card-body">
                     </div>
-                </div>
+                </div>--%>
             </div>
         </div>
     </div>
-    <div class="content" id="calDisposicionHoraria">
+    <%--<div class="content" id="calDisposicionHoraria">
         <div class="row justify-content-md-center">
             <div class="col-md-8">
                 <div class="card">
@@ -113,7 +132,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
     <%--MODAL TURNO--%>
     <div class="modal fade" tabindex="-1" role="dialog" id="modalTurno">
         <div class="modal-dialog modal-lg" role="document">

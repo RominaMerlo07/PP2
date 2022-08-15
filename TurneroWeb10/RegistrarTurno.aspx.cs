@@ -252,15 +252,23 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string traerDisponibilidadHoraria(string idProfesional, string idEspecialidad, string idCentro, string dia = null)
+        public static string traerDisponibilidadHoraria(string idProfesional, string centro)
         {
             try
             {
-                GestorProfesionales gProfesionales = new GestorProfesionales();
-                DataTable dt = gProfesionales.TraerDisponibilidadHoraria(idProfesional, idEspecialidad, idCentro, dia);
-                string col = JsonConvert.SerializeObject(dt);
+                GestorProfesionales gestorProfesional = new GestorProfesionales();
+                Profesional profesional = gestorProfesional.obtenerProfesional(Convert.ToInt32(idProfesional));
 
-                return col;
+                GestorDisponibilidadHoraria gestorDisponibilidad = new GestorDisponibilidadHoraria();
+                profesional.HorariosProfesional = gestorDisponibilidad.TraerHorariosProfesional(idProfesional, centro);
+
+                string cadena = JsonConvert.SerializeObject(profesional);
+                return cadena;
+                //GestorProfesionales gProfesionales = new GestorProfesionales();
+                //DataTable dt = gProfesionales.TraerDisponibilidadHoraria(idProfesional, idEspecialidad, idCentro, dia);
+                //string col = JsonConvert.SerializeObject(dt);
+
+                //return col;
             }
             catch (Exception e)
             {
