@@ -270,13 +270,10 @@
                                     <span>Especialidades</span>
                                 </a>
                                 
+                                
                                 <a class="dropdown-item" id="iddisponibilidadHoraria2" href="HorariosProfesionales.aspx">
                                     <i class="fa fa-calendar-plus"></i>
-                                    <span>Disponibilidad Horaria 2</span>
-                                </a>
-                                <a class="dropdown-item" id="iddisponibilidadHoraria2" href="HorariosProfesionales.aspx">
-                                    <i class="fa fa-calendar-plus"></i>
-                                    <span>Disponibilidad Horaria 2</span>
+                                    <span>Disponibilidad Horaria</span>
                                 </a>
                             </div>
                         </li>
