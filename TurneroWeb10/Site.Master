@@ -269,15 +269,13 @@
                                     <i class="fa-solid fa-hospital-user"></i>
                                     <span>Especialidades</span>
                                 </a>
-                                
-                                
-                                <a class="dropdown-item" id="iddisponibilidadHoraria2" href="HorariosProfesionales.aspx">
+                                <%--<a class="dropdown-item" id="iddisponibilidadHoraria" href="DisponibilidadHoraria.aspx">
                                     <i class="fa fa-calendar-plus"></i>
                                     <span>Disponibilidad Horaria</span>
-                                </a>
-                                <a class="dropdown-item" id="iddisponibilidadHoraria2" href="HorariosProfesionales.aspx">
+                                </a>--%>
+                                <a class="dropdown-item" id="iddisponibilidadHoraria" href="HorariosProfesionales.aspx">
                                     <i class="fa fa-calendar-plus"></i>
-                                    <span>Disponibilidad Horaria 2</span>
+                                    <span>Disponibilidad Horaria</span>
                                 </a>
                             </div>
                         </li>
