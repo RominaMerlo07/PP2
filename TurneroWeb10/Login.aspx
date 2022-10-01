@@ -29,13 +29,13 @@
                     <img src="Estilos/img/user3.png" />
                 </div>
                 <form class="col-12" id="form-login" action="">
-                    <label for="usuario">Usuario</label>
-                    <div class="form-group" id="user-group">
-                        <input type="text" name="usuario" id="txtUsuario" />
+                    <label for="usuario">Usuario</label> 
+                    <div class="form-group" id="user-group">                       
+                        <input type="text" name="usuario" id="txtUsuario" required/>                         
                     </div>
                     <label for="password">Contraseña</label>
                     <div class="form-group" id="password-group">
-                        <input type="password" name="password" id="txtPassword" />
+                        <input type="password" name="password" id="txtPassword" required/> 
                     </div>
                     <button type="submit" class="btn btn-info" id="btnIngresar"><i class="fas fa-sign-in-alt"></i> INGRESAR</button>                    
                 </form>
@@ -64,11 +64,11 @@
                     <br />
                     <label for="password">Contraseña Actual</label>
                     <div class="form-group" id="passActual-group">
-                        <input type="password" name="password" id="txtPasswordProv" />
+                        <input type="password" name="password" id="txtPasswordProv" /> 
                     </div>
                     <label for="password">Contraseña Nueva</label>
                     <div class="form-group" id="passNewUno-group">
-                        <input type="password" name="password" id="txtpassNewUno" />
+                        <input type="password" name="password" id="txtpassNewUno" />  
                     </div>
                     <label for="password">Repetir Contraseña</label>
                     <div class="form-group" id="passNewDos-group">
@@ -93,7 +93,8 @@
     </div>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Scripts/sweetalert.min.js"%>"></script>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Login.js"%>"></script>
-    
+
+
 
 </body>
 </html>
