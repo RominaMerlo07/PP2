@@ -69,7 +69,7 @@ function accesoUsuario(user) {
         success: function (data) {
 
             if (data.d != 'OK') {
-                alert('Error al validar usuario.');
+                swal("Alguno/s de los datos ingresados son incorrectos", "Por favor, verifique los mismos y reintente la operación", "error"); //error
 
             } else {
                
