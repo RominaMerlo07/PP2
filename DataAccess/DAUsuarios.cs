@@ -30,7 +30,7 @@ namespace DataAccess
                 string consulta = @"SELECT * FROM T_USUARIOS U, T_ROLES R
                                     WHERE U.ID_ROL = R.ID_ROL
                                    AND U.NOMBRE_USUARIO = @USUARIO 
-                                   AND U.CLAVE_USUARIO = @PASSWORD 
+                                   AND U.CLAVE_USUARIO = @PASSWORD COLLATE SQL_Latin1_General_CP1_CS_AS
                                    AND U.FECHA_BAJA IS NULL; ";
 
                 cmd = new SqlCommand(consulta, con);

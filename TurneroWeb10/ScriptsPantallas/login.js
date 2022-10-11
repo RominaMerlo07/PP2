@@ -36,9 +36,6 @@ form.addEventListener('submit', function (e) {
         validaClaveProvisoria(user);
         //accesoUsuario(user);
     }
-    else {
-        alert("No valide datos o sali por error");
-    }
 
 });
 
@@ -46,11 +43,13 @@ form.addEventListener('submit', function (e) {
 function validarDatosUsuario() {
 
     if (usuario === "") {
-        alert("Por favor, ingrese su usuario");
+        swal("Todos los datos son obligatorios", "Por favor, ingrese su usuario", "error");
+       // alert("Por favor, ingrese su usuario");
         return false;
     }
     else if (password === "") {
-        alert("Por favor, ingrese su contraseña");
+        swal("Todos los datos son obligatorios", "Por favor, ingrese su contraseña", "error");
+        //alert("Por favor, ingrese su contraseña");
         return false;
     }
     else {
@@ -69,7 +68,7 @@ function accesoUsuario(user) {
         success: function (data) {
 
             if (data.d != 'OK') {
-                alert('Error al validar usuario.');
+                swal("Alguno/s de los datos ingresados son incorrectos", "Por favor, verifique los mismos y reintente la operación", "error"); //error
 
             } else {
                
