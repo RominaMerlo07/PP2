@@ -9,6 +9,7 @@ namespace Entidades.ent
         private int id_obra_social;
         private string descripcion;
         private int id_plan_obra;
+        private ObrasPlanes planObraSocial;
         //private Centro centro;
         private int usuario_alta;
         private DateTime fecha_alta;
@@ -35,6 +36,11 @@ namespace Entidades.ent
             set { id_plan_obra = value; }
         }
 
+        public ObrasPlanes PlanObraSocial
+        {
+            get { return planObraSocial; }
+            set { planObraSocial = value; }
+        }
         //public Centro Centro
         //{
         //    get { return centro; }

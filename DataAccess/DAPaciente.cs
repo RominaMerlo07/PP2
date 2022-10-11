@@ -247,6 +247,76 @@ namespace DataAccess
             }
         }
 
+        public Paciente BuscarPacientePorId(string idPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @" SELECT top 1 * FROM t_pacientes 
+                                        WHERE FECHA_BAJA IS NULL
+                                        and ID_PACIENTE = @idPaciente ";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!String.IsNullOrEmpty(idPaciente))
+                    cmd.Parameters.AddWithValue("@idPaciente", idPaciente);
+                else
+                    cmd.Parameters.AddWithValue("@idPaciente", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                Paciente paciente = new Paciente();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr["ID_PACIENTE"] != DBNull.Value)
+                            paciente.IdPaciente = Convert.ToInt32(dr["ID_PACIENTE"]);
+                        if (dr["NOMBRE"] != DBNull.Value)
+                            paciente.Nombre = Convert.ToString(dr["NOMBRE"]);
+                        if (dr["APELLIDO"] != DBNull.Value)
+                            paciente.Apellido = Convert.ToString(dr["APELLIDO"]);
+                        if (dr["DOCUMENTO"] != DBNull.Value)
+                            paciente.Documento = Convert.ToString(dr["DOCUMENTO"]);
+                        if (dr["NRO_CONTACTO"] != DBNull.Value)
+                            paciente.NroContacto = Convert.ToString(dr["NRO_CONTACTO"]);
+                        if (dr["EMAIL_CONTACTO"] != DBNull.Value)
+                            paciente.EmailContacto = Convert.ToString(dr["EMAIL_CONTACTO"]);
+                        if (dr["FECHA_NACIMIENTO"] != DBNull.Value)
+                            paciente.FechaNacimiento = Convert.ToDateTime(dr["FECHA_NACIMIENTO"]);
+                        if (dr["DOMICILIO"] != DBNull.Value)
+                            paciente.Domicilio = Convert.ToString(dr["DOMICILIO"]);
+                        if (dr["LOCALIDAD"] != DBNull.Value)
+                            paciente.Localidad = Convert.ToString(dr["LOCALIDAD"]);
+                        if (dr["ID_HISTORIA"] != DBNull.Value)
+                        {
+                            DAHistoriaClinica DaHC = new DAHistoriaClinica();
+                            HistoriaClinica histClinica = DaHC.completarHistClinica(paciente.IdPaciente);
+                            paciente.HistoriaClinica = histClinica;
+                        }
+
+                    }
+
+                    return paciente;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                con.Close();
+                throw ex;
+            }
+        }
+
 
         public DataTable cargarPacientes()
         {
@@ -326,6 +396,8 @@ namespace DataAccess
                 throw e;
             }
         }
+
+
 
 
         public string actualizarPaciente(Paciente paciente)

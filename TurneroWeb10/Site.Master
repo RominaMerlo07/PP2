@@ -225,6 +225,11 @@
                                     <%--<i class="fa fa-calendar"></i>--%>
                                     <span>Registrar Turnos</span>
                                 </a>
+                                <a class="dropdown-item" id="idReprogramarTurnos" href="ReprogramarTurno.aspx">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                    <%--<i class="fa fa-calendar"></i>--%>
+                                    <span>Reprogramar Turnos</span>
+                                </a>
                                 <%-- <a class="dropdown-item" id="idConsultarTurnos" href="#" >
                                 <i class="fa fa-calendar"></i>
                                 <span>Consultar Turnos</span>

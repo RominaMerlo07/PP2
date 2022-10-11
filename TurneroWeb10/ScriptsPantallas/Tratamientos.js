@@ -26,7 +26,7 @@ $(document).ready(function () {
     });
 
     $('#btnAgregarTurnoEd').click(function () {
-        debugger;
+
         if ($("#ddlDiaTurnoEd").val() != 0) {
             var nuevoTurnoTratamiento;
             nuevoTurnoTratamiento = armarArrayTurnoEd();
@@ -413,16 +413,6 @@ function obtieneDisponibilidadHorariaEd(idProfesional, idEspecialidad, centro) {
     var eventosDispHorArr = [];
     var profesional = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro);
 
-    //disponibilidadHoraria.forEach(function (e) {
-
-    //    var dateInic = new Date(e.FECHA_INIC);
-    //    var dateFin = new Date(e.FECHA_FIN);
-
-    //    var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin);
-
-    //    eventosDispHor = armarSemanasSinFindesemanas(diasArray);
-
-    //});
     if (!(profesional.HorariosProfesional === null)) {
         profesional.HorariosProfesional.forEach(function (e) {
 
@@ -442,7 +432,7 @@ function obtieneDisponibilidadHorariaEd(idProfesional, idEspecialidad, centro) {
             var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin, Dias);
 
             eventosDispHorArr.push(armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria));
-            //eventosDispHor = armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria);
+
         });
     }
 
@@ -451,36 +441,6 @@ function obtieneDisponibilidadHorariaEd(idProfesional, idEspecialidad, centro) {
 }
 
 function crearComboDiasEd(eventosDispHorArr) {
-    //var contadorEventos = Object.keys(eventosDispHor).length;
-    //if (contadorEventos > 0) {
-    //    $("#ddlDiaTurnoEd").append('<option value="0" selected="selected" hidden="hidden">--Seleccione--</option>');
-    //    eventosDispHor.forEach(function (e) {
-    //        var fecha_inicio = e.start;
-    //        //moment.locale('es');
-
-    //        moment.lang('es', {
-    //            months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
-    //            monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
-    //            weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
-    //            weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
-    //            weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
-    //        }
-    //        );
-
-    //        var momentDay = moment(fecha_inicio, 'YYYY-MM-DD');
-    //        //var diaFormat = momentDay.locale('es').format('LL');MMMM YYYY
-    //        var diaFormat2 = momentDay.locale('es').format('dddd DD') + ' de ' + momentDay.locale('es').format('MMMM') + ', ' + momentDay.locale('es').format('YYYY');
-
-    //        $("#ddlDiaTurnoEd").append($("<option></option>").val(fecha_inicio).html(diaFormat2));
-    //        $("#divDiaTurnoEd").show();
-    //    });
-    //} else {
-
-    //    $("#ddlDiaTurnoEd").empty();
-    //    $("#divDiaTurnoEd").hide();
-    //    //$("#divAlertMsg").show();
-
-    //}
 
     var contadorEventos = Object.keys(eventosDispHorArr).length;
     if (contadorEventos > 0) {
@@ -549,13 +509,6 @@ function dibujarTablaTurnosEditar(arrayTurnosEditar) {
         "bAutoWidth": true,
         columns: [
             { title: "ID_TURNO", visible: false },
-            //{ title: "ID_TRATAMIENTO", visible: false },
-            //{ title: "ID_PACIENTE", visible: false },
-            //{ title: "ID_PROFESIONAL", visible: false },
-            //{ title: "ID_OBRA_SOCIAL", visible: false },
-            //{ title: "ID_ESPECIALIDAD", visible: false },
-            //{ title: "ID_CENTRO", visible: false },
-            //{ title: "ID_PLAN_OBRA", visible: false },
 
             { title: "DOCUMENTO" },
             { title: "PACIENTE" },
@@ -938,19 +891,6 @@ function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro) {
 }
 
 function obtenerDiasSinFindesemanas(startDate, stopDate, Dias) {
-    //var diasArray = new Array();
-    //var currentDate = startDate;
-    //while (currentDate <= stopDate) {
-    //    var diaNombre = currentDate.toLocaleString('es-es', { weekday: 'long' });
-    //    if (!(diaNombre.startsWith('dom') || diaNombre.startsWith('sáb'))) {
-    //        diasArray.push(new Date(currentDate));
-    //        currentDate = currentDate.addDays(1);
-    //    }
-    //    else {
-    //        currentDate = currentDate.addDays(1);
-    //    }
-    //}
-    //return diasArray;
 
     var diasArray = new Array();
     var currentDate = startDate;

@@ -221,8 +221,6 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-
-
         public string RegistrarSoloTurno(Turno turno)
         {
            string mensaje = "OK";
@@ -240,10 +238,6 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-
-
-
-
         public void EditarObservacionTurno(Turno turno)
         {
             try
@@ -256,6 +250,58 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
-        
+
+        public List<Turno> TraerTurnosReprogramar(string idCentro)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraerTurnosReprogramar(idCentro);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string CancelarTurnoReprogramar(string idTurno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.CancelarTurnoReprogramar(idTurno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public Turno CargarDatosTurnoReprogramar(string idTurno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.CargarDatosTurnoReprogramar(idTurno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public string ReprogramarTurno(Turno turno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.ReprogramarTurno(turno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

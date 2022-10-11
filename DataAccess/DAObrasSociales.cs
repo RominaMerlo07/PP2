@@ -147,8 +147,6 @@ namespace DataAccess
             }
         }
 
-
-
         public List<ObraSocial> cargarObrasSocialesById(string idCentro)
         {
             try
@@ -584,6 +582,113 @@ namespace DataAccess
                 {
                     return null;
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ObraSocial traerObraSocialById(string idObraSocial)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select  os.ID_OBRA_SOCIAL,
+                                            os.DESCRIPCION
+                                        from t_obras_sociales os
+                                        where os.fecha_baja is null
+                                          and os.id_obra_social = @idObraSocial
+                                        ;";
+
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!string.IsNullOrEmpty(idObraSocial))
+                    cmd.Parameters.AddWithValue("@idObraSocial", idObraSocial);
+                else
+                    cmd.Parameters.AddWithValue("@idObraSocial", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                ObraSocial obraSocial = new ObraSocial();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows) { 
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                        obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                    }
+
+                    return obraSocial;
+
+                } else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ObrasPlanes traerPlanObraById(string idPlanObraSocial)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select  ID_PLANES,
+                                            COD_PLAN,
+                                            DESCRIPCION
+                                        from T_OBRAS_PLANES 
+                                        where fecha_baja is null
+                                          and ID_PLANES = @idPlanObraSocial
+                                        ;";
+
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!string.IsNullOrEmpty(idPlanObraSocial))
+                    cmd.Parameters.AddWithValue("@idPlanObraSocial", idPlanObraSocial);
+                else
+                    cmd.Parameters.AddWithValue("@idPlanObraSocial", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                ObrasPlanes planObraSocial = new ObrasPlanes();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr["ID_PLANES"] != DBNull.Value)
+                            planObraSocial.IdObraSocial = Convert.ToInt32(dr["ID_PLANES"]);
+                        if (dr["COD_PLAN"] != DBNull.Value)
+                            planObraSocial.CodPlan = dr["COD_PLAN"].ToString();
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            planObraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                    }
+
+                    return planObraSocial;
+
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception e)
             {

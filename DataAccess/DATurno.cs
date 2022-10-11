@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using Entidades.ent;
+using System.Web;
 
 namespace DataAccess
 {
@@ -721,7 +722,7 @@ namespace DataAccess
                 string consulta = @"
                                     update T_TURNOS
                                     set
-	                                    FECHA_TURNO = NULL, HORA_DESDE = NULL, HORA_HASTA = NULL,
+	                                    //FECHA_TURNO = NULL, HORA_DESDE = NULL, HORA_HASTA = NULL,
 	                                    ESTADO = 'REPROGRAMAR',
 	                                    USUARIO_MOD = @usrMod, FECHA_MOD = GETDATE()
                                     where ID_TURNO in (
@@ -759,5 +760,304 @@ namespace DataAccess
                 throw ex;
             }
         }
+
+        public List<Turno> TraerTurnosReprogramar(string idCentro)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT * FROM T_TURNOS T
+                                        WHERE T.FECHA_BAJA IS NULL
+		                                AND T.ESTADO = 'REPROGRAMAR'
+		                                AND T.ID_CENTRO = @idCentro
+                                    ; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@idCentro", idCentro);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<Turno> listaTurnos = new List<Turno>();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Turno turno = new Turno();
+                        if (dr["ID_TURNO"] != DBNull.Value)
+                            turno.IdTurno = Convert.ToInt32(dr["ID_TURNO"]);
+                        if (dr["ID_PACIENTE"] != DBNull.Value)
+                        {
+                            DAPaciente daPaciente = new DAPaciente();
+                            Paciente paciente = daPaciente.BuscarPacientePorId(dr["ID_PACIENTE"].ToString());
+                            turno.Paciente = paciente;
+                        }
+                        if (dr["ID_PROFESIONAL"] != DBNull.Value)
+                        {
+                            DAProfesional daProfesional = new DAProfesional();
+                            Profesional profesional = daProfesional.obtenerProfesional(Convert.ToInt32(dr["ID_PROFESIONAL"]));
+                            turno.Profesional = profesional;
+                        }
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                        {
+                            DAObrasSociales daObraSocial = new DAObrasSociales();
+                            ObraSocial obraSoc = daObraSocial.traerObraSocialById(dr["ID_OBRA_SOCIAL"].ToString());
+                            turno.ObraSocial = obraSoc;
+                        }
+                        if (dr["ID_PLAN_OBRA"] != DBNull.Value)
+                        {
+                            DAObrasSociales daObraSocial = new DAObrasSociales();
+                            ObrasPlanes planObraSoc = daObraSocial.traerPlanObraById(dr["ID_PLAN_OBRA"].ToString());
+                            turno.ObraSocial.PlanObraSocial = planObraSoc;
+                        }
+                        if (dr["ID_ESPECIALIDAD"] != DBNull.Value)
+                        {
+                            DAEspecialidades daEspecialidad = new DAEspecialidades();
+                            Especialidad especialidad = daEspecialidad.obtenerEspecialidad(Convert.ToInt32(dr["ID_ESPECIALIDAD"].ToString()));
+                            turno.Especialidad = especialidad;
+                        }
+                        if (dr["ID_CENTRO"] != DBNull.Value)
+                        {
+                            DACentros daCentro = new DACentros();
+                            Centro centro = daCentro.obtenerCentro(Convert.ToInt32(dr["ID_CENTRO"].ToString()));
+                            turno.Centro = centro;
+                        }
+                        if (dr["FECHA_TURNO"] != DBNull.Value)
+                            turno.FechaTurno = Convert.ToDateTime(dr["FECHA_TURNO"]);
+                        if (dr["HORA_DESDE"] != DBNull.Value)
+                            turno.HoraDesde = TimeSpan.Parse(dr["HORA_DESDE"].ToString());
+                        if (dr["HORA_HASTA"] != DBNull.Value)
+                            turno.HoraHasta = TimeSpan.Parse(dr["HORA_HASTA"].ToString());
+                        if (dr["ESTADO"] != DBNull.Value)
+                            turno.Estado = Convert.ToString(dr["ESTADO"]);
+                        if (dr["OBSERVACIONES"] != DBNull.Value)
+                            turno.Observaciones = Convert.ToString(dr["OBSERVACIONES"]);
+                        if (dr["USUARIO_ALTA"] != DBNull.Value)
+                            turno.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
+                        if (dr["FECHA_ALTA"] != DBNull.Value)
+                            turno.FechaAlta = Convert.ToDateTime(dr["FECHA_ALTA"]);
+                        if (dr["USUARIO_MOD"] != DBNull.Value)
+                            turno.UsuarioMod = Convert.ToInt32(dr["USUARIO_MOD"]);
+                        if (dr["FECHA_MOD"] != DBNull.Value)
+                            turno.FechaMod = Convert.ToDateTime(dr["FECHA_MOD"]);
+                        if (dr["USUARIO_BAJA"] != DBNull.Value)
+                            turno.UsuarioBaja = Convert.ToInt32(dr["USUARIO_BAJA"]);
+                        if (dr["FECHA_BAJA"] != DBNull.Value)
+                            turno.FechaBaja = Convert.ToDateTime(dr["FECHA_BAJA"]);
+                        if (dr["NRO_AFILIADO"] != DBNull.Value)
+                            turno.NroAfiliado = Convert.ToString(dr["NRO_AFILIADO"]);
+                        if (dr["NRO_AUTORIZACION_OBRA"] != DBNull.Value)
+                            turno.NroAutorizacionObra = Convert.ToString(dr["NRO_AUTORIZACION_OBRA"]);
+
+                        listaTurnos.Add(turno);
+                    }
+
+                    return listaTurnos;
+                }
+                else
+                {
+                    return listaTurnos;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string CancelarTurnoReprogramar(string idTurno)
+        {
+            try
+            {
+                string resultado = "OK";
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    UPDATE T_TURNOS
+                                        SET ESTADO = 'CANCELADO', USUARIO_BAJA = @usrBaja, FECHA_BAJA = @fechaBaja
+                                        WHERE ID_TURNO = @idTurno
+                                    ;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                cmd.Transaction = trans;
+
+                Usuario usuario = (Usuario)HttpContext.Current.Session["TURNERO.Usuario"];
+
+                cmd.Parameters.AddWithValue("@usrBaja", usuario.IdUsuario);
+                cmd.Parameters.AddWithValue("@fechaBaja", DateTime.Now.ToString());
+                cmd.Parameters.AddWithValue("@idTurno", idTurno);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+                con.Close();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                con.Close();
+                throw ex;
+            }
+        }
+
+        public Turno CargarDatosTurnoReprogramar(string idTurno)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT * FROM T_TURNOS T
+                                        WHERE T.FECHA_BAJA IS NULL
+		                                AND T.ESTADO = 'REPROGRAMAR'
+		                                AND T.ID_TURNO = @idTurno
+                                    ; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@idTurno", idTurno);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                Turno turno = new Turno();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+
+                        if (dr["ID_TURNO"] != DBNull.Value)
+                            turno.IdTurno = Convert.ToInt32(dr["ID_TURNO"]);
+                        if (dr["ID_PACIENTE"] != DBNull.Value)
+                        {
+                            DAPaciente daPaciente = new DAPaciente();
+                            Paciente paciente = daPaciente.BuscarPacientePorId(dr["ID_PACIENTE"].ToString());
+                            turno.Paciente = paciente;
+                        }
+                        if (dr["ID_PROFESIONAL"] != DBNull.Value)
+                        {
+                            DAProfesional daProfesional = new DAProfesional();
+                            Profesional profesional = daProfesional.obtenerProfesional(Convert.ToInt32(dr["ID_PROFESIONAL"]));
+                            turno.Profesional = profesional;
+                        }
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                        {
+                            DAObrasSociales daObraSocial = new DAObrasSociales();
+                            ObraSocial obraSoc = daObraSocial.traerObraSocialById(dr["ID_OBRA_SOCIAL"].ToString());
+                            turno.ObraSocial = obraSoc;
+                        }
+                        if (dr["ID_PLAN_OBRA"] != DBNull.Value)
+                        {
+                            DAObrasSociales daObraSocial = new DAObrasSociales();
+                            ObrasPlanes planObraSoc = daObraSocial.traerPlanObraById(dr["ID_PLAN_OBRA"].ToString());
+                            turno.ObraSocial.PlanObraSocial = planObraSoc;
+                        }
+                        if (dr["ID_ESPECIALIDAD"] != DBNull.Value)
+                        {
+                            DAEspecialidades daEspecialidad = new DAEspecialidades();
+                            Especialidad especialidad = daEspecialidad.obtenerEspecialidad(Convert.ToInt32(dr["ID_ESPECIALIDAD"].ToString()));
+                            turno.Especialidad = especialidad;
+                        }
+                        if (dr["ID_CENTRO"] != DBNull.Value)
+                        {
+                            DACentros daCentro = new DACentros();
+                            Centro centro = daCentro.obtenerCentro(Convert.ToInt32(dr["ID_CENTRO"].ToString()));
+                            turno.Centro = centro;
+                        }
+                        if (dr["FECHA_TURNO"] != DBNull.Value)
+                            turno.FechaTurno = Convert.ToDateTime(dr["FECHA_TURNO"]);
+                        if (dr["HORA_DESDE"] != DBNull.Value)
+                            turno.HoraDesde = TimeSpan.Parse(dr["HORA_DESDE"].ToString());
+                        if (dr["HORA_HASTA"] != DBNull.Value)
+                            turno.HoraHasta = TimeSpan.Parse(dr["HORA_HASTA"].ToString());
+                        if (dr["ESTADO"] != DBNull.Value)
+                            turno.Estado = Convert.ToString(dr["ESTADO"]);
+                        if (dr["OBSERVACIONES"] != DBNull.Value)
+                            turno.Observaciones = Convert.ToString(dr["OBSERVACIONES"]);
+                        if (dr["USUARIO_ALTA"] != DBNull.Value)
+                            turno.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
+                        if (dr["FECHA_ALTA"] != DBNull.Value)
+                            turno.FechaAlta = Convert.ToDateTime(dr["FECHA_ALTA"]);
+                        if (dr["USUARIO_MOD"] != DBNull.Value)
+                            turno.UsuarioMod = Convert.ToInt32(dr["USUARIO_MOD"]);
+                        if (dr["FECHA_MOD"] != DBNull.Value)
+                            turno.FechaMod = Convert.ToDateTime(dr["FECHA_MOD"]);
+                        if (dr["USUARIO_BAJA"] != DBNull.Value)
+                            turno.UsuarioBaja = Convert.ToInt32(dr["USUARIO_BAJA"]);
+                        if (dr["FECHA_BAJA"] != DBNull.Value)
+                            turno.FechaBaja = Convert.ToDateTime(dr["FECHA_BAJA"]);
+                        if (dr["NRO_AFILIADO"] != DBNull.Value)
+                            turno.NroAfiliado = Convert.ToString(dr["NRO_AFILIADO"]);
+                        if (dr["NRO_AUTORIZACION_OBRA"] != DBNull.Value)
+                            turno.NroAutorizacionObra = Convert.ToString(dr["NRO_AUTORIZACION_OBRA"]);
+
+                    }
+
+                    return turno;
+                }
+                else
+                {
+                    return turno;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string ReprogramarTurno(Turno turno)
+        {
+            try
+            {
+                string resultado = "OK";
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    UPDATE T_TURNOS
+                                        SET ESTADO = 'OTORGADO', USUARIO_MOD = @usrMod, FECHA_MOD = @fechaMod,
+                                            FECHA_TURNO = @fechaTurno, HORA_DESDE = @horaDesde
+                                        WHERE ID_TURNO = @idTurno
+                                    ;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                cmd.Transaction = trans;
+
+                Usuario usuario = (Usuario)HttpContext.Current.Session["TURNERO.Usuario"];
+
+                cmd.Parameters.AddWithValue("@usrMod", turno.UsuarioMod);
+                cmd.Parameters.AddWithValue("@fechaMod", turno.FechaMod);
+                cmd.Parameters.AddWithValue("@idTurno", turno.IdTurno);
+                cmd.Parameters.AddWithValue("@fechaTurno", turno.FechaTurno);
+                cmd.Parameters.AddWithValue("@horaDesde", turno.HoraDesde);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+                con.Close();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                con.Close();
+                throw ex;
+            }
+        }
+        
     }
 }

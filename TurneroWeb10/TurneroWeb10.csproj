@@ -529,6 +529,7 @@
     <Content Include="Estilos\FullCalendar\README.md" />
     <Content Include="Archivos\CONSENTIMIENTO_INFORMADO.pdf" />
     <Content Include="RecuperarPassword.aspx" />
+    <Content Include="ReprogramarTurno.aspx" />
     <Content Include="zzEjemploEnviadorMail.aspx" />
     <None Include="Estilos\Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Estilos\Scripts\jquery-3.0.0.js" />
@@ -1263,6 +1264,13 @@
     </Compile>
     <Compile Include="RegistrarTurno.aspx.designer.cs">
       <DependentUpon>RegistrarTurno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReprogramarTurno.aspx.cs">
+      <DependentUpon>ReprogramarTurno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReprogramarTurno.aspx.designer.cs">
+      <DependentUpon>ReprogramarTurno.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

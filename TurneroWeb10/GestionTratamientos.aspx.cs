@@ -168,11 +168,7 @@ namespace TurneroWeb10
 
                 string cadena = JsonConvert.SerializeObject(profesional);
                 return cadena;
-                //GestorProfesionales gProfesionales = new GestorProfesionales();
-                //DataTable dt = gProfesionales.TraerDisponibilidadHoraria(idProfesional, idEspecialidad, idCentro, dia);
-                //string col = JsonConvert.SerializeObject(dt);
 
-                //return col;
             }
             catch (Exception e)
             {
