@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-success btn-lg" type="button" id="btnRegistrarModal"> <i class="fas fa-user-plus"></i>  | Registrar Profesional</button>
+                <button class="btn btn-success btn-lg" type="button" id="btnRegistrarModal"> <i class="fas fa-user-plus"></i>  | Registrar Centro</button>
             </div>
         </div>
         <br />

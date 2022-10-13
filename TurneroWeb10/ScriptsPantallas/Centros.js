@@ -1,58 +1,58 @@
 ﻿
-    var nombre_centro;
-    var domicilio_centro;
-    var localidad_centro;
-    var email_centro_1;
-    var email_centro_2;
-    var nro_contacto_1;
-    var nro_contacto_2;
-
-var table, data, id;
+var centro, calle, numero, barrio, localidad, telefono, email1, email2,D table, data, id;
 
 
 $(document).ready(function () {
 
     sendDataCentros();
 
-    $('#btnGuardarNvoCentro').click(function () {
+    $('#btnRegistrar').click(function () {
 
-        nombre_centro = $('#txtNombreCentro').val();
-        domicilio_centro = $('#txtDomicilioCentro').val();
-        localidad_centro = $('#txtLocalidadCentro').val();
-        email_centro_1 = $('#txtEmailCentro1').val();
-        email_centro_2 = $('#txtEmailCentro2').val();
-        nro_contacto_1 = $('#txtTelefonoCentro1').val();
-        nro_contacto_2 = $('#txtTelefonoCentro2').val();
-
-
-        var validacion = validarDatosCentro();
-
-        if (validacion === true) {
-
-            var centro = {
-
-                p_nombre: nombre_centro,
-                p_domicilio: domicilio_centro,
-                p_localidad: localidad_centro,
-                p_email1: email_centro_1,
-                p_email2: email_centro_2,
-                p_contacto_1: nro_contacto_1,
-                p_contacto_2: nro_contacto_2
-
-            }
-
-            console.log(centro);
-            registrarCentros(centro);
-            sendDataCentros();
-            $('input[type="text"]').val('');
+        centro = $('#id__txtNombre').val();
+        calle = $('#id__txtCalle').val();
+        numero = $('#id__txtNumero').val();
+        barrio = $('#id__txtBarrio').val();
+        localidad = $('#id__txtLocalidad').val();
+        telefono = $('#id__txtTelefono').val();
+        celular = $('#id__txtCelular').val();
+        email1 = $('#id__txtEmail1').val();
+        email2 = $('#id__txtEmail2').val();
 
 
-        }
-        else {
-            console.log("Error en validación de datos del centro");
-        }
+        console.log(centro);
+       
+        //var validacion = validarDatosCentro();
+
+        //if (validacion === true) {
+
+        //    var centro = {
+
+        //        p_nombre: nombre_centro,
+        //        p_domicilio: domicilio_centro,
+        //        p_localidad: localidad_centro,
+        //        p_email1: email_centro_1,
+        //        p_email2: email_centro_2,
+        //        p_contacto_1: nro_contacto_1,
+        //        p_contacto_2: nro_contacto_2
+
+        //    }
+
+        //    console.log(centro);
+        //    registrarCentros(centro);
+        //    sendDataCentros();
+        //    $('input[type="text"]').val('');
+
+
+        //}
+        //else {
+        //    console.log("Error en validación de datos del centro");
+        //}
 
     });
+});
+
+$('#btnRegistrarModal').click(function () {
+    $("#modalRegistrar").modal('show');
 });
 
 
@@ -158,7 +158,7 @@ $(document).ready(function () {
         $.ajax(
             {
                 type: "POST",
-                url: "RegistrarCentros.aspx/obtenerCentro",
+                url: "RegistrarCentros.aspx/traerCentros",
                 data: {},
                 contentType: 'application/json; charset=utf-8',
                 async: false,
@@ -170,24 +170,21 @@ $(document).ready(function () {
 
                         var Numero = data.d[i].IdCentro;
                         var Nombre = data.d[i].NombreCentro;
-                        var Domicilio = data.d[i].DomicilioCentro;
-                        var Localidad = data.d[i].LocalidadCentro;
+                        var Domicilio = data.d[i].DomicilioCentro + ", " + data.d[i].LocalidadCentro;
                         var Email = data.d[i].EmailCentro;
                         var NroCentro1 = data.d[i].NroCentro1;
                         var NroCentro2 = data.d[i].NroCentro2;
 
-                        var jsonStr = '["' + Nombre + '", "' + Numero + '", "' + Domicilio + '", "' + Localidad + '", "' + Email + '", "' + NroCentro1 + '","' + NroCentro2 + '"]';
+                        var jsonStr = '["' + Nombre + '", "' + Numero + '", "' + Domicilio + '", "' + Email + '", "' + NroCentro1 + '","' + NroCentro2 + '"]';
                         var Acciones = '<a href="#" button title= "editarCentro"  onclick="return actualizarCentro(' + Numero + ')"  class="btn btn-primary btn-editar"> <span class="fas fa-user-edit" aria-hidden="true"></span></a >' +
                             '<a href="#" onclick = "return inactivar(' + Numero + ", '" + Nombre + "'" + ')"  class="btn btn-danger btn-inactivar" > <span class="fas fa-user-minus"></span></a >';
-
-                        
-
+                                                
                         arrayCentros.push([
-                            Numero, Nombre, Domicilio, Localidad, Email, NroCentro1, NroCentro2, Acciones
+                            Numero, Nombre, Domicilio, Email, NroCentro1, NroCentro2, Acciones
                         ])
                     }
 
-                        var table = $('#tabla_centros').DataTable({
+                    var table = $('#tabla_Centros').DataTable({
                         data: arrayCentros,
                         "scrollX": true,
                         "languaje": {
@@ -198,9 +195,8 @@ $(document).ready(function () {
                         "bAutoWidth": true,
                         columns: [
                             { title: "Numero", visible: false },
-                            { title: "Nombre" },
-                            { title: "Domicilio" },
-                            { title: "Localidad" },
+                            { title: "Centro" },
+                            { title: "Domicilio" },                   
                             { title: "Email" },
                             { title: "Nro Contacto" },
                             { title: "Nro Contacto 2" },
