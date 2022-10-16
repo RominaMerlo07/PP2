@@ -32,7 +32,7 @@
             </div>
                        
             <div id="tListarTurnos" >
-                <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaListarTurnos">
+                <table style="width:100%" class="table table-hover table-bordered  table-striped" id="tablaListarTurnos">
                     <%--<thead>
                         <tr>
                             <th>HORA</th>

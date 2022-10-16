@@ -84,7 +84,7 @@ namespace TurneroWeb10
             try
             {
                 GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
-                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerOSPacientes();
+                List<ObraSocial> obrasSociales = gestorObrasSociales.obtenerObrasSociales();
                 return obrasSociales;
             }
             catch (Exception e)

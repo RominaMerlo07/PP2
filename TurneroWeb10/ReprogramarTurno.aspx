@@ -29,15 +29,13 @@
                     <div class="box-body table-responsive">                    
                         <%--<div class="row">--%>
                         <div class="col-md-12">
-                            <div class="" id="tblTurnosReprogramar" style="display:none">
+                            <%--<div class="" id="tblTurnosReprogramar" style="display:none">--%>
                                 </br>
-                                <div class="table-responsive"> 
                                     <div id="tHorarios" >
                                         <table style=" width: 100% !important;" class="table table-hover table-bordered  table-striped" id="tablaTurnosReprogramar">
                                         </table>
                                     </div> 
-                                </div>  
-                            </div>
+                            <%--</div>--%>
                             <div class="alert alert-success" role="alert" id="msgSinTurnosReprogramar" style="display:none">
                                 <strong>Esta sucursal no tiene turnos para reprogramar.</strong>
                             </div>
@@ -289,6 +287,7 @@
         // Pantalla Principal
 
         function traerTurnosReprogramar(idCentro) {
+
             $.ajax({
                 url: "ReprogramarTurno.aspx/traerTurnosReprogramar",
                 data: "{idCentro: '" + idCentro + "'}",
@@ -308,7 +307,12 @@
                             var nombrePaciente = e.Paciente.Nombre + " " + e.Paciente.Apellido;
                             var pacienteNombre = nombrePaciente;
                             var telPaciente = e.Paciente.NroContacto;
-                            var obraPlan = e.ObraSocial.Descripcion;
+                            debugger;
+                            var obraPlan = "";
+                            if (e.ObraSocial != null) {
+                                obraPlan = e.ObraSocial.Descripcion + " (" + e.ObraSocial.PlanObraSocial.Descripcion +") ";
+                            }
+
                             var nroAfiliado = e.NroAfiliado;
 
                             var fechaTurno = getFormattedDate(new Date(e.FechaTurno));
@@ -328,11 +332,11 @@
 
                         dibujarTablaTurnosReprogramar(turnosReprogramar);
                         $("#msgSinTurnosReprogramar").hide();
-                        $("#tblTurnosReprogramar").show();
+                        $("#tHorarios").show();
                         
                     } else {
                         $("#msgSinTurnosReprogramar").show();
-                        $("#tblTurnosReprogramar").hide();
+                        $("#tHorarios").hide();
 
                     }
                 },

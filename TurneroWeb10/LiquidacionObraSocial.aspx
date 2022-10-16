@@ -1,10 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="InformeObras.aspx.cs" Inherits="TurneroWeb10.InformeObras" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LiquidacionObraSocial.aspx.cs" Inherits="TurneroWeb10.TurnosPorObraSocial" %>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <style>
 
     </style>
     <section class="content-header">
-        <h1 style="text-align: center">OBRAS SOCIALES - INFORMES</h1>
+        <h1 style="text-align: center">OBRAS SOCIALES - TURNOS</h1>
     </section>
     <section class="content">
         <div class="box box-primary">
@@ -59,7 +60,7 @@
             </div>
             <div class="box-body table-responsive">
                 <div class="col-md-12">
-                    <table style="width:100%" class="table table-hover table-bordered  table-striped" id="tablaTurnosObras">
+                    <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaTurnosObras">
                         <%--<thead>
                             <tr>
                                 <th>HORA</th>
