@@ -722,7 +722,6 @@ namespace DataAccess
                 string consulta = @"
                                     update T_TURNOS
                                     set
-	                                    //FECHA_TURNO = NULL, HORA_DESDE = NULL, HORA_HASTA = NULL,
 	                                    ESTADO = 'REPROGRAMAR',
 	                                    USUARIO_MOD = @usrMod, FECHA_MOD = GETDATE()
                                     where ID_TURNO in (
@@ -811,7 +810,9 @@ namespace DataAccess
                         {
                             DAObrasSociales daObraSocial = new DAObrasSociales();
                             ObrasPlanes planObraSoc = daObraSocial.traerPlanObraById(dr["ID_PLAN_OBRA"].ToString());
+                            if(turno.ObraSocial != null) { 
                             turno.ObraSocial.PlanObraSocial = planObraSoc;
+                            }
                         }
                         if (dr["ID_ESPECIALIDAD"] != DBNull.Value)
                         {

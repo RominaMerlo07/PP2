@@ -53,25 +53,25 @@ namespace BusinessLogicLayer.Gestores
         }
 
 
-        public List<ObraSocial> cargarObrasSocialesById(string idCentro)
-        {
-            try
-            {
-                DAObrasSociales daObrasSociales = new DAObrasSociales();
-                List<ObraSocial> list = daObrasSociales.cargarObrasSocialesById(idCentro);
+        //public List<ObraSocial> cargarObrasSocialesById(string idCentro)
+        //{
+        //    try
+        //    {
+        //        DAObrasSociales daObrasSociales = new DAObrasSociales();
+        //        List<ObraSocial> list = daObrasSociales.cargarObrasSocialesById(idCentro);
 
-                if (list.Count > 0)
-                {
-                    return list;
-                }
-                else
-                    return null;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+        //        if (list.Count > 0)
+        //        {
+        //            return list;
+        //        }
+        //        else
+        //            return null;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
 
         public void DarBajaObraSocial(ObraSocial obraSocial)
         {
@@ -143,6 +143,16 @@ namespace BusinessLogicLayer.Gestores
         {
             try
             {
+                //DACentros centros = new DACentros();
+                //List<Centro> listaCentros = centros.traerCentros();
+
+                //foreach (Centro centro in listaCentros)
+                //{
+                //    obraSocial.Centro = centro;
+                //    DAObrasSociales daObrasSociales = new DAObrasSociales();
+                //    daObrasSociales.AgregarObraSocial(obraSocial);
+                //}
+
                 DAObrasSociales daObrasSociales = new DAObrasSociales();
                 daObrasSociales.AgregarObraSocial(obraSocial);
             }
@@ -152,25 +162,25 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-        public List<ObraSocial> obtenerOSPacientes()
-        {
-            try
-            {
-                DAObrasSociales daObrasSociales = new DAObrasSociales();
-                List<ObraSocial> list = daObrasSociales.obtenerOSPacientes();
+        //public List<ObraSocial> obtenerOSPacientes()
+        //{
+        //    try
+        //    {
+        //        DAObrasSociales daObrasSociales = new DAObrasSociales();
+        //        List<ObraSocial> list = daObrasSociales.obtenerOSPacientes();
 
-                if (list.Count > 0)
-                {
-                    return list;
-                }
-                else
-                    return null;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+        //        if (list.Count > 0)
+        //        {
+        //            return list;
+        //        }
+        //        else
+        //            return null;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
 
         public List<ObraSocial> obtenerOSxPaciente(string idPaciente)
         {

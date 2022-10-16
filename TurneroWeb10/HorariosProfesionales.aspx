@@ -630,11 +630,12 @@
 
         function validarDatosModalRegistrar(disponibilidad) {
 
-
+            debugger;
             if (disponibilidad.p_sucursal == null) { return "Seleccione una Sucursal." }
             else if (disponibilidad.p_fechaDesde == "") { return "Seleccione correctamente la fecha." }
             else if (disponibilidad.p_fechaHasta == "") { return "Seleccione correctamente la fecha." }
-            else if (disponibilidad.p_horaDesde > disponibilidad.p_horaHasta) { return "Seleccione correctamente la hora." }
+            else if (+disponibilidad.p_horaDesde > +disponibilidad.p_horaHasta) { return "Seleccione correctamente la hora." }
+            else if ((+disponibilidad.p_horaDesde == +disponibilidad.p_horaHasta) && (+disponibilidad.p_minDesde > +disponibilidad.p_minHasta)) { return "Seleccione correctamente la hora." }
             else if (!disponibilidad.p_lunes &&
                 !disponibilidad.p_martes &&
                 !disponibilidad.p_miercoles &&

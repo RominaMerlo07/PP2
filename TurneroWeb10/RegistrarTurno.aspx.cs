@@ -236,20 +236,20 @@ namespace TurneroWeb10
             }
         }
 
-        [WebMethod]
-        public static List<ObraSocial> cargarObrasSocialesById(string idCentro)
-        {
-            try
-            {
-                GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
-                List<ObraSocial> obrasSociales = gestorObrasSociales.cargarObrasSocialesById(idCentro);
-                return obrasSociales;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
+        //[WebMethod]
+        //public static List<ObraSocial> cargarObrasSocialesById(string idCentro)
+        //{
+        //    try
+        //    {
+        //        GestorObrasSociales gestorObrasSociales = new GestorObrasSociales();
+        //        List<ObraSocial> obrasSociales = gestorObrasSociales.cargarObrasSocialesById(idCentro);
+        //        return obrasSociales;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
 
         [WebMethod]
         public static string traerDisponibilidadHoraria(string idProfesional, string centro)

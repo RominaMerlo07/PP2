@@ -101,7 +101,7 @@ $(document).ready(function () {
         $("#calDisposicionHoraria").hide();
         $("#calTurnos").hide();
 
-        cargarObrasSociales("#ddlObraSocial", centro);
+        cargarObrasSociales("#ddlObraSocial");
 
     });
 
@@ -279,7 +279,7 @@ function CargarEventosFullCalendar(idProfesional, idEspecialidad, centro) {
             var descr = e.Centro.NombreCentro + " | " + e.HoraDesde.slice(0, -3) + " - " + e.HoraHasta.slice(0, -3);
 
             var diasArray = obtenerDiasSinFindesemanas(dateInic, dateFin, Dias);
-            debugger;
+
             eventos.push(armarSemanasSinFindesemanas(diasArray, descr, e.IdDisponibilidadHoraria));
 
         });
@@ -322,7 +322,7 @@ function obtenerDiasSinFindesemanas(startDate, stopDate, Dias) {
 
 function armarSemanasSinFindesemanas(diasArray, descr, idEvent) {
     var dispHor = [];
-    debugger;
+
     var dispHorSemana = '{"title": "Disponible", "start": "", "end":"", "description": "", "id":"' + idEvent +'"}';
 
     for (i = 0; i < diasArray.length; i++) {
@@ -361,7 +361,7 @@ function obtenerTurnosXDia(idProfesional, dia) {
 }
 
 function obtenerHorarios(idProfesional, idEspecialidad, dia, idDisponibilidad) {
-    debugger;
+
     var disponibilidad = [];
     var disponibilidadXDia = '{"title": "Disponible", "start": "", "end":"", "color":"green"}';
     var profesional = obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia);
@@ -564,7 +564,7 @@ function dibujaCalendarioDisp(idEspecialidad) {
         },
         locale: 'ES',
         eventClick: function (info) {
-            debugger;
+
             var dia = info.event.startStr;
             var idDisponibilidad = info.event.id;
             dibujaCalendarioTurnos(dia, idEspecialidad, idDisponibilidad);
@@ -698,20 +698,17 @@ function cargarEspecialidades(idCentro, ddl) {
     });
 }
 
-function cargarObrasSociales(ddl, idCentro) {
+function cargarObrasSociales(ddl) {
 
    // idCentro = $("#ddlSucursal").val();
 
     $.ajax({
-        url: "RegistrarTurno.aspx/cargarObrasSocialesById",
-        data: "{idCentro: '" + idCentro + "'}",
+        url: "RegistrarTurno.aspx/cargarObrasSociales",
+        //data: "{idCentro: '" + idCentro + "'}",
         type: "post",
         contentType: "application/json",
         async: false,
         success: function (data) {
-
-            console.log(data.d);
-
             if (data.d.length > 0) {
                 $(ddl).empty();
                 $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
@@ -725,7 +722,7 @@ function cargarObrasSociales(ddl, idCentro) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             $(ddl).prop("disabled", true);
-            alert(data.error);
+            
         }
     });
 }
@@ -755,7 +752,7 @@ function cargarComboCentros(ddl) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             $(ddl).prop("disabled", true);
-            alert(data.error);
+            
         }
     });
 }
@@ -806,8 +803,6 @@ function registrarTurnoNew(datosTurno) {
         async: false,
         success: function (data) {
 
-            console.log(data.d);
-
             if (data.d != 'OK') {
                 //alert('Error al registrar turno.')
                 swal("Hubo un problema", "Error al registrar el turno!", "error");
@@ -818,7 +813,7 @@ function registrarTurnoNew(datosTurno) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
+            
         }
 
     });
@@ -911,7 +906,6 @@ function sendDataPacienteOS(numero) {
 
             if (arrayPacienteOS.length >= 1) {
 
-                console.log(arrayPacienteOS);
                 var table = $('#tablaOSPaciente').DataTable({
                     data: arrayPacienteOS,
                     select: true,
@@ -973,15 +967,12 @@ function sendDataPacienteOS(numero) {
           
             //$(ddl).prop("disabled", true);
             //alert(data.error);
-            //console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
         }
     })
 }
 
 
 function inactivarE(idPaciente, idObraPaciente) {
-
-    console.log(idPaciente, idObraPaciente);
 
     $.ajax({
         type: "POST",
@@ -992,11 +983,8 @@ function inactivarE(idPaciente, idObraPaciente) {
         error: function (xhr, ajaxOptions, thrownError) {
             //$(ddl).prop("disabled", true);
             //alert(data.error);
-            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
         },
         success: function (response) {
-
-            console.log(response.d);
 
             if (response.d != 'OK') {
                 swal("Hubo un problema", "Error al dar de baja la obra social.", "error");
@@ -1038,15 +1026,12 @@ $("#btnAgregar").click(function (e) {
         p_nroAfiliado: $("#txtNroAfiliado").val()
     }
 
-    //console.log(obraPaciente);
     registrarOSxPaciente(obraPaciente);
-
 })
 
 
 function registrarOSxPaciente(obraPaciente) {
 
-    console.log(obraPaciente);
     $.ajax({
         url: "RegistrarPaciente.aspx/registrarOSPaciente",
         data: JSON.stringify(obraPaciente),
@@ -1055,13 +1040,11 @@ function registrarOSxPaciente(obraPaciente) {
         async: false,
         success: function (data) {
 
-            console.log(data.d);
-
             if (data.d != 'OK') {
-                alert('Error al agregar la obra social.')
+                swal("Hubo un problema", "Error al agregar la obra social.", "error");
             } else {
                 $('#btnConfPaciente').show();
-                alert('Obra social registrada con Éxito.');
+
                 $("#agregarObraSocial").hide();
 
                
@@ -1073,7 +1056,7 @@ function registrarOSxPaciente(obraPaciente) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
+           
         }
 
     });
@@ -1091,8 +1074,6 @@ function seleccionarOS(idObraPaciente, numero) {
     $('#tablaOSPaciente tbody').on('click', 'tr', function (e) {
 
         e.preventDefault();
-
-        // console.log(table.row(this).data());
 
         var resulfila = [];
         resulfila = table.row(this).data();      
@@ -1115,11 +1096,7 @@ function seleccionarOS(idObraPaciente, numero) {
 
       //  let lengthOfObject = Object.keys(obraTurnoPaciente).length;
 
-        console.log(obraTurnoPaciente);    
-       
-
         btnRegistrarExis.disabled = false;
-        //console.log(resulfila);
     }
     );
         
@@ -1127,12 +1104,13 @@ function seleccionarOS(idObraPaciente, numero) {
 
 $('#btnRegistrarExis').click(function (e) {
     e.preventDefault();
-    console.log(obraTurnoPaciente);
+
     registrarSoloTurno(obraTurnoPaciente);
     $('#modalTurno').modal('hide');
     $("#calDisposicionHoraria").hide();
     $("#calTurnos").hide();
 
+    limpiarCampos();
 });
 
 function registrarSoloTurno(obraTurnoPaciente) {
@@ -1145,19 +1123,16 @@ function registrarSoloTurno(obraTurnoPaciente) {
         async: false,
         success: function (data) {
 
-            console.log(data.d);
-
             if (data.d != 'OK') {
-                //alert('Error al registrar turno.')
                 swal("Hubo un problema", "Error al registrar el turno!", "error");
             } else {
                 $('#btnConfTurno').show();
-                //alert('Turno registrado con Éxito.')
+
                 swal("Hecho", "Turno registrado con éxito!", "success");
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
+            
         }
 
     });
