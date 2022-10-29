@@ -302,6 +302,11 @@
                                     <i class="fa-solid fa-id-card-clip"></i>
                                     <span>Obras Sociales</span>
                                 </a>
+                                <a class="dropdown-item" id="idLiquidacionObraSocial" href="LiquidacionObraSocial.aspx">
+                                    <%-- <i class="fas fa-folder-plus"></i>--%>
+                                    <i class="fa-solid fa-hospital-user"></i>
+                                    <span>Liquidaciones</span>
+                                </a>
                                 <a class="dropdown-item" id="idInformes" href="InformeObras.aspx">
                                     <i class="far fa-clipboard"></i>
                                     <span>Informes</span>

@@ -74,7 +74,6 @@
   <ItemGroup>
     <Content Include="Agenda.aspx" />
     <Content Include="Archivos\16052022_SCRIPT_BASE_conDatosIniciales.sql" />
-    <Content Include="DisponibilidadHoraria.aspx" />
     <Content Include="Estilos\Content\bootstrap-datepicker.min.css" />
     <Content Include="Estilos\Content\bootstrap-grid.css" />
     <Content Include="Estilos\Content\bootstrap-grid.min.css" />
@@ -530,6 +529,7 @@
     <Content Include="Archivos\CONSENTIMIENTO_INFORMADO.pdf" />
     <Content Include="RecuperarPassword.aspx" />
     <Content Include="ReprogramarTurno.aspx" />
+    <Content Include="LiquidacionObraSocial.aspx" />
     <Content Include="zzEjemploEnviadorMail.aspx" />
     <None Include="Estilos\Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Estilos\Scripts\jquery-3.0.0.js" />
@@ -1149,13 +1149,6 @@
     <Compile Include="Agenda.aspx.designer.cs">
       <DependentUpon>Agenda.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DisponibilidadHoraria.aspx.cs">
-      <DependentUpon>DisponibilidadHoraria.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DisponibilidadHoraria.aspx.designer.cs">
-      <DependentUpon>DisponibilidadHoraria.aspx</DependentUpon>
-    </Compile>
     <Compile Include="GestionSeguimientoPacientes.aspx.cs">
       <DependentUpon>GestionSeguimientoPacientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1278,6 +1271,13 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="LiquidacionObraSocial.aspx.cs">
+      <DependentUpon>LiquidacionObraSocial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LiquidacionObraSocial.aspx.designer.cs">
+      <DependentUpon>LiquidacionObraSocial.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\AgendaTurnos.ascx.cs">
       <DependentUpon>AgendaTurnos.ascx</DependentUpon>

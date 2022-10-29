@@ -303,7 +303,6 @@ function actualizar(idBuscar) {
 
             var paciente = JSON.parse(data.d); 
             console.log(paciente);
-          
 
             if (paciente != null) {
 
