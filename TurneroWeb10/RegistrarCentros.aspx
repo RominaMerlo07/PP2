@@ -150,161 +150,111 @@
         </div>
     </div>
 
-    <%--final Modal registrar--%>
+    <%--Final Modal registrar--%>
 
 
-
-
-
-
-       <%-- <h1 style="text-align: left">REGISTRAR NUEVO CENTRO</h1>
-        </section>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-6" id="crEpecialidades">
-                    <div class="card text-white bg-light">
-                        <div class="card-header bg-info">
-                            <h4>Datos Centro</h4>
-                        </div>
-                        <div class="card-body align-items-center" id="form-centros">
-                            <div class="form-row">
-                                <div class="col-sm-12">
-                                    <div class="input-group mb-3 d-flex align-items-center">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text text-info">Nombre:</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtNombreCentro"/>
-                                    </div>
-                                    <div class="input-group mb-3 d-flex align-items-center">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text text-info">Domicilio:</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtDomicilioCentro"/>
-                                    </div>
-                                    <div class="input-group mb-3 d-flex align-items-center">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text text-info">Localidad:</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtLocalidadCentro"/>
-                                    </div>
-                                    <div class="input-group mb-3 d-flex align-items-center">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text text-info">E-mail:</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtEmailCentro1"/>
-                                        <div class="input-group-addon">
-                                            <span class="input-group-text text-info">@</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtEmailCentro2"/>
-                                    </div>
-                                    <div class="input-group mb-3 d-flex align-items-center">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text text-info">Teléfono:</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtTelefonoCentro1"/>
-                                    </div>
-                                    <div class="input-group mb-3 d-flex align-items-center">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text text-info">Teléfono alternativo:</span>
-                                        </div>
-                                        <input type="text" style="text-align:left" class="form-control" id="txtTelefonoCentro2"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <button	type="button" class="btn btn-primary btn-lg" id="btnGuardarNvoCentro">Crear Centro</button>
-                            </div>
-                           </div>
-                        </div>
-                    </div>
-                </div>--%>
-
-      
-
-<%--     <div class="modal fade" id="modalEditarCentro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+    <%--Modal Editar--%>
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header text-white bg-info">
-                    <h4 class="modal-title" id="myModalLabel">Actualizar datos del Centro</h4>
+                    <h4 class="modal-title" id="lblEditar">Actualizar datos del Centro de Atención</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <h4 class="modal-title" id="DatosCentro">Datos Centro</h4>
-                    </div>
-                    <br />
-                    <div class="form-row">
+                <div class="modal-body" id="formularioEditar">
+                    <div class="card-body">
                         <div class="col-sm">
                             <div class="row">
-                                <div class="col-sm">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Nombre</span>
-                                        </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtNombre" maxlength="8" onpaste="return false"/>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nombre Centro</span>
                                     </div>
+                                    <%--<input type="text" name="nombre" style="text-align: left" class="formulario-input form-control" id="id__txtNombre" />--%>
+                                    <input type="text" name="calle" id="id__txtNombreE" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                 </div>
-                                <div class="col-sm">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Domicilio</span>
-                                        </div>
-                                        <input type="text" style="text-align: left" class="form-control" id="txtDomicilio" maxlength="10"  onpaste="return false"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Dirección</span>
                                     </div>
+                                    <input type="text" style="text-align: left" class="form-control" id="id__txtDomicilioE" maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">Localidad</span>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Barrio</span>
+                                    </div>
+                                    <input type="text" name="barrio" style="text-align: left" class="form-control" id="id__txtBarrioE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    --%>
                                 </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtLocalidad"  maxlength="150" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                               
+                                <%--<p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>--%>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Localidad</span>
+                                    </div>
+                                    <input type="text" name="localidad" style="text-align: left" class="form-control" id="id__txtLocalidadE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  --%>
+                                </div>
+                                <%--<p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>--%>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Telefono</span>
+                                    </div>
+                                    <input type="text" name="telefono" style="text-align: left" class="form-control" id="id__txtTelefonoE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3514560000" />
+                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    --%>
+                                </div>
+                                <%--<p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>--%>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Celular</span>
+                                    </div>
+                                    <input type="text" name="celular" style="text-align: left" class="form-control" id="id__txtCelularE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3515127426" />
+                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  --%>
+                                </div>
+                                <%--<p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>--%>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Email: </span>
+                                    </div>
+                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1E" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail1"></i>  --%>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">@</span>
+                                    </div>
+                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2E" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail2"></i>  --%>
+                                </div>
+                                <%--<p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>--%>
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">E-mail</span>
-                                </div>
-                                <div>
-                                    <input type="text" style="text-align: left" class="form-control" id="txtEmail" maxlength="10" onpaste="return false"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">N° Contacto</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtNcontacto1"  maxlength="160" "/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">N° Contacto Alternativo</span>
-                                </div>
-                                <input type="text" style="text-align: left" class="form-control" id="txtNcontacto2" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnActualizarCentro">Actualizar</button>
+                    <button class="btn btn-success btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
-    </div>--%>
+    </div>
+
+    <%--Final Modal Editar--%>
+
+
 
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Centros.js"%>"></script>
 

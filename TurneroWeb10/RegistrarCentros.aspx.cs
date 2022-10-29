@@ -17,26 +17,27 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-        public static string registrarCentros(string p_nombre, string p_domicilio, string p_localidad, string p_email1, string p_email2,  string p_contacto_1, string p_contacto_2)
+        public static string registrarCentros(string p_nombre, string p_domicilio, string p_numero, string p_barrio, string p_localidad,  string p_email1, string p_email2, string p_celular, string p_telefono)
         {
 
            Centro centro = new Centro();
-           GestorCentros gestorCentros = new GestorCentros();
-
+           GestorCentros gestorCentros = new GestorCentros();       
+            
             try
             {
                 string mensaje = "OK";
 
-                #region Completa entidad Profesional
+                #region Completa entidad Centro
 
                 if (!string.IsNullOrEmpty(p_nombre))
                 {
                     centro.NombreCentro = p_nombre;
-                }
+                }              
 
-                if (!string.IsNullOrEmpty(p_domicilio))
+                if ((!string.IsNullOrEmpty(p_domicilio)) && (!string.IsNullOrEmpty(p_numero)))
                 {
-                    centro.DomicilioCentro = p_domicilio;
+                    string domicilio = p_domicilio + " " + p_numero + " Barrio: " + p_barrio;
+                    centro.DomicilioCentro = domicilio;
                 }
 
                 if (!string.IsNullOrEmpty(p_localidad))
@@ -44,17 +45,15 @@ namespace TurneroWeb10
                     centro.LocalidadCentro = p_localidad;
                 }
 
-                if (!string.IsNullOrEmpty(p_contacto_1))
+                if (!string.IsNullOrEmpty(p_celular))
                 {
-                    centro.NroCentro1 = p_contacto_1;
+                    centro.NroCentro2 = p_celular;
                 }
 
-                if (!string.IsNullOrEmpty(p_contacto_2))
+                if (!string.IsNullOrEmpty(p_telefono))
                 {
-                    centro.NroCentro2 = p_contacto_2;
+                    centro.NroCentro1 = p_telefono;
                 }
-
-
 
                 if ((!string.IsNullOrEmpty(p_email1)) && (!string.IsNullOrEmpty(p_email2)))
                 {
@@ -62,10 +61,9 @@ namespace TurneroWeb10
                     centro.EmailCentro = email;
                 }
 
-               centro.UsuarioAlta = 1;
-               centro.FechaAlta = DateTime.Today;
+                centro.UsuarioAlta = 1;
+                centro.FechaAlta = DateTime.Today;
 
-              
 
                 #endregion
 
@@ -75,11 +73,13 @@ namespace TurneroWeb10
             }
             catch (Exception e)
             {
-                string error = "Se produjo un error al registrar el nuevo centro " + e.Message;
+                string error = "Se produjo un error al registrar el centro " + e.Message;
                 return error;
             }
 
         }
+
+    
 
         [WebMethod]
         public static List<Centro> traerCentros()
@@ -97,8 +97,7 @@ namespace TurneroWeb10
         }
 
         [WebMethod]
-
-        public static string actualizarCentros(string p_id, string p_nombre, string p_domicilio, string p_localidad, string p_email, string p_contacto_1, string p_contacto_2)
+        public static string actualizarCentros(string p_id, string p_centro, string p_domicilio, string p_barrio, string p_localidad, string p_telefono, string p_celular, string p_email1, string p_email2)
         
         {
 
@@ -109,14 +108,17 @@ namespace TurneroWeb10
             {
                 string mensaje = "OK";
 
-                if (!string.IsNullOrEmpty(p_nombre))
+                #region Completa entidad Centro
+
+                if (!string.IsNullOrEmpty(p_centro))
                 {
-                    centro.NombreCentro = p_nombre;
+                    centro.NombreCentro = p_centro;
                 }
 
                 if (!string.IsNullOrEmpty(p_domicilio))
                 {
-                    centro.DomicilioCentro = p_domicilio;
+                    string domicilio = p_domicilio + " Barrio: " + p_barrio;
+                    centro.DomicilioCentro = domicilio;
                 }
 
                 if (!string.IsNullOrEmpty(p_localidad))
@@ -124,19 +126,20 @@ namespace TurneroWeb10
                     centro.LocalidadCentro = p_localidad;
                 }
 
-                if (!string.IsNullOrEmpty(p_email))
+                if (!string.IsNullOrEmpty(p_celular))
                 {
-                    centro.EmailCentro = p_email;
+                    centro.NroCentro2 = p_celular;
                 }
 
-                if (!string.IsNullOrEmpty(p_contacto_1))
+                if (!string.IsNullOrEmpty(p_telefono))
                 {
-                    centro.NroCentro1 = p_contacto_1;
+                    centro.NroCentro1 = p_telefono;
                 }
 
-                if (!string.IsNullOrEmpty(p_contacto_2))
+                if ((!string.IsNullOrEmpty(p_email1)) && (!string.IsNullOrEmpty(p_email2)))
                 {
-                    centro.NroCentro2 = p_contacto_2;
+                    string email = p_email1 + "@" + p_email2;
+                    centro.EmailCentro = email;
                 }
 
                 centro.IdCentro = Convert.ToInt32(p_id);
@@ -144,6 +147,7 @@ namespace TurneroWeb10
                 centro.UsuarioMod = 1;
                 centro.FechaMod = DateTime.Today;
 
+                #endregion
 
                 gestorCentros.ActualizarCentros(centro);
 
@@ -159,7 +163,6 @@ namespace TurneroWeb10
 
 
         [WebMethod]
-
         public static Centro obtenerCentro( int idCentro)
         {
             try
@@ -178,7 +181,6 @@ namespace TurneroWeb10
 
 
         [WebMethod]
-
         public static string darBajaCentro(string p_id)
         {
             Centro centro = new Centro();

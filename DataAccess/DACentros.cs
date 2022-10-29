@@ -125,7 +125,7 @@ namespace DataAccess
                         if (dr["NRO_CONTACTO_1"] != DBNull.Value)
                             centro.NroCentro1 = Convert.ToString(dr["NRO_CONTACTO_1"]);
                         if (dr["NRO_CONTACTO_2"] != DBNull.Value)
-                            centro.NroCentro2 = Convert.ToString(dr["NRO_CONTACTO_1"]);
+                            centro.NroCentro2 = Convert.ToString(dr["NRO_CONTACTO_2"]);
                         if (dr["USUARIO_ALTA"] != DBNull.Value)
                             centro.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
                         if (dr["FECHA_ALTA"] != DBNull.Value)

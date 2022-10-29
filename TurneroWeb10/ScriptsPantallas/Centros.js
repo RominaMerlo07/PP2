@@ -18,35 +18,33 @@ $(document).ready(function () {
         email1 = $('#id__txtEmail1').val();
         email2 = $('#id__txtEmail2').val();
 
-
-        console.log(centro);
        
-        //var validacion = validarDatosCentro();
+        var validacion = validarDatosCentro();
 
-        //if (validacion === true) {
+        if (validacion === true) {
 
-        //    var centro = {
+            var sucursal = {
 
-        //        p_nombre: nombre_centro,
-        //        p_domicilio: domicilio_centro,
-        //        p_localidad: localidad_centro,
-        //        p_email1: email_centro_1,
-        //        p_email2: email_centro_2,
-        //        p_contacto_1: nro_contacto_1,
-        //        p_contacto_2: nro_contacto_2
+                p_nombre: centro,
+                p_domicilio: calle,
+                p_numero: numero,
+                p_barrio: barrio,
+                p_localidad: localidad,
+                p_email1: email1,
+                p_email2: email2,
+                p_celular: celular,
+                p_telefono: telefono
 
-        //    }
+            }
 
-        //    console.log(centro);
-        //    registrarCentros(centro);
-        //    sendDataCentros();
-        //    $('input[type="text"]').val('');
+            console.log(sucursal);
+            registrarCentros(sucursal);
 
 
-        //}
-        //else {
-        //    console.log("Error en validación de datos del centro");
-        //}
+        }
+        else {
+            console.log("Error en validación de datos del centro");
+        }
 
     });
 });
@@ -57,7 +55,8 @@ $('#btnRegistrarModal').click(function () {
 
 
 
-    function actualizarCentro(IdCentro) {
+function actualizarCentro(IdCentro) {
+         
 
         id = IdCentro;
 
@@ -69,16 +68,20 @@ $('#btnRegistrarModal').click(function () {
             contentType: 'application/json; charset=utf-8',
             async: false,
             success: function (data) {
+                                
 
-                $("#modalEditarCentro").modal('show');
+                $("#modalEditar").modal('show');
 
-
-                $("#txtNombre").val(data.d.NombreCentro);
-                $("#txtDomicilio").val(data.d.DomicilioCentro);
-                $("#txtLocalidad").val(data.d.LocalidadCentro);
-                $("#txtEmail").val(data.d.EmailCentro);
-                $("#txtNcontacto1").val(data.d.NroCentro1);
-                $("#txtNcontacto2").val(data.d.NroCentro2);
+                $("#id__txtNombreE").val(data.d.NombreCentro);
+                var direccion = data.d.DomicilioCentro.split('Barrio:');
+                $("#id__txtDomicilioE").val(direccion[0]);
+                $("#id__txtBarrioE").val(direccion[1]);           
+                $("#id__txtLocalidadE").val(data.d.LocalidadCentro);
+                var email = data.d.EmailCentro.split('@');
+                $("#id__txtEmail1E").val(email[0]);
+                $("#id__txtEmail2E").val(email[1]);
+                $("#id__txtTelefonoE").val(data.d.NroCentro1);
+                $("#id__txtCelularE").val(data.d.NroCentro2);
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -89,17 +92,12 @@ $('#btnRegistrarModal').click(function () {
 
 
 
-    $("#btnActualizarCentro").click(function (e) {
+$("#btnActualizar").click(function (e) {
         e.preventDefault();
-        UpdateDataCentros(id);
-       /* $("#tabla_centros").DataTable().fnClearTable();*/
-        
-        $("#modalEditarCentro").modal('hide');
-        sendDataCentros();
-
+        UpdateDataCentros(id);        
     });
 
-    function registrarCentros(datosCentro) {
+function registrarCentros(datosCentro) {
         $.ajax({
             url: "RegistrarCentros.aspx/registrarCentros",
             data: JSON.stringify(datosCentro),
@@ -109,9 +107,12 @@ $('#btnRegistrarModal').click(function () {
             success: function (data) {
 
                 if (data.d != 'OK') {
-                    alert('Error al registrar el centro.')
+                    swal("Hubo un problema", "Error al registrar el centro", "error"); //error
                 } else {
-                    alert('Centro registrado con Éxito.');
+                    $("#modalRegistrar").modal('hide');
+                    swal("Hecho", "Centro de Atención registrado con Éxito!", "success"); //error
+                    //$("#tabla_profesionales").DataTable().fnClearTable();
+                    sendDataCentros();
 
                 }
             },
@@ -123,29 +124,29 @@ $('#btnRegistrarModal').click(function () {
 
 };
 
-    function validarDatosCentro() {
+function validarDatosCentro() {
 
-        if (nombre_centro == "") {
+        if (centro == "") {
             alert("Por favor, ingrese el nombre del centro");
             return false;
         }
-        else if (domicilio_centro == "") {
+        else if (calle == "") {
             alert("Por favor, ingrese Domicilio");
             return false;
         }
-        else if (localidad_centro == null) {
+        else if (localidad == null) {
             alert("Por favor, ingrese localidad del centro");
             return false;
         }
-        else if (email_centro_1 == null) {
+        else if (email1 == null) {
             alert("Por favor, ingrese correctamente la dirección del Email");
             return false;
         }
-        else if (email_centro_2 == "") {
+        else if (email2 == "") {
             alert("Por favor, ingrese correctamente la dirección del Email");
             return false;
         }
-        else if (nro_contacto_1 == "") {
+        else if (celular == "") {
             alert("Por favor, un numero de contacto");
             return false;
         }
@@ -154,7 +155,7 @@ $('#btnRegistrarModal').click(function () {
         };
 };
 
-    function sendDataCentros() {
+function sendDataCentros() {
         $.ajax(
             {
                 type: "POST",
@@ -198,8 +199,8 @@ $('#btnRegistrarModal').click(function () {
                             { title: "Centro" },
                             { title: "Domicilio" },                   
                             { title: "Email" },
-                            { title: "Nro Contacto" },
-                            { title: "Nro Contacto 2" },
+                            { title: "Telefono" },
+                            { title: "Celular" },
                             { title: "Acciones" },
                         ],
                         dom: 'Bfrtip',
@@ -228,112 +229,69 @@ $('#btnRegistrarModal').click(function () {
                     console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
                 }
             })
-    }
-
-    //evento boton editar, llama al modal y lo carga
-
-    //$(document).on('click', '.btn-editar', function (e) {
-
-    //    e.preventDefault();
-    //    console.log("boton editar");
-
-
-
-    //    var celda = $(this).parent().parent();
-        
-    //    var valor_celda = celda.children();
-
-    //    var table = $('#tabla_centros').DataTable;
-    //    const id_p = table.arrayCentros.Nombre;
-    //    console.log(id_p);
-
-    //    $("#txtNombre").val($(valor_celda[0]).text());
-    //    $("#txtDomicilio").val($(valor_celda[1]).text());
-    //    $("#txtLocalidad").val($(valor_celda[2]).text());
-    //    $("#txtEmail").val($(valor_celda[3]).text());
-    //    $("#txtNcontacto1").val($(valor_celda[4]).text());
-    //    $("#txtNcontacto2").val($(valor_celda[5]).text());
-
-             
-    //})
-
-
-//$(document).on('click', '.btn-editar', function (e) {
-
-//    e.preventDefault();
-//    console.log(table.row(this).data().Numero);
-
-//});
-
-
-    //$(document).on('click', '.btn-eliminar', function (e) {
-
-    //    e.preventDefault();
-    //    console.log("boton elimina");
-
-    //})
-
-function inactivar(id, nombre) {
-
-    var IdCentro = id;
-    var nombreCentro = nombre;
-
-    $.ajax({
-        url: "RegistrarCentros.aspx/darBajaCentro",
-        data: "{p_id: '" + IdCentro + "'}",
-        type: "post",
-        contentType: "application/json",
-        async: false,
-        success: function (data) {
-
-            swal("Hecho", "Se dio de baja exitosamente a " + nombreCentro+ ".", "success");
-
-            sendDataCentros();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
-        }
-    });
 }
 
 
-    function UpdateDataCentros(id) {
+//function inactivar(id, nombre) {
 
-        var obj = JSON.stringify({
-            p_id: id,
-            p_nombre: $("#txtNombre").val(),
-            p_domicilio: $("#txtDomicilio").val(),
-            p_localidad: $("#txtLocalidad").val(),
-            p_email: $("#txtEmail").val(),
-            p_contacto_1: $("#txtNcontacto1").val(),
-            p_contacto_2: $("#txtNcontacto2").val()
-           
+//    var IdCentro = id;
+//    var nombreCentro = nombre;
+
+//    $.ajax({
+//        url: "RegistrarCentros.aspx/darBajaCentro",
+//        data: "{p_id: '" + IdCentro + "'}",
+//        type: "post",
+//        contentType: "application/json",
+//        async: false,
+//        success: function (data) {
+
+//            swal("Hecho", "Se dio de baja exitosamente a " + nombreCentro+ ".", "success");
+
+//            sendDataCentros();
+//        },
+//        error: function (xhr, ajaxOptions, thrownError) {
+//            alert(data.error);
+//        }
+//    });
+//}
 
 
-        })
+function UpdateDataCentros(id) {
 
-        $.ajax({
-            type: "POST",
-            url: "RegistrarCentros.aspx/actualizarCentros",
-            data: obj,
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            error: function (xhr, ajaxOptions, thrownError) {
-                //$(ddl).prop("disabled", true);
-                //alert(data.error);
-                console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
-            },
-            success: function (response) {
+    var obj = JSON.stringify({
+        p_id: id,
+        p_centro: $('#id__txtNombreE').val(),
+        p_domicilio: $('#id__txtDomicilioE').val(),
+        p_barrio: $('#id__txtBarrioE').val(),
+        p_localidad: $('#id__txtLocalidadE').val(),
+        p_telefono: $('#id__txtTelefonoE').val(),
+        p_celular: $('#id__txtCelularE').val(),
+        p_email1: $('#id__txtEmail1E').val(),
+        p_email2: $('#id__txtEmail2E').val()
+
+    });
+
+   
+    $.ajax({
+        type: "POST",
+        url: "RegistrarCentros.aspx/actualizarCentros",
+        data: obj,
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',     
+        success: function (response) {
 
                 if (response.d != 'OK') {
                     swal("Hubo un problema", "Error al actualizar datos del centro.", "error");
                 }
                 else {
-                    $('#btnActualizarCentro').show();
                     swal("Hecho", "Los datos del centro se actualizaron con Éxito.", "success");
-                }
-                //console.log(response);
-            }
+                    $("#modalEditar").modal('hide');
+                    sendDataCentros();
+
+                }          
+        },
+           error: function (xhr, ajaxOptions, thrownError) {
+        }
         })
     }
 
