@@ -1,5 +1,5 @@
 ﻿
-var centro, calle, numero, barrio, localidad, telefono, email1, email2,D table, data, id;
+var centro, calle, numero, barrio, localidad, telefono, email1, email2, table, data, id;
 
 
 $(document).ready(function () {
