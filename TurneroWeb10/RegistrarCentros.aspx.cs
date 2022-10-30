@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -7,6 +8,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer.Gestores;
 using Entidades.ent;
+using Newtonsoft.Json;
+
 namespace TurneroWeb10
 {
     public partial class RegistrarCentros : System.Web.UI.Page
@@ -206,6 +209,93 @@ namespace TurneroWeb10
 
         }
 
+
+        [WebMethod]
+        public static string ObtenerTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+            try
+            {
+                GestorCentros gestorCentros = new GestorCentros();
+
+                int id = Convert.ToInt32(p_id);
+
+                int cantTurnosFuturos = gestorCentros.TurnosFuturos(id);
+
+                if(cantTurnosFuturos > 0)
+                { 
+
+                DataTable dt = gestorCentros.ObtenerTurnosFuturos(id);
+                col = JsonConvert.SerializeObject(dt);
+                return col;
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string MostrarTurnosFuturos(string p_id)
+        {
+            
+            try
+            {
+                GestorCentros gestorCentros = new GestorCentros();
+
+                int id = Convert.ToInt32(p_id);
+
+                DataTable dt = gestorCentros.ObtenerTurnosFuturos(id);
+                string col = JsonConvert.SerializeObject(dt);
+                return col;              
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string DaDarDeBajaTurnos(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+               
+                GestorCentros gestorCentros = new GestorCentros();
+                Centro centro = new Centro();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultado = gestorCentros.DaDarDeBajaTurnos(id, 1);
+
+                if (resultado == "OK") 
+                {
+                    centro.IdCentro = id;
+                    centro.UsuarioBaja = 1;
+                    centro.FechaBaja = DateTime.Today;
+
+                    col = gestorCentros.DarDeBajaCentro(centro);                   
+                }
+                    return col;
+
+                //return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 

@@ -92,10 +92,52 @@ namespace BusinessLogicLayer.Gestores
 
         }
 
+        public DataTable ObtenerTurnosFuturos(int idCentro)
+        {
+            try
+            {
+                DACentros daCentros = new DACentros();        
+                return daCentros.ObtenerTurnosFuturos(idCentro);             
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public int TurnosFuturos(int idCentro)
+        {
+            try
+            {
+                DACentros daCentros = new DACentros();
+                return daCentros.TurnosFuturos(idCentro);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string DaDarDeBajaTurnos(int idCentro, int usuarioBaja)
+        {
+            try
+            {
+                DACentros DaCentros = new DACentros();
+                return DaCentros.DaDarDeBajaTurnos(idCentro, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 
 
-
+   
 
 }
 

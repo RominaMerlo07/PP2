@@ -360,8 +360,132 @@ namespace DataAccess
 
             return resultado;
 
+        }
 
+
+        public int TurnosFuturos(int idCentro)
+        {
+
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT COUNT(*) CANTIDAD " +
+                                    "FROM T_TURNOS " +
+                                    "WHERE ID_CENTRO = @ID_CENTRO " +
+                                    "AND ESTADO = 'OTORGADO' " +
+                                    "AND FECHA_BAJA IS NULL " +
+                                    "AND FECHA_TURNO > GETDATE(); ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_CENTRO", idCentro);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();             
+
+            }
+            catch (Exception e)
+            {
+                       
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
 
         }
+
+
+        public DataTable ObtenerTurnosFuturos(int idCentro)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT CONVERT(varchar,T.FECHA_TURNO,103) TURNO, 
+								           SUBSTRING ((CONVERT(varchar,T.HORA_DESDE,8)),0,6) as HORA, 
+										   CONCAT (P.NOMBRE, ' ', P.APELLIDO) PACIENTE, 
+										   P.NRO_CONTACTO,
+										   P.EMAIL_CONTACTO
+									  FROM T_TURNOS T, T_PACIENTES P
+									 WHERE T.ID_PACIENTE = P.ID_PACIENTE
+									   AND ID_CENTRO = @idCentro
+									   AND ESTADO = 'OTORGADO'
+									   AND T.FECHA_BAJA IS NULL
+									   AND P.FECHA_BAJA IS NULL
+									   AND T.FECHA_TURNO > GETDATE();";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@idCentro", idCentro);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public string DaDarDeBajaTurnos(int idCentro, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_TURNOS " +
+                                     "SET FECHA_BAJA = GETDATE(), ESTADO = 'CANCELADO', USUARIO_BAJA = @USUARIO_BAJA " +
+                                     "WHERE ID_CENTRO = @ID_CENTRO " +
+                                     "AND FECHA_TURNO > GETDATE();";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_CENTRO", idCentro);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);               
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
+
     }
 }

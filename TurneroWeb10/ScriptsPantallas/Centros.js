@@ -1,5 +1,5 @@
 ﻿
-var centro, calle, numero, barrio, localidad, telefono, email1, email2, table, data, id;
+var centro, calle, numero, barrio, localidad, telefono, email1, email2, table, data, id, nombreCentro, IdCentro;
 
 
 $(document).ready(function () {
@@ -96,6 +96,7 @@ $("#btnActualizar").click(function (e) {
         e.preventDefault();
         UpdateDataCentros(id);        
     });
+
 
 function registrarCentros(datosCentro) {
         $.ajax({
@@ -232,28 +233,49 @@ function sendDataCentros() {
 }
 
 
-//function inactivar(id, nombre) {
+function inactivar(id, nombre) {
 
-//    var IdCentro = id;
-//    var nombreCentro = nombre;
+    IdCentro = id;
+    nombreCentro = nombre;
 
-//    $.ajax({
-//        url: "RegistrarCentros.aspx/darBajaCentro",
-//        data: "{p_id: '" + IdCentro + "'}",
-//        type: "post",
-//        contentType: "application/json",
-//        async: false,
-//        success: function (data) {
 
-//            swal("Hecho", "Se dio de baja exitosamente a " + nombreCentro+ ".", "success");
+     $.ajax({
+         url: "RegistrarCentros.aspx/ObtenerTurnosFuturos",
+        data: "{p_id: '" + IdCentro + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+         success: function (data) {
 
-//            sendDataCentros();
-//        },
-//        error: function (xhr, ajaxOptions, thrownError) {
-//            alert(data.error);
-//        }
-//    });
-//}
+             if (data.d === 'sin info') {
+                 console.log('puedo eliminar directo');
+
+                 swal({
+                     title: "¿Estas seguro que deseas eliminar el centro " + nombreCentro + "?",
+                     text: "Una vez eliminado, ¡no podrá recuperar los datos asociados al mismo!",
+                     icon: "warning",
+                     buttons: true,
+                     buttons: ["Cancelar", "Eliminar"],
+                     dangerMode: true,
+                 })
+                     .then((willDelete) => {
+                         if (willDelete) {
+                             darBajaCentro(IdCentro, nombreCentro);                             
+                         }
+                     });
+             }
+             else {
+                 console.log("tengo que mostrar los turnos pendientes");
+                 ObtenerTurnosFuturos(IdCentro);   
+                 $("#modalTurnos").modal('show');                    
+             }            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+   
+}
 
 
 function UpdateDataCentros(id) {
@@ -296,3 +318,152 @@ function UpdateDataCentros(id) {
     }
 
 
+function ObtenerTurnosFuturos(idCentro)
+{
+   
+    var turnos;
+    $.ajax({
+        type: "POST",
+        url: "RegistrarCentros.aspx/MostrarTurnosFuturos",
+        data: "{p_id: '" + idCentro + "'}",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+
+            turnos = JSON.parse(data.d);
+
+            var arrayTurnos = new Array();
+
+            turnos.forEach(function (e) {
+
+                var turno = e.TURNO;
+                var hora = e.HORA;
+                var paciente = e.PACIENTE;
+                var contacto = e.NRO_CONTACTO;
+                var email = e.EMAIL_CONTACTO;
+                             
+                arrayTurnos.push([turno, hora, paciente, contacto, email]);
+
+                console.log(arrayTurnos);
+            
+            });
+          
+            var table = $('#tabla_Turnos').DataTable({
+                data: arrayTurnos,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "ordering": true,
+                "bDestroy": true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "Turno" },
+                    { title: "Hora" },
+                    { title: "Paciente" },
+                    { title: "Contacto" },
+                    { title: "Email" },                
+                ],
+                dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 5,
+                buttons: [
+                    //{ extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+
+
+            
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        }
+    })
+};
+
+$("#btnCancelar").click(function (e) {
+    e.preventDefault();
+    $("#modalTurnos").modal('hide');
+
+});
+
+
+$("#btnEliminar").click(function (e) {
+    e.preventDefault();
+    DaDarDeBajaTurnos(IdCentro, nombreCentro);
+
+});
+
+
+function DaDarDeBajaTurnos(IdCentro, nombreCentro) {
+
+    $.ajax({
+        url: "RegistrarCentros.aspx/DaDarDeBajaTurnos",
+        data: "{p_id: '" + IdCentro + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            console.log(data.d);
+
+            if (data.d != 'OK') {
+                swal("Hubo un problema", "Error al eliminar el centro.", "error");
+            }
+            else {
+                swal("Hecho", "El centro " + nombreCentro + " se elimino con Éxito, y los turnos fueron cancelados.", "success");
+                $("#modalTurnos").modal('hide');
+                sendDataCentros();
+            }          
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}
+
+
+function darBajaCentro(IdCentro, nombreCentro) {
+
+    console.log(IdCentro, nombreCentro);
+
+    $.ajax({
+        url: "RegistrarCentros.aspx/darBajaCentro",
+        data: "{p_id: '" + IdCentro + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+            
+            if (data.d == "OK") {
+                swal("El centro " + nombreCentro + " fue eliminado con Éxito!.", {
+                    icon: "success",
+                });
+                sendDataCentros();
+            }
+            else {
+                swal("Hubo un problema", "Error al eliminar el centro.", "error");
+            }
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+            return false;      
+
+        }
+    });
+}
