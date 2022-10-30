@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Agenda.aspx" />
-    <Content Include="Archivos\16052022_SCRIPT_BASE_conDatosIniciales.sql" />
+    <Content Include="Archivos\29102022_SCRIPT_C_DATOS_INIC.sql" />
     <Content Include="Estilos\Content\bootstrap-datepicker.min.css" />
     <Content Include="Estilos\Content\bootstrap-grid.css" />
     <Content Include="Estilos\Content\bootstrap-grid.min.css" />
