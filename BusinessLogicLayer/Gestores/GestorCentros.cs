@@ -88,8 +88,6 @@ namespace BusinessLogicLayer.Gestores
             {
                 throw e;
             }
-
-
         }
 
         public DataTable ObtenerTurnosFuturos(int idCentro)

@@ -1,4 +1,4 @@
-﻿var descripcion, id;
+﻿var descripcion, id, idEspecialidades;
 
 $(document).ready(function () {
 
@@ -169,7 +169,6 @@ $('#btnActualizar').click(function () {
 
     var nombreEspecialidad = $("#id__txtNombreE").val();
     editarEspecialidad(id, nombreEspecialidad);
-    //$("#modalRegistrar").modal('show');
 });
 
 
@@ -203,3 +202,194 @@ function editarEspecialidad(id, nombreEspecialidad) {
         }
     })
 };
+
+
+
+function inactivar(id, descripcion) {
+
+    idEspecialidades = id;    
+ 
+    $.ajax({
+        url: "RegistrarEspecialidades.aspx/ObtenerTurnosFuturos",
+        data: "{p_id: '" + id + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d === 'sin info') {
+                console.log('puedo eliminar directo');
+
+                swal({
+                    title: "¿Estas seguro que deseas eliminar la especialidad " + descripcion + "?",
+                    text: "Una vez eliminada, ¡no podrá recuperar los datos asociadas al mismo!",
+                    icon: "warning",
+                    buttons: true,
+                    buttons: ["Cancelar", "Eliminar"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            darBajaEspecialidad(id, descripcion);
+                        }
+                    });
+            }
+            else {
+                console.log("tengo que mostrar los turnos pendientes");
+                ObtenerTurnosFuturos(id);
+                $("#modalTurnos").modal('show');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}
+
+
+function ObtenerTurnosFuturos(id) {
+
+    var turnos;
+    $.ajax({
+        type: "POST",
+        url: "RegistrarEspecialidades.aspx/MostrarTurnosFuturos",
+        data: "{p_id: '" + id + "'}",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+
+            turnos = JSON.parse(data.d);
+
+            var arrayTurnos = new Array();
+
+            turnos.forEach(function (e) {
+
+                var turno = e.TURNO;
+                var hora = e.HORA;
+                var paciente = e.PACIENTE;
+                var contacto = e.NRO_CONTACTO;
+                var email = e.EMAIL_CONTACTO;
+
+                arrayTurnos.push([turno, hora, paciente, contacto, email]);
+
+                console.log(arrayTurnos);
+
+            });
+
+            var table = $('#tabla_Especialidad').DataTable({
+                data: arrayTurnos,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "ordering": true,
+                "bDestroy": true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "Turno" },
+                    { title: "Hora" },
+                    { title: "Paciente" },
+                    { title: "Contacto" },
+                    { title: "Email" },
+                ],
+                dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 5,
+                buttons: [
+                    //{ extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        }
+    })
+};
+
+
+$("#btnCancelar").click(function (e) {
+    e.preventDefault();
+    $("#modalTurnos").modal('hide');
+});
+
+$("#btnEliminar").click(function (e) {
+    e.preventDefault();
+    DarDeBajaTurnos(idEspecialidades, descripcion);
+});
+
+function DarDeBajaTurnos(idEspecialidades, descripcion) {
+
+ //   console.log(idEspecialidades);
+
+    $.ajax({
+        url: "RegistrarEspecialidades.aspx/DarDeBajaTurnos",
+        data: "{p_id: '" + idEspecialidades + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            console.log(data.d);
+
+            if (data.d != 'OK') {
+                swal("Hubo un problema", "Error al eliminar la especialidad.", "error");
+            }
+            else {
+                swal("Hecho", "La especialidad " + descripcion + " se elimino con Éxito, y los turnos fueron cancelados.", "success");
+                $("#modalTurnos").modal('hide');
+                sendDataEspecialidad();
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}
+
+
+function darBajaEspecialidad(id, descripcion) {
+
+    console.log(id, descripcion);
+
+    $.ajax({
+        url: "RegistrarEspecialidades.aspx/darBajaEspecialidad",
+        data: "{p_id: '" + id + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d == "OK") {
+                swal("La especialidad " + descripcion + " fue eliminada con Éxito!.", {
+                    icon: "success",
+                });
+                sendDataEspecialidad();
+            }
+            else {
+                swal("Hubo un problema", "Error al eliminar la especialidad.", "error");
+            }
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+            return false;
+
+        }
+    });
+}

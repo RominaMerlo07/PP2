@@ -112,5 +112,120 @@ namespace TurneroWeb10
 
         }
 
+        [WebMethod]
+        public static string ObtenerTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+
+            try
+            {
+                GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+
+                int id = Convert.ToInt32(p_id);
+
+                int cantTurnosFuturos = gestorEspecialidades.TurnosFuturos(id);
+
+                if (cantTurnosFuturos > 0)
+                {
+
+                    DataTable dt = gestorEspecialidades.ObtenerTurnosFuturos(id);
+                    col = JsonConvert.SerializeObject(dt);
+                    return col;
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string MostrarTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+
+            try
+            {
+                GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+
+                int id = Convert.ToInt32(p_id);
+                DataTable dt = gestorEspecialidades.ObtenerTurnosFuturos(id);
+                col = JsonConvert.SerializeObject(dt);
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string DarDeBajaTurnos(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+                Especialidad especialidad = new Especialidad();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultado = gestorEspecialidades.DaDarDeBajaTurnos(id, 1);
+
+                if (resultado == "OK")
+                {
+                    especialidad.IdEspecialidad = id;
+                    especialidad.UsuarioBaja = 1;
+                    especialidad.FechaBaja = DateTime.Today;
+
+                    col = gestorEspecialidades.DaDarDeBajaEspecialidad(especialidad);
+                }
+                return col;
+
+                //return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string darBajaEspecialidad(string p_id)
+        {
+            Especialidad especialidad = new Especialidad();
+            GestorEspecialidades gestorEspecialidades = new GestorEspecialidades();
+
+            try
+            {
+                string mensaje = "OK";
+
+                especialidad.IdEspecialidad = Convert.ToInt32(p_id);
+                especialidad.UsuarioBaja = 1;
+                especialidad.FechaBaja = DateTime.Today;
+
+                mensaje = gestorEspecialidades.darBajaEspecialidad(especialidad);
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+
+
     }
 }

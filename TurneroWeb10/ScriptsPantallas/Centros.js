@@ -397,14 +397,12 @@ function ObtenerTurnosFuturos(idCentro)
 $("#btnCancelar").click(function (e) {
     e.preventDefault();
     $("#modalTurnos").modal('hide');
-
 });
 
 
 $("#btnEliminar").click(function (e) {
     e.preventDefault();
     DaDarDeBajaTurnos(IdCentro, nombreCentro);
-
 });
 
 
