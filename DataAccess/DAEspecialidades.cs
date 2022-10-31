@@ -270,7 +270,57 @@ namespace DataAccess
             }
         }
 
+
+        public string editarEspecialidad(Especialidad especialidad)
+        {
+            try
+            {
+                string resultado = "OK";
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_ESPECIALIDADES " +
+                                     "SET DESCRIPCION = @DESCRIPCION, FECHA_MOD = @FECHA_MOD, USUARIO_MOD = @USUARIO_MOD " +
+                                     "WHERE ID_ESPECIALIDADES = @ID_ESPECIALIDADES; ";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(especialidad.Descripcion))
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", especialidad.Descripcion);
+                else
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", DBNull.Value);
+
+
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDADES", especialidad.IdEspecialidad);
+                cmd.Parameters.AddWithValue("@USUARIO_MOD", especialidad.UsuarioMod);
+                cmd.Parameters.AddWithValue("@FECHA_MOD", especialidad.FechaMod);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                con.Close();
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+        }
+
+
+
+
     }
 
-    
+
 }

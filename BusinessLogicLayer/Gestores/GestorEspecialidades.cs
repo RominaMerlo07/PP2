@@ -75,5 +75,32 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public Especialidad obtenerEspecialidad(int idEspecialidad)
+        {
+            try
+            {
+                DAEspecialidades DaEspecialidades = new DAEspecialidades();
+                return DaEspecialidades.obtenerEspecialidad(idEspecialidad);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string editarEspecialidad(Especialidad especialidad)
+        {
+            try
+            {
+                DAEspecialidades DaEspecialidades = new DAEspecialidades();
+                return DaEspecialidades.editarEspecialidad(especialidad);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
