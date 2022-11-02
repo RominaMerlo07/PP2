@@ -144,11 +144,14 @@ namespace DataAccess
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
                 //e.*, pd.*, dh.*
-                string consulta = @"select distinct e.ID_ESPECIALIDADES, e.DESCRIPCION
-                                        from t_especialidades e, t_profesionales_detalle pd
-                                        where e.id_especialidades = pd.id_especialidad
-                                        and pd.FECHA_BAJA is null
-                                        and pd.id_centro = @id_centro
+                string consulta = @"SELECT DISTINCT e.ID_ESPECIALIDADES, e.DESCRIPCION
+                                      FROM t_especialidades e, t_profesionales_detalle pd, T_CENTROS c
+                                     WHERE e.id_especialidades = pd.id_especialidad
+                                       AND pd.ID_CENTRO = c.ID_CENTRO
+                                       AND e.FECHA_BAJA is null
+                                       AND pd.FECHA_BAJA is null
+                                       AND c.FECHA_BAJA is null
+                                       AND pd.id_centro = @id_centro;
                                     ; ";
 
                 cmd = new SqlCommand(consulta, con);
