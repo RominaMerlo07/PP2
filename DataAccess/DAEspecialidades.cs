@@ -148,7 +148,7 @@ namespace DataAccess
                                       FROM t_especialidades e, t_profesionales_detalle pd, T_CENTROS c
                                      WHERE e.id_especialidades = pd.id_especialidad
                                        AND pd.ID_CENTRO = c.ID_CENTRO
-                                       AND e.FECHA_BAJA is null
+                                       AND e.FECHA_BAJA is NULL
                                        AND pd.FECHA_BAJA is null
                                        AND c.FECHA_BAJA is null
                                        AND pd.id_centro = @id_centro;

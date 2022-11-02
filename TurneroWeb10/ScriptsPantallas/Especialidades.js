@@ -400,16 +400,4 @@ function darBajaEspecialidad(id, descripcion) {
 
 function limpiarCampos() {
     $('#id__txtNombre').val("");
-    //$('#id__txtMatricula').val("");
-    //$('#ddlEspecialidad').val([]);
-    //$('#id__txtNombre').val("");
-    //$('#id__txtApellido').val("");
-    //$('#id__dtpFechaNac').datepicker('clearDates');
-    //$('#id__txtCalle').val("");
-    //$('#id__txtNumero').val("");
-    //$('#id__txtBarrio').val("");
-    //$('#id__txtLocalidad').val("");
-    //$('#id__txtCelular').val("");
-    //$('#id__txtEmail1').val("");
-    //$('#id__txtEmail2').val("");
 }
