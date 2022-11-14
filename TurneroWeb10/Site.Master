@@ -268,19 +268,15 @@
                                 <a class="dropdown-item" id="idProfesionales" href="RegistrarProfesional.aspx">
                                     <i class="fa fa-user-md"></i>
                                     <span>Profesionales</span>
-                                </a>
-                                <a class="dropdown-item" id="idEspecialidades" href="RegistrarEspecialidades.aspx">
-                                    <%-- <i class="fa fa-user-tag"></i>--%>
-                                    <i class="fa-solid fa-hospital-user"></i>
-                                    <span>Especialidades</span>
-                                </a>
-                                <%--<a class="dropdown-item" id="iddisponibilidadHoraria" href="DisponibilidadHoraria.aspx">
-                                    <i class="fa fa-calendar-plus"></i>
-                                    <span>Disponibilidad Horaria</span>
-                                </a>--%>
+                                </a>                          
                                 <a class="dropdown-item" id="iddisponibilidadHoraria" href="HorariosProfesionales.aspx">
                                     <i class="fa fa-calendar-plus"></i>
                                     <span>Disponibilidad Horaria</span>
+                                </a>
+                                   <a class="dropdown-item" id="idEspecialidades" href="RegistrarEspecialidades.aspx">
+                                    <%-- <i class="fa fa-user-tag"></i>--%>
+                                    <i class="fa-solid fa-hospital-user"></i>
+                                    <span>Especialidades</span>
                                 </a>
                             </div>
                         </li>

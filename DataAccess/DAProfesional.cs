@@ -526,8 +526,7 @@ namespace DataAccess
                                    "WHERE P.ID_PROFESIONAL = PD.ID_PROFESIONAL " +
                                      "AND PD.ID_ESPECIALIDAD = E.ID_ESPECIALIDADES " +
                                      "AND PD.FECHA_BAJA IS NULL " +
-                                     "AND P.FECHA_BAJA IS NULL " +
-                                     "AND E.FECHA_BAJA IS NULL " +
+                                     "AND P.FECHA_BAJA IS NULL " +                                     
                                      "AND P.ID_PROFESIONAL = @idProfesional " +
                                    "ORDER BY 2; ";
 
