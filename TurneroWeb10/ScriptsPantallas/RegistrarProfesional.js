@@ -133,29 +133,6 @@ function especialidades(numero, profesional, matricula) {
 }
 
 
-//function inactivar(id, nombre) {
-
-//    var IdProfesional = id;
-//    var nomApeProf = nombre;
-
-//    $.ajax({
-//        url: "RegistrarProfesional.aspx/darBajaProfesional",
-//        data: "{idProfesional: '" + IdProfesional + "'}",
-//        type: "post",
-//        contentType: "application/json",
-//        async: false,
-//        success: function (data) {
-
-//            swal("Hecho", "Se dio de baja exitosamente a " + nomApeProf + ".", "success");
-
-//            sendDataProfesionales();
-//        },
-//        error: function (xhr, ajaxOptions, thrownError) {
-//            alert(data.error);
-//        }
-//    });
-//}
-
 function inactivar(id, nombre) {
 
     IdProf = id;
@@ -654,24 +631,6 @@ function UpdateDataProfesionales(id) {
     })
 }
 
-//function soloNumeros(e) {
-
-//    key = e.keyCode || e.which;
-//    teclado = String.fromCharCode(key);
-//    numeros = "0123456789";
-//    especiales = "8-37-38-46";
-//    teclado_especial = false;
-
-//    for (var i in especiales) {
-//        if (key == especiales[i]) {
-//            teclado_especial = true;
-//        }
-//    }
-
-//    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
-//        return false;
-//    }
-//}
 
 function soloNumeros(event) {
     var regex = new RegExp("^[0-9]+$");
@@ -681,28 +640,6 @@ function soloNumeros(event) {
         return false;
     }
 };
-
-
-
-//function soloLetras(e) {
-
-//    key = e.keyCode || e.which;
-//    teclado = String.fromCharCode(key);
-//    numeros = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-//    especiales = "8-37-38-46-164";
-//    teclado_especial = false;
-
-//    for (var i in especiales) {
-//        if (key == especiales[i]) {
-//            teclado_especial = true; break;
-//        }
-//    }
-
-//    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
-//        return false;
-//    }
-//}
-
 
 
 function soloLetras (event) {
