@@ -28,7 +28,8 @@ $(document).ready(function () {
     $('.date').datepicker({
         autoclose: true,
         format: "dd/mm/yyyy",
-        language: 'es'
+        language: 'es',
+        startDate: '01/11/2022'
     });
 
    
@@ -71,6 +72,7 @@ $(document).ready(function () {
             //console.log(profesional);
             registrarProfesional(profesional);
             limpiarCampos();
+
         }
         else {
             console.log("No valide datos o sali por error");
@@ -80,6 +82,8 @@ $(document).ready(function () {
 
     $('#btnRegistrarModal').click(function () {
         $("#modalRegistrar").modal('show');
+        limpiarCampos();
+        deshabilitarCampos(true);
     });
 
 });
@@ -99,27 +103,26 @@ function actualizar(idBuscar) {
             
             $("#modalEditar").modal('show');
 
-            $("#txtNombreA").val(data.d.Nombre);
-            $("#txtApellidoA").val(data.d.Apellido);
-            $("#txtDocumentoA").val(data.d.Documento);
-            $("#txtMatriculaA").val(data.d.NroMatricula);
-            $("#txtLocalidadA").val(data.d.Localidad);
-            $("#dtpFechaNacA").val(mostrarFecha(data.d.FechaNacimiento));
+            $("#id__AtxtNombre").val(data.d.Nombre);
+            $("#id__AtxtApellido").val(data.d.Apellido);
+            $("#id__AtxtDocumento").val(data.d.Documento);
+            $("#id__AtxtMatricula").val(data.d.NroMatricula);
+            $("#id__AtxtLocalidad").val(data.d.Localidad);
+            $("#id__AdtpFechaNac").val(mostrarFecha(data.d.FechaNacimiento));
             var direccion = data.d.Domicilio.split('Barrio:')
-            $("#txtDomicilio").val(direccion[0]);
-            $("#txtBarrioA").val(direccion[1]);
+            $("#id__AtxtDomicilio").val(direccion[0]);
+            $("#id__AtxtBarrio").val(direccion[1]);
 
-            $("#txtCelularA").val(data.d.NroContacto);
+            $("#id__AtxtCelular").val(data.d.NroContacto);
             var email = data.d.EmailContacto.split('@');
-            $("#txtEmail1A").val(email[0]);
-            $("#txtEmail2A").val(email[1]);
+            $("#id__AtxtEmail1").val(email[0]);
+            $("#id__AtxtEmail2").val(email[1]);
         },
         error: function (xhr, ajaxOptions, thrownError) {
 
         }
     })
 }
-
 
 function especialidades(numero, profesional, matricula) {
    // alert(numero + ' prof: ' + profesional + 'matricula: ' + matricula);
@@ -168,6 +171,28 @@ function limpiarCampos() {
     $('#id__txtEmail1').val("");
     $('#id__txtEmail2').val("");
 }
+
+function deshabilitarCampos(valor) {
+
+   // document.getElementById("id__txtDocumento").focus();
+
+    document.getElementById("id__txtMatricula").readOnly = valor;    
+    document.getElementById("ddlEspecialidad").readOnly = valor;
+    document.getElementById("id__txtNombre").readOnly = valor;
+    document.getElementById("id__txtApellido").readOnly = valor;
+    document.getElementById("id__dtpFechaNac").disable = valor;
+    document.getElementById("id__dtpFechaNac").readOnly = valor;
+    document.getElementById("id__txtCalle").readOnly = valor;
+    document.getElementById("id__txtNumero").readOnly = valor;
+    document.getElementById("id__txtBarrio").readOnly = valor;
+    document.getElementById("id__txtLocalidad").readOnly = valor;
+    document.getElementById("id__txtCelular").readOnly = valor;
+    document.getElementById("id__txtEmail1").readOnly = valor;
+    document.getElementById("id__txtEmail2").readOnly = valor;   
+
+}
+
+
 
 function registrarProfesional(datosProfesional) {
     $.ajax({
@@ -271,7 +296,7 @@ function cargarEspecialidades(ddl) {
 
                 for (i = 0; i < data.d.length; i++) {
 
-                    $(ddl).append($("<option></option>").val(data.d[i].IdEspecialidad).html(data.d[i].Descripcion));
+                    $(ddl).append($("<option></option>").val(data.d[i].IdEspecialidad).html(data.d[i].Descripcion).prop("disabled", false));
                 }
                 $(ddl).prop("disabled", false);
             }
@@ -397,17 +422,17 @@ function UpdateDataProfesionales(id) {
 
     var obj = JSON.stringify({
         id: id,
-        nombre: $("#txtNombreA").val(),
-        apellido: $("#txtApellidoA").val(),
-        dni: $("#txtDocumentoA").val(),
-        matricula: $("#txtMatriculaA").val(),
-        fechaNacimiento: $("#dtpFechaNacA").val(),
-        localidad: $("#txtLocalidadA").val(),
-        barrio: $("#txtBarrioA").val(),
-        direccion: $("#txtDomicilio").val(),
-        celular: $("#txtCelularA").val(),
-        email1: $("#txtEmail1A").val(),
-        email2: $("#txtEmail2A").val()
+        nombre: $("#id__AtxtNombre").val(),
+        apellido: $("#id__AtxtApellido").val(),
+        dni: $("#id__AtxtDocumento").val(),
+        matricula: $("#id__AtxtMatricula").val(),
+        fechaNacimiento: $("#id__AdtpFechaNac").val(),
+        localidad: $("#id__AtxtLocalidad").val(),
+        barrio: $("#id__AtxtBarrio").val(),
+        direccion: $("#id__AtxtDomicilio").val(),
+        celular: $("#id__AtxtCelular").val(),
+        email1: $("#id__AtxtEmail1").val(),
+        email2: $("#id__AtxtEmail2").val()
     })
 
     $.ajax({
@@ -435,44 +460,65 @@ function UpdateDataProfesionales(id) {
     })
 }
 
-function soloNumeros(e) {
+//function soloNumeros(e) {
 
-    key = e.keyCode || e.which;
-    teclado = String.fromCharCode(key);
-    numeros = "0123456789";
-    especiales = "8-37-38-46";
-    teclado_especial = false;
+//    key = e.keyCode || e.which;
+//    teclado = String.fromCharCode(key);
+//    numeros = "0123456789";
+//    especiales = "8-37-38-46";
+//    teclado_especial = false;
 
-    for (var i in especiales) {
-        if (key == especiales[i]) {
-            teclado_especial = true;
-        }
-    }
+//    for (var i in especiales) {
+//        if (key == especiales[i]) {
+//            teclado_especial = true;
+//        }
+//    }
 
-    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+//    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+//        return false;
+//    }
+//}
+
+function soloNumeros(event) {
+    var regex = new RegExp("^[0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
         return false;
     }
-}
+};
 
 
-function soloLetras(e) {
 
-    key = e.keyCode || e.which;
-    teclado = String.fromCharCode(key);
-    numeros = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-    especiales = "8-37-38-46-164";
-    teclado_especial = false;
+//function soloLetras(e) {
 
-    for (var i in especiales) {
-        if (key == especiales[i]) {
-            teclado_especial = true; break;
-        }
-    }
+//    key = e.keyCode || e.which;
+//    teclado = String.fromCharCode(key);
+//    numeros = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+//    especiales = "8-37-38-46-164";
+//    teclado_especial = false;
 
-    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+//    for (var i in especiales) {
+//        if (key == especiales[i]) {
+//            teclado_especial = true; break;
+//        }
+//    }
+
+//    if (numeros.indexOf(teclado) == -1 && !teclado_especial) {
+//        return false;
+//    }
+//}
+
+
+
+function soloLetras (event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
         return false;
     }
-}
+};
 
 
 function sendDataProfesional_Especialidades(numero) {        

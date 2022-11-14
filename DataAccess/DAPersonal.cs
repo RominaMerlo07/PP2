@@ -406,5 +406,45 @@ namespace DataAccess
         }
 
 
+        public int validarDniPersonal(string dni)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT count(*) " +
+                                    "FROM T_PERSONAL p " +
+                                    "WHERE p.DOCUMENTO = @DNI " +
+                                    "AND p.FECHA_BAJA is null; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@DNI", dni);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+
+        }
+
+
     }
 }

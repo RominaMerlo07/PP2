@@ -227,5 +227,32 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int validarDniProfesional(string dni)
+        {
+
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.validarDniProfesional(dni);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public int validarMatricula(string matricula)
+        {
+
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.validarMatricula(matricula);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

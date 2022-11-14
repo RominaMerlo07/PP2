@@ -86,6 +86,18 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int validarDniPersonal(string dni) {
+
+            try
+            {
+                DAPersonal DaPersonal = new DAPersonal();
+                return DaPersonal.validarDniPersonal(dni);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }        
 
     }
 

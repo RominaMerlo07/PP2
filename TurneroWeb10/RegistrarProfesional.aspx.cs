@@ -345,6 +345,70 @@ namespace TurneroWeb10
         }
 
 
+        [WebMethod]
+        public static string validarDni(string dni)
+        {
+
+            string result = "OK";
+            try
+            {
+                GestorPersonal gPersonal = new GestorPersonal();
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+                int existePersonal = gPersonal.validarDniPersonal(dni);
+                int existeProfesional = gestorProfesionales.validarDniProfesional(dni);
+
+
+                if (existePersonal > 0 || existeProfesional > 0)
+                {
+
+                    result = "existe";
+                    return result;
+                }
+                else {
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string validarMatricula(string matricula)
+        {
+
+            string result = "OK";
+            try
+            {
+
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+
+                int existeMatricula = gestorProfesionales.validarMatricula(matricula);
+
+
+                if (existeMatricula > 0)
+                {
+
+                    result = "existe";
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
 
 
