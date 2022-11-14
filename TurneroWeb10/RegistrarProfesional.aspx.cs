@@ -410,6 +410,151 @@ namespace TurneroWeb10
             }
         }
 
+        [WebMethod]
+        public static string ObtenerTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+                int id = Convert.ToInt32(p_id);
+
+                int cantTurnosFuturos = gestorProfesionales.TurnosFuturos(id);
+
+                if (cantTurnosFuturos > 0)
+                {
+
+                    DataTable dt = gestorProfesionales.ObtenerTurnosFuturos(id);
+                    col = JsonConvert.SerializeObject(dt);
+                    return col;
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string MostrarTurnosFuturos(string p_id)
+        {
+
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+                int id = Convert.ToInt32(p_id);
+
+                DataTable dt = gestorProfesionales.ObtenerTurnosFuturos(id);
+                string col = JsonConvert.SerializeObject(dt);
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string DaDarDeBajaProfTurnos(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                Profesional profesional = new Profesional();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultadoBajaProfDet = gestorProfesionales.DaDarDeBajaProfDetalle(id, 1);
+
+                if (resultadoBajaProfDet == "OK")
+                {
+                    string resultadoBajaProfUsuario = gestorProfesionales.DaDarDeBajaProfUsuario(id, 1);
+
+                    if (resultadoBajaProfUsuario == "OK")
+                    {
+                        string resultadoBajaProfTurnos = gestorProfesionales.DaDarDeBajaTurnos(id, 1);
+
+                        if (resultadoBajaProfTurnos == "OK")
+                        {
+                            profesional.IdProfesional = id;
+                            profesional.UsuarioBaja = 1;
+                            profesional.FechaBaja = DateTime.Today;
+
+                            col = gestorProfesionales.DarBajaProfesional(profesional);
+                        }
+                        
+                    }
+
+                }
+
+                return col;
+
+                //return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string DaDarDeBajaProf(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                Profesional profesional = new Profesional();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultadoBajaProfDet = gestorProfesionales.DaDarDeBajaProfDetalle(id, 1);
+
+                if (resultadoBajaProfDet == "OK")
+                {
+                    string resultadoBajaProfUsuario = gestorProfesionales.DaDarDeBajaProfUsuario(id, 1);
+
+                    if (resultadoBajaProfUsuario == "OK")
+                    {
+                        
+                            profesional.IdProfesional = id;
+                            profesional.UsuarioBaja = 1;
+                            profesional.FechaBaja = DateTime.Today;
+
+                            col = gestorProfesionales.DarBajaProfesional(profesional);
+                        
+
+                    }
+
+                }
+
+                return col;
+
+                //return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
 
     }

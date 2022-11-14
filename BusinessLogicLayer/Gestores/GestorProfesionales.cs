@@ -254,5 +254,79 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+
+        public int TurnosFuturos(int idProfesional)
+        {
+            try
+            {
+                DAProfesional dAProfesional = new DAProfesional();
+                return dAProfesional.TurnosFuturos(idProfesional);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public DataTable ObtenerTurnosFuturos(int idProf)
+        {
+            try
+            {
+                DAProfesional dAProfesional = new DAProfesional();
+                return dAProfesional.ObtenerTurnosFuturos(idProf);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DaDarDeBajaProfDetalle(int idProf, int usuarioBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DaDarDeBajaProfDetalle(idProf, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DaDarDeBajaProfUsuario(int idProf, int usuarioBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DaDarDeBajaProfUsuario(idProf, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DaDarDeBajaTurnos(int idProf, int usuarioBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DaDarDeBajaTurnos(idProf, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
     }
 }
