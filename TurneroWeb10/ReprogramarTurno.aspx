@@ -298,10 +298,14 @@
 
                     
                     var result = JSON.parse(data.d);
+                  
+
                     var turnosReprogramar = [];
-                    debugger;
+                    //debugger;
                     if (result.length > 0) {
-                        result.forEach(function (e) {
+                        result.forEach(function (e) {  
+
+                            console.log(e);
 
                             var idTurno = e.IdTurno;
                             var nombrePaciente = e.Paciente.Nombre + " " + e.Paciente.Apellido;

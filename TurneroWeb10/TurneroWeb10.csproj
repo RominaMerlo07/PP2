@@ -531,6 +531,7 @@
     <Content Include="ReprogramarTurno.aspx" />
     <Content Include="LiquidacionObraSocial.aspx" />
     <Content Include="ScriptsPantallas\Especialidades.js" />
+    <Content Include="ScriptsPantallas\Personal_validacion.js" />
     <Content Include="zzEjemploEnviadorMail.aspx" />
     <None Include="Estilos\Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Estilos\Scripts\jquery-3.0.0.js" />

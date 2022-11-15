@@ -7,21 +7,6 @@ const formulario = document.getElementById('formularioRegistrar');
 const inputs = document.querySelectorAll('#formularioRegistrar input'); 
 
 
-//const expresiones = {
-//    dni: /^\d{7,8}$/, // 7 a 8 numeros
-//    matricula: /^\d{5,8}$/, // 5 a 8 numeros
-//    nombre: /^[a-zA-ZÀ-ÿ\s]{1,150}$/, // Letras y espacios, pueden llevar acentos.
-//    apellido: /^[a-zA-ZÀ-ÿ\s]{1,150}$/, // Letras y espacios, pueden llevar acentos.
-//    //fecha: /^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/,
-//    calle: /[A-Za-z0-9'\.\-\s\,]/,
-//    numero: /^\d{1,8}$/,
-//    barrio: /[A-Za-z0-9'\.\-\s\,]/,
-//    localidad: /[A-Za-z0-9'\.\-\s\,]/,
-//    celular: /^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/,
-//    email1: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))/,
-//    email2: /(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
-//}
-
 const campos = {
     dni: false,
     matricula: false,
@@ -52,9 +37,6 @@ const validarFormulario = (e) => {
         case "apellido":
             validarCampo(expresiones.apellido, e.target, 'txtDomicilio');
             break;
-        //case "fechaNac":
-        //    validarCampo(expresiones.fecha, e.target, 'dtpFechaNac');
-        //    break;
         case "calle":
             validarCampo(expresiones.calle, e.target, 'txtCalle');
             break;
@@ -86,7 +68,6 @@ const validarCampo = (expresion, input, campo) => {
     var result, resultMat;
 
     var estado = document.getElementById(`id__${campo}`).readOnly; 
-    //console.log(estado);
 
     if (estado === false) {
   
@@ -307,8 +288,6 @@ matP.addEventListener('focus', (e) => {
 
 
 
-
-
 const validarFormularioEditar = (e) => {
     switch (e.target.name) {
         case "dniE":
@@ -358,36 +337,6 @@ const validarCampoEditar = (expresion, input, campo) => {
             document.getElementById(`id__${campo}`).classList.add('formulario-input');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.add('formulario__error');
-
-
-            //if (campo = "txtDocumento") {
-            //    dni = $('#id__txtDocumento').val();
-
-            //    result = validarDni(dni);
-            //    if (result) {
-            //        document.getElementById("id__txtMatricula").readOnly = false;
-            //        document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
-            //        document.getElementById(`id__${campo}`).classList.add('formulario-input');
-            //    } else {
-            //        document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
-            //        document.getElementById(`id__${campo}`).classList.remove('formulario-input');
-            //    }
-            //}
-            //if (campo = "txtMatricula") {
-
-            //    matricula = $('#id__txtMatricula').val();
-
-            //    resultMat = validarMatricula(matricula);
-
-            //    if (resultMat) {
-            //        document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
-            //        document.getElementById(`id__${campo}`).classList.add('formulario-input');
-            //        deshabilitarCampos(false);
-            //    } else {
-            //        document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
-            //        document.getElementById(`id__${campo}`).classList.remove('formulario-input');
-            //    }
-            //}
         }
         else {
             document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
@@ -399,21 +348,6 @@ const validarCampoEditar = (expresion, input, campo) => {
     
 }
 
-
-
-//function validarCambio() {
-
-//    inputsE.forEach((input) => {
-//        input.addEventListener('blur', prueba);
-//        //  input.addEventListener('blur', validarFormulario);
-//    });
-//}
-
-//function prueba() {
-
-//    console.log("holis");
-
-//}
 
 
 inputsE.forEach((input) => {
@@ -460,7 +394,6 @@ function calcularFechaMax() {
 }
 
 var fechaMax = calcularFechaMax();
-
 
 
 $('.date').datepicker({

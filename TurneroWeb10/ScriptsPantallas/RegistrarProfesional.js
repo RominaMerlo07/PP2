@@ -125,14 +125,13 @@ function actualizar(idBuscar) {
 }
 
 function especialidades(numero, profesional, matricula) {
-   // alert(numero + ' prof: ' + profesional + 'matricula: ' + matricula);
 
     console.log(numero, profesional, matricula);
-
-
+    
     var texto = "Profesional: " + profesional + " -  Matrícula: " + matricula;
     $("#infoProfesional").text(texto);
     sendDataProfesional_Especialidades(numero);
+       
     return $("#modalEspecialidades").modal('show');
 }
 

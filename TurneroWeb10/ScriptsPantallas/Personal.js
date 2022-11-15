@@ -13,7 +13,7 @@ var celular;
 var email1;
 var email2;
 
-var tabla, data, id, idN;
+var tabla, data, id, idN, idBuscar;
 
 
 
@@ -23,6 +23,7 @@ $(document).ready(function () {
 
     $('#btnRegistrarModal').click(function () {
         $("#modalRegistrar").modal('show');
+        deshabilitarCampos(true);
     });
 
 
@@ -175,8 +176,9 @@ function sendDataPersonal() {
                 var jsonStr = '["' + DateFechaNac + '", "' + Numero + '", "' + Personal + '", "' + DNI + '", "' + Nacimiento + '","' + Contacto + '","' + Email + '","' + Domicilio + '"]';
                 //const array = JSON.parse(jsonStr);
 
+                idBuscar = Numero;
 
-                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
+                var Acciones = '<a href="#" id="editar" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
                     '<a href="#" onclick="return inactivar(' + Numero + ",'" + Personal + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
 
                 //' + "'"+ Numero +"'"+ '
@@ -232,6 +234,14 @@ function sendDataPersonal() {
     })
 }
 
+//$("#editar").click(function (idBuscar) {
+//    $("#modalEditar").modal('show');
+//    actualizar(idBuscar);
+//});
+
+
+
+
 
 function actualizar(idBuscar) {
 
@@ -248,19 +258,19 @@ function actualizar(idBuscar) {
 
             $("#modalEditar").modal('show');
 
-            $("#txtNombreA").val(data.d.Nombre);
-            $("#txtApellidoA").val(data.d.Apellido);
-            $("#id__txtDocumentoE").val(data.d.Documento);            
-            $("#txtLocalidadA").val(data.d.Localidad);
-            $("#id__dtpFechaNacE").val(mostrarFecha(data.d.FechaNacimiento));
+            $("#id__AtxtNombre").val(data.d.Nombre);
+            $("#id__AtxtApellido").val(data.d.Apellido);
+            $("#id__AtxtDocumento").val(data.d.Documento);            
+            $("#id__AtxtLocalidad").val(data.d.Localidad);
+            $("#id__AdtpFechaNacE").val(mostrarFecha(data.d.FechaNacimiento));
             var direccion = data.d.Domicilio.split('Barrio:')
-            $("#txtDomicilio").val(direccion[0]);
-            $("#txtBarrioA").val(direccion[1]);
+            $("#id__AtxtDomicilio").val(direccion[0]);
+            $("#id__AtxtBarrio").val(direccion[1]);
 
-            $("#txtCelularA").val(data.d.NroContacto);
+            $("#id__AtxtCelular").val(data.d.NroContacto);
             var email = data.d.EmailContacto.split('@');
-            $("#txtEmail1A").val(email[0]);
-            $("#txtEmail2A").val(email[1]);
+            $("#id__AtxtEmail1").val(email[0]);
+            $("#id__AtxtEmail2").val(email[1]);
         },
         error: function (xhr, ajaxOptions, thrownError) {
 
@@ -284,16 +294,16 @@ function UpdateDataPersonal(id) {
 
     var obj = JSON.stringify({
         id: id,
-        nombre: $("#txtNombreA").val(),
-        apellido: $("#txtApellidoA").val(),
+        nombre: $("#id__AtxtNombre").val(),
+        apellido: $("#id__AtxtApellido").val(),
         dni: $("#id__txtDocumentoE").val(),       
-        fechaNacimiento: $("#id__dtpFechaNacE").val(),
-        localidad: $("#txtLocalidadA").val(),
-        barrio: $("#txtBarrioA").val(),
-        direccion: $("#txtDomicilio").val(),
-        celular: $("#txtCelularA").val(),
-        email1: $("#txtEmail1A").val(),
-        email2: $("#txtEmail2A").val()
+        fechaNacimiento: $("#id__AdtpFechaNacE").val(),
+        localidad: $("#id__AtxtLocalidad").val(),
+        barrio: $("#id__AtxtBarrio").val(),
+        direccion: $("#id__AtxtBarrio").val(),
+        celular: $("#id__AtxtCelular").val(),
+        email1: $("#id__AtxtEmail1").val(),
+        email2: $("#id__AtxtEmail2").val()
     })
 
     $.ajax({
@@ -346,4 +356,40 @@ function inactivar(id, nombre) {
             alert(data.error);
         }
     });
+}
+
+function soloNumeros(event) {
+    var regex = new RegExp("^[0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+function soloLetras(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+function deshabilitarCampos(valor) {
+
+    //document.getElementById("id__txtDocumento").focus();   
+
+    document.getElementById("id__txtNombre").readOnly = valor;
+    document.getElementById("id__txtApellido").readOnly = valor;
+    document.getElementById("id__txtCalle").readOnly = valor;
+    document.getElementById("id__txtNumero").readOnly = valor;
+    document.getElementById("id__txtBarrio").readOnly = valor;
+    document.getElementById("id__txtLocalidad").readOnly = valor;
+    document.getElementById("id__txtCelular").readOnly = valor;
+    document.getElementById("id__txtEmail1").readOnly = valor;
+    document.getElementById("id__txtEmail2").readOnly = valor;
+
 }

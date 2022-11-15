@@ -374,7 +374,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="btnActualizar">Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-lg float-right" id="btnActualizar">Actualizar</button>
                     </div>
                 </div>
             </div>
