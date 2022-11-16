@@ -53,7 +53,7 @@
         <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header text-white bg-success">
+                    <div class="modal-header text-white bg-info">
                         <h4 class="modal-title" id="lblRegistrar">Registrar Profesional</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
                     </div>
@@ -61,7 +61,7 @@
                         <div class="row">
                             <div class="col-md" id="crdDatosPersonales">
                                 <div class="card text-white">
-                                    <div class="card-header bg-success">
+                                    <div class="card-header bg-info">
                                         <h4>Datos personales</h4>
                                     </div>
                                     <div class="card-body">
@@ -138,7 +138,7 @@
                         <div class="row">
                             <div class="col-md" id="crdDatosContacto">
                                 <div class="card text-white bg-light">
-                                    <div class="card-header bg-success">
+                                    <div class="card-header bg-info">
                                         <h4>Datos de Contacto</h4>
                                     </div>
                                     <div class="card-body">
@@ -456,7 +456,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="modalTurnos">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+                <div class="modal-header bg-info text-white">
                     <h4 class="modal-title " id="lblTituloTurno">Eliminar Profesional</h4>
                     <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>

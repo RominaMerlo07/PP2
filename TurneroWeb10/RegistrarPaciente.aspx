@@ -151,7 +151,7 @@
                          </div>
                             <div class="modal-footer">
                                 <div class="row float-right">
-                                    <button class="btn btn-success btn-lg " type="button" id="btnRegistrar">Registrar</button>
+                                    <button class="btn btn-success btn-lg float-right " type="button" id="btnRegistrar">Registrar</button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="row float-right">
-                            <button class="btn btn-success btn-lg " type="button" id="btnEditar">Actualizar</button>
+                            <button class="btn btn-primary btn-lg float-right " type="button" id="btnEditar">Actualizar</button>
                         </div>
                     </div>
                 </div>

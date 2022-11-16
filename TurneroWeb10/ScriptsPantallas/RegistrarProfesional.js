@@ -513,8 +513,8 @@ function sendDataProfesionales() {
 
                     var Especialidad = '<button id="btnEspecialidades" class="btn btn-warning btn-especialidades" type="reset" onclick= "return especialidades(' + Numero + ",'" + Profesional + "'," + Matricula + ')" ><i class="fa-solid fa-hospital-user"></i> Consultar </button>';
 
-                    var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
-                        '<a href="#" onclick="return inactivar(' + Numero + ",'" + Profesional + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
+                    var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit" title="Modificar"></span></a > ' +
+                        '<a href="#" onclick="return inactivar(' + Numero + ",'" + Profesional + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus" title="Dar de baja"></span></a > ';
 
                     //' + "'"+ Numero +"'"+ '
                     arrayProfesionales.push([
@@ -675,7 +675,7 @@ function sendDataProfesional_Especialidades(numero) {
                 var estado = e.ESTADO;
                 //var Acciones;
 
-                var Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idEspecialidad + "'" +')" class="btn btn-danger btn-sm btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+                var Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idEspecialidad + "'" +')" class="btn btn-danger btn-sm btnInactivarE"> <span class="fas fa-minus-square" title="Dar de baja"></span></a >';
                             
                 arrayEspecialidades.push([
                     idEspecialidad, especialidades, /*estado,*/ Acciones

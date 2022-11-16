@@ -92,8 +92,8 @@ function sendDataEspecialidad() {
                     
 
                    
-                    var Acciones = '<a href="#" button title= "editarEspecialidad"  onclick="return actualizarEspecialidad(' + Numero + ')"  class="btn btn-primary btn-editar"> <span class="fas fa-user-edit" aria-hidden="true"></span></a >' +
-                        '<a href="#" onclick = "return inactivar(' + Numero + ", '" + Nombre + "'" + ')"  class="btn btn-danger btn-inactivar" > <span class="fas fa-user-minus"></span></a >';
+                    var Acciones = '<a href="#"  onclick="return actualizarEspecialidad(' + Numero + ')"  class="btn btn-primary btn-editar"> <span class="fa fa-pencil" title="Modificar"></span></a >' +
+                        '<a href="#" onclick = "return inactivar(' + Numero + ", '" + Nombre + "'" + ')"  class="btn btn-danger btn-inactivar" > <span class="fa fa-trash" title="Dar de baja"></span> </a >';
 
                     arrayEspecialidades.push([
                         Numero, Nombre, Acciones

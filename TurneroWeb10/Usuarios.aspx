@@ -125,25 +125,14 @@
                                                             <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtUsuario"></i>--%>
                                                         </div>
                                                         <%--<p class="formulario__error" id="p__txtUsuario">Por favor, ingrese el Barrio</p>--%>
-                                                    </div>
-                                                   <%-- <div class="col">
-                                                        <div class="input-group mb-3">                                                          
-                                                            <button type="button" class="btn btn-info" id="btnEnviarPass">GENERAR CONTRASEÑA</button>
-                                                            <%-- <div class="input-group-append">
-                                                            <button id="show_passwordA" class="btn btn-primary" type="button" onclick="mostrarPassword('id__txtPassword')"><span class="fa fa-eye-slash icon"></span></button>
-                                                            </div>--%>
-                                                            <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>
-                                                        </div>--%>
-                                                        <%--  <p class="formulario__error" id="p__txtPassword">Por favor, ingrese una contraseña</p>
-                                                    </div>--%>
+                                                    </div>                                                 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                            <%--<button class="btn btn-secondary btn-lg float-right" type="button" id="btnCancelar">Cancelar</button>--%>
+                            <br />                           
                             <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Generar</button>
                         </div>
                     </div>
@@ -207,7 +196,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnActualizar">Actualizar</button>
+                    <button type="button" class="btn btn-primary btn-lg float-right" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>

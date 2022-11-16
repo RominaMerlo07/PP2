@@ -178,8 +178,8 @@ function sendDataCentros() {
                         var NroCentro2 = data.d[i].NroCentro2;
 
                         var jsonStr = '["' + Nombre + '", "' + Numero + '", "' + Domicilio + '", "' + Email + '", "' + NroCentro1 + '","' + NroCentro2 + '"]';
-                        var Acciones = '<a href="#" button title= "editarCentro"  onclick="return actualizarCentro(' + Numero + ')"  class="btn btn-primary btn-editar"> <span class="fas fa-user-edit" aria-hidden="true"></span></a >' +
-                            '<a href="#" onclick = "return inactivar(' + Numero + ", '" + Nombre + "'" + ')"  class="btn btn-danger btn-inactivar" > <span class="fas fa-user-minus"></span></a >';
+                        var Acciones = '<a href="#" onclick="return actualizarCentro(' + Numero + ')"  class="btn btn-primary btn-editar"> <span class="fa fa-pencil" title="Modificar"></span></a >' +
+                            '<a href="#" onclick = "return inactivar(' + Numero + ", '" + Nombre + "'" + ')"  class="btn btn-danger btn-inactivar" > <span class="fa fa-trash" title="Dar de baja"></span></a >';
                                                 
                         arrayCentros.push([
                             Numero, Nombre, Domicilio, Email, NroCentro1, NroCentro2, Acciones

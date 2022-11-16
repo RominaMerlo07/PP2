@@ -178,8 +178,8 @@ function sendDataPersonal() {
 
                 idBuscar = Numero;
 
-                var Acciones = '<a href="#" id="editar" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
-                    '<a href="#" onclick="return inactivar(' + Numero + ",'" + Personal + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
+                var Acciones = '<a href="#" id="editar" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit" title="Modificar"></span></a > ' +
+                    '<a href="#" onclick="return inactivar(' + Numero + ",'" + Personal + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus" title="Dar de baja"></span></a > ';
 
                 //' + "'"+ Numero +"'"+ '
                 arrayPersonal.push([

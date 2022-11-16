@@ -42,7 +42,7 @@
     <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header text-white bg-success">
+                <div class="modal-header text-white bg-info">
                     <h4 class="modal-title" id="lblRegistrar">Registrar Especialidad</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-info btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>
+                    <button class="btn btn-success btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="modalTurnos">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+                <div class="modal-header bg-info text-white">
                     <h4 class="modal-title " id="lblTituloEspecialidad">Eliminar Especialidad</h4>
                     <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>

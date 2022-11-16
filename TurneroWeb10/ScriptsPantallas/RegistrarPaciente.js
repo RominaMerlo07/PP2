@@ -233,8 +233,8 @@ function sendDataPacientes() {
 
                 var ObrasSociales = '<button id="btnObrasSocial" class="btn btn-warning btn-obrasSociales" type="reset" onclick= "return obrasSociales(' + Numero + ",'" + Paciente + "'," + Dni + ')" ><i class="fa-solid fa-id-card"></i> Consultar </button>';
 
-                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ' +
-                    '<a href="#" onclick="return inactivar(' + Numero + ",'" + Paciente + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus"></span></a > ';
+                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit" title="Modificar"></span></a > ' +
+                    '<a href="#" onclick="return inactivar(' + Numero + ",'" + Paciente + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus" title="Dar de baja"></span></a > ';
 
               
                 arrayPacientes.push([
@@ -413,12 +413,12 @@ function sendDataPacienteOS(numero) {
 
                 if (ObraSocial != "PARTICULAR") {
 
-                    Acciones = '<a href="#" onclick="return actualizarOS(' + idObraPaciente + ",'" + NumAfiliado + "'" + ')"  class="btn btn-primary btnEditarOS" > <span class="fa-solid fa-pen-to-square"></span></a> ' +
-                        '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+                    Acciones = '<a href="#" onclick="return actualizarOS(' + idObraPaciente + ",'" + NumAfiliado + "'" + ')"  class="btn btn-primary btnEditarOS" > <span class="fa-solid fa-pen-to-square" title="Modificar"></span></a> ' +
+                        '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square" title="Dar de baja"></span></a >';
 
                 }
                 else {
-                    Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+                    Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square" title="Dar de baja"></span></a >';
                 }
 
 
