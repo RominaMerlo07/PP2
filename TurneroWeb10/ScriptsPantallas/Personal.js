@@ -338,8 +338,7 @@ function inactivar(id, nombre) {
 
     var IdPersonal = id;
     var nomApePersonal = nombre;
-    console.log(IdPersonal);
-
+    
 
     swal({
         title: "¿Estas seguro que deseas eliminar a " + nombre + "?",
