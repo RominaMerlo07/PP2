@@ -19,10 +19,8 @@ const expresiones = {
 
 const campos = {
     dni: false,
-    //matricula: false,
     nombre: false,
     apellido: false,
-    //fecha: false,
     calle: false,
     numero: false,
     barrio: false,
@@ -116,8 +114,6 @@ inputs.forEach((input) => {
     input.addEventListener('blur', validarFormulario);
 });
 
-
-console.log(inputs);
 
 /************************************** FIN Form Registrar **************************************************/
 

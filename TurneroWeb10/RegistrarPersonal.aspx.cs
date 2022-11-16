@@ -222,12 +222,23 @@ namespace TurneroWeb10
             {
                 string mensaje = "OK";
 
-                personal.IdPersonal = Convert.ToInt32(idPersonal);
+                int id = Convert.ToInt32(idPersonal);
 
-                personal.UsuarioBaja = 1;
-                personal.FechaBaja = DateTime.Today;
 
-                mensaje = gestorPersonal.DarBajaPersonal(personal);
+                string resultadoBajaProfUsuario = gestorPersonal.DarDeBajaUsuarioPersonal(id, 1);
+
+                if (resultadoBajaProfUsuario == "OK")
+                {
+
+                    personal.IdPersonal = id;
+
+                    personal.UsuarioBaja = 1;
+                    personal.FechaBaja = DateTime.Today;
+
+                    mensaje = gestorPersonal.DarBajaPersonal(personal);
+
+
+                }               
 
                 return mensaje;
             }

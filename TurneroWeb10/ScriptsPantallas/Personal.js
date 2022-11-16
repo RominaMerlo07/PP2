@@ -340,22 +340,35 @@ function inactivar(id, nombre) {
     var nomApePersonal = nombre;
     console.log(IdPersonal);
 
-    $.ajax({
-        url: "RegistrarPersonal.aspx/darBajaPersonal",
-        data: "{idPersonal: '" + IdPersonal + "'}",
-        type: "post",
-        contentType: "application/json",
-        async: false,
-        success: function (data) {
 
-            swal("Hecho", "Se dio de baja exitosamente a " + nomApePersonal + ".", "success");
+    swal({
+        title: "¿Estas seguro que deseas eliminar a " + nombre + "?",
+        text: "Una vez eliminado, ¡no podrá recuperar los datos asociados al mismo!",
+        icon: "warning",
+        buttons: true,
+        buttons: ["Cancelar", "Eliminar"],
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "RegistrarPersonal.aspx/darBajaPersonal",
+                    data: "{idPersonal: '" + IdPersonal + "'}",
+                    type: "post",
+                    contentType: "application/json",
+                    async: false,
+                    success: function (data) {
 
-            sendDataPersonal();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
-        }
-    });
+                        swal("Hecho", "Se dio de baja exitosamente a " + nomApePersonal + ".", "success");
+
+                        sendDataPersonal();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(data.error);
+                    }
+                });
+            }
+        });  
 }
 
 function soloNumeros(event) {

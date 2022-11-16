@@ -445,6 +445,52 @@ namespace DataAccess
 
         }
 
+        public string DarDeBajaUsuarioPersonal(int idPer, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_USUARIOS " +
+                                     "SET FECHA_BAJA = GETDATE(), USUARIO_BAJA = @USUARIO_BAJA " +
+                                     "WHERE ID_PERSONAL = @ID_PERSONAL " +
+                                     "AND FECHA_BAJA IS NULL;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PERSONAL", idPer);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
+
+
 
     }
 }

@@ -97,7 +97,21 @@ namespace BusinessLogicLayer.Gestores
             {
                 throw e;
             }
-        }        
+        }
+
+
+        public string DarDeBajaUsuarioPersonal(int idPer, int usuarioBaja)
+        {
+            try
+            {
+                DAPersonal DaPersonal = new DAPersonal();
+                return DaPersonal.DarDeBajaUsuarioPersonal(idPer, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 
