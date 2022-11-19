@@ -178,7 +178,6 @@ function cargarComboPlanes(idObraSocial, ddl) {
         async: false,
         success: function (data) {
             var planes = JSON.parse(data.d);
-            //disponibilidadHoraria = especialidades;
 
             if (planes.length > 0) {
 
