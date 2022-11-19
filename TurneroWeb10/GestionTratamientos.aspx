@@ -3,8 +3,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <style>
     </style>
-    <section class="content-header">
-        <h1 style="text-align: left">GESTIÓN DE TRATAMIENTOS</h1>
+     <section class="content-header">
+        <h1 style="text-align: center">GESTIÓN DE TRATAMIENTOS</h1>
     </section>
     <div class="content" id="sectionEspecialidad">
         <div class="row">

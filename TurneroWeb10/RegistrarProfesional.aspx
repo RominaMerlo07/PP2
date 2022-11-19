@@ -6,9 +6,8 @@
             bottom: 5px;
         }
     </style>--%>
-    <section class="content-header">
-        <%-- <button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Profesionales</button>--%>
-        <h1>PROFESIONALES</h1>
+  <section class="content-header">
+        <h1 style="text-align: center">PROFESIONALES</h1>
     </section>
     <section class="content">
         <div class="row" id="alertNullProf" style="display:none">

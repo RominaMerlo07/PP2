@@ -23,6 +23,7 @@ $(document).ready(function () {
 
     $('#btnRegistrarModal').click(function () {
         $("#modalRegistrar").modal('show');
+        limpiarCampos();
         deshabilitarCampos(true);
     });
 
@@ -136,7 +137,7 @@ function registrarPersonal(datosPersonal) {
             } else {
                 //$('#btnConfProfesional').show();
                 $("#modalRegistrar").modal('hide');
-                swal("Hecho", "Personal registrado con Éxito!", "success"); //error
+                swal("Hecho", "Personal registrado con Éxito!", "success");
                 //$("#tabla_profesionales").DataTable().fnClearTable();
                 sendDataPersonal();   
             }
@@ -233,14 +234,6 @@ function sendDataPersonal() {
         }
     })
 }
-
-//$("#editar").click(function (idBuscar) {
-//    $("#modalEditar").modal('show');
-//    actualizar(idBuscar);
-//});
-
-
-
 
 
 function actualizar(idBuscar) {
@@ -404,4 +397,19 @@ function deshabilitarCampos(valor) {
     document.getElementById("id__txtEmail1").readOnly = valor;
     document.getElementById("id__txtEmail2").readOnly = valor;
 
+}
+
+
+function limpiarCampos() {
+    $('#id__txtDocumento').val("");
+    $('#id__txtNombre').val("");
+    $('#id__txtApellido').val("");
+    $('#id__dtpFechaNac').datepicker('clearDates');
+    $('#id__txtCalle').val("");
+    $('#id__txtNumero').val("");
+    $('#id__txtBarrio').val("");
+    $('#id__txtLocalidad').val("");
+    $('#id__txtCelular').val("");
+    $('#id__txtEmail1').val("");
+    $('#id__txtEmail2').val("");
 }

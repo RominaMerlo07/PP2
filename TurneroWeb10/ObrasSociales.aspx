@@ -4,7 +4,7 @@
     <style>
     </style>
     <section class="content-header">
-        <h1 style="text-align: left">Gestión Obras Sociales</h1>
+        <h1 style="text-align: center">OBRAS SOCIALES</h1>
     </section>
     <div class="content">
         <div class="row">

@@ -378,37 +378,213 @@ namespace TurneroWeb10
         }
 
 
+        //[WebMethod]
+        //public static string inactivarPaciente(string idPaciente)
+        //{
+
+        //    Paciente paciente = new Paciente();
+        //    GestorPacientes gestorPacientes = new GestorPacientes();
+
+        //    try
+        //    {
+        //        string mensaje = "OK";
+
+
+        //        paciente.IdPaciente = Convert.ToInt32(idPaciente);
+        //        paciente.UsuarioBaja = 1;
+        //        paciente.FechaBaja = DateTime.Today;
+
+
+        //        gestorPacientes.inactivarPaciente(paciente);
+
+        //        return mensaje;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        string error = "Se produjo un error al registrar el paciente " + e.Message;
+        //        return error;
+        //    }
+
+        //}
+
         [WebMethod]
-        public static string inactivarPaciente(string idPaciente)
+        public static string validarDni(string dni)
         {
 
-            Paciente paciente = new Paciente();
-            GestorPacientes gestorPacientes = new GestorPacientes();
-
+            string result = "OK";
             try
             {
-                string mensaje = "OK";
+                GestorPacientes gPaciente = new GestorPacientes();
+
+                int existePersonal = gPaciente.validarDniPaciente(dni);
+
+                if (existePersonal > 0)
+                {
+
+                    result = "existe";
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
 
 
-                paciente.IdPaciente = Convert.ToInt32(idPaciente);
-                paciente.UsuarioBaja = 1;
-                paciente.FechaBaja = DateTime.Today;
-
-
-                gestorPacientes.inactivarPaciente(paciente);
-
-                return mensaje;
             }
             catch (Exception e)
             {
-                string error = "Se produjo un error al registrar el paciente " + e.Message;
-                return error;
+                throw e;
             }
-
         }
+
+        [WebMethod]
+        public static string buscarPacienteParticular(string idPaciente)
+        {
+            try
+            {
+                GestorPacientes gestorPacientes = new GestorPacientes();
+                DataTable dt = gestorPacientes.buscarPacienteParticular(idPaciente);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string ObtenerTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+            try
+            {
+                GestorPacientes gestorPaciente = new GestorPacientes();
+
+                int id = Convert.ToInt32(p_id);
+
+                int cantTurnosFuturos = gestorPaciente.TurnosFuturos(id);
+
+                if (cantTurnosFuturos > 0)
+                {
+
+                    DataTable dt = gestorPaciente.ObtenerTurnosFuturos(id);
+                    col = JsonConvert.SerializeObject(dt);
+                    return col;
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string MostrarTurnosFuturos(string p_id)
+        {
+
+            try
+            {
+                GestorPacientes gestorPaciente = new GestorPacientes();
+
+                int id = Convert.ToInt32(p_id);
+
+                DataTable dt = gestorPaciente.ObtenerTurnosFuturos(id);
+                string col = JsonConvert.SerializeObject(dt);
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string DaDarDeBajaPaciente(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorPacientes gestorPacientes = new GestorPacientes();
+                Paciente paciente = new Paciente();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultadoBajaObraPaciente = gestorPacientes.DaDarDeBajaObraPaciente(id, 1);
+
+                if (resultadoBajaObraPaciente == "OK")
+                {
+                    paciente.IdPaciente = id;
+                    paciente.UsuarioBaja = 1;
+                    paciente.FechaBaja = DateTime.Today;
+
+                    col = gestorPacientes.DarBajaPaciente(paciente);                                     
+
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string DarDeBajaPacienteTurnos(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorPacientes gestorPaciente = new GestorPacientes();
+                Paciente paciente = new Paciente();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultadoBajaObraPaciente = gestorPaciente.DaDarDeBajaObraPaciente(id, 1);
+
+                if (resultadoBajaObraPaciente == "OK")
+                {
+                    string resultadoBajaTurnos = gestorPaciente.DarBajaTurnos(id, 1);
+
+                    if (resultadoBajaTurnos == "OK")
+                    {
+                        paciente.IdPaciente = id;
+                        paciente.UsuarioBaja = 1;
+                        paciente.FechaBaja = DateTime.Today;
+
+                        col = gestorPaciente.DarBajaPaciente(paciente);
+
+                    }
+
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
 
     }
 
 
-    
+
 }

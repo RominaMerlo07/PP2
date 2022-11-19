@@ -21,9 +21,9 @@
            pointer-events: none !important;
         }
         
-    </style>
-    <section class="content-header">
-        <h1 style="text-align: left">DISPONIBILIDAD HORARIA</h1>
+    </style>   
+     <section class="content-header">
+        <h1 style="text-align: center">DISPONIBILIDAD HORARIA</h1>
     </section>
     <section class="content">
         </br>

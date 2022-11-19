@@ -159,34 +159,130 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
-        public int inactivarPaciente(Paciente paciente)
+        //public int inactivarPaciente(Paciente paciente)
+        //{
+        //    try
+        //    {
+        //        DAPaciente DaPaciente = new DAPaciente();
+        //        paciente.IdPaciente = DaPaciente.inactivarPaciente(paciente);
+
+
+        //        if (paciente.IdPaciente > 0)
+        //        {
+        //            ObrasPacientes obraPaciente = new ObrasPacientes();
+
+        //            obraPaciente.IdPaciente = paciente.IdPaciente;
+        //            obraPaciente.UsuarioBaja = paciente.UsuarioBaja;
+        //            obraPaciente.FechaBaja = paciente.FechaBaja;
+
+        //            DAObraPaciente DaObraPaciente = new DAObraPaciente();
+        //            int idObraPaciente = DaObraPaciente.inactivarObraPaciente(obraPaciente);
+
+        //        }
+        //        return paciente.IdPaciente;
+        //    }
+
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
+
+        public int validarDniPaciente(string dni)
         {
+
             try
             {
                 DAPaciente DaPaciente = new DAPaciente();
-                paciente.IdPaciente = DaPaciente.inactivarPaciente(paciente);
-
-
-                if (paciente.IdPaciente > 0)
-                {
-                    ObrasPacientes obraPaciente = new ObrasPacientes();
-
-                    obraPaciente.IdPaciente = paciente.IdPaciente;
-                    obraPaciente.UsuarioBaja = paciente.UsuarioBaja;
-                    obraPaciente.FechaBaja = paciente.FechaBaja;
-
-                    DAObraPaciente DaObraPaciente = new DAObraPaciente();
-                    int idObraPaciente = DaObraPaciente.inactivarObraPaciente(obraPaciente);
-
-                }
-                return paciente.IdPaciente;
+                return DaPaciente.validarDniPaciente(dni);
             }
-
             catch (Exception e)
             {
                 throw e;
             }
         }
+
+        public DataTable buscarPacienteParticular(string idPaciente)
+        {
+            try
+            {
+                DAPaciente daPaciente = new DAPaciente();
+                return daPaciente.buscarPacienteParticular(idPaciente);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public int TurnosFuturos(int idPaciente)
+        {
+            try
+            {
+                DAPaciente dAPaciente = new DAPaciente();
+                return dAPaciente.TurnosFuturos(idPaciente);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public DataTable ObtenerTurnosFuturos(int idPaciente)
+        {
+            try
+            {
+                DAPaciente dAPaciente = new DAPaciente();
+                return dAPaciente.ObtenerTurnosFuturos(idPaciente);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DaDarDeBajaObraPaciente(int idPaciente, int usuarioBaja)
+        {
+            try
+            {
+                DAPaciente DaPaciente = new DAPaciente();
+                return DaPaciente.DaDarDeBajaObraPaciente(idPaciente, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string DarBajaPaciente(Paciente paciente)
+        {
+            try
+            {
+                DAPaciente DaPaciente = new DAPaciente();
+                return DaPaciente.DarBajaPaciente(paciente);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string DarBajaTurnos(int idPaciente, int usuarioBaja)
+        {
+            try
+            {
+                DAPaciente DaPaciente = new DAPaciente();
+                return DaPaciente.DarBajaTurnos(idPaciente, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 }

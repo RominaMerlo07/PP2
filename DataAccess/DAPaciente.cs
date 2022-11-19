@@ -599,8 +599,252 @@ namespace DataAccess
             }
         }
 
-        public int inactivarPaciente(Paciente paciente)
+        //public int inactivarPaciente(Paciente paciente)
+        //{
+        //    try
+        //    {
+        //        string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+        //        con = new SqlConnection(cadenaDeConexion);
+        //        con.Open();
+        //        trans = con.BeginTransaction();
+
+        //        string consulta = "UPDATE T_PACIENTES " +
+        //                             "SET USUARIO_BAJA = @USUARIO_BAJA, " +
+        //                                 "FECHA_BAJA = @FECHA_BAJA " +
+        //                           "WHERE ID_PACIENTE = @ID_PACIENTE;";
+
+
+        //        cmd = new SqlCommand(consulta, con);
+        //        cmd.Transaction = trans;
+
+        //        cmd.Parameters.AddWithValue("@ID_PACIENTE", paciente.IdPaciente);
+        //        cmd.Parameters.AddWithValue("@USUARIO_BAJA", paciente.UsuarioBaja);
+        //        cmd.Parameters.AddWithValue("@FECHA_BAJA", paciente.FechaBaja);
+
+        //        int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+        //        trans.Commit();
+
+        //        con.Close();
+
+        //        return devolver;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        trans.Rollback();
+        //        con.Close();
+        //        throw e;
+        //    }
+
+        //}
+
+        public int validarDniPaciente(string dni)
         {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT count(*) " +
+                                    "FROM T_PACIENTES p " +
+                                    "WHERE p.DOCUMENTO = @DNI " +
+                                    "AND p.FECHA_BAJA is null; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@DNI", dni);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+
+        }
+
+        public DataTable buscarPacienteParticular(string idPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @" SELECT P.ID_PACIENTE, 
+	                                        P.NOMBRE,
+	                                        P.APELLIDO, 
+	                                        P.DOCUMENTO, 
+	                                        P.NRO_CONTACTO,
+	                                        P.EMAIL_CONTACTO,
+                                            OP.ID_OBRA_SOCIAL,
+	                                        OS.DESCRIPCION
+                                        FROM T_PACIENTES P, 
+	                                        T_OBRAS_PACIENTES OP, 
+	                                        T_OBRAS_SOCIALES OS
+                                        WHERE P.ID_PACIENTE = OP.ID_PACIENTE
+                                        AND OP.ID_OBRA_SOCIAL = OS.ID_OBRA_SOCIAL                                       
+                                        AND P.ID_PACIENTE = @ID_PACIENTE
+                                        AND P.FECHA_BAJA IS NULL
+                                        AND OP.FECHA_BAJA IS NULL
+                                        AND OS.FECHA_BAJA IS NULL;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public int TurnosFuturos(int idPaciente)
+        {
+
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT COUNT(*) CANTIDAD " +
+                                    "FROM T_TURNOS " +
+                                    "WHERE ID_PACIENTE = @ID_PACIENTE " +
+                                    "AND ESTADO = 'OTORGADO' " +
+                                    "AND FECHA_BAJA IS NULL " +
+                                    "AND FECHA_TURNO > GETDATE(); ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+
+        }
+
+
+        public DataTable ObtenerTurnosFuturos(int idPaciente)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT CONVERT(varchar,T.FECHA_TURNO,103) TURNO, 
+	                                        SUBSTRING ((CONVERT(varchar,T.HORA_DESDE,8)),0,6) as HORA, 
+	                                        CONCAT (P.NOMBRE, ' ', P.APELLIDO) PACIENTE, 
+	                                        P.NRO_CONTACTO,
+	                                        P.EMAIL_CONTACTO
+                                        FROM T_TURNOS T, T_PACIENTES P
+                                        WHERE T.ID_PACIENTE = P.ID_PACIENTE
+                                        AND P.ID_PACIENTE = @ID_PACIENTE
+                                        AND ESTADO = 'OTORGADO'
+                                        AND T.FECHA_BAJA IS NULL
+                                        AND P.FECHA_BAJA IS NULL
+                                        AND T.FECHA_TURNO > GETDATE();";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string DaDarDeBajaObraPaciente(int idPaciente, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_OBRAS_PACIENTES " +
+                                     "SET FECHA_BAJA = GETDATE(), USUARIO_BAJA = @USUARIO_BAJA " +
+                                     "WHERE ID_PACIENTE = @ID_PACIENTE " +
+                                     "AND FECHA_BAJA IS NULL;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
+        public string DarBajaPaciente(Paciente paciente)
+        {
+
+            string result;
             try
             {
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
@@ -610,9 +854,9 @@ namespace DataAccess
                 trans = con.BeginTransaction();
 
                 string consulta = "UPDATE T_PACIENTES " +
-                                     "SET USUARIO_BAJA = @USUARIO_BAJA, " +
-                                         "FECHA_BAJA = @FECHA_BAJA " +
-                                   "WHERE ID_PACIENTE = @ID_PACIENTE;";
+                                  "SET USUARIO_BAJA = @USUARIO_BAJA, " +
+                                  "FECHA_BAJA = @FECHA_BAJA " +
+                                  "WHERE ID_PACIENTE = @ID_PACIENTE;";
 
 
                 cmd = new SqlCommand(consulta, con);
@@ -622,20 +866,71 @@ namespace DataAccess
                 cmd.Parameters.AddWithValue("@USUARIO_BAJA", paciente.UsuarioBaja);
                 cmd.Parameters.AddWithValue("@FECHA_BAJA", paciente.FechaBaja);
 
-                int devolver = Convert.ToInt32(cmd.ExecuteScalar());
-                trans.Commit();
+                cmd.ExecuteNonQuery();
 
+                trans.Commit();
                 con.Close();
 
-                return devolver;
+                result = "OK";
+
             }
             catch (Exception e)
             {
+                result = "ERROR - " + e.ToString();
                 trans.Rollback();
                 con.Close();
                 throw e;
             }
 
+            return result;
+
         }
+
+
+        public string DarBajaTurnos(int idPaciente, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_TURNOS " +
+                                     "SET FECHA_BAJA = GETDATE(), ESTADO = 'CANCELADO', USUARIO_BAJA = @USUARIO_BAJA " +
+                                     "WHERE ID_PACIENTE = @ID_PACIENTE " +
+                                     "AND FECHA_TURNO > GETDATE();";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PACIENTE", idPaciente);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
+
     }
 }

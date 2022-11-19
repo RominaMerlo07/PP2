@@ -5,8 +5,8 @@
 
     </style>
 
-    <section class="content-header">
-        <h1 style="text-align: left">REPROGRAMAR TURNOS</h1>
+  <section class="content-header">
+        <h1 style="text-align: center">REPROGRAMAR TURNO</h1>
     </section>
     <div class="content" id="sectionEspecialidad">
         <div class="row justify-content-md-center">

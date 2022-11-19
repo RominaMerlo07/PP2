@@ -3,8 +3,8 @@
 </asp:Content>--%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <section class="content-header">
-       <h1 style="text-align: center">USUARIOS</h1>
+     <section class="content-header">
+        <h1 style="text-align: center">USUARIOS</h1>
     </section>
 
     <section class="content">

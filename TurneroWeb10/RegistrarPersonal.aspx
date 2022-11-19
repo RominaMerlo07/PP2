@@ -64,8 +64,7 @@
                                                             <input type="text" name="dni" style="text-align: left" class="formulario-input form-control" id="id__txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" /><p style="color: red;">*</p>                                                           
                                                         </div>
                                                         <p class="formulario__error" id="p__txtDocumento"> Por favor, ingrese el DNI sin puntos.</p>
-                                                    </div>
-                                                   
+                                                    </div>                                                   
                                                 </div>
                                             </div>
                                             <div class="col-sm">

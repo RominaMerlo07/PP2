@@ -421,10 +421,9 @@ namespace DataAccess
                 string consulta = @"SELECT ID_OBRA_SOCIAL, 
 	                                       DESCRIPCION
                                       FROM T_OBRAS_SOCIALES OS
-                                     WHERE OS.FECHA_BAJA IS NULL
-                                       AND C.FECHA_BAJA IS NULL
+                                     WHERE OS.FECHA_BAJA IS NULL                                     
                                     EXCEPT
-                                    SELECT os.ID_OBRA_SOCIAL, 
+                                    SELECT OS.ID_OBRA_SOCIAL, 
 	                                       OS.DESCRIPCION
                                       FROM T_OBRAS_SOCIALES OS,
                                            T_OBRAS_PACIENTES OP, 
@@ -432,6 +431,19 @@ namespace DataAccess
                                      WHERE OS.ID_OBRA_SOCIAL = OP.ID_OBRA_SOCIAL
                                        AND OP.ID_PLAN =  OPL.ID_PLANES
                                        AND OP.ID_PACIENTE = @ID_PACIENTE                                       
+                                       AND OP.FECHA_BAJA IS NULL
+                                    UNION
+                                    SELECT ID_OBRA_SOCIAL, 
+	                                       DESCRIPCION
+                                      FROM T_OBRAS_SOCIALES OS
+                                     WHERE OS.FECHA_BAJA IS NULL
+                                    EXCEPT
+                                    SELECT OS.ID_OBRA_SOCIAL, 
+	                                       OS.DESCRIPCION
+                                      FROM T_OBRAS_SOCIALES OS,
+                                           T_OBRAS_PACIENTES OP
+                                     WHERE OS.ID_OBRA_SOCIAL = OP.ID_OBRA_SOCIAL
+                                       AND OP.ID_PACIENTE = @ID_PACIENTE                                  
                                        AND OP.FECHA_BAJA IS NULL
                                      ORDER BY DESCRIPCION;";
 

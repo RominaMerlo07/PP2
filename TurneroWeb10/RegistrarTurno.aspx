@@ -34,9 +34,8 @@
     
 	
     </style>
-    <section class="content-header">
-        <%--<button class="btn btn-info btn-sm float-right" type="button" id="Listar">Listar Turnos</button>--%>
-        <h1 style="text-align: left">REGISTRAR TURNO</h1>
+  <section class="content-header">
+        <h1 style="text-align: center">REGISTRAR TURNO</h1>
     </section>
     <div class="content" id="sectionEspecialidad">
 

@@ -9,8 +9,9 @@
             resize: none;
         }
     </style>
+    
     <section class="content-header">
-        <h1 style="text-align: left">SEGUIMIENTO DEL PACIENTE</h1>
+        <h1 style="text-align: center">SEGUIMIENTO DEL PACIENTE</h1>
     </section>
     <div class="content">
         </br>

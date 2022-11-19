@@ -6,7 +6,7 @@
 
     </style>
     <div class="content-header">
-        <h1 style="text-align: left">AGENDA</h1>
+        <h1 style="text-align: center">AGENDA</h1>
 
         <ul class="nav nav-tabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#userControl">Turnos</a></li>

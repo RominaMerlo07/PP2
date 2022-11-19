@@ -1,4 +1,4 @@
-﻿var dni, nombre, apellido, celular, obraSocial, plan, email1, email2, nroAfiliado, id, idPaciente, idOSP;
+﻿var dni, nombre, apellido, celular, obraSocial, plan, email1, email2, nroAfiliado, id, idPaciente, idOSP, name, idEliminar;
 
 $(document).ready(function () {
 
@@ -15,7 +15,7 @@ $(document).ready(function () {
         dni = $('#id__txtDocumento').val();
         celular = $('#id__txtCelular').val();
         nombre = $('#id__txtNombre').val();
-        apellido = $('#id__txtApeliido').val();
+        apellido = $('#id__txtApellido').val();
         email1 = $('#id__txtEmail1').val();
         email2 = $('#id__txtEmail2').val();
         obraSocial = $('#ddlObraSocial').val();
@@ -49,6 +49,8 @@ $(document).ready(function () {
 
     $('#btnRegistrarModal').click(function () {
         $("#modalRegistrar").modal('show');
+        limpiarCampos();
+        deshabilitarCampos(true);
     });
 
     cargarObrasSociales("#ddlObraSocial");
@@ -84,10 +86,10 @@ function registrarPaciente(datosPaciente) {
         success: function (data) {
 
             if (data.d != 'OK') {
-                alert('Error al registrar el paciente.')
+                swal("Hubo un problema", "Error al registrar el paciente!", "error");
             } else {
                 $('#btnConfPaciente').show();
-                alert('Paciente registrado con Éxito.');
+                swal("Hecho", "Paciente registrado con Éxito!", "success");
 
                 $("#modalRegistrar").modal('hide');
                 sendDataPacientes();
@@ -131,7 +133,7 @@ function validarDatosPaciente() {
     else if (email2 == "") {
         alert("Por favor, ingrese un E-mail válido");
         return false;
-    }    
+    } 
     else {
         return true;
     };
@@ -301,30 +303,40 @@ function actualizar(idBuscar) {
         async: false,
         success: function (data) {
 
+            
+
             var paciente = JSON.parse(data.d); 
             console.log(paciente);
+            console.log(paciente.length);
 
-            if (paciente != null) {
+            if (paciente.length > 0) {
 
-                paciente.forEach(function (e) {
+                if (paciente != null) {
 
-                    id = e.ID_PACIENTE;
-                    // cargo = e.cargo;
+                    paciente.forEach(function (e) {
 
-                    $("#modalEditar").modal('show');
+                        id = e.ID_PACIENTE;
+                        // cargo = e.cargo;
 
-                    $("#id__txtDocumentoE").val(e.DOCUMENTO);
-                    $("#id__txtCelularE").val(e.NRO_CONTACTO);
-                    $("#id__txtNombreE").val(e.NOMBRE);
-                    $("#id__txtApeliidoE").val(e.APELLIDO);
-                    var email = e.EMAIL_CONTACTO.split('@');
-                    $("#id__txtEmail1E").val(email[0]);
-                    $("#id__txtEmail2E").val(email[1]);             
-                                 
+                        $("#modalEditar").modal('show');
 
-                });                
+                        $("#id__AtxtDocumento").val(e.DOCUMENTO);
+                        $("#id__AtxtCelular").val(e.NRO_CONTACTO);
+                        $("#id__AtxtNombre").val(e.NOMBRE);
+                        $("#id__AtxtApellido").val(e.APELLIDO);
+                        var email = e.EMAIL_CONTACTO.split('@');
+                        $("#id__AtxtEmail1").val(email[0]);
+                        $("#id__AtxtEmail2").val(email[1]);
 
-               
+
+                    });
+
+                }
+            }
+
+            else {
+
+                buscarPacienteParticular(idBuscar);
             }
       
         },
@@ -347,12 +359,12 @@ function UpdateDataPaciente(id) {
 
     var obj = JSON.stringify({
         id: id,
-        nombre: $("#id__txtNombreE").val(),
-        apellido: $("#id__txtApeliidoE").val(),
-        dni: $("#id__txtDocumentoE").val(),
-        celular: $("#id__txtCelularE").val(),
-        email1: $("#id__txtEmail1E").val(),
-        email2: $("#id__txtEmail2E").val()
+        nombre: $("#id__AtxtNombre").val(),
+        apellido: $("#id__AtxtApellido").val(),
+        dni: $("#id__AtxtDocumento").val(),
+        celular: $("#id__AtxtCelular").val(),
+        email1: $("#id__AtxtEmail1").val(),
+        email2: $("#id__AtxtEmail2").val()
     })
 
     $.ajax({
@@ -388,9 +400,13 @@ function obrasSociales(id, Paciente, Dni) {
     idPaciente = id;
     sendDataPacienteOS(id);
     return $("#modalObrasSociales").modal('show');
+ 
+
 }
 
 function sendDataPacienteOS(numero) {
+    $("#agregarObraSocial").hide();
+
     $.ajax({
         type: "POST",
         url: "RegistrarPaciente.aspx/obraSocialPaciente",
@@ -409,7 +425,8 @@ function sendDataPacienteOS(numero) {
                 var CodigoPlan = e.COD_PLAN;
                 var Plan = e.PLAN;
                 var NumAfiliado = e.NRO_AFILIADO;
-                var Acciones;
+                var Acciones;               
+
 
                 if (ObraSocial != "PARTICULAR") {
 
@@ -515,9 +532,7 @@ $("#btnCancelarOS").click(function () {
 
 function inactivarE(idPaciente, idObraPaciente) {
 
-    console.log(idPaciente, idObraPaciente);
-
-    $.ajax({
+      $.ajax({
         type: "POST",
         url: "RegistrarPaciente.aspx/inactivarOSPaciente",
         data: "{idObraPaciente: '" + idObraPaciente + "'}",       
@@ -545,7 +560,7 @@ function inactivarE(idPaciente, idObraPaciente) {
     })
 }
 
-function obtenerOSxPaciente(ddl, numero) {
+function obtenerOSxPaciente(ddl, numero) {    
 
     $.ajax({
         url: "RegistrarPaciente.aspx/obtenerOSxPaciente",
@@ -575,7 +590,7 @@ function obtenerOSxPaciente(ddl, numero) {
 
 $("#btnAgregar").click(function (e) {
     e.preventDefault();
- 
+
     var obraPaciente = {
 
         p_idPaciente: idPaciente,
@@ -705,33 +720,276 @@ $("#btnActualizarOS").click(function (e) {
 
 function inactivar(idPaciente, paciente) {
 
-    console.log(idPaciente, paciente);
+    name = paciente;
+    idEliminar = idPaciente;
 
+       
+    $.ajax({
+        url: "RegistrarPaciente.aspx/ObtenerTurnosFuturos",
+        data: "{p_id: '" + idPaciente + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d === 'sin info') {
+                console.log('puedo eliminar directo');
+
+                swal({
+                    title: "¿Estas seguro que deseas eliminar el paciente " + paciente + "?",
+                    text: "Una vez eliminado, ¡no podrá recuperar los datos asociados al mismo!",
+                    icon: "warning",
+                    buttons: true,
+                    buttons: ["Cancelar", "Eliminar"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+
+                            DaDarDeBajaPaciente(idPaciente, paciente);
+                            console.log('dar de baja paciente y relacion con obra social');
+                        }
+                    });
+            }
+            else {
+                console.log("tengo que mostrar los turnos pendientes");
+                ObtenerTurnosFuturos(idPaciente);
+                $("#modalTurnos").modal('show');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}
+
+
+
+function soloNumeros(event) {
+    var regex = new RegExp("^[0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+function soloLetras(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+function deshabilitarCampos(valor) {
+
+    //document.getElementById("id__txtDocumento").focus();   
+    document.getElementById("id__txtNombre").readOnly = valor;
+    document.getElementById("id__txtApellido").readOnly = valor;
+    document.getElementById("id__txtCelular").readOnly = valor;
+    document.getElementById("id__txtEmail1").readOnly = valor;
+    document.getElementById("id__txtEmail2").readOnly = valor;
+    document.getElementById("id__txtNroAfiliado").readOnly = valor;
+}
+
+function limpiarCampos() {
+    $('#id__txtDocumento').val("");  
+    $('#id__txtNombre').val("");
+    $('#id__txtApellido').val("");
+    $('#id__txtCelular').val("");
+    $('#id__txtEmail1').val("");
+    $('#id__txtEmail2').val("");
+    $('#id__txtNroAfiliado').val("");
+    $('#ddlObraSocial').val([]);
+    $('#ddlPlanObra').val([]);
+}
+
+
+function buscarPacienteParticular(idBuscar) {
+
+    id = idBuscar;
     $.ajax({
         type: "POST",
-        url: "RegistrarPaciente.aspx/inactivarPaciente",
-        data: "{idPaciente: '" + idPaciente + "'}",       
+        url: "RegistrarPaciente.aspx/buscarPacienteParticular",
+        data: "{idPaciente: '" + idBuscar + "'}",
         dataType: "json",
         contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+
+            var paciente = JSON.parse(data.d);
+            console.log(paciente);
+            console.log(paciente.length);
+
+
+            if (paciente != null) {
+
+                paciente.forEach(function (e) {
+
+                    id = e.ID_PACIENTE;
+                    // cargo = e.cargo;
+
+                    $("#modalEditar").modal('show');
+
+                    $("#id__AtxtDocumento").val(e.DOCUMENTO);
+                    $("#id__AtxtCelular").val(e.NRO_CONTACTO);
+                    $("#id__AtxtNombre").val(e.NOMBRE);
+                    $("#id__AtxtApellido").val(e.APELLIDO);
+                    var email = e.EMAIL_CONTACTO.split('@');
+                    $("#id__AtxtEmail1").val(email[0]);
+                    $("#id__AtxtEmail2").val(email[1]);
+                });
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+    })
+};
+
+function DaDarDeBajaPaciente(IdPaciente, paciente) {
+
+    $.ajax({
+        url: "RegistrarPaciente.aspx/DaDarDeBajaPaciente",
+        data: "{p_id: '" + IdPaciente + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d == "OK") {
+                swal("El paciente " + paciente + " fue eliminado con Éxito!.", {
+                    icon: "success",
+                });
+                sendDataPacientes();
+            }
+            else {
+                swal("Hubo un problema", "Error al eliminar el paciente.", "error");
+            }
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(data.error);
+            return false;
+
+        }
+    });
+}
+
+
+function ObtenerTurnosFuturos(idPaciente) {
+
+    var turnos;
+    $.ajax({
+        type: "POST",
+        url: "RegistrarPaciente.aspx/MostrarTurnosFuturos",
+        data: "{p_id: '" + idPaciente + "'}",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+
+
+            turnos = JSON.parse(data.d);
+
+            var arrayTurnos = new Array();
+
+            turnos.forEach(function (e) {
+
+                var turno = e.TURNO;
+                var hora = e.HORA;
+
+                arrayTurnos.push([turno, hora]);
+
+                console.log(arrayTurnos);
+
+            });
+
+            var table = $('#tabla_Turnos').DataTable({
+                data: arrayTurnos,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "ordering": true,
+                "bDestroy": true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "Turno" },
+                    { title: "Hora" },
+                ],
+                dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 5,
+                buttons: [
+                    //{ extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+
+
+
+        },
         error: function (xhr, ajaxOptions, thrownError) {
             //$(ddl).prop("disabled", true);
             //alert(data.error);
             console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
-        },
-        success: function (response) {
-
-            console.log(response.d);
-
-            if (response.d != 'OK') {
-                swal("Hubo un problema", "Error al dar de baja el paciente.", "error");
-            }
-            else {
-                $('#btnActfProfesional').show();
-                swal("Hecho", "El paciente fue dado de baja.", "success");
-                sendDataPacientes();
-            }
-
         }
     })
-}
+};
 
+
+
+$("#btnCancelarT").click(function (e) {
+    e.preventDefault();
+    $("#modalTurnos").modal('hide');
+});
+
+
+
+$("#btnEliminar").click(function (e) {
+    e.preventDefault();
+    DarDeBajaTurnos(idEliminar, name);
+});
+
+
+function DarDeBajaTurnos(idEliminar, name) {
+
+    $.ajax({
+        url: "RegistrarPaciente.aspx/DarDeBajaPacienteTurnos",
+        data: "{p_id: '" + idEliminar + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            console.log(data.d);
+
+            if (data.d != 'OK') {
+                swal("Hubo un problema", "Error al eliminar el paciente.", "error");
+            }
+            else {
+                swal("Hecho", "El paciente " + name + " se elimino con Éxito, y los turnos fueron cancelados.", "success");
+                $("#modalTurnos").modal('hide');
+                sendDataPacientes();
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}

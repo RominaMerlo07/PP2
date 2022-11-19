@@ -6,8 +6,8 @@
             width: 100%;
         }
     </style>
-    <section class="content-header">
-        <h1 style="text-align: left">INSTRUCTIVOS PARA OBRAS SOCIALES</h1>
+  <section class="content-header">
+        <h1 style="text-align: left">INSTRUCTIVOS PARA OBRAS SOCIALES</h1>      
     </section>
     <section class="content">
         <div class="row">
