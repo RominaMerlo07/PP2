@@ -83,29 +83,34 @@ const validarCampo = (expresion, input, campo) => {
          
             result = validarDni(dni); 
             if (result) {
-                document.getElementById("id__txtMatricula").readOnly = false;               
                 document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
                 document.getElementById(`id__${campo}`).classList.add('formulario-input');
+                document.getElementById("id__txtMatricula").readOnly = false;
+
+                if (campo = "txtMatricula") {
+
+                    matricula = $('#id__txtMatricula').val();
+
+                    resultMat = validarMatricula(matricula);
+
+                    if (resultMat) {
+                        document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
+                        document.getElementById(`id__${campo}`).classList.add('formulario-input');
+                        deshabilitarCampos(false);
+                    } else {
+                        document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
+                        document.getElementById(`id__${campo}`).classList.remove('formulario-input');
+                        deshabilitarCampos(true);
+                        document.getElementById("id__txtMatricula").readOnly = false;
+                    }
+                }           
             } else {
                 document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
-                document.getElementById(`id__${campo}`).classList.remove('formulario-input');                
+                document.getElementById(`id__${campo}`).classList.remove('formulario-input');  
+                deshabilitarCampos(true);
             }
         }
-        if (campo = "txtMatricula") {
-
-            matricula = $('#id__txtMatricula').val();
-
-            resultMat = validarMatricula(matricula);
-
-            if (resultMat) {
-                document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
-                document.getElementById(`id__${campo}`).classList.add('formulario-input');
-                deshabilitarCampos(false);
-            } else {
-                document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
-                document.getElementById(`id__${campo}`).classList.remove('formulario-input');
-            }
-        }              
+       
     }
     else {       
         document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
