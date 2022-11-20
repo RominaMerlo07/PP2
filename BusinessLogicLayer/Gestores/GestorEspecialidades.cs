@@ -176,6 +176,20 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int validarEspecialidad(string especialidad)
+        {
+
+            try
+            {
+                DAEspecialidades DaEspecialidades = new DAEspecialidades();
+                return DaEspecialidades.validarEspecialidad(especialidad);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 }

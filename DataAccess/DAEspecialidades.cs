@@ -540,6 +540,46 @@ namespace DataAccess
         }
 
 
+        public int validarEspecialidad(string especialidad)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT count(*) " +
+                                    "FROM T_ESPECIALIDADES " +
+                                    "WHERE DESCRIPCION = @ESPECIALIDAD " +
+                                    "AND FECHA_BAJA is null; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ESPECIALIDAD", especialidad);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+
+        }
+
+
     }
 
 

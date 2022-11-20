@@ -54,9 +54,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Nombre Especialidad</span>
                                     </div>
-                                    <%--<input type="text" name="nombre" style="text-align: left" class="formulario-input form-control" id="id__txtNombre" />--%>
-                                    <input type="text" name="calle" id="id__txtNombre" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <input type="text" name="nombre" style="text-align: left" class="form-control" id="id__txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
                                 </div>
+                                 <p class="formulario__error" id="p__txtNombre">Por favor, ingrese la especialidad</p>
                             </div>
                         </div>
                     </div>
@@ -86,12 +86,13 @@
                                         <span class="input-group-text">Nombre Especialidad</span>
                                     </div>
                                     <%--<input type="text" name="nombre" style="text-align: left" class="formulario-input form-control" id="id__txtNombre" />--%>
-                                    <input type="text" name="calle" id="id__txtNombreE" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <input type="text" name="nameE" id="id__AtxtNombre" style="text-align: left" class="form-control" maxlength="120" onkeypress="return soloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
                                 </div>
+                                 <p class="formulario__error" id="p__AtxtNombre">Por favor, ingrese la especialidad</p>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>
+                    <button class="btn btn-primary btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -138,8 +139,9 @@
     <%--Final Modal Turno--%>
 
 
-    
+<link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />    
 <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Especialidades.js"%>"></script>
+<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Especialidades_validacion.js"%>"></script>
 
 </asp:Content>
    

@@ -30,6 +30,7 @@ $(document).ready(function () {
 
 $('#btnRegistrarModal').click(function () {
     $("#modalRegistrar").modal('show');
+    limpiarCampos();
 });
 
 
@@ -158,7 +159,7 @@ function actualizarEspecialidad(IdEspecialidad) {
         success: function (data) {
             
             $("#modalEditar").modal('show');
-            $("#id__txtNombreE").val(data.d.Descripcion);           
+            $("#id__AtxtNombre").val(data.d.Descripcion);           
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -170,7 +171,7 @@ function actualizarEspecialidad(IdEspecialidad) {
 
 $('#btnActualizar').click(function () {
 
-    var nombreEspecialidad = $("#id__txtNombreE").val();
+    var nombreEspecialidad = $("#id__AtxtNombre").val();
     editarEspecialidad(id, nombreEspecialidad);
 });
 
@@ -401,3 +402,12 @@ function darBajaEspecialidad(id, descripcion) {
 function limpiarCampos() {
     $('#id__txtNombre').val("");
 }
+
+function soloLetras(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};

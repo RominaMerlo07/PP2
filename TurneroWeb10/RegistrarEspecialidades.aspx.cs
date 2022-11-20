@@ -225,6 +225,36 @@ namespace TurneroWeb10
 
         }
 
+        [WebMethod]
+        public static string validarEspecialidad(string especialidad)
+        {
+
+            string result = "OK";
+            try
+            {
+                GestorEspecialidades gEspecialidades = new GestorEspecialidades();
+
+                int existeEspecialidad = gEspecialidades.validarEspecialidad(especialidad);
+
+                if (existeEspecialidad > 0)
+                {
+
+                    result = "existe";
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
 
     }

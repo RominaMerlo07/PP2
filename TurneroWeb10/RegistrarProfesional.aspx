@@ -200,12 +200,12 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Email: </span>
                                                     </div>
-                                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toLowerCase();" />
+                                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
 
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">@</span>
                                                     </div>
-                                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toLowerCase();" /><p style="color: red;">*</p>
+                                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
 
                                                 </div>
                                                 <p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>
@@ -354,12 +354,12 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Email: </span>
                                                         </div>
-                                                        <input type="text" name="email1E" class="form-control" id="id__AtxtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toLowerCase();" />
+                                                        <input type="text" name="email1E" class="form-control" id="id__AtxtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
 
                                                         <div class="input-group-append">
                                                             <span class="input-group-text">@</span>
                                                         </div>
-                                                        <input type="text" name="email2E" class="form-control" id="id__AtxtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toLowerCase();" /><p style="color: red;">*</p>
+                                                        <input type="text" name="email2E" class="form-control" id="id__AtxtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
 
                                                     </div>
                                                     <p class="formulario__error" id="p__AtxtEmail2">Por favor, ingrese un email valido</p>

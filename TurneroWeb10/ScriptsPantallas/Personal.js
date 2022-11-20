@@ -289,7 +289,7 @@ function UpdateDataPersonal(id) {
         id: id,
         nombre: $("#id__AtxtNombre").val(),
         apellido: $("#id__AtxtApellido").val(),
-        dni: $("#id__txtDocumentoE").val(),       
+        dni: $("#id__AtxtDocumento").val(),       
         fechaNacimiento: $("#id__AdtpFechaNacE").val(),
         localidad: $("#id__AtxtLocalidad").val(),
         barrio: $("#id__AtxtBarrio").val(),
