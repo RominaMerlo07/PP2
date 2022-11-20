@@ -30,7 +30,7 @@
                         <%--<div class="row">--%>
                         <div class="col-md-12">
                             <%--<div class="" id="tblTurnosReprogramar" style="display:none">--%>
-                                </br>
+                                <br/>
                                     <div id="tHorarios" >
                                         <table style=" width: 100% !important;" class="table table-hover table-bordered  table-striped" id="tablaTurnosReprogramar">
                                         </table>
@@ -314,7 +314,13 @@
                             debugger;
                             var obraPlan = "";
                             if (e.ObraSocial != null) {
-                                obraPlan = e.ObraSocial.Descripcion + " (" + e.ObraSocial.PlanObraSocial.Descripcion +") ";
+
+                                if (e.ObraSocial.PlanObraSocial != null) {
+                                    obraPlan = e.ObraSocial.Descripcion + " (" + e.ObraSocial.PlanObraSocial.Descripcion + ") ";
+                                }
+                                else {
+                                    obraPlan = e.ObraSocial.Descripcion;
+                                }
                             }
 
                             var nroAfiliado = e.NroAfiliado;
@@ -518,12 +524,24 @@
                 success: function (data) {
 
                     var result = JSON.parse(data.d);
+                    var obraSocial;
 
 
                     $('#txtDocumentoEd').val(result.Paciente.Documento);
                     var nombrePaciente = result.Paciente.Nombre + " " + result.Paciente.Apellido;
                     $('#txtPacienteEd').val(nombrePaciente);
-                    var obraSocial = result.ObraSocial.Descripcion + ", " + result.ObraSocial.PlanObraSocial.Descripcion;
+
+                    if (result.ObraSocial.PlanObraSocial != null) {
+                        obraSocial = result.ObraSocial.Descripcion + ", " + result.ObraSocial.PlanObraSocial.Descripcion;
+                         $('#idPlanObraEd').val(result.ObraSocial.PlanObraSocial.IdPlan);
+
+                    }
+                    else {
+
+                        obraSocial = result.ObraSocial.Descripcion;
+                         $('#idPlanObraEd').val(null);
+                    }
+
                     $('#txtObrasocialEd').val(obraSocial);
                     $('#txtNroAfiliadoEd').val(result.NroAfiliado);
                     $('#txtNroAutorizacionEd').val(result.NroAutorizacionObra);
@@ -538,7 +556,7 @@
                     $('#idObraSocialEd').val(result.ObraSocial.IdObraSocial);
                     $('#idEspecialidadEd').val(result.Especialidad.IdEspecialidad);
                     $('#idCentroEd').val(result.Centro.IdCentro);
-                    $('#idPlanObraEd').val(result.ObraSocial.PlanObraSocial.IdPlan);
+                   
                     $('#idTurnoEd').val(IdTurno);
 
                     obtieneDisponibilidadHorariaEd(result.Profesional.IdProfesional, result.Especialidad.IdEspecialidad, result.Centro.IdCentro)
