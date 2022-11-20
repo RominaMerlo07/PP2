@@ -2,6 +2,7 @@
 var disponibilidadHoraria, turnosXIdProfDetalle, eventosDelDia, esEdicionPaciente, centro, especialidad;
 var fechaTurno, horaTurno, minTurno, nombre, apellido, documento, celular, email1, email2, obraSocial;
 var planObra, nroAfiliado, idProfesional, calendarDisp, calendarTur, infoTurno, idPaciente;
+
 var tObraPaciente = document.getElementById("tblObraSocialPaciente");
 var formObraSocial = document.getElementById("formObraSocial");
 var btnRegistrarOS = document.getElementById("btnRegistrarOS");
@@ -22,6 +23,8 @@ $(document).ready(function () {
     });
 
     btnRegistrarExis.disabled = true;
+
+   
 
     $('#modalTurno').modal('hide');
     $('#tListarTurnos').show();
@@ -50,19 +53,58 @@ $(document).ready(function () {
         //horaTurno = $('#ddlHoraDesde').val();
         //obraSocial = $('#ddlObraSocial').val();
         //minTurno = $('#ddlMinDesde').val();
-        nombre = $('#txtNombre').val();
-        apellido = $('#txtApeliido').val();
-        documento = $('#txtDocumento').val();
-        celular = $('#txtCelular').val();
-        email1 = $('#txtEmail1').val();
-        email2 = $('#txtEmail2').val();
+        nombre = $('#id__txtNombre').val();
+        apellido = $('#id__txtApellido').val();
+        documento = $('#id__txtDocumento').val();
+        celular = $('#id__txtCelular').val();
+        email1 = $('#id__txtEmail1').val();
+        email2 = $('#id__txtEmail2').val();
         obraSocial = $('#ddlObraSocial').val();
         planObra = $('#ddlPlanObra').val();
-        nroAfiliado = $('#txtNroAfiliado').val();
+        nroAfiliado = $('#id__txtNroAfiliado').val();
 
-        var validacion = validarDatosTurno();
+        if (obraSocial === 1) {
+            console.log("no puedo validar nro_afiliado ni plan");
 
-        if (validacion === true) {
+
+            var validacionParticular = validarDatosTurnoParticular();
+
+            if (validacionParticular === true) {
+
+                var turnoYPersona = {
+                    p_centro: centro,
+                    p_especialidad: especialidad,
+                    p_fechaTurno: fechaTurno,
+                    p_horaTurno: horaTurno,
+                    //p_obra_social: obraSocial,
+                    //p_minTurno: minTurno,
+                    p_nombre: nombre,
+                    p_apellido: apellido,
+                    p_documento: documento,
+                    p_celular: celular,
+                    p_email1: email1,
+                    p_email2: email2,
+                    p_obraSocial: obraSocial,
+                    p_planObra: planObra,
+                    p_nroAfiliado: nroAfiliado,
+                    p_profesional: $('#ddlProfesional').val(),
+                    es_edicion: esEdicionPaciente
+                }
+
+                registrarTurnoNew(turnoYPersona);
+                $('#modalTurno').modal('hide');
+                $("#calDisposicionHoraria").hide();
+                $("#calTurnos").hide();
+
+                limpiarCampos();
+            }
+        }
+        else {
+
+        var validacionConOS = validarDatosTurno();
+
+
+        if (validacionConOS === true) {
 
             var turnoYPersona = {
                 p_centro: centro,
@@ -91,6 +133,11 @@ $(document).ready(function () {
 
             limpiarCampos();
         }
+        }
+
+
+
+
     });
 
     $("#ddlSucursal").bind("change", function () {
@@ -125,7 +172,7 @@ $(document).ready(function () {
 
     $('#btnBuscarDNI').click(function () {
          
-        var dniPaciente = $('#txtDocumento').val();
+        var dniPaciente = $('#id__txtDocumento').val();
         buscarPaciente(dniPaciente);
 
     });
@@ -133,13 +180,18 @@ $(document).ready(function () {
     $("#ddlObraSocial").bind("change", function () {
 
         var idObraSocial = $('#ddlObraSocial').val();
+
+        console.log(idObraSocial);
+
         cargarComboPlanes(idObraSocial, "#ddlPlanObra");
+
         //$('#ddlPlanObra').prop('disabled', false);   
     });
 
 });
 
 function buscarPaciente(dniPaciente) {
+         
     $.ajax({
         url: "RegistrarTurno.aspx/buscarPaciente",
         data: "{dniPaciente: '" + dniPaciente + "'}",
@@ -151,24 +203,28 @@ function buscarPaciente(dniPaciente) {
             var paciente = JSON.parse(data.d); 
                         
             if (data.d != "null") {
-                $('#txtDocumento').prop('disabled', true);
-                $('#txtCelular').prop('disabled', false);
-                $('#txtNombre').prop('disabled', false);
-                $('#txtApeliido').prop('disabled', false);
-                $('#txtEmail1').prop('disabled', false);
-                $('#txtEmail2').prop('disabled', false);
+
+                //validar datos como si los fuera a editar
+
+
+                $('#id__txtDocumento').prop('disabled', false);
+                $('#id__txtCelular').prop('disabled', false);
+                $('#id__txtNombre').prop('disabled', false);
+                $('#id__txtApellido').prop('disabled', false);
+                $('#id__txtEmail1').prop('disabled', false);
+                $('#id__txtEmail2').prop('disabled', false);
                 $('#ddlObraSocial').prop('disabled', false);
                 $('#ddlPlanObra').prop('disabled', true);
-                $('#txtNroAfiliado').prop('disabled', true);
+                $('#id__txtNroAfiliado').prop('disabled', true);
 
-                $('#txtCelular').val(paciente.NroContacto);
-                $('#txtNombre').val(paciente.Nombre);
-                $('#txtApeliido').val(paciente.Apellido);
+                $('#id__txtCelular').val(paciente.NroContacto);
+                $('#id__txtNombre').val(paciente.Nombre);
+                $('#id__txtApellido').val(paciente.Apellido);
 
                 var pacienteEmail = paciente.EmailContacto.split('@');
 
-                $('#txtEmail1').val(pacienteEmail[0]);
-                $('#txtEmail2').val(pacienteEmail[1]);
+                $('#id__txtEmail1').val(pacienteEmail[0]);
+                $('#id__txtEmail2').val(pacienteEmail[1]);
 
                 idPaciente = paciente.IdPaciente;
 
@@ -185,21 +241,25 @@ function buscarPaciente(dniPaciente) {
                 formObraSocial.style.display = "none";
                 btnRegistrarNew.style.display = "none";
                               
-                sendDataPacienteOS(idPaciente);
+                sendDataPacienteOS(idPaciente);   
+
+                clicCruz();
 
             }
             else {
 
-                $('#txtDocumento').prop('disabled', false);
+                   //validar datos como si los fuera a agregar
 
-                $('#txtCelular').prop('disabled', false);
-                $('#txtNombre').prop('disabled', false);
-                $('#txtApeliido').prop('disabled', false);
-                $('#txtEmail1').prop('disabled', false);
-                $('#txtEmail2').prop('disabled', false);
+                $('#id__txtDocumento').prop('disabled', false);
+
+                $('#id__txtCelular').prop('disabled', false);
+                $('#id__txtNombre').prop('disabled', false);
+                $('#id__txtApellido').prop('disabled', false);
+                $('#id__txtEmail1').prop('disabled', false);
+                $('#id__txtEmail2').prop('disabled', false);
                 $('#ddlObraSocial').prop('disabled', false);
                 $('#ddlPlanObra').prop('disabled', true);
-                $('#txtNroAfiliado').prop('disabled', true);
+                $('#id__txtNroAfiliado').prop('disabled', true);
 
 
                 var texto = "Datos Obra Social";
@@ -217,7 +277,9 @@ function buscarPaciente(dniPaciente) {
                 btnCancelar.style.display = "none";
                 btnRegistrarExis.style.display = "none";
                
-                esEdicionPaciente = true;               
+                esEdicionPaciente = true;         
+
+                clicCruz();
             }
             
         }
@@ -243,6 +305,18 @@ function obtenerDisponibilidadHoraria(idProfesional, idEspecialidad, centro, dia
 
     return profesional;
 }
+
+
+function clicCruz() {
+
+    document.getElementById("id__txtDocumento").addEventListener("search", function (event) {
+        console.log('cruz');
+        limpiarModalTurno();      
+        $("#crdObraSocial").hide();
+    });
+
+}
+
 
 function CargarEventosFullCalendar(idProfesional, idEspecialidad, centro) {
     var eventos = [];
@@ -533,6 +607,7 @@ function btnListarTurnoClick(turnos) {
 function mostrarModalTurno(arg) {
     if (arg.event.backgroundColor == 'green') {
 
+        $("#crdObraSocial").hide(); 
         limpiarModalTurno();
         $('#modalTurno').modal('show');
 
@@ -604,36 +679,36 @@ function limpiarCampos() {
     //$('#ddlObraSocial').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
     $('#ddlObraSocial').prop("disabled", true);
     $('#ddlMinDesde').val('00');
-    $('#txtNombre').val("");
-    $('#txtApeliido').val("");
-    $('#txtDocumento').val("");
-    $('#txtCelular').val("");
-    $('#txtEmail1').val("");
-    $('#txtEmail2').val("");
+    $('#id__txtNombre').val("");
+    $('#id__txtApellido').val("");
+    $('#id__txtDocumento').val("");
+    $('#id__txtCelular').val("");
+    $('#id__txtEmail1').val("");
+    $('#id__txtEmail2').val("");
 }
 
 function limpiarModalTurno() {
 
-    $('#txtDocumento').prop('disabled', false);
-    $('#txtCelular').prop('disabled', true);
-    $('#txtNombre').prop('disabled', true);
-    $('#txtApeliido').prop('disabled', true);
-    $('#txtEmail1').prop('disabled', true);
-    $('#txtEmail2').prop('disabled', true);
+    $('#id__txtDocumento').prop('disabled', false);
+    $('#id__txtCelular').prop('disabled', true);
+    $('#id__txtNombre').prop('disabled', true);
+    $('#id__txtApellido').prop('disabled', true);
+    $('#id__txtEmail1').prop('disabled', true);
+    $('#id__txtEmail2').prop('disabled', true);
     $('#ddlObraSocial').prop('disabled', true);
     $('#ddlPlanObra').prop('disabled', true);
-    $('#txtNroAfiliado').prop('disabled', true);
+    $('#id__txtNroAfiliado').prop('disabled', true);
 
 
-    $('#txtNombre').val("");
-    $('#txtApeliido').val("");
-    $('#txtDocumento').val("");
-    $('#txtCelular').val("");
-    $('#txtEmail1').val("");
-    $('#txtEmail2').val("");
+    $('#id__txtNombre').val("");
+    $('#id__txtApellido').val("");
+    $('#id__txtDocumento').val("");
+    $('#id__txtCelular').val("");
+    $('#id__txtEmail1').val("");
+    $('#id__txtEmail2').val("");
     $('#ddlObraSocial').val(0);
     $('#ddlPlanObra').empty();
-    $('#txtNroAfiliado').val("");;
+    $('#id__txtNroAfiliado').val("");;
 
 }
 
@@ -778,12 +853,12 @@ function cargarComboPlanes(idObraSocial, ddl) {
                     $(ddl).append($("<option></option>").val(e.ID_PLANES).html(e.DESCRIPCION));
                 });
                 $("#ddlPlanObra").prop("disabled", false);
-                $('#txtNroAfiliado').prop('disabled', false);
+                $('#id__txtNroAfiliado').prop('disabled', false);
 
             }
             else {
                 $("#ddlPlanObra").prop("disabled", true);
-                $('#txtNroAfiliado').prop('disabled', true);
+                $('#id__txtNroAfiliado').prop('disabled', true);
 
             }
         },
@@ -820,6 +895,9 @@ function registrarTurnoNew(datosTurno) {
 }
 
 function validarDatosTurno() {
+
+
+    //console.log(nroAfiliado.prop.disabled);
 
     if (centro == null) {
         swal("Cuidado", "Ingrese un Centro", "warning");
@@ -864,10 +942,72 @@ function validarDatosTurno() {
         swal("Cuidado", "Ingrese una Obra Social", "warning");
         return false;
     }
+    else if (nroAfiliado == "") {
+        swal("Cuidado", "Ingrese el número de afiliado", "warning");
+        return false;
+    }
     else {
         return true;
     };
 };
+
+
+function validarDatosTurnoParticular() {
+
+
+    //console.log(nroAfiliado.prop.disabled);
+
+    if (centro == null) {
+        swal("Cuidado", "Ingrese un Centro", "warning");
+        return false;
+    }
+    else if (especialidad == null) {
+        swal("Cuidado", "Ingrese una Especialidad", "warning");
+        return false;
+    }
+    else if (fechaTurno == "") {
+        swal("Cuidado", "Ingrese una Fecha", "warning");
+        return false;
+    }
+    else if (horaTurno == null) {
+        return false;
+    }
+    else if (nombre == "") {
+        swal("Cuidado", "Ingrese un Nombre", "warning");
+        return false;
+    }
+    else if (apellido == "") {
+        swal("Cuidado", "Ingrese un Apellido", "warning");
+        return false;
+    }
+    else if (documento == "") {
+        swal("Cuidado", "Ingrese un Documento", "warning");
+        return false;
+    }
+    else if (celular == "") {
+        swal("Cuidado", "Ingrese un Celular", "warning");
+        return false;
+    }
+    else if (email1 == "") {
+        swal("Cuidado", "Ingrese un Email válido", "warning");
+        return false;
+    }
+    else if (email2 == "") {
+        swal("Cuidado", "Ingrese un Email válido", "warning");
+        return false;
+    }
+    else if (obraSocial == "") {
+        swal("Cuidado", "Ingrese una Obra Social", "warning");
+        return false;
+    }    
+    else {
+        return true;
+    };
+};
+
+
+
+
 
 
 function sendDataPacienteOS(numero) {
@@ -1023,7 +1163,7 @@ $("#btnAgregar").click(function (e) {
         p_idPaciente: idPaciente,
         p_obraSocial: $("#ddlObraSocial").val(),
         p_plan: $("#ddlPlanObra").val(),
-        p_nroAfiliado: $("#txtNroAfiliado").val()
+        p_nroAfiliado: $("#id__txtNroAfiliado").val()
     }
 
     registrarOSxPaciente(obraPaciente);
@@ -1073,7 +1213,7 @@ function seleccionarOS(idObraPaciente, numero) {
     var table = $('#tablaOSPaciente').DataTable();
     $('#tablaOSPaciente tbody').on('click', 'tr', function (e) {
 
-        e.preventDefault();
+       // e.preventDefault();
 
         var resulfila = [];
         resulfila = table.row(this).data();      
@@ -1138,3 +1278,21 @@ function registrarSoloTurno(obraTurnoPaciente) {
     });
 }
 
+function soloNumeros(event) {
+    var regex = new RegExp("^[0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+function soloLetras(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};

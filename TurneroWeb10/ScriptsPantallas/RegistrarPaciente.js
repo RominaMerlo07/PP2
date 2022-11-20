@@ -196,10 +196,12 @@ function cargarComboPlanes(idObraSocial, ddl) {
             }
             else {
                 $("#ddlPlanObra").prop("disabled", true);
-                $("#ddlPlanObra").val(null);
+                $("#ddlPlanObra").val([0]);
+                $('#id__txtNroAfiliado').val("");
                 $('#id__txtNroAfiliado').prop('disabled', true);
                 $("#ddlPlanObraE").prop("disabled", true);
-                $("#ddlPlanObraE").val(null);
+                $("#ddlPlanObraE").val([0]);
+                $('#id__txtNroAfiliadoE').val("");
                 $('#id__txtNroAfiliadoE').prop('disabled', true);                     
 
             }

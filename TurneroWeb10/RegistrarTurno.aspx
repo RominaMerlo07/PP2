@@ -137,70 +137,81 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-info text-white">
-                    <h4 class="modal-title " id="lblTituloTurno">Reserva de Turno</h4>
+                    <h4 class="modal-title" id="lblTituloTurno">Reserva de Turno</h4>
                     <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="formularioRegistrar">
                     <div class="col-md-12" id="crdPaciente2">
                         <div class="card text-white ">
-                            <div class="card-header ">
-                                <h4 class="modal-title text-dark">Datos personales</h4>
+                            <div class="card-header bg-info">
+                                <h4 class="modal-title text-white">Datos personales</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
-                                    <div class="col">
+                                    <div class="col-sm-6">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paciente: </span>
                                             </div>
-                                            <input type="search" class="form-control rounded" id="txtDocumento" placeholder="Ingrese DNI" aria-label="Search"
+                                            <input type="search" name="dni" class="form-control rounded" id="id__txtDocumento" maxlength="8" placeholder="Ingrese DNI" aria-label="Search"
                                                 aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
+                                             <%--<input type="search" name="dni" style="text-align: left" class="formulario-input form-control rounded" id="id__txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" aria-label="Search"
+                                                aria-describedby="search-addon"/>--%> 
                                             <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                                 <i class="fas fa-search"></i>
-                                            </button>
+                                            </button><p style="color: red;">*</p>
                                         </div>
-                                    </div>
-                                    <div class="col ">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Celular:</span>
-                                            </div>
-                                            <input type="text" style="text-align: left" class="form-control" id="txtCelular" onkeypress="return soloNumeros(event)" disabled="disabled" />
-                                        </div>
-                                    </div>
+                                        <p class="formulario__error" id="p__txtDocumento">Por favor, ingrese el DNI sin puntos.</p>
+                                    </div>                                  
                                 </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">Nombre y Apellido:</span>
+                                 <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">Nombre y Apellido</span>
+                                                </div>
+                                                <input type="text" name="nombre" style="text-align: left" class="form-control" id="id__txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <input type="text" name="apellido" style="text-align: left" class="form-control" id="id__txtApellido" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
+
                                             </div>
-                                            <input type="text" style="text-align: left" class="form-control" id="txtNombre" onkeypress="return soloLetras(event)" disabled="disabled" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                            <input type="text" style="text-align: left" class="form-control" id="txtApeliido" onkeypress="return soloLetras(event)" disabled="disabled" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                            <p class="formulario__error" id="p__txtNombre">Por favor, ingrese el/los nombre/s</p>
+                                            <p class="formulario__error" id="p__txtApellido">Por favor, ingrese el/los apellido/s</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col ">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Email: </span>
+                                 <div class="form-row">
+                                        <div class="col-sm-6">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Celular</span>
+                                                </div>
+                                                <input type="text" name="celular" style="text-align: left" class="form-control" id="id__txtCelular" maxlength="10" onkeypress="return soloNumeros(event)" onpaste="return false" placeholder="Ej: 3515123456" /><p style="color: red;">*</p>
                                             </div>
-                                            <input type="text" class="form-control" id="txtEmail1" disabled="disabled" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">@</span>
-                                            </div>
-                                            <input type="text" class="form-control" id="txtEmail2" placeholder="gmail.com" disabled="disabled" />
+                                            <p class="formulario__error" id="p__txtCelular">Por favor, ingrese el Celular sin 0 y sin 15</p>
                                         </div>
                                     </div>
-                                </div>                             
+                                <div class="form-row">
+                                        <div class="col">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Email: </span>
+                                                </div>
+                                                <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">@</span>
+                                                </div>
+                                                <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
+                                            </div>
+                                            <p class="formulario__error" id="p__txtEmail1">Por favor, ingrese un email valido</p>
+                                            <p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>
+                                        </div>
+                                    </div>                           
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12" id="crdObraSocial" style="display: none">
-                        <div class="card text-white ">
-                            <div class="card-header ">
-                                <h4 class="modal-title text-dark" id="textObraSocial">Seleccione Obra Social</h4>
+                        <div class="card text-white">
+                            <div class="card-header bg-info">
+                                <h4 class="modal-title text-white" id="textObraSocial">Seleccione Obra Social</h4>
                             </div>
                             <div class="card-body">
                                 <div id="formObraSocial" style="display: none">
@@ -230,8 +241,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Nro. Afiliado:</span>
                                                 </div>
-                                                <input type="text" style="text-align: left" class="form-control" id="txtNroAfiliado" onkeypress="return soloNumeros(event)" disabled="disabled" />
+                                                <input type="text" name="nro_afiliado" style="text-align: left" class="form-control" id="id__txtNroAfiliado" onkeypress="return soloNumeros(event)" disabled="disabled" />
                                             </div>
+                                            <p class="formulario__error" id="p__txtNroAfiliado">Por favor, ingrese el numero de afiliado</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -303,5 +315,7 @@
             </div>
         </div>
     </div>
+      <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/registrarTurnos.js"%>"></script>
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/registrarTurnos_validacion.js"%>"></script>
 </asp:Content>
