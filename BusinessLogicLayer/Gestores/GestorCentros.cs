@@ -132,6 +132,21 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+
+        public int validarCentro(string centro)
+        {
+
+            try
+            {
+                DACentros DaCentros = new DACentros();
+                return DaCentros.validarCentro(centro);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 
 

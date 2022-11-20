@@ -252,13 +252,13 @@ namespace DataAccess
 
                 string consulta = "UPDATE T_CENTROS SET NOMBRE_CENTRO = @NOMBRE_CENTRO," +
                                                         "DOMICILIO_CENTRO = @DOMICILIO_CENTRO," +
-                                                        "LOCALIDAD_CENTRO =@LOCALIDAD_CENTRO," +
+                                                        "LOCALIDAD_CENTRO = @LOCALIDAD_CENTRO," +
                                                         "EMAIL_CENTRO = @EMAIL_CENTRO, " +
                                                         "NRO_CONTACTO_1 = @NRO_CONTACTO1, " +
                                                         "NRO_CONTACTO_2 = @NRO_CONTACTO2, " +
                                                         "USUARIO_MOD = @USUARIO_MOD, " +
                                                         "FECHA_MOD = @FECHA_MOD " +
-                                                        "WHERE ID_CENTRO = @ID_CENTRO; SELECT SCOPE_IDENTITY()";
+                                                  "WHERE ID_CENTRO = @ID_CENTRO; SELECT SCOPE_IDENTITY()";
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Transaction = trans;
@@ -483,6 +483,45 @@ namespace DataAccess
             }
 
             return resultado;
+
+        }
+
+        public int validarCentro(string centro)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT count(*) " +
+                                    "FROM T_CENTROS p " +
+                                    "WHERE NOMBRE_CENTRO = @CENTRO " +
+                                    "AND FECHA_BAJA is null; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@CENTRO", centro);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
 
         }
 

@@ -51,6 +51,7 @@ $(document).ready(function () {
 
 $('#btnRegistrarModal').click(function () {
     $("#modalRegistrar").modal('show');
+    deshabilitarCampos(true);
 });
 
 
@@ -72,16 +73,16 @@ function actualizarCentro(IdCentro) {
 
                 $("#modalEditar").modal('show');
 
-                $("#id__txtNombreE").val(data.d.NombreCentro);
+                $("#id__AtxtNombre").val(data.d.NombreCentro);
                 var direccion = data.d.DomicilioCentro.split('Barrio:');
-                $("#id__txtDomicilioE").val(direccion[0]);
-                $("#id__txtBarrioE").val(direccion[1]);           
-                $("#id__txtLocalidadE").val(data.d.LocalidadCentro);
+                $("#id__AtxtDomicilio").val(direccion[0]);
+                $("#id__AtxtBarrio").val(direccion[1]);           
+                $("#id__AtxtLocalidad").val(data.d.LocalidadCentro);
                 var email = data.d.EmailCentro.split('@');
-                $("#id__txtEmail1E").val(email[0]);
-                $("#id__txtEmail2E").val(email[1]);
-                $("#id__txtTelefonoE").val(data.d.NroCentro1);
-                $("#id__txtCelularE").val(data.d.NroCentro2);
+                $("#id__AtxtEmail1").val(email[0]);
+                $("#id__AtxtEmail2").val(email[1]);
+                $("#id__AtxtTelefono").val(data.d.NroCentro1);
+                $("#id__AtxtCelular").val(data.d.NroCentro2);
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -271,7 +272,7 @@ function inactivar(id, nombre) {
              }            
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
         }
     });
    
@@ -282,16 +283,18 @@ function UpdateDataCentros(id) {
 
     var obj = JSON.stringify({
         p_id: id,
-        p_centro: $('#id__txtNombreE').val(),
-        p_domicilio: $('#id__txtDomicilioE').val(),
-        p_barrio: $('#id__txtBarrioE').val(),
-        p_localidad: $('#id__txtLocalidadE').val(),
-        p_telefono: $('#id__txtTelefonoE').val(),
-        p_celular: $('#id__txtCelularE').val(),
-        p_email1: $('#id__txtEmail1E').val(),
-        p_email2: $('#id__txtEmail2E').val()
+        p_centro: $('#id__AtxtNombre').val(),
+        p_domicilio: $('#id__AtxtDomicilio').val(),
+        p_barrio: $('#id__AtxtBarrio').val(),
+        p_localidad: $('#id__AtxtLocalidad').val(),
+        p_telefono: $('#id__AtxtTelefono').val(),
+        p_celular: $('#id__AtxtCelular').val(),
+        p_email1: $('#id__AtxtEmail1').val(),
+        p_email2: $('#id__AtxtEmail2').val()
 
     });
+
+    console.log(obj);
 
    
     $.ajax({
@@ -301,6 +304,8 @@ function UpdateDataCentros(id) {
         dataType: "json",
         contentType: 'application/json; charset=utf-8',     
         success: function (response) {
+
+            console.log(response);
 
                 if (response.d != 'OK') {
                     swal("Hubo un problema", "Error al actualizar datos del centro.", "error");
@@ -312,10 +317,13 @@ function UpdateDataCentros(id) {
 
                 }          
         },
-           error: function (xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(thrownError);
         }
-        })
-    }
+    })
+          
+}
 
 
 function ObtenerTurnosFuturos(idCentro)
@@ -465,3 +473,37 @@ function darBajaCentro(IdCentro, nombreCentro) {
         }
     });
 }
+
+
+function deshabilitarCampos(valor) {
+
+    // document.getElementById("id__txtDocumento").focus(); 
+  
+    document.getElementById("id__txtCalle").readOnly = valor;
+    document.getElementById("id__txtNumero").readOnly = valor;
+    document.getElementById("id__txtBarrio").readOnly = valor;
+    document.getElementById("id__txtLocalidad").readOnly = valor;
+    document.getElementById("id__txtCelular").readOnly = valor;
+    document.getElementById("id__txtEmail1").readOnly = valor;
+    document.getElementById("id__txtEmail2").readOnly = valor;
+
+}
+
+function soloNumeros(event) {
+    var regex = new RegExp("^[0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+function soloLetras(event) {
+    var regex = new RegExp("^[a-zA-Z ]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};

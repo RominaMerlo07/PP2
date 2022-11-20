@@ -297,6 +297,36 @@ namespace TurneroWeb10
             }
         }
 
+        [WebMethod]
+        public static string validarCentro(string centro)
+        {
+
+            string result = "OK";
+            try
+            {
+                GestorCentros gCentros = new GestorCentros();
+
+                int existeCentro = gCentros.validarCentro(centro);
+
+                if (existeCentro > 0)
+                {
+
+                    result = "existe";
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 
 }

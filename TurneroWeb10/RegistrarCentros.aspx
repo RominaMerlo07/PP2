@@ -54,10 +54,10 @@
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Nombre Centro</span>
-                                    </div>
-                                    <%--<input type="text" name="nombre" style="text-align: left" class="formulario-input form-control" id="id__txtNombre" />--%>
-                                     <input type="text" name="calle" id="id__txtNombre" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    </div>                                  
+                                     <input type="text" name="nombre" id="id__txtNombre" style="text-align: left" class="form-control" maxlength="120"  onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" /> <p style="color: red;">*</p>
                                 </div>
+                                <p class="formulario__error" id="p__txtNombre">Por favor, ingrese el nombre del centro.</p>
                             </div>
                         </div>
                         <div class="form-row">
@@ -66,20 +66,18 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Calle</span>
                                     </div>
-                                    <input type="text" name="calle" id="id__txtCalle" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtCalle"></i>                                                    --%>
-                                </div>
-                                <%--<p class="formulario__error" id="p__txtCalle">Por favor, ingrese la calle</p>--%>
+                                    <input type="text" name="calle" id="id__txtCalle" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
+                                 </div>
+                                <p class="formulario__error" id="p__txtCalle">Por favor, ingrese la calle</p>
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Numero</span>
                                     </div>
-                                    <input type="text" name="numero" style="text-align: left" class="form-control" id="id__txtNumero" maxlength="4" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtNumero"></i>                                                    --%>
+                                    <input type="text" name="numero" style="text-align: left" class="form-control" id="id__txtNumero" maxlength="5" onkeypress="return soloNumeros(event)" /><p style="color: red;">*</p>                                                                                  
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtNumero">Por favor, ingrese el Número o "0".</p>--%>
+                                <p class="formulario__error" id="p__txtNumero">Por favor, ingrese el Número o "0".</p>
                             </div>
                         </div>
                         <div class="form-row">
@@ -88,42 +86,37 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Barrio</span>
                                     </div>
-                                    <input type="text" name="barrio" style="text-align: left" class="form-control" id="id__txtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    --%>
+                                    <input type="text" name="barrio" style="text-align: left" class="form-control" id="id__txtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p> 
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>--%>
+                                <p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>
                             </div>
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Localidad</span>
                                     </div>
-                                    <input type="text" name="localidad" style="text-align: left" class="form-control" id="id__txtLocalidad" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  --%>
+                                    <input type="text" name="localidad" style="text-align: left" class="form-control" id="id__txtLocalidad" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>                             
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>--%>
+                                <p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Telefono</span>
-                                    </div>
-                                    <input type="text" name="telefono" style="text-align: left" class="form-control" id="id__txtTelefono" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3514560000"/>
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    --%>
-                                </div>
-                                <%--<p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>--%>
-                            </div>
+                        <div class="form-row">                           
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Celular</span>
                                     </div>
-                                    <input type="text" name="celular" style="text-align: left" class="form-control" id="id__txtCelular" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3515127426"/>
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  --%>
+                                    <input type="text" name="celular" style="text-align: left" class="form-control" id="id__txtCelular" maxlength="10" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return soloNumeros(event)" placeholder="Ej.: 3515127426"/><p style="color: red;">*</p>                             
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>--%>
+                                <p class="formulario__error" id="p__txtCelular">Por favor, ingrese el celular sin 0 y sin 15</p>
+                            </div>
+                             <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Telefono</span>
+                                    </div>
+                                    <input type="text" name="telefono" style="text-align: left" class="form-control" id="id__txtTelefono" maxlength="10" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3514560000" onkeypress="return soloNumeros(event)"/>                                   
+                                </div>                              
                             </div>
                         </div>
                         <div class="form-row">
@@ -133,14 +126,12 @@
                                         <span class="input-group-text">Email: </span>
                                     </div>
                                     <input type="text" name="email1" class="form-control" id="id__txtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail1"></i>  --%>
                                     <div class="input-group-append">
                                         <span class="input-group-text">@</span>
                                     </div>
-                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail2"></i>  --%>
+                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" /> <p style="color: red;">*</p>    
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>--%>
+                                <p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>
                             </div>
                         </div>
                     </div>
@@ -168,10 +159,10 @@
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Nombre Centro</span>
-                                    </div>
-                                    <%--<input type="text" name="nombre" style="text-align: left" class="formulario-input form-control" id="id__txtNombre" />--%>
-                                    <input type="text" name="calle" id="id__txtNombreE" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    </div>                                   
+                                    <input type="text" name="nombreE" id="id__AtxtNombre" style="text-align: left" class="form-control"  onkeypress="return soloLetras(event)" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>    
                                 </div>
+                                <p class="formulario__error" id="p__AtxtNombre">Por favor, ingrese el nombre del centro.</p>
                             </div>
                         </div>
                         <div class="form-row">
@@ -180,8 +171,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Dirección</span>
                                     </div>
-                                    <input type="text" style="text-align: left" class="form-control" id="id__txtDomicilioE" maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                    <input type="text" name="domicilioE" style="text-align: left" class="form-control" id="id__AtxtDomicilio" maxlength="160" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>    
                                 </div>
+                                <p class="formulario__error" id="p__AtxtDomicilio">Por favor, ingrese el domicilio (calle y numero)</p>
                             </div>
                         </div>
                         <div class="form-row">
@@ -190,42 +182,39 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Barrio</span>
                                     </div>
-                                    <input type="text" name="barrio" style="text-align: left" class="form-control" id="id__txtBarrioE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    --%>
+                                    <input type="text" name="barrioE" style="text-align: left" class="form-control" id="id__AtxtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />  <p style="color: red;">*</p>                                
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>--%>
+                                <p class="formulario__error" id="p__AtxtBarrio">Por favor, ingrese el Barrio</p>
                             </div>
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Localidad</span>
                                     </div>
-                                    <input type="text" name="localidad" style="text-align: left" class="form-control" id="id__txtLocalidadE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  --%>
+                                    <input type="text" name="localidadE" style="text-align: left" class="form-control" id="id__AtxtLocalidad" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" /> <p style="color: red;">*</p>                                 
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>--%>
+                                <p class="formulario__error" id="p__AtxtLocalidad">Por favor, ingrese la Localidad</p>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Telefono</span>
-                                    </div>
-                                    <input type="text" name="telefono" style="text-align: left" class="form-control" id="id__txtTelefonoE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3514560000" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtBarrio"></i>    --%>
-                                </div>
-                                <%--<p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>--%>
-                            </div>
+                          
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Celular</span>
                                     </div>
-                                    <input type="text" name="celular" style="text-align: left" class="form-control" id="id__txtCelularE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3515127426" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtLocalidad"></i>  --%>
+                                    <input type="text" name="celularE" style="text-align: left" class="form-control" id="id__AtxtCelular" maxlength="10" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ej.: 3515127426" onkeypress="return soloNumeros(event)" /><p style="color: red;">*</p>  
+           
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>--%>
+                                <p class="formulario__error" id="p__AtxtCelular">Por favor, ingrese el celular sin 0 y sin 15</p>
+                            </div>
+                              <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Telefono</span>
+                                    </div>
+                                    <input type="text" name="telefonoE" style="text-align: left" class="form-control" id="id__AtxtTelefono" maxlength="10" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return soloNumeros(event)" placeholder="Ej.: 3514560000" />                                  
+                                </div>  
                             </div>
                         </div>
                         <div class="form-row">
@@ -234,15 +223,13 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Email: </span>
                                     </div>
-                                    <input type="text" name="email1" class="form-control" id="id__txtEmail1E" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail1"></i>  --%>
+                                    <input type="text" name="email1E" class="form-control" id="id__AtxtEmail1" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" />                              
                                     <div class="input-group-append">
                                         <span class="input-group-text">@</span>
                                     </div>
-                                    <input type="text" name="email2" class="form-control" id="id__txtEmail2E" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%--<i class="formulario__validacion fas fa-times-circle" id="icon__txtEmail2"></i>  --%>
+                                    <input type="text" name="email2E" class="form-control" id="id__AtxtEmail2" maxlength="100" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>                              
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>--%>
+                                <p class="formulario__error" id="p__AtxtEmail2">Por favor, ingrese un email valido</p>
                             </div>
                         </div>
                     </div>
@@ -294,6 +281,7 @@
     </div>
     <%--Final Modal Turno--%>
 
+     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Centros.js"%>"></script>
-
+    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Centros_validacion.js"%>"></script>
   </asp:Content>

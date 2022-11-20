@@ -530,6 +530,7 @@
     <Content Include="RecuperarPassword.aspx" />
     <Content Include="ReprogramarTurno.aspx" />
     <Content Include="LiquidacionObraSocial.aspx" />
+    <Content Include="ScriptsPantallas\Centros_validacion.js" />
     <Content Include="ScriptsPantallas\Especialidades.js" />
     <Content Include="ScriptsPantallas\Personal_validacion.js" />
     <Content Include="ScriptsPantallas\RegistrarPaciente_validacion.js" />
