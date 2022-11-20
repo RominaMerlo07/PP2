@@ -83,6 +83,7 @@ const validarCampo = (expresion, input, campo) => {
                 } else {
                     document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
                     document.getElementById(`id__${campo}`).classList.remove('formulario-input');
+                    deshabilitarCampos(true);
                 }
             }
         }
