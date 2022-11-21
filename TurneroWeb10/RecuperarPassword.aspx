@@ -33,7 +33,7 @@
                     <h6>Ingrese su email para enviarle las instrucciones de "Recuperación de Contraseña"</h6>
                     <label for="email">Email</label>
                     <div class="form-group" id="email-group">
-                        <input type="text" name="email" id="txtEmail" />
+                        <input type="text" name="email" id="txtEmail" /><p style="color: red;">*</p>
                     </div>
                     <input type="button" class="btn btn-primary" id="button" value="Enviar Email" />
                 </form>

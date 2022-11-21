@@ -620,10 +620,10 @@ function registrarOSxPaciente(obraPaciente) {
             console.log(data.d);
 
             if (data.d != 'OK') {
-                alert('Error al agregar la obra social.')
+                swal("Hubo un problema", "Error al agregar la obra social.", "error"); //error               
             } else {
                 $('#btnConfPaciente').show();
-                alert('Obra social registrada con Éxito.');
+                swal("Hecho", "Obra social registrada con Éxito!", "success"); //error                
                 $("#agregarObraSocial").hide();
                 sendDataPacienteOS(obraPaciente.p_idPaciente);
 
@@ -685,10 +685,13 @@ function actualizarOSPaciente(obraPaciente) {
             console.log(data.d);
 
             if (data.d != 'OK') {
-                alert('Error al actualizar los datos de la obra social del paciente.')
+               
+                swal("Hubo un problema", "Error al actualizar los datos de la obra social del paciente.", "error"); //error
+               // alert('Los datos de la obra social del paciente se actualizaron con Éxito.');
             } else {
                 $('#btnConfPaciente').show();
-                alert('Los datos de la obra social del paciente se actualizaron con Éxito.');
+                swal("Hecho", "Los datos de la obra social del paciente se actualizaron con Éxito.!", "success"); //error
+               // alert('Los datos de la obra social del paciente se actualizaron con Éxito.');
                 $("#agregarObraSocial").hide();
                 sendDataPacienteOS(obraPaciente.p_idPaciente);
 

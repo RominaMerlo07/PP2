@@ -6,7 +6,7 @@
     </section>
     <div class="content">
         <div class="row">
-            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal">Registrar Obra Social</button>
+            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"> <i class="fa-solid fa-plus"></i> | Registrar Obra Social</button>
         </div>
         <br />
         <div class="row">
@@ -129,7 +129,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Plan: </span>
                                             </div>
-                                            <input type="text" name="nombreP" class="form-control" id="id__txtPlan" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                            <input type="text" name="nombreP" class="form-control" id="id__txtPlan" onkeyup="javascript:this.value=this.value.toUpperCase();"/><p style="color: red;">*</p>
                                         </div>
                                         <p class="formulario__error" id="p__txtPlan">Por favor, ingrese un plan</p>
                                     </div>                              
@@ -175,7 +175,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Plan: </span>
                                             </div>
-                                            <input type="text" name="nombrePE" class="form-control" id="id__AtxtPlan" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                            <input type="text" name="nombrePE" class="form-control" id="id__AtxtPlan" onkeyup="javascript:this.value=this.value.toUpperCase();"/><p style="color: red;">*</p>
                                         </div>
                                         <p class="formulario__error" id="p__AtxtPlan">Por favor, ingrese un plan</p>
                                     </div>                              

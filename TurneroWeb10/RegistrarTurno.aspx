@@ -54,7 +54,7 @@
                                         <span class="input-group-text">Sucursal: </span>
                                     </div>
                                     <select class="custom-select form-control" id="ddlSucursal">
-                                    </select>
+                                    </select><p style="color: red;">*</p>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -64,7 +64,7 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                    </select>
+                                    </select><p style="color: red;">*</p>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -74,7 +74,7 @@
                                     </div>
                                     <select class="form-control" id="ddlProfesional">
                                         <%--<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>--%>
-                                    </select>
+                                    </select><p style="color: red;">*</p>
                                 </div>
                             </div>
                         </div>
@@ -154,12 +154,12 @@
                                                 <span class="input-group-text">Paciente: </span>
                                             </div>
                                             <input type="search" name="dni" class="form-control rounded" id="id__txtDocumento" maxlength="8" placeholder="Ingrese DNI" aria-label="Search"
-                                                aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
+                                                aria-describedby="search-addon" onkeypress="return soloNumeros(event)" /><p style="color: red;">*</p>
                                              <%--<input type="search" name="dni" style="text-align: left" class="formulario-input form-control rounded" id="id__txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" aria-label="Search"
                                                 aria-describedby="search-addon"/>--%> 
                                             <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                                 <i class="fas fa-search"></i>
-                                            </button><p style="color: red;">*</p>
+                                            </button>
                                         </div>
                                         <p class="formulario__error" id="p__txtDocumento">Por favor, ingrese el DNI sin puntos.</p>
                                     </div>                                  
@@ -222,7 +222,7 @@
                                                     <span class="input-group-text">Obra Social: </span>
                                                 </div>
                                                 <select class="custom-select form-control" id="ddlObraSocial" disabled="disabled">
-                                                </select>
+                                                </select><p style="color: red;">*</p>
                                             </div>
                                         </div>
                                         <div class="col ">

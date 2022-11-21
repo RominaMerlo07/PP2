@@ -10,7 +10,7 @@
     </section>
     <section class="content">
         <div class="row">
-            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"><i class="fas fa-user-plus"></i>| Registrar Paciente</button>
+            <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"><i class="fas fa-user-plus"></i> | Registrar Paciente</button>
         </div>
         <br />
         <!-- Lista usuarios -->

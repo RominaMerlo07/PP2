@@ -39,7 +39,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Profesional: </span>
                                 </div>
-                                <select class="form-control" id="txtNombreProf" ></select>
+                                <select class="form-control" id="txtNombreProf" ></select><p style="color: red;">*</p>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-8" >
@@ -97,7 +97,7 @@
                                                 </div>
                                                 <select class="custom-select form-control actualizar" id="ddlSucursal">
                                                     <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                                </select>
+                                                </select><p style="color: red;">*</p>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                                                 </div>
                                                 <input type='text' class="form-control datepickerAgregar date actualizar" id="dtpFechaDesde"
                                                         placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                                        data-date-format="dd/mm/yyyy" />
+                                                        data-date-format="dd/mm/yyyy" /><p style="color: red;">*</p>
                                                 
                                                     
                                             </div>
@@ -121,7 +121,7 @@
                                                 </div>
                                                 <input type='text' class="form-control datepickerAgregar date actualizar" id="dtpFechaHasta"
                                                     placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                                    data-date-format="dd/mm/yyyy" />
+                                                    data-date-format="dd/mm/yyyy" /><p style="color: red;">*</p>
 
                                             </div>
                                         </div>                           
@@ -155,7 +155,7 @@
                                                     <option value="15">15</option>
                                                     <option value="30">30</option>
                                                     <option value="45">45</option>
-                                                </select>
+                                                </select><p style="color: red;">*</p>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
                                                     <option value="15">15</option>
                                                     <option value="30">30</option>
                                                     <option value="45">45</option>
-                                                </select>
+                                                </select><p style="color: red;">*</p>
                                             </div>
                                         </div>
                                     </div> 
