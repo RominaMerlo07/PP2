@@ -35,69 +35,90 @@
         <!-- End Datatable -->
         <!-- End Lista centros -->
 
-    </section>
+    </section>    
 
 
     <%--Modal Registrar--%>
-    <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" tabindex="-1" role="dialog" id ="modalRegistrar" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header text-white bg-info">
-                    <h4 class="modal-title" id="lblRegistrar">Registrar Especialidad</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-header bg-info text-white">
+                    <h4 class="modal-title " id="lblRegistrar" >Registrar Especialidad</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>       
                 </div>
                 <div class="modal-body" id="formularioRegistrar">
-                    <div class="card-body">
-                        <div class="col-sm">
-                            <div class="row">
-                                <div class="input-group mb-3">
+                    <div class="col-md-12">
+                        <div class="card text-white">
+                            <div class="card-header bg-info">
+                                <h4 class="modal-title text-white" >Completar datos</h4>
+                            </div>
+                            <div class="card-body">       
+                                <div class="form-row">
+                                    <div class="col-md-8">
+                                           <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Nombre Especialidad</span>
                                     </div>
                                     <input type="text" name="nombre" style="text-align: left" class="form-control" id="id__txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
                                 </div>
                                  <p class="formulario__error" id="p__txtNombre">Por favor, ingrese la especialidad</p>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md text-right">
+                                        <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>      
+                                    </div>
+                                </div>                                             
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrar">Registrar</button>
                 </div>
             </div>
         </div>
     </div>
-    <%--Final Modal registrar--%>
+ <%--Final Modal registrar--%>
 
 
-
-        <%--Modal Editar--%>
-    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <%--Modal Registrar--%>
+    <div class="modal fade" tabindex="-1" role="dialog" id ="modalEditar" >
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header text-white bg-info">
-                    <h4 class="modal-title" id="lblEditar">Actualizar Especialidad</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-header bg-info text-white">
+                    <h4 class="modal-title ">Actualizar Especialidad</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>       
                 </div>
                 <div class="modal-body" id="formularioEditar">
-                    <div class="card-body">
-                        <div class="col-sm">
-                            <div class="row">
-                                <div class="input-group mb-3">
+                    <div class="col-md-12">
+                        <div class="card text-white">
+                            <div class="card-header bg-info">
+                                <h4 class="modal-title text-white" >Modificar datos</h4>
+                            </div>
+                            <div class="card-body">       
+                                <div class="form-row">
+                                    <div class="col-md-8">
+                                           <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Nombre Especialidad</span>
                                     </div>
-                                    <%--<input type="text" name="nombre" style="text-align: left" class="formulario-input form-control" id="id__txtNombre" />--%>
-                                    <input type="text" name="nameE" id="id__AtxtNombre" style="text-align: left" class="form-control" maxlength="120" onkeypress="return soloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
+                                    <input type="text" name="nameE" style="text-align: left" class="form-control" id="id__AtxtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
                                 </div>
                                  <p class="formulario__error" id="p__AtxtNombre">Por favor, ingrese la especialidad</p>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md text-right">
+                                        <button class="btn btn-primary btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>      
+                                    </div>
+                                </div>                                             
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-lg float-right" type="button" id="btnActualizar">Actualizar</button>
                 </div>
             </div>
         </div>
     </div>
-    <%--Final Modal Editar--%>
+ <%--Final Modal registrar--%>
+
 
 
      <%--MODAL TURNO--%>

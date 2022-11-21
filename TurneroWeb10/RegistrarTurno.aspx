@@ -270,8 +270,8 @@
                 <br />
                 <div class="modal-footer">
                     <div class="row float-right">
-                        <button class="btn btn-success btn-lg " type="button" id="btnRegistrarNew">Registrar Turno</button>
-                        <button class="btn btn-success btn-lg " type="button" id="btnRegistrarExis">Registrar Turno</button>
+                        <button class="btn btn-success btn-lg " type="button" id="btnRegistrarNew">Registrar</button>
+                        <button class="btn btn-success btn-lg " type="button" id="btnRegistrarExis">Registrar</button>
                     </div>
                 </div>
             </div>

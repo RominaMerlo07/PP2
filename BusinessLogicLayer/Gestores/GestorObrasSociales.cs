@@ -99,6 +99,19 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public DataTable TraerPlanesAll(string idObraSocial)
+        {
+            try
+            {
+                DAObrasSociales daObrasSociales = new DAObrasSociales();
+                return daObrasSociales.TraerPlanesAll(idObraSocial);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public DataTable cargarPlanesPacientes(string idObraSocial, string idPaciente)
         {
@@ -221,6 +234,90 @@ namespace BusinessLogicLayer.Gestores
                 throw e;
             }
         }
+
+        public int validarObraSocial(string obraSocial)
+        {
+
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.validarObraSocial(obraSocial);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ObraSocial cargarObrasSociales(int idObraSocial)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.cargarObrasSociales(idObraSocial);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string editarObraSocial(ObraSocial obraSocial)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.editarObraSocial(obraSocial);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public int validarPlan(int id_obraSocial, string plan)
+        {
+
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.validarPlan(id_obraSocial, plan);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public ObrasPlanes cargarPlan(int idPlan)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.cargarPlan(idPlan);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string editarPlan(ObrasPlanes obrasPlanes)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.editarPlan(obrasPlanes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 

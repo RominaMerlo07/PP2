@@ -534,6 +534,8 @@
     <Content Include="ScriptsPantallas\Especialidades.js" />
     <Content Include="ScriptsPantallas\Especialidades_validacion.js" />
     <Content Include="ScriptsPantallas\Personal_validacion.js" />
+    <Content Include="ScriptsPantallas\RegistrarOS.js" />
+    <Content Include="ScriptsPantallas\RegistrarOS_validacion.js" />
     <Content Include="ScriptsPantallas\RegistrarPaciente_validacion.js" />
     <Content Include="ScriptsPantallas\registrarTurnos_validacion.js" />
     <Content Include="zzEjemploEnviadorMail.aspx" />

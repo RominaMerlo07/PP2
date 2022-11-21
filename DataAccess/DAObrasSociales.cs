@@ -189,7 +189,7 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
                 string consulta = @"SELECT * FROM T_OBRAS_PLANES
                                         WHERE ID_OBRA_SOCIAL = @idObraSocial
-                                          AND FECHA_BAJA IS NULL"; /*CONSULTAR A GAS SI GENERA PROBLEMAS EN OTRO LADO*/
+                                          AND FECHA_BAJA IS NULL";
 
                 cmd = new SqlCommand(consulta, con);
 
@@ -336,9 +336,9 @@ namespace DataAccess
                 con.Open();
                 trans = con.BeginTransaction();
 
-                string consulta = "insert into T_OBRAS_SOCIALES " +
-                    "(DESCRIPCION, USUARIO_ALTA, FECHA_ALTA) " +
-                    "values (@descripcion, @usrAlta, @fechaAlta);";
+                string consulta = "INSERT INTO T_OBRAS_SOCIALES " +
+                                            "(DESCRIPCION, USUARIO_ALTA, FECHA_ALTA) " +
+                                     "VALUES (@descripcion, @usrAlta, @fechaAlta);";
 
 
                 cmd = new SqlCommand(consulta, con);
@@ -347,7 +347,7 @@ namespace DataAccess
                 cmd.Parameters.AddWithValue("@descripcion", obraSocial.Descripcion);
                 cmd.Parameters.AddWithValue("@usrAlta", obraSocial.UsuarioAlta);
                 cmd.Parameters.AddWithValue("@fechaAlta", obraSocial.FechaAlta);
-                cmd.Parameters.AddWithValue("@idCentro", obraSocial.Centro.IdCentro);            
+               // cmd.Parameters.AddWithValue("@idCentro", obraSocial.Centro.IdCentro);            
 
                 cmd.ExecuteNonQuery();
                 trans.Commit();
@@ -644,5 +644,333 @@ namespace DataAccess
                 throw e;
             }
         }
+
+        public int validarObraSocial(string obraSocial)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT count(*) " +
+                                    "FROM T_OBRAS_SOCIALES " +
+                                    "WHERE DESCRIPCION = @OBRA_SOCIAL " +
+                                    "AND FECHA_BAJA is null; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@OBRA_SOCIAL", obraSocial);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+                con.Close();
+                throw e;
+            }
+
+            return devolver;
+
+        }
+
+        public ObraSocial cargarObrasSociales(int idObraSocial)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = "SELECT * FROM T_OBRAS_SOCIALES " +
+                                    "WHERE ID_OBRA_SOCIAL = @ID_OBRA_SOCIAL " +
+                                    "AND FECHA_BAJA IS NULL;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (idObraSocial != 0)
+                    cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", idObraSocial);
+                else
+                    cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                ObraSocial obraSocial = new ObraSocial();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+
+                        if (dr["ID_OBRA_SOCIAL"] != DBNull.Value)
+                            obraSocial.IdObraSocial = Convert.ToInt32(dr["ID_OBRA_SOCIAL"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obraSocial.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                        if (dr["USUARIO_ALTA"] != DBNull.Value)
+                            obraSocial.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
+                        if (dr["FECHA_ALTA"] != DBNull.Value)
+                            obraSocial.FechaAlta = Convert.ToDateTime(dr["FECHA_ALTA"]);
+                        if (dr["USUARIO_MOD"] != DBNull.Value)
+                            obraSocial.UsuarioMod = Convert.ToInt32(dr["USUARIO_MOD"]);
+                        if (dr["FECHA_MOD"] != DBNull.Value)
+                            obraSocial.FechaMod = Convert.ToDateTime(dr["FECHA_MOD"]);
+                        if (dr["USUARIO_BAJA"] != DBNull.Value)
+                            obraSocial.UsuarioBaja = Convert.ToInt32(dr["USUARIO_BAJA"]);
+                        if (dr["FECHA_BAJA"] != DBNull.Value)
+                            obraSocial.FechaBaja = Convert.ToDateTime(dr["FECHA_BAJA"]);
+
+                    }
+
+                    return obraSocial;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string editarObraSocial(ObraSocial obraSocial)
+        {
+            try
+            {
+                string resultado = "OK";
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_OBRAS_SOCIALES " +
+                                     "SET DESCRIPCION = @DESCRIPCION, FECHA_MOD = @FECHA_MOD, USUARIO_MOD = @USUARIO_MOD " +
+                                     "WHERE ID_OBRA_SOCIAL = @ID_OBRA_SOCIAL; ";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(obraSocial.Descripcion))
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", obraSocial.Descripcion);
+                else
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", DBNull.Value);
+
+
+                cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", obraSocial.IdObraSocial);
+                cmd.Parameters.AddWithValue("@USUARIO_MOD", obraSocial.UsuarioMod);
+                cmd.Parameters.AddWithValue("@FECHA_MOD", obraSocial.FechaMod);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                con.Close();
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+        }
+
+
+        public int validarPlan(int id_obraSocial, string plan)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "SELECT COUNT(*) FROM T_OBRAS_SOCIALES O, T_OBRAS_PLANES P " +
+                                   "WHERE O.ID_OBRA_SOCIAL = P.ID_OBRA_SOCIAL " +
+                                     "AND O.FECHA_BAJA IS NULL " +
+                                     "AND P.FECHA_BAJA IS NULL " +
+                                     "AND O.ID_OBRA_SOCIAL = @ID_OBRA_SOCIAL " +
+                                     "AND P.DESCRIPCION = @PLAN; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_OBRA_SOCIAL", id_obraSocial);
+                cmd.Parameters.AddWithValue("@PLAN", plan);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+                con.Close();
+                throw e;
+            }
+
+            return devolver;
+
+        }
+
+
+        public DataTable TraerPlanesAll(string idObraSocial)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"SELECT * FROM T_OBRAS_PLANES
+                                        WHERE ID_OBRA_SOCIAL = @idObraSocial
+                                        ORDER BY FECHA_BAJA ASC;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (!String.IsNullOrEmpty(idObraSocial))
+                    cmd.Parameters.AddWithValue("@idObraSocial", idObraSocial);
+                else
+                    cmd.Parameters.AddWithValue("@idObraSocial", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public ObrasPlanes cargarPlan(int idPlan)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = "SELECT * FROM T_OBRAS_PLANES " +
+                                    "WHERE ID_PLANES = @ID_PLANES " +
+                                    "AND FECHA_BAJA IS NULL;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                if (idPlan != 0)
+                    cmd.Parameters.AddWithValue("@ID_PLANES", idPlan);
+                else
+                    cmd.Parameters.AddWithValue("@ID_PLANES", DBNull.Value);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                ObrasPlanes obrasPlanes = new ObrasPlanes();
+
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+
+                        if (dr["ID_PLANES"] != DBNull.Value)
+                            obrasPlanes.IdPlanes = Convert.ToInt32(dr["ID_PLANES"]);
+                        if (dr["DESCRIPCION"] != DBNull.Value)
+                            obrasPlanes.Descripcion = Convert.ToString(dr["DESCRIPCION"]);
+                        if (dr["USUARIO_ALTA"] != DBNull.Value)
+                            obrasPlanes.UsuarioAlta = Convert.ToInt32(dr["USUARIO_ALTA"]);
+                        if (dr["FECHA_ALTA"] != DBNull.Value)
+                            obrasPlanes.FechaAlta = Convert.ToDateTime(dr["FECHA_ALTA"]);
+                        if (dr["USUARIO_MOD"] != DBNull.Value)
+                            obrasPlanes.UsuarioMod = Convert.ToInt32(dr["USUARIO_MOD"]);
+                        if (dr["FECHA_MOD"] != DBNull.Value)
+                            obrasPlanes.FechaMod = Convert.ToDateTime(dr["FECHA_MOD"]);
+                        if (dr["USUARIO_BAJA"] != DBNull.Value)
+                            obrasPlanes.UsuarioBaja = Convert.ToInt32(dr["USUARIO_BAJA"]);
+                        if (dr["FECHA_BAJA"] != DBNull.Value)
+                            obrasPlanes.FechaBaja = Convert.ToDateTime(dr["FECHA_BAJA"]);
+
+                    }
+
+                    return obrasPlanes;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string editarPlan(ObrasPlanes obrasPlanes)
+        {
+            try
+            {
+                string resultado = "OK";
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_OBRAS_PLANES " +
+                                     "SET DESCRIPCION = @DESCRIPCION, FECHA_MOD = @FECHA_MOD, USUARIO_MOD = @USUARIO_MOD " +
+                                     "WHERE ID_PLANES = @ID_PLANES; ";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                if (!string.IsNullOrEmpty(obrasPlanes.Descripcion))
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", obrasPlanes.Descripcion);
+                else
+                    cmd.Parameters.AddWithValue("@DESCRIPCION", DBNull.Value);
+
+
+                cmd.Parameters.AddWithValue("@ID_PLANES", obrasPlanes.IdPlanes);
+                cmd.Parameters.AddWithValue("@USUARIO_MOD", obrasPlanes.UsuarioMod);
+                cmd.Parameters.AddWithValue("@FECHA_MOD", obrasPlanes.FechaMod);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                con.Close();
+
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+        }
+
+
+
     }
 }

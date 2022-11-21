@@ -80,6 +80,16 @@ namespace TurneroWeb10
             return json;
         }
 
+
+        [WebMethod]
+        public static string traerPlanesAll(string idObraSocial)
+        {
+            GestorObrasSociales gObrasSociales = new GestorObrasSociales();
+            DataTable planes = gObrasSociales.TraerPlanesAll(idObraSocial);
+            string json = JsonConvert.SerializeObject(planes);
+            return json;
+        }
+
         [WebMethod]
         public static void darBajaPlan(string idPlan)
         {
@@ -136,6 +146,181 @@ namespace TurneroWeb10
                 throw ex;
             }
         }
-        
+
+
+        [WebMethod]
+        public static string validarObraSocial(string obraSocial)
+        {
+
+            string result = "OK";
+            try
+            {
+                GestorObrasSociales gObrasSociales = new GestorObrasSociales();
+
+                int existeOS = gObrasSociales.validarObraSocial(obraSocial);
+
+                if (existeOS > 0)
+                {
+                    result = "existe";
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static ObraSocial cargarObrasSociales(string idObraSocial)
+        {
+            try
+            {
+                int id = Convert.ToInt32(idObraSocial);
+
+                GestorObrasSociales gestorOS = new GestorObrasSociales();
+                ObraSocial obraSocial = new ObraSocial();
+                obraSocial = gestorOS.cargarObrasSociales(id);
+
+                return obraSocial;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string editarObraSocial(string p_id, string p_descripcion)
+        {
+            ObraSocial obraSocial = new ObraSocial();
+            GestorObrasSociales gestorOS = new GestorObrasSociales();
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad Obra Social
+
+                if (!string.IsNullOrEmpty(p_descripcion))
+                {
+                    obraSocial.Descripcion = p_descripcion;
+                }
+
+                obraSocial.IdObraSocial = Convert.ToInt32(p_id);
+
+                obraSocial.UsuarioMod = 1;
+                obraSocial.FechaMod = DateTime.Today;
+
+                #endregion
+
+                gestorOS.editarObraSocial(obraSocial);
+
+                return mensaje;
+            }
+
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al registrar la obra social " + e.Message;
+                return error;
+            }
+
+        }
+
+        [WebMethod]
+        public static string validarPlan(string p_id, string p_descripcion)
+        {
+
+            string result = "OK";
+            try
+            {
+                GestorObrasSociales gObrasSociales = new GestorObrasSociales();
+
+                var id = Convert.ToInt32(p_id);
+
+                int existeOS = gObrasSociales.validarPlan(id, p_descripcion);
+
+                if (existeOS > 0)
+                {
+                    result = "existe";
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static ObrasPlanes cargarPlan(string idPlan)
+        {
+            try
+            {
+                int id = Convert.ToInt32(idPlan);
+
+                GestorObrasSociales gestorOS = new GestorObrasSociales();
+                ObrasPlanes obrasPlanes = new ObrasPlanes();
+                obrasPlanes = gestorOS.cargarPlan(id);
+
+                return obrasPlanes;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string editarPlan(string p_id, string p_descripcion)
+        {
+            ObrasPlanes obrasPlanes = new ObrasPlanes();
+            GestorObrasSociales gestorOS = new GestorObrasSociales();
+
+            try
+            {
+                string mensaje = "OK";
+
+                #region Completa entidad Obra Social
+
+                if (!string.IsNullOrEmpty(p_descripcion))
+                {
+                    obrasPlanes.Descripcion = p_descripcion;
+                }
+
+                obrasPlanes.IdPlanes = Convert.ToInt32(p_id);
+
+                obrasPlanes.UsuarioMod = 1;
+                obrasPlanes.FechaMod = DateTime.Today;
+
+                #endregion
+
+                gestorOS.editarPlan(obrasPlanes);
+
+                return mensaje;
+            }
+
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al editar el plan " + e.Message;
+                return error;
+            }
+
+        }
+
+
     }
 }
