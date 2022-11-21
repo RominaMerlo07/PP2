@@ -55,17 +55,18 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-row">
-                                        <div class="col">
+                                        <div class="col-md-6">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">DNI del Personal </span>
                                                 </div>
-                                                <input type="search" class="form-control rounded" id="txtDocumento" placeholder="Ingrese DNI" aria-label="Search"
+                                                <input type="search" name="dni" class="form-control rounded" maxlength="8" id="id__txtDocumento" aria-label="Search"
                                                     aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
                                                 <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                                     <i class="fas fa-search"></i>
                                                 </button>
                                             </div>
+                                            <p class="formulario__error" id="p__txtDocumento">Por favor, ingrese el numero de documento sin puntos</p>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -75,12 +76,8 @@
                                                     <span class="input-group-text" id="">Nombre y Apellido</span>
                                                 </div>
                                                 <input type="text" name="nombre" style="text-align: left" class="form-control" id="id__txtNombre" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                                <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtNombre"></i>--%>
-                                                <input type="text" name="apellido" style="text-align: left" class="form-control" id="id__txtApellido" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                                <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtApellido"></i>--%>
-                                            </div>
-                                            <%-- <p class="formulario__error" id="p__txtNombre">Por favor, ingrese el/los nombre/s</p>
-                                        <p class="formulario__error" id="p__txtApellido">Por favor, ingrese el/los apellido/s</p>--%>
+                                                <input type="text" name="apellido" style="text-align: left" class="form-control" id="id__txtApellido" maxlength="150" onkeypress="return soloLetras(event)" onpaste="return false" onkeyup="javascript:this.value=this.value.toUpperCase();" />                                       
+                                            </div>                                          
                                         </div>
                                     </div>
                                      <div class="form-row">
@@ -89,11 +86,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="">Email</span>
                                                 </div>
-                                                <input type="text" name="email" style="text-align: left" class="form-control" id="id__Email" maxlength="230" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                                <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtNombre"></i>--%>                                              
-                                            </div>
-                                            <%-- <p class="formulario__error" id="p__txtNombre">Por favor, ingrese el/los nombre/s</p>
-                                        <p class="formulario__error" id="p__txtApellido">Por favor, ingrese el/los apellido/s</p>--%>
+                                                <input type="text" name="email" style="text-align: left" class="form-control" id="id__Email" maxlength="230" onkeyup="javascript:this.value=this.value.toUpperCase();" />                                                                                        
+                                            </div>                                        
                                         </div>
                                     </div>
                                 </div>
@@ -121,10 +115,8 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">Usuario</span>
                                                             </div>
-                                                            <input type="text" name="usuario" style="text-align: left" class="form-control" id="id__txtUsuario" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                                            <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtUsuario"></i>--%>
-                                                        </div>
-                                                        <%--<p class="formulario__error" id="p__txtUsuario">Por favor, ingrese el Barrio</p>--%>
+                                                            <input type="text" name="usuario" style="text-align: left" class="form-control" id="id__txtUsuario" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />                                                           
+                                                        </div>                                                        
                                                     </div>                                                 
                                                 </div>
                                             </div>
@@ -174,9 +166,9 @@
                                         <span class="input-group-text">Usuario</span>
                                     </div>
                                     <input type="text" name="usuario" style="text-align: left" class="form-control" id="id__txtUsuarioE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtUsuario"></i>--%>
+                                   
                                 </div>
-                                <%--<p class="formulario__error" id="p__txtUsuario">Por favor, ingrese el Barrio</p>--%>
+                           
                             </div>
                             <div class="col">
                                 <div class="input-group mb-3">
@@ -186,10 +178,8 @@
                                     <input type="password" name="password" style="text-align: left" class="form-control" id="id__txtPasswordE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                     <div class="input-group-append">
                                         <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword('id__txtPasswordE')"><span class="fa fa-eye-slash icon"></span></button>
-                                    </div>
-                                    <%-- <i class="formulario__validacion fas fa-times-circle" id="icon__txtPassword"></i>--%>
-                                </div>
-                                <%--  <p class="formulario__error" id="p__txtPassword">Por favor, ingrese una contraseña</p>--%>
+                                    </div>                               
+                                </div>                              
                             </div>
                         </div>
                     </div>
@@ -204,7 +194,8 @@
     <%--End Modal Editar--%>
 
 
-
+    <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />
    <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Usuarios.js"%>"></script>
+     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Usuarios_validacion.js"%>"></script>
 
 </asp:Content>

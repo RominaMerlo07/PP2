@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#btnRegistrarModal').click(function () {
         $("#modalRegistrar").modal('show');
         $("#ddlRol").prop("disabled", true);    
+        deshabilitarCampos(true);
     });
 
     $('#ShowPassword').click(function () {
@@ -22,7 +23,7 @@ $(document).ready(function () {
 
 $('#btnBuscarDNI').click(function () {
 
-    var dniPersonal = $('#txtDocumento').val();
+    var dniPersonal = $('#id__txtDocumento').val();
     buscarPersonal(dniPersonal);
 
 });
@@ -47,14 +48,14 @@ function buscarPersonal(dniPersonal) {
                     id_personal = e.idPersonal;
                     cargo = e.cargo;                    
 
-                    $('#txtDocumento').prop('disabled', true);
+                    $('#id__txtDocumento').prop('disabled', true);
                     $('#id__txtNombre').prop('disabled', true);
                     $('#id__txtApellido').prop('disabled', true);
-                    $('#id__Email').prop('disabled', true);
+                    $('#id__Email').prop('disabled', false);
                     $('#id__txtNombre').val(e.nombre);
                     $('#id__txtApellido').val(e.apellido);
                     $('#id__Email').val(e.EMAIL_CONTACTO);
-
+                    document.getElementById("id__Email").readOnly = false;  
                     generarUsuario(e.nombre, e.apellido);
 
                 });                     
@@ -149,7 +150,7 @@ function validarDatosUsuario() {
 
 
 function limpiarCampos() {
-    $('#txtDocumento').val("");
+    $('#id__txtDocumento').val("");
     $('#id__txtNombre').val("");
     $('#id__txtApellido').val("");
     $('#ddlRol').val([]);
@@ -158,9 +159,21 @@ function limpiarCampos() {
 };
 
 
+
+function deshabilitarCampos(valor) {
+
+    //document.getElementById("id__txtDocumento").focus();   
+    document.getElementById("id__txtNombre").readOnly = valor;
+    document.getElementById("id__txtApellido").readOnly = valor;
+    document.getElementById("ddlRol").readOnly = valor;
+    document.getElementById("id__txtUsuario").readOnly = valor;
+    document.getElementById("id__Email").readOnly = valor;  
+}
+
+
 $('#btnRegistrar').click(function () {
 
-    dni = $('#txtDocumento').val();
+    dni = $('#id__txtDocumento').val();
     user = $('#id__txtUsuario').val();
     password = $('#id__txtPassword').val();
     rol = $('#ddlRol').val();
