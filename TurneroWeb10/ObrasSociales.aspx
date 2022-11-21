@@ -195,6 +195,44 @@
     <%-- FIN MODAL PLANES--%>
 
 
+     <%--MODAL TURNO--%>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTurnos">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h4 class="modal-title " id="lblTituloEspecialidad">Eliminar Obra Social</h4>
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <%--<div class="row">--%>
+                    <div class="box box-danger">
+                        <div class="box-header">
+                            <h1 class="box-title text-red">Al eliminar la obra social, se cancelaran los siguientes turnos</h1>                            
+                        </div>
+                        <div class="box-body table-responsive">
+                            <div class="col-md-12">
+                                <table id="tabla_ObraSocial" style="width: 100%" class="table table-bordered table-hover">
+                                    <tbody id="tbl_body_tableT">
+                                        <!-- DATA POR MEDIO DE AJAX-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <%--</div>--%>
+                    <div class="row float-right">
+                        <div class="col">
+                            <button class="btn btn-danger btn-lg " type="button" id="btnEliminar">Eliminar</button>
+                            <button class="btn btn-secondary btn-lg " type="button" id="btnCancelar">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--Final Modal Turno--%>
+
+
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarOS.js"%>"></script>

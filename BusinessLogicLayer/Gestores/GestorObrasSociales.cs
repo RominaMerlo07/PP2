@@ -73,18 +73,18 @@ namespace BusinessLogicLayer.Gestores
         //    }
         //}
 
-        public void DarBajaObraSocial(ObraSocial obraSocial)
-        {
-            try
-            {
-                DAObrasSociales daObrasSociales = new DAObrasSociales();
-                daObrasSociales.DarBajaObraSocial(obraSocial);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //public void DarBajaObraSocial(ObraSocial obraSocial)
+        //{
+        //    try
+        //    {
+        //        DAObrasSociales daObrasSociales = new DAObrasSociales();
+        //        daObrasSociales.DarBajaObraSocial(obraSocial);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         public DataTable TraerPlanes(string idObraSocial)
         {
@@ -311,6 +311,81 @@ namespace BusinessLogicLayer.Gestores
             {
                 DAObrasSociales DaObrasSociales = new DAObrasSociales();
                 return DaObrasSociales.editarPlan(obrasPlanes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public int TurnosFuturos(int idObraSocial)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.TurnosFuturos(idObraSocial);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public DataTable ObtenerTurnosFuturos(int idObraSocial)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.ObtenerTurnosFuturos(idObraSocial);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string DaDarDeBajaTurnos(int idObraSocial, int usuarioBaja)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.DaDarDeBajaTurnos(idObraSocial, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string darBajaObraSocial(ObraSocial obraSocial)
+        {
+            try
+
+            {
+
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.darBajaObraSocial(obraSocial);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string darBajaObraSocialPaciente(ObraSocial obraSocial)
+        {
+            try
+
+            {
+
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.darBajaObraSocialPaciente(obraSocial);
+
             }
             catch (Exception e)
             {

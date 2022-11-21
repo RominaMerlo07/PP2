@@ -1,4 +1,4 @@
-﻿var idObraSocial, idPlan;
+﻿var idObraSocial, idPlan, descripcionOS;
 
 $(document).ready(function () {
 
@@ -103,7 +103,7 @@ function cargarTablaObrasSociales() {
 
                 if (obraSocial == "PARTICULAR") {
 
-                    obras.push([idObSocial, obraSocial, particular, /*Centro,*/ Acciones]);
+                    obras.push([idObSocial, obraSocial, particular, /*Centro,*/ particular]);
 
                 }
                 else {
@@ -235,22 +235,194 @@ function updateObraSocial(idObraSocial, obraSocial) {
 
 }
 
-function inactivar(idObraSocial, obraSocial) {
+function inactivar(id, descripcion) {
+
+    idObraSocial = id;
+    descripcionOS = descripcion;
 
     $.ajax({
-        url: "ObrasSociales.aspx/darBajaObraSocial",
-        data: "{idObraSocial: '" + idObraSocial + "'}",
+        url: "ObrasSociales.aspx/ObtenerTurnosFuturos",
+        data: "{p_id: '" + id + "'}",
         type: "post",
         contentType: "application/json",
         async: false,
         success: function (data) {
 
-            swal("Hecho", "Se dio de baja a " + obraSocial + " y sus planes.", "success");
+            if (data.d === 'sin info') {
+                console.log('puedo eliminar directo');
 
-            cargarTablaObrasSociales();
+                swal({
+                    title: "¿Estas seguro que deseas eliminar la obra social " + descripcion + "?",
+                    text: "Una vez eliminada, ¡no podrá recuperar los datos asociadas al mismo!",
+                    icon: "warning",
+                    buttons: true,
+                    buttons: ["Cancelar", "Eliminar"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            darBajaObraSocial(id, descripcionOS);
+                        }
+                    });
+            }
+            else {
+                console.log("tengo que mostrar los turnos pendientes");
+                ObtenerTurnosFuturos(id);
+                $("#modalTurnos").modal('show');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}
+
+
+function ObtenerTurnosFuturos(id) {
+
+    var turnos;
+    $.ajax({
+        type: "POST",
+        url: "ObrasSociales.aspx/MostrarTurnosFuturos",
+        data: "{p_id: '" + id + "'}",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+
+            turnos = JSON.parse(data.d);
+
+            var arrayTurnos = new Array();
+
+            turnos.forEach(function (e) {
+
+                var turno = e.TURNO;
+                var hora = e.HORA;
+                var paciente = e.PACIENTE;
+                var contacto = e.NRO_CONTACTO;
+                var email = e.EMAIL_CONTACTO;
+
+                arrayTurnos.push([turno, hora, paciente, contacto, email]);
+
+                console.log(arrayTurnos);
+
+            });
+
+            var table = $('#tabla_ObraSocial').DataTable({
+                data: arrayTurnos,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "ordering": true,
+                "bDestroy": true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "Turno" },
+                    { title: "Hora" },
+                    { title: "Paciente" },
+                    { title: "Contacto" },
+                    { title: "Email" },
+                ],
+                dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 5,
+                buttons: [
+                    //{ extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        }
+    })
+};
+
+
+$("#btnCancelar").click(function (e) {
+    e.preventDefault();
+    $("#modalTurnos").modal('hide');
+});
+
+$("#btnEliminar").click(function (e) {
+    e.preventDefault();
+    DarDeBajaTurnos(idObraSocial, descripcionOS);
+});
+
+
+
+function DarDeBajaTurnos(idObraSocial, descripcionOS) {
+
+    //   console.log(idEspecialidades);
+
+    $.ajax({
+        url: "ObrasSociales.aspx/DarDeBajaTurnos",
+        data: "{p_id: '" + idObraSocial + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            console.log(data.d);
+
+            if (data.d != 'OK') {
+                swal("Hubo un problema", "Error al eliminar la obra social.", "error");
+            }
+            else {
+                swal("Hecho", "La obra social " + descripcionOS + " se elimino con Éxito, y los turnos fueron cancelados.", "success");
+                $("#modalTurnos").modal('hide');
+                cargarTablaObrasSociales();
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}
+
+
+function darBajaObraSocial(id, descripcionOS) {
+
+    console.log(id, descripcionOS);
+
+    $.ajax({
+        url: "ObrasSociales.aspx/darBajaObraSocial",
+        data: "{p_id: '" + id + "'}",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d == "OK") {
+                swal("La obra social " + descripcionOS + " fue eliminada con Éxito!.", {
+                    icon: "success",
+                });
+                cargarTablaObrasSociales();
+            }
+            else {
+                swal("Hubo un problema", "Error al eliminar la obra social.", "error");
+            }
+
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert(data.error);
+            return false;
+
         }
     });
 }

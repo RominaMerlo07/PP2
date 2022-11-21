@@ -53,23 +53,23 @@ namespace TurneroWeb10
             }
         }
 
-        [WebMethod]
-        public static void darBajaObraSocial(string idObraSocial)
-        {
-            try
-            {
-                GestorObrasSociales gObrasSociales = new GestorObrasSociales();
-                ObraSocial obraSocial = new ObraSocial();
-                obraSocial.IdObraSocial = Convert.ToInt32(idObraSocial);
-                obraSocial.UsuarioBaja = 1;
-                obraSocial.FechaBaja = DateTime.Now;
-                gObrasSociales.DarBajaObraSocial(obraSocial);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //[WebMethod]
+        //public static void darBajaObraSocial(string idObraSocial)
+        //{
+        //    try
+        //    {
+        //        GestorObrasSociales gObrasSociales = new GestorObrasSociales();
+        //        ObraSocial obraSocial = new ObraSocial();
+        //        obraSocial.IdObraSocial = Convert.ToInt32(idObraSocial);
+        //        obraSocial.UsuarioBaja = 1;
+        //        obraSocial.FechaBaja = DateTime.Now;
+        //        gObrasSociales.DarBajaObraSocial(obraSocial);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         [WebMethod]
         public static string traerPlanes (string idObraSocial)
@@ -317,6 +317,127 @@ namespace TurneroWeb10
             {
                 string error = "Se produjo un error al editar el plan " + e.Message;
                 return error;
+            }
+
+        }
+
+
+        [WebMethod]
+        public static string ObtenerTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+
+            try
+            {
+                GestorObrasSociales gestorOS = new GestorObrasSociales();
+
+                int id = Convert.ToInt32(p_id);
+
+                int cantTurnosFuturos = gestorOS.TurnosFuturos(id);
+
+                if (cantTurnosFuturos > 0)
+                {
+
+                    DataTable dt = gestorOS.ObtenerTurnosFuturos(id);
+                    col = JsonConvert.SerializeObject(dt);
+                    return col;
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string MostrarTurnosFuturos(string p_id)
+        {
+
+            string col = "sin info";
+
+            try
+            {
+                GestorObrasSociales gestorOS = new GestorObrasSociales();
+
+                int id = Convert.ToInt32(p_id);
+                DataTable dt = gestorOS.ObtenerTurnosFuturos(id);
+                col = JsonConvert.SerializeObject(dt);
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string DarDeBajaTurnos(string p_id)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorObrasSociales gestorOS = new GestorObrasSociales();
+                ObraSocial obraSocial = new ObraSocial();
+
+                int id = Convert.ToInt32(p_id);
+
+                string resultado = gestorOS.DaDarDeBajaTurnos(id, 1);
+
+                if (resultado == "OK")
+                {
+                    obraSocial.IdObraSocial = id;
+                    obraSocial.UsuarioBaja = 1;
+                    obraSocial.FechaBaja = DateTime.Today;
+
+                    col = gestorOS.darBajaObraSocial(obraSocial);
+                }
+                return col;
+
+                //return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string darBajaObraSocial(string p_id)
+        {
+            GestorObrasSociales gestorOS = new GestorObrasSociales();
+            ObraSocial obraSocial = new ObraSocial();
+
+            try
+            {
+                string mensaje = "OK";
+
+                obraSocial.IdObraSocial = Convert.ToInt32(p_id);
+                obraSocial.UsuarioBaja = 1;
+                obraSocial.FechaBaja = DateTime.Today;
+
+                var resultado = gestorOS.darBajaObraSocialPaciente(obraSocial);
+
+                if (resultado == "OK")
+                {
+
+                    mensaje = gestorOS.darBajaObraSocial(obraSocial);
+
+                }
+
+                return mensaje;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
 
         }
