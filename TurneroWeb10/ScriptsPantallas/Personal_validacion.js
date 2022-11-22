@@ -82,6 +82,7 @@ const validarCampo = (expresion, input, campo) => {
             document.getElementById(`id__${campo}`).classList.add('formulario-input');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.add('formulario__error');
+            document.getElementById('btnRegistrar').disabled = false;
 
 
             if (campo = "txtDocumento") {
@@ -91,10 +92,12 @@ const validarCampo = (expresion, input, campo) => {
                 if (result) {
                     document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
                     document.getElementById(`id__${campo}`).classList.add('formulario-input');
+                    document.getElementById('btnRegistrar').disabled = false;                    
                     deshabilitarCampos(false);
                 } else {
                     document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
                     document.getElementById(`id__${campo}`).classList.remove('formulario-input');
+                    document.getElementById('btnRegistrar').disabled = true;
                 }
             }           
         }
@@ -103,6 +106,7 @@ const validarCampo = (expresion, input, campo) => {
             document.getElementById(`id__${campo}`).classList.remove('formulario-input');
             document.getElementById(`p__${campo}`).classList.add('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error');
+            document.getElementById('btnRegistrar').disabled = true;
             document.getElementById(`id__${campo}`).focus();
         }
     }
@@ -200,12 +204,15 @@ const validarCampoEditar = (expresion, input, campo) => {
         document.getElementById(`id__${campo}`).classList.add('formulario-input');
         document.getElementById(`p__${campo}`).classList.remove('formulario__error-activo');
         document.getElementById(`p__${campo}`).classList.add('formulario__error');
+        document.getElementById('btnActualizar').disabled = false;
+        
     }
     else {
         document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
         document.getElementById(`id__${campo}`).classList.remove('formulario-input');
         document.getElementById(`p__${campo}`).classList.add('formulario__error-activo');
         document.getElementById(`p__${campo}`).classList.remove('formulario__error');
+        document.getElementById('btnActualizar').disabled = true;
         document.getElementById(`id__${campo}`).focus();
     }
 }

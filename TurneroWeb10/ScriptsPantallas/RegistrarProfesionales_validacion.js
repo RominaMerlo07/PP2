@@ -35,7 +35,7 @@ const validarFormulario = (e) => {
             validarCampo(expresiones.nombre, e.target, 'txtNombre');
             break;
         case "apellido":
-            validarCampo(expresiones.apellido, e.target, 'txtDomicilio');
+            validarCampo(expresiones.apellido, e.target, 'txtApellido');
             break;
         case "calle":
             validarCampo(expresiones.calle, e.target, 'txtCalle');
@@ -75,7 +75,8 @@ const validarCampo = (expresion, input, campo) => {
           document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
           document.getElementById(`id__${campo}`).classList.add('formulario-input');    
           document.getElementById(`p__${campo}`).classList.remove('formulario__error-activo');
-          document.getElementById(`p__${campo}`).classList.add('formulario__error');
+        document.getElementById(`p__${campo}`).classList.add('formulario__error');
+        document.getElementById('btnRegistrar').disabled = false;
 
 
         if (campo = "txtDocumento") {
@@ -96,10 +97,12 @@ const validarCampo = (expresion, input, campo) => {
                     if (resultMat) {
                         document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
                         document.getElementById(`id__${campo}`).classList.add('formulario-input');
+                        document.getElementById('btnRegistrar').disabled = false;
                         deshabilitarCampos(false);
                     } else {
                         document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
                         document.getElementById(`id__${campo}`).classList.remove('formulario-input');
+                        document.getElementById('btnRegistrar').disabled = true;
                         deshabilitarCampos(true);
                         document.getElementById("id__txtMatricula").readOnly = false;
                     }
@@ -107,6 +110,7 @@ const validarCampo = (expresion, input, campo) => {
             } else {
                 document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
                 document.getElementById(`id__${campo}`).classList.remove('formulario-input');  
+                document.getElementById('btnRegistrar').disabled = true;
                 deshabilitarCampos(true);
             }
         }
@@ -117,6 +121,7 @@ const validarCampo = (expresion, input, campo) => {
         document.getElementById(`id__${campo}`).classList.remove('formulario-input');
         document.getElementById(`p__${campo}`).classList.add('formulario__error-activo');
         document.getElementById(`p__${campo}`).classList.remove('formulario__error');   
+        document.getElementById('btnRegistrar').disabled = true;
         document.getElementById(`id__${campo}`).focus();
         }  
     }
@@ -342,6 +347,7 @@ const validarCampoEditar = (expresion, input, campo) => {
             document.getElementById(`id__${campo}`).classList.add('formulario-input');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.add('formulario__error');
+            document.getElementById('btnActualizar').disabled = false;
         }
         else {
             document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
@@ -349,6 +355,7 @@ const validarCampoEditar = (expresion, input, campo) => {
             document.getElementById(`p__${campo}`).classList.add('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error');
             document.getElementById(`id__${campo}`).focus();
+            document.getElementById('btnActualizar').disabled = true;
         }
     
 }
