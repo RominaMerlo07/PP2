@@ -148,7 +148,7 @@ function validarDatosCentro() {
         else if (email2 == "") {
             alert("Por favor, ingrese correctamente la dirección del Email");
             return false;
-        }
+        }      
         else if (celular == "") {
             alert("Por favor, un numero de contacto");
             return false;
@@ -508,6 +508,19 @@ function soloLetras(event) {
         return false;
     }
 };
+
+
+function emailFirst(event) {
+    var regex = new RegExp("[a-zA-Z0-9-_.]+");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+
 
 
 function limpiarCampos() {

@@ -413,3 +413,13 @@ function limpiarCampos() {
     $('#id__txtEmail1').val("");
     $('#id__txtEmail2').val("");
 }
+
+
+function emailFirst(event) {
+    var regex = new RegExp("[a-zA-Z0-9-_.]+");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};

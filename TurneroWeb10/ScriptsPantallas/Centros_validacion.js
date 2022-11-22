@@ -10,8 +10,8 @@ const expresiones = {
     barrio: /[A-Za-z0-9'\.\-\s\,]/,
     localidad: /[A-Za-z0-9'\.\-\s\,]/,
     celular: /^\(?\d{2}\)?[\s\.-]?\d{4}[\s\.-]?\d{4}$/,
-    email1: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))/,
-    email2: /(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
+    email1: /([a-zA-Z0-9-_.]+)/,
+    email2: /[a-zA-Z0-9-_]+(\.[a-zA-Z]{2,4}){1,2}/
 }
 
 
@@ -50,7 +50,7 @@ const validarFormulario = (e) => {
         case "email1":
             validarCampo(expresiones.email1, e.target, 'txtEmail1');
             break;
-        case "email2":
+        case "email2":   
             validarCampo(expresiones.email2, e.target, 'txtEmail2');
             break;
     }
@@ -70,6 +70,7 @@ const validarCampo = (expresion, input, campo) => {
             document.getElementById(`id__${campo}`).classList.add('formulario-input');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.add('formulario__error');
+            document.getElementById('btnRegistrar').disabled = false;
 
 
             if (campo = "txtNombre") {
@@ -79,10 +80,12 @@ const validarCampo = (expresion, input, campo) => {
                 if (result) {
                     document.getElementById(`id__${campo}`).classList.remove('formulario-input-incorrecto');
                     document.getElementById(`id__${campo}`).classList.add('formulario-input');
+                    document.getElementById('btnRegistrar').disabled = false;
                     deshabilitarCampos(false);
                 } else {
                     document.getElementById(`id__${campo}`).classList.add('formulario-input-incorrecto');
                     document.getElementById(`id__${campo}`).classList.remove('formulario-input');
+                    document.getElementById('btnRegistrar').disabled = true;
                     deshabilitarCampos(true);
                 }
             }
@@ -93,6 +96,7 @@ const validarCampo = (expresion, input, campo) => {
             document.getElementById(`p__${campo}`).classList.add('formulario__error-activo');
             document.getElementById(`p__${campo}`).classList.remove('formulario__error');
             document.getElementById(`id__${campo}`).focus();
+            document.getElementById('btnRegistrar').disabled = true;
         }
     }
 }
@@ -237,3 +241,8 @@ inputsE.forEach((input) => {
     input.addEventListener('keyup', validarFormularioEditar);
     input.addEventListener('blur', validarFormularioEditar);
 });
+
+
+
+    
+

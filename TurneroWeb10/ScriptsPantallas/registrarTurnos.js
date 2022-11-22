@@ -1296,3 +1296,13 @@ function soloLetras(event) {
         return false;
     }
 };
+
+
+function emailFirst(event) {
+    var regex = new RegExp("[a-zA-Z0-9-_.]+");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
