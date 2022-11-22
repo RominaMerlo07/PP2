@@ -1059,6 +1059,68 @@ namespace DataAccess
                 throw ex;
             }
         }
-        
+
+        public DataTable buscarTurnosVencidos()
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT ID_TURNO 
+                                      FROM T_TURNOS
+                                     WHERE FECHA_BAJA IS NULL
+                                       AND ESTADO NOT IN ('CANCELADO', 'ATENDIDO')
+                                       AND FECHA_TURNO <= GETDATE()
+                                       AND HORA_DESDE <= (SELECT CAST(DATEPART(HOUR,GETDATE()) as char(2))+':'+CAST(DATEPART(MINUTE,GETDATE()) as char(2))+':'+
+                                                         CAST(DATEPART(SECOND,GETDATE()) as char(2)) as hora);";
+
+                cmd = new SqlCommand(consulta, con);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string cancelarTurnos(string idturno)
+        {
+
+            string resultado = "OK";
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @" UPDATE T_TURNOS
+                                        SET FECHA_BAJA = GETDATE(), USUARIO_BAJA = 1, ESTADO = 'CANCELADO'
+                                        WHERE ID_TURNO = @ID_TURNO;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_TURNO", idturno);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

@@ -4,6 +4,63 @@
 //    $("#modalChangePassword").modal('show');
 //});
 
+
+function buscarTurnosVencidos() {
+
+    $.ajax({
+        url: "Agenda.aspx/buscarTurnosVencidos",
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            // console.log(data.d)
+
+            turnos = JSON.parse(data.d);
+
+            turnos.forEach(function (e) {
+
+                var turno = e.ID_TURNO;
+
+                //  console.log(turno);
+                cancelarTurnos(turno);
+
+            });
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        }
+    });
+}
+
+function cancelarTurnos(turno) {
+
+    $.ajax({
+        type: "POST",
+        url: "Agenda.aspx/cancelarTurnos",
+        data: "{p_id: '" + turno + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+
+            console.log(response.d);
+
+            if (response.d != 'OK') {
+                console.log("no se cancelaron los turnos");
+            }
+            else {
+                console.log("se cancelaron los turnos");
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(thrownError);
+        }
+    })
+    
+}
+
 $("#btnCancelar").click(function () {
     $("#modalChangePassword").modal('hide');
 });
@@ -73,6 +130,8 @@ function accesoUsuario(user) {
             } else {
                
                 window.location.href = 'Principal.aspx';
+
+                buscarTurnosVencidos();
                 //$('#btnConfUsuario').show();
                 //alert('Ingreso OK');
             }

@@ -521,8 +521,6 @@ function emailFirst(event) {
 
 
 
-
-
 function limpiarCampos() {
     $('#id__txtNombre').val("");
     $('#id__txtCalle').val("");

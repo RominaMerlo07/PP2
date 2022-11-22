@@ -303,5 +303,33 @@ namespace BusinessLogicLayer.Gestores
                 throw ex;
             }
         }
+
+        public DataTable buscarTurnosVencidos()
+        {
+            try
+            {
+                DATurno daTurno = new DATurno();
+                return daTurno.buscarTurnosVencidos();
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string cancelarTurnos(string idturno)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.cancelarTurnos(idturno);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

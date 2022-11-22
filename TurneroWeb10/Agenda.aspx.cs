@@ -98,5 +98,68 @@ namespace TurneroWeb10
                 throw e;
             }
         }
+
+        [WebMethod]
+        public static string buscarTurnosVencidos()
+        {
+
+            try
+            {
+                GestorTurno gestorTurno = new GestorTurno();
+
+                DataTable dt = gestorTurno.buscarTurnosVencidos();
+                string col = JsonConvert.SerializeObject(dt);
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //[WebMethod]
+        //public string cancelarTurnos(string p_id)
+        //{
+        //    try
+        //    {
+        //        string resultado;
+
+        //        GestorTurno gestorTurno = new GestorTurno();
+        //        resultado = gestorTurno.cancelarTurnos(p_id);
+
+        //        return resultado;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
+
+
+
+        [WebMethod]
+        public static string cancelarTurnos(string p_id)
+        {
+            GestorTurno gestorTurno = new GestorTurno();
+
+            try
+            {
+                string mensaje = "OK";
+
+                gestorTurno.cancelarTurnos(p_id);
+
+                return mensaje;
+            }
+
+            catch (Exception e)
+            {
+                string error = "Se produjo un error al registrar el profesional " + e.Message;
+                return error;
+            }
+
+        }
+
+
     }
 }
