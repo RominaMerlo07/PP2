@@ -165,25 +165,12 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Usuario</span>
                                     </div>
-                                    <input type="text" name="usuario" style="text-align: left" class="form-control" id="id__txtUsuarioE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                   
-                                </div>
-                           
-                            </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Contraseña</span>
-                                    </div>
-                                    <input type="password" name="password" style="text-align: left" class="form-control" id="id__txtPasswordE" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" />
-                                    <div class="input-group-append">
-                                        <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword('id__txtPasswordE')"><span class="fa fa-eye-slash icon"></span></button>
-                                    </div>                               
-                                </div>                              
-                            </div>
+                                    <input type="text" name="usuario" style="text-align: left" class="form-control" id="id__txtUsuarioE" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" />                                   
+                                </div>                           
+                            </div>                          
                         </div>
+                        <p style="color: midnightblue;"> En caso de que el usuario necesite recuperar su contraseña, debe seleccionar la opcion "Recuperar contraseña" en la pantalla de inicio de sesión.</p>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-lg float-right" id="btnActualizar">Actualizar</button>

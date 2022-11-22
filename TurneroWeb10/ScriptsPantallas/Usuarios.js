@@ -424,7 +424,7 @@ function actualizar(idBuscar, personal, rol) {
     id_usuario = idBuscar;
     $("#ddlRol").prop("disabled", true);   
     $("#id__txtUsuarioE").prop("disabled", true);      
-    $("#id__txtPasswordE").attr('type', 'password'); 
+   // $("#id__txtPasswordE").attr('type', 'password'); 
 
     var texto;
 
@@ -453,7 +453,7 @@ function actualizar(idBuscar, personal, rol) {
             datos.forEach(function (e) {
 
                 $("#id__txtUsuarioE").val(e.NOMBRE_USUARIO);
-                $("#id__txtPasswordE").val(e.CLAVE_USUARIO);
+               // $("#id__txtPasswordE").val(e.CLAVE_USUARIO);
                 $("#ddlRolE").val(e.ID_ROL);          
                 $("#modalEditar").modal('show');
                 
@@ -481,7 +481,7 @@ function UpdateDataUsuarios(id_usuario, rolE) {
     var obj = JSON.stringify({
         id: id_usuario,
         user: $("#id__txtUsuarioE").val(),
-        password: $("#id__txtPasswordE").val(),
+       // password: $("#id__txtPasswordE").val(),
         rol: rolE      
     })
     
@@ -543,3 +543,5 @@ function mostrarPassword(password) {
 //        }
 //    });
 //}
+
+

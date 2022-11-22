@@ -201,5 +201,18 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public DataTable buscarEmail(string idUsuario)
+        {
+            try
+            {
+                DAUsuarios daUsuario = new DAUsuarios();
+                return daUsuario.buscarEmail(idUsuario);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

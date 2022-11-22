@@ -206,10 +206,22 @@ function actualizarClaveUser(datosUsuario) {
             else {
                 console.log("Se actualizo clave ok")
                 swal("Hecho", "Los datos del usuario se actualizaron con Éxito. Por favor, probá el ingreso con tus datos actualizados", "success");
-                //sendDataUsuarios();
+                $("#modalChangePassword").modal('hide');
+                $('#txtUsuario').val("");
+                $('#txtPassword').val("");
             }
 
         }
     })
 };
 
+function mostrarPassword(password) {
+    var cambio = document.getElementById(password);
+    if (cambio.type == "password") {
+        cambio.type = "text";
+        $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    } else {
+        cambio.type = "password";
+        $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+};

@@ -235,6 +235,7 @@ function enviarMail(datosUsuario) {
                 botonEnviar.value = "Enviar Email";
                 botonEnviar.style.backgroundColor = '#007bff';
                 swal("EMAIL ENVIADO", "Por favor verifica tu correo y seguí las instrucciones que te hemos enviado por email", "success");
+
             } else {
                 botonEnviar.value = "Enviar Email"; 
                 botonEnviar.style.backgroundColor = '#007bff';

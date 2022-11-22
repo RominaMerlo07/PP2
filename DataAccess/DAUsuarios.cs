@@ -335,8 +335,7 @@ namespace DataAccess
                 trans = con.BeginTransaction();
 
                 string consulta = "UPDATE T_USUARIOS " +
-                                     "SET NOMBRE_USUARIO = @NOMBRE_USUARIO, " +
-                                          "CLAVE_USUARIO = @CLAVE_USUARIO, " +
+                                     "SET NOMBRE_USUARIO = @NOMBRE_USUARIO, " +                                         
                                           "ID_ROL = @ID_ROL, " +
                                           "USUARIO_MOD = @USUARIO_MOD, " +
                                           "FECHA_MOD = @FECHA_MOD " +
@@ -349,12 +348,7 @@ namespace DataAccess
                 if (!string.IsNullOrEmpty(usuario.NombreUsuario))
                     cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", usuario.NombreUsuario);
                 else
-                    cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", DBNull.Value);
-
-                if (!string.IsNullOrEmpty(usuario.ClaveUsuario))
-                    cmd.Parameters.AddWithValue("@CLAVE_USUARIO", usuario.ClaveUsuario);
-                else
-                    cmd.Parameters.AddWithValue("@CLAVE_USUARIO", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NOMBRE_USUARIO", DBNull.Value);              
 
                 cmd.Parameters.AddWithValue("@ID_ROL", rol);
                 cmd.Parameters.AddWithValue("@ID_USUARIO", usuario.IdUsuario);
@@ -562,8 +556,8 @@ namespace DataAccess
                                            T_USUARIOS u, 
                                            T_PROFESIONALES p
 									 WHERE r.NOMBRE_USUARIO = u.NOMBRE_USUARIO
-									   AND r.ID_PERSONAL = p.ID_PROFESIONAL
-									   AND u.ID_PERSONAL = p.ID_PROFESIONAL
+									   AND r.ID_PROFESIONAL = p.ID_PROFESIONAL
+									   AND u.ID_PROFESIONAL = p.ID_PROFESIONAL
 									   AND r.NOMBRE_USUARIO = @nombreUsuario
 									   AND r.EMAIL_CONTACTO = @email
 									   AND r.FECHA_BAJA IS NULL
@@ -748,6 +742,50 @@ namespace DataAccess
 
             return result;
 
+        }
+
+
+        public DataTable buscarEmail(string idUsuario)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @" SELECT P.EMAIL_CONTACTO, 
+                                            CONCAT(P.NOMBRE, ' ', P.APELLIDO) USUARIO, 
+                                            P.ID_PERSONAL ID_PERSONAL, 
+                                            NULL ID_PROFESIONAL
+                                            FROM T_USUARIOS U, T_PERSONAL P
+                                       WHERE U.ID_PERSONAL = P.ID_PERSONAL
+                                         AND U.FECHA_BAJA IS NULL
+                                         AND P.FECHA_BAJA IS NULL
+                                         AND U.ID_USUARIO = @ID_USUARIO
+                                       UNION
+                                      SELECT P.EMAIL_CONTACTO, 
+                                             CONCAT(P.NOMBRE, ' ', P.APELLIDO) USUARIO, 
+                                             NULL ID_PERSONAL, 
+                                             P.ID_PROFESIONAL ID_PROFESIONAL
+                                        FROM T_USUARIOS U, T_PROFESIONALES P
+                                       WHERE U.ID_PROFESIONAL = P.ID_PROFESIONAL
+                                         AND U.FECHA_BAJA IS NULL
+                                         AND P.FECHA_BAJA IS NULL
+                                         AND U.ID_USUARIO = @ID_USUARIO;";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@ID_USUARIO", idUsuario);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
     }

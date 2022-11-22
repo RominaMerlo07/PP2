@@ -29,19 +29,19 @@
                     <img src="Estilos/img/user3.png" />
                 </div>
                 <form class="col-12" id="form-login" action="">
-                    <label for="usuario">Usuario</label> 
-                    <div class="form-group" id="user-group">                       
-                        <input type="text" name="usuario" id="txtUsuario" required/>                         
+                    <label for="usuario">Usuario</label>
+                    <div class="form-group" id="user-group">
+                        <input type="text" name="usuario" id="txtUsuario" required />
                     </div>
                     <label for="password">Contraseña</label>
                     <div class="form-group" id="password-group">
-                        <input type="password" name="password" id="txtPassword" required/> 
+                        <input type="password" name="password" id="txtPassword" required />                 
                     </div>
-                    <button type="submit" class="btn btn-info" id="btnIngresar"><i class="fas fa-sign-in-alt"></i> INGRESAR</button>                    
+                    <button type="submit" class="btn btn-info" id="btnIngresar"><i class="fas fa-sign-in-alt"></i> INGRESAR</button>
                 </form>
                 <div>
                     <a href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "RecuperarPassword.aspx"%>">Recuperar Contraseña</a>
-                                    </div>
+                </div>
                 <br />
             </div>
         </div>

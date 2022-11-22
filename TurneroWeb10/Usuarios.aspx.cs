@@ -153,7 +153,7 @@ namespace TurneroWeb10
 
 
         [WebMethod]
-        public static string actualizarUsuario(string id, string user, string password, string rol)
+        public static string actualizarUsuario(string id, string user, string rol)
         {
 
             Usuario usuario = new Usuario();
@@ -170,13 +170,8 @@ namespace TurneroWeb10
                 {
                     usuario.NombreUsuario = user;
                 }
-
-                if (!string.IsNullOrEmpty(password))
-                {
-                    usuario.ClaveUsuario = password;
-                }
+                             
                 
-
                 usuario.IdUsuario = Convert.ToInt32(id);
                 int IdRol = Convert.ToInt32(rol);
 
@@ -223,6 +218,23 @@ namespace TurneroWeb10
                 return error;
             }
 
+        }
+
+        [WebMethod]
+        public static string buscarEmail(string idUsuario)
+        {
+            try
+            {
+                GestorUsuarios gUsuarios = new GestorUsuarios();
+                DataTable dt = gUsuarios.buscarEmail(idUsuario);
+                string col = JsonConvert.SerializeObject(dt);
+
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
 
