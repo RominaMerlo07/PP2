@@ -257,6 +257,7 @@ function ObtenerTurnosFuturos(IdProf) {
 };
 
 
+
 $("#btnCancelarT").click(function (e) {
     e.preventDefault();
     $("#modalTurnos").modal('hide');
@@ -387,6 +388,7 @@ function registrarProfesional(datosProfesional) {
                 swal("Hecho", "Profesional registrado con Éxito!", "success"); //error
                 //$("#tabla_profesionales").DataTable().fnClearTable();
                 sendDataProfesionales();
+                window.location.reload();
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
