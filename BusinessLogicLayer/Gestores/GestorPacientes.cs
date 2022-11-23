@@ -283,6 +283,33 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int obtenerTratamientos(int idPaciente)
+        {
+            try
+            {
+                DAPaciente dAPaciente = new DAPaciente();
+                return dAPaciente.obtenerTratamientos(idPaciente);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string DarBajaTratamiento(int idPaciente, int usuarioBaja)
+        {
+            try
+            {
+                DAPaciente DaPaciente = new DAPaciente();
+                return DaPaciente.DarBajaTratamiento(idPaciente, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 }

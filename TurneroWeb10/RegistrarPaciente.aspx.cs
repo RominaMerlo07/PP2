@@ -554,21 +554,59 @@ namespace TurneroWeb10
 
                 int id = Convert.ToInt32(p_id);
 
+            
                 string resultadoBajaObraPaciente = gestorPaciente.DaDarDeBajaObraPaciente(id, 1);
 
                 if (resultadoBajaObraPaciente == "OK")
                 {
-                    string resultadoBajaTurnos = gestorPaciente.DarBajaTurnos(id, 1);
 
-                    if (resultadoBajaTurnos == "OK")
+                    int cantIdTratamiento = gestorPaciente.obtenerTratamientos(id);
+                    
+
+                    if (cantIdTratamiento > 0)
                     {
-                        paciente.IdPaciente = id;
-                        paciente.UsuarioBaja = 1;
-                        paciente.FechaBaja = DateTime.Today;
 
-                        col = gestorPaciente.DarBajaPaciente(paciente);
+                        string resultadoBajaTratamiento = gestorPaciente.DarBajaTratamiento(id, 1);
+
+                        if (resultadoBajaTratamiento == "OK") {
+
+                            string resultadoBajaTurnos = gestorPaciente.DarBajaTurnos(id, 1);
+
+
+                            if (resultadoBajaTurnos == "OK")
+                            {
+                                                               
+
+                                    paciente.IdPaciente = id;
+                                    paciente.UsuarioBaja = 1;
+                                    paciente.FechaBaja = DateTime.Today;
+
+                                    col = gestorPaciente.DarBajaPaciente(paciente);
+                                                     
+
+                            }
+                        }
+                        
+                    }
+                    else
+                    {
+                        string resultadoBajaTurnos = gestorPaciente.DarBajaTurnos(id, 1);
+
+
+                        if (resultadoBajaTurnos == "OK")
+                        {
+                            
+                                paciente.IdPaciente = id;
+                                paciente.UsuarioBaja = 1;
+                                paciente.FechaBaja = DateTime.Today;
+
+                                col = gestorPaciente.DarBajaPaciente(paciente);
+                            
+
+                        }
 
                     }
+                                     
 
                 }
 
