@@ -1001,6 +1001,281 @@ namespace DataAccess
 
         }
 
+
+        public int TurnosFuturosE(int idProfesional, int idEspecialidad)
+        {
+
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"SELECT COUNT(*) CANTIDAD
+                                      FROM T_TURNOS 
+                                     WHERE ID_PROFESIONAL = @ID_PROFESIONAL
+                                       AND ID_ESPECIALIDAD = @ID_ESPECIALIDAD
+                                       AND ESTADO = 'OTORGADO'
+                                       AND FECHA_BAJA IS NULL
+                                       AND FECHA_TURNO > GETDATE(); ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDAD", idEspecialidad);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+
+        }
+
+        public DataTable ObtenerTurnosFuturosE(int idProfesional, int idEspecialidad)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"SELECT CONVERT(varchar,T.FECHA_TURNO,103) TURNO, 
+		                                   SUBSTRING ((CONVERT(varchar,T.HORA_DESDE,8)),0,6) as HORA, 
+		                                   CONCAT (P.NOMBRE, ' ', P.APELLIDO) PACIENTE, 
+		                                   P.NRO_CONTACTO,
+		                                   P.EMAIL_CONTACTO
+	                                  FROM T_TURNOS T, T_PACIENTES P
+	                                 WHERE T.ID_PACIENTE = P.ID_PACIENTE
+	                                   AND ID_PROFESIONAL = @ID_PROFESIONAL
+	                                   AND ID_ESPECIALIDAD = @ID_ESPECIALIDAD
+	                                   AND ESTADO = 'OTORGADO'
+	                                   AND T.FECHA_BAJA IS NULL
+	                                   AND P.FECHA_BAJA IS NULL
+	                                   AND T.FECHA_TURNO > GETDATE();";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDAD", idEspecialidad);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public int obtenerTratamientosE(int idProfesional, int idEspecialidad)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"SELECT COUNT(DISTINCT ID_PLAN_TRATAMIENTO) CANTIDAD
+                                      FROM T_TURNOS T, T_PLAN_TRATAMIENTO P
+                                     WHERE T.ID_PLAN_TRATAMIENTO = P.ID_TRATAMIENTO
+                                       AND ESTADO_PLAN = 'EN CURSO'
+                                       AND ID_PLAN_TRATAMIENTO IS NOT NULL
+                                       AND T.FECHA_BAJA IS NULL
+                                       AND P.FECHA_BAJA IS NULL
+                                       AND T.FECHA_TURNO >= GETDATE()
+                                       AND T.ID_PROFESIONAL = @ID_PROFESIONAL 
+									   AND T.ID_ESPECIALIDAD = @ID_ESPECIALIDAD;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDAD", idEspecialidad);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+        }
+
+
+        public string DarBajaTratamientoE(int idProfesional, int idEspecialidad, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"UPDATE T_PLAN_TRATAMIENTO 
+                                       SET FECHA_BAJA = GETDATE(), ESTADO_PLAN = 'CANCELADO', USUARIO_BAJA = @USUARIO_BAJA
+                                       WHERE ESTADO_PLAN = 'EN CURSO'
+                                       AND FECHA_BAJA IS NULL
+                                       AND ID_TRATAMIENTO = (SELECT DISTINCT(ID_PLAN_TRATAMIENTO)
+                                                               FROM T_TURNOS 
+                                                              WHERE ID_TRATAMIENTO = ID_PLAN_TRATAMIENTO
+                                                                AND ID_PROFESIONAL = @ID_PROFESIONAL
+							                                    AND ID_ESPECIALIDAD = @ID_ESPECIALIDAD 
+                                                                AND FECHA_BAJA IS NULL 
+                                                                AND FECHA_TURNO >= GETDATE());";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDAD", idEspecialidad);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
+
+        public string DaDarDeBajaTurnosE(int idProfesional, int idEspecialidad, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"UPDATE T_TURNOS
+                                       SET FECHA_BAJA = GETDATE(), ESTADO = 'CANCELADO', USUARIO_BAJA = @USUARIO_BAJA
+                                     WHERE ID_PROFESIONAL = @ID_PROFESIONAL
+                                       AND ID_ESPECIALIDAD = @ID_ESPECIALIDAD
+                                       AND FECHA_TURNO > GETDATE(); ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idProfesional);
+                cmd.Parameters.AddWithValue("@ID_ESPECIALIDAD", idEspecialidad);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
+
+        public string DarBajaDisponibilidad(Profesional profesional)
+        {
+
+            string result;
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"UPDATE T_DISPONIBILIDAD_HORARIA 
+                                       SET USUARIO_BAJA = @USUARIO_BAJA, FECHA_BAJA = @FECHA_BAJA 
+                                      WHERE ID_PROFESIONAL = @ID_PROFESIONAL 
+                                        AND FECHA_BAJA IS NULL; ";
+
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", profesional.IdProfesional);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", profesional.UsuarioBaja);
+                cmd.Parameters.AddWithValue("@FECHA_BAJA", profesional.FechaBaja);
+
+                cmd.ExecuteNonQuery();
+                //int devolver = Convert.ToInt32(cmd.ExecuteScalar());
+                trans.Commit();
+                con.Close();
+
+                result = "OK";
+
+            }
+            catch (Exception e)
+            {
+                result = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+            }
+
+            return result;
+
+        }
+
+
     }
 }
 

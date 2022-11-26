@@ -235,7 +235,8 @@ namespace DataAccess
                                      WHERE ID_ESPECIALIDADES NOT IN (SELECT PD.ID_ESPECIALIDAD 
                                                                        FROM T_PROFESIONALES_DETALLE PD 
                                                                       WHERE PD.ID_ESPECIALIDAD = ID_ESPECIALIDADES 
-                                                                        AND PD.ID_PROFESIONAL = @idProfesional) 
+                                                                        AND PD.ID_PROFESIONAL = @idProfesional 
+                                                                        AND PD.FECHA_BAJA IS NULL) 
                                         AND E.FECHA_BAJA IS NULL";
 
                 cmd = new SqlCommand(consulta, con);

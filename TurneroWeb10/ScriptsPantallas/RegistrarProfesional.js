@@ -13,7 +13,7 @@ var celular;
 var email1;
 var email2;
 
-var tabla, data, id, idN, IdProf, nombreProf;
+var tabla, data, id, idN, IdProf, nombreProf, idProfE, idEsp;
 
 
 
@@ -677,8 +677,8 @@ function sendDataProfesional_Especialidades(numero) {
                 var estado = e.ESTADO;
                 //var Acciones;
 
-                var Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idEspecialidad + "'" +')" class="btn btn-danger btn-sm btnInactivarE"> <span class="fas fa-minus-square" title="Dar de baja"></span></a >';
-                            
+                var Acciones = '<a href="#" onclick="return inactivarE(' + numero + ",'" + idEspecialidad + "','" + especialidades + "'" + ')" class="btn btn-danger btn-sm btnInactivarE"> <span class="fas fa-minus-square" title="Dar de baja"></span></a >';
+                
                 arrayEspecialidades.push([
                     idEspecialidad, especialidades, /*estado,*/ Acciones
                 ])
@@ -815,8 +815,156 @@ function agregarEspecialidadesProfesional(espeProfesional) {
 };
 
 
-function inactivarE(id, idEspecialidad) {
 
+function emailFirst(event) {
+    var regex = new RegExp("[a-zA-Z0-9-_.]+");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
+
+$("#btnCancelarE").click(function (e) {
+    e.preventDefault();
+    $("#modalTurnosE").modal('hide');
+});
+
+
+function inactivarE(id, idEspecialidad, especialidad) {
+
+    console.log(especialidad);
+    var dataInactivarPE = {
+        IdProfesional: id,
+        idEspecialidad: idEspecialidad
+    }
+
+    $.ajax({
+        url: "RegistrarProfesional.aspx/ObtenerTurnosFuturosE",
+        data: JSON.stringify(dataInactivarPE),
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            if (data.d === 'sin info') {
+                console.log('puedo eliminar directo');
+
+                swal({
+                    title: "¿Estas seguro que deseas eliminar la espcialidad " + especialidad + " del profesional?",
+                    text: "Una vez eliminada, ¡no podrá recuperar los datos asociados la misma!",
+                    icon: "warning",
+                    buttons: true,
+                    buttons: ["Cancelar", "Eliminar"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            DarDeBajaEspecialidad(id, idEspecialidad, especialidad);
+                        }
+                    });
+            }
+            else {
+                console.log("tengo que mostrar los turnos pendientes");
+                ObtenerTurnosFuturosE(id, idEspecialidad);
+                $("#modalTurnosE").modal('show');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });    
+}
+
+function ObtenerTurnosFuturosE(IdProf, idEspecialidad) {
+
+    var dataInactivarPE = {
+        IdProfesional: IdProf,
+        idEspecialidad: idEspecialidad
+    }
+
+    idProfE = IdProf;
+    idEsp = idEspecialidad;
+
+   // console.log(idProfE, idEsp);
+
+    var turnos;
+    $.ajax({
+        type: "POST",
+        url: "RegistrarProfesional.aspx/MostrarTurnosFuturosE",
+        data: JSON.stringify(dataInactivarPE),
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
+
+
+            turnos = JSON.parse(data.d);
+
+            var arrayTurnos = new Array();
+
+            turnos.forEach(function (e) {
+
+                var turno = e.TURNO;
+                var hora = e.HORA;
+                var paciente = e.PACIENTE;
+                var contacto = e.NRO_CONTACTO;
+                var email = e.EMAIL_CONTACTO;
+
+                arrayTurnos.push([turno, hora, paciente, contacto, email]);
+
+                console.log(arrayTurnos);
+
+            });
+
+            var table = $('#tabla_TurnosE').DataTable({
+                data: arrayTurnos,
+                "scrollX": true,
+                "languaje": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
+                },
+                "ordering": true,
+                "bDestroy": true,
+                "bAutoWidth": true,
+                columns: [
+                    { title: "Turno" },
+                    { title: "Hora" },
+                    { title: "Paciente" },
+                    { title: "Contacto" },
+                    { title: "Email" },
+                ],
+                dom: 'Bfrtip',
+                dom: '<"top"B>rti<"bottom"fp><"clear">',
+                "oLanguage": {
+                    "sSearch": "Filtrar:",
+                    "oPaginate": {
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
+                },
+                "bPaginate": true,
+                "pageLength": 5,
+                buttons: [
+                    //{ extend: 'copy', text: "Copiar" },
+                    { extend: 'print', text: "Imprimir" },
+                    { extend: 'pdf', orientation: 'landscape' },
+                    { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
+                ]
+            });
+
+
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //$(ddl).prop("disabled", true);
+            //alert(data.error);
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        }
+    })
+};
+
+
+function DarDeBajaEspecialidad(id, idEspecialidad, especialidad) {
 
     var dataInactivarPE = {
         IdProfesional: id,
@@ -832,22 +980,63 @@ function inactivarE(id, idEspecialidad) {
         async: false,
         success: function (data) {
 
-          swal("Hecho", "Se dio de baja exitosamente la especialidad seleccionada", "success");
+            if (data.d == "OK") {
+                swal("La especialidad " + especialidad + " fue eliminada con Éxito!.", {
+                    icon: "success",
+                });
+                sendDataProfesional_Especialidades(id);
+            }
+            else {
+                swal("Hubo un problema", "Error al eliminar la especialidad.", "error");
+            } 
 
-          sendDataProfesional_Especialidades(id);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(data.error);
+            console.log(thrownError);          
         }
     });
 }
 
 
-function emailFirst(event) {
-    var regex = new RegExp("[a-zA-Z0-9-_.]+");
-    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-    if (!regex.test(key)) {
-        event.preventDefault();
-        return false;
+$("#btnEliminarE").click(function (e) {
+    e.preventDefault();
+    console.log(idProfE, idEsp);
+    DarDeBajaTurnosE(idProfE, idEsp);
+});
+
+
+
+function DarDeBajaTurnosE(idProfE, idEsp) {
+
+    var dataInactivarPE = {
+        IdProfesional: idProfE,
+        idEspecialidad: idEsp
     }
-};
+
+    console.log(dataInactivarPE);
+
+    $.ajax({
+        url: "RegistrarProfesional.aspx/DaDarDeBajaProfTurnosE",
+        data: JSON.stringify(dataInactivarPE),
+        type: "post",
+        contentType: "application/json",
+        async: false,
+        success: function (data) {
+
+            console.log(data.d);
+
+            if (data.d != 'OK') {
+                swal("Hubo un problema", "Error al eliminar la especialidad.", "error");
+            }
+            else {
+                swal("Hecho", "La especialidad se elimino con Éxito, y los turnos fueron cancelados.", "success");
+                $("#modalTurnosE").modal('hide');
+                sendDataProfesional_Especialidades(idProfE);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError);
+        }
+    });
+
+}

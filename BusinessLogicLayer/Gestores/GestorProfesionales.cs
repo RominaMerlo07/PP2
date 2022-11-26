@@ -355,5 +355,93 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int TurnosFuturosE(int idProfesional, int idEspecialidad)
+        {
+            try
+            {
+                DAProfesional dAProfesional = new DAProfesional();
+                return dAProfesional.TurnosFuturosE(idProfesional, idEspecialidad);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public DataTable ObtenerTurnosFuturosE(int idProfesional, int idEspecialidad)
+        {
+            try
+            {
+                DAProfesional dAProfesional = new DAProfesional();
+                return dAProfesional.ObtenerTurnosFuturosE(idProfesional, idEspecialidad);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public int obtenerTratamientosE(int idProfesional, int idEspecialidad)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.obtenerTratamientosE(idProfesional, idEspecialidad);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaTratamientoE(int idProfesional, int idEspecialidad, int usuarioBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DarBajaTratamientoE(idProfesional, idEspecialidad, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DaDarDeBajaTurnosE(int idProfesional, int idEspecialidad, int usuarioBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DaDarDeBajaTurnosE(idProfesional, idEspecialidad, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaDisponibilidad(Profesional profesional)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DarBajaDisponibilidad(profesional);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+
     }
 }

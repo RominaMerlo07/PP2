@@ -499,11 +499,18 @@ namespace TurneroWeb10
 
                                 if (resultadoBajaProfTurnos == "OK")
                                 {
+                                    
                                     profesional.IdProfesional = id;
                                     profesional.UsuarioBaja = 1;
                                     profesional.FechaBaja = DateTime.Today;
 
-                                    col = gestorProfesionales.DarBajaProfesional(profesional);
+                                    string resultadoBajaDisponibilidad = gestorProfesionales.DarBajaDisponibilidad(profesional);
+
+                                    if (resultadoBajaDisponibilidad == "OK") { 
+
+                                        col = gestorProfesionales.DarBajaProfesional(profesional);
+
+                                    }
                                 }
                             }
 
@@ -518,7 +525,14 @@ namespace TurneroWeb10
                                 profesional.UsuarioBaja = 1;
                                 profesional.FechaBaja = DateTime.Today;
 
-                                col = gestorProfesionales.DarBajaProfesional(profesional);
+                                string resultadoBajaDisponibilidad = gestorProfesionales.DarBajaDisponibilidad(profesional);
+
+                                if (resultadoBajaDisponibilidad == "OK")
+                                {
+
+                                    col = gestorProfesionales.DarBajaProfesional(profesional);
+
+                                }
                             }
 
                         }                        
@@ -583,7 +597,121 @@ namespace TurneroWeb10
             }
         }
 
+        [WebMethod]
+        public static string ObtenerTurnosFuturosE(string IdProfesional, string idEspecialidad)
+        {
 
+            string col = "sin info";
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+                int idP = Convert.ToInt32(IdProfesional);
+                int idE = Convert.ToInt32(idEspecialidad);
+
+                int cantTurnosFuturos = gestorProfesionales.TurnosFuturosE(idP, idE);
+
+                if (cantTurnosFuturos > 0)
+                {
+
+                    DataTable dt = gestorProfesionales.ObtenerTurnosFuturosE(idP, idE);
+                    col = JsonConvert.SerializeObject(dt);
+                    return col;
+                }
+
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        [WebMethod]
+        public static string MostrarTurnosFuturosE(string IdProfesional, string idEspecialidad)
+        {
+
+            try
+            {
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+
+                int idP = Convert.ToInt32(IdProfesional);
+                int idE = Convert.ToInt32(idEspecialidad);
+
+                DataTable dt = gestorProfesionales.ObtenerTurnosFuturosE(idP, idE);
+                string col = JsonConvert.SerializeObject(dt);
+                return col;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        [WebMethod]
+        public static string DaDarDeBajaProfTurnosE(string IdProfesional, string idEspecialidad)
+        {
+
+            string col = "OK";
+            try
+            {
+
+                GestorProfesionales gestorProfesionales = new GestorProfesionales();
+                Profesional profesional = new Profesional();
+
+                int idProf = Convert.ToInt32(IdProfesional);
+                int idEsp = Convert.ToInt32(idEspecialidad);
+
+                int cantIdTratamiento = gestorProfesionales.obtenerTratamientosE(idProf, idEsp);
+
+                if (cantIdTratamiento > 0)
+                {
+
+                    string resultadoBajaTratamiento = gestorProfesionales.DarBajaTratamientoE(idProf, idEsp, 1);
+
+                    if (resultadoBajaTratamiento == "OK")
+                    {
+
+                        string resultadoBajaProfTurnos = gestorProfesionales.DaDarDeBajaTurnosE(idProf, idEsp, 1);
+
+                        if (resultadoBajaProfTurnos == "OK")
+                        {
+
+                           int usuarioBaja = 1;
+                           DateTime fechaBaja = DateTime.Today;
+
+                            col = gestorProfesionales.DarBajaProfesionalE(IdProfesional, idEspecialidad, usuarioBaja, fechaBaja);
+                        }
+                    }
+
+                }
+                else
+                {
+
+                    string resultadoBajaProfTurnos = gestorProfesionales.DaDarDeBajaTurnosE(idProf, idEsp, 1);
+
+                    if (resultadoBajaProfTurnos == "OK")
+                    {
+                        int usuarioBaja = 1;
+                        DateTime fechaBaja = DateTime.Today;
+
+                        col = gestorProfesionales.DarBajaProfesionalE(IdProfesional, idEspecialidad, usuarioBaja, fechaBaja);
+                    }
+
+                }
+
+                return col;
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 }

@@ -433,7 +433,7 @@ function sendDataPacienteOS(numero) {
 
                 if (ObraSocial != "PARTICULAR") {
 
-                    Acciones = '<a href="#" onclick="return actualizarOS(' + idObraPaciente + ",'" + NumAfiliado + "'" + ')"  class="btn btn-primary btnEditarOS" > <span class="fa-solid fa-pen-to-square" title="Modificar"></span></a> ' +
+                    Acciones = '<a href="#" onclick="return actualizarOS(' + idObraPaciente + ",'" + NumAfiliado + "'" + ')"  class="btn btn-primary btnEditarOS" > <span class="fa fa-pencil" title="Modificar"></span></a> ' +
                         '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square" title="Dar de baja"></span></a >';
 
                 }
