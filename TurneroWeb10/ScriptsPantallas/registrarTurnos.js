@@ -9,7 +9,7 @@ var btnRegistrarOS = document.getElementById("btnRegistrarOS");
 var btnAgregar = document.getElementById("btnAgregar");
 var btnCancelar = document.getElementById("btnCancelar");
 var btnRegistrarNew = document.getElementById("btnRegistrarNew");
-var btnRegistrarExis = document.getElementById("btnRegistrarExis");
+var btnRegistrarExis = document.getElementById("btnRegistrarExis"); seleccionarOS
 
 
 
@@ -22,7 +22,7 @@ $(document).ready(function () {
         language: 'es'
     });
 
-    btnRegistrarExis.disabled = true;
+   // btnRegistrarExis.disabled = true;
 
    
 
@@ -870,6 +870,8 @@ function cargarComboPlanes(idObraSocial, ddl) {
 
 function registrarTurnoNew(datosTurno) {
 
+    window.location.reload();
+
     $.ajax({
         url: "RegistrarTurno.aspx/RegistrarTurnoNew",
         data: JSON.stringify(datosTurno),
@@ -885,6 +887,7 @@ function registrarTurnoNew(datosTurno) {
                 $('#btnConfTurno').show();
                 //alert('Turno registrado con Éxito.')
                 swal("Hecho", "Turno registrado con éxito!", "success");
+               
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -1213,10 +1216,12 @@ function seleccionarOS(idObraPaciente, numero) {
     var table = $('#tablaOSPaciente').DataTable();
     $('#tablaOSPaciente tbody').on('click', 'tr', function (e) {
 
-       // e.preventDefault();
+        e.preventDefault();
 
         var resulfila = [];
-        resulfila = table.row(this).data();      
+        resulfila = table.row(this).data();   
+
+        console.log(resulfila);
  
         obraTurnoPaciente = {
             p_centro: centro,
@@ -1224,7 +1229,7 @@ function seleccionarOS(idObraPaciente, numero) {
             p_fechaTurno: fechaTurno,
             p_horaTurno: horaTurno,
             p_idPaciente: numero,
-            p_idObraSocial: resulfila[1],
+            p_idObraSocial: resulfila[0],
             p_idPlan: resulfila[3],
             p_nroAfiliado: resulfila[6],
             p_profesional: $('#ddlProfesional').val(),
@@ -1233,6 +1238,11 @@ function seleccionarOS(idObraPaciente, numero) {
             p_codPlan : resulfila[4],
             p_nombrePlan : resulfila[5]
         }
+
+
+        console.log(obraTurnoPaciente);
+
+        console.log(resulfila);
 
       //  let lengthOfObject = Object.keys(obraTurnoPaciente).length;
 
@@ -1254,6 +1264,7 @@ $('#btnRegistrarExis').click(function (e) {
 });
 
 function registrarSoloTurno(obraTurnoPaciente) {
+   window.location.reload();
 
     $.ajax({
         url: "RegistrarTurno.aspx/RegistrarSoloTurno",
@@ -1267,8 +1278,8 @@ function registrarSoloTurno(obraTurnoPaciente) {
                 swal("Hubo un problema", "Error al registrar el turno!", "error");
             } else {
                 $('#btnConfTurno').show();
-
                 swal("Hecho", "Turno registrado con éxito!", "success");
+
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

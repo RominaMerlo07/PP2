@@ -242,7 +242,9 @@ function sendDataPacientes() {
               
                 arrayPacientes.push([
                     Numero, Dni, Paciente, Celular, Email, ObrasSociales, Acciones
-                ])
+                ])          
+
+                //sendDataPacienteOS(numero);
         });
 
     var table = $('#tabla_pacientes').DataTable({
