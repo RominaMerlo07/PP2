@@ -525,6 +525,100 @@ namespace DataAccess
 
         }
 
+        public int obtenerTratamientos(int idCentro)
+        {
+            int devolver = 0;
+
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"SELECT COUNT(DISTINCT ID_PLAN_TRATAMIENTO) CANTIDAD
+                                      FROM T_TURNOS T, T_PLAN_TRATAMIENTO P
+                                     WHERE T.ID_PLAN_TRATAMIENTO = P.ID_TRATAMIENTO
+                                       AND ESTADO_PLAN = 'EN CURSO'
+                                       AND ID_PLAN_TRATAMIENTO IS NOT NULL
+                                       AND T.FECHA_BAJA IS NULL
+                                       AND P.FECHA_BAJA IS NULL
+                                       AND T.FECHA_TURNO >= GETDATE()
+                                       AND T.ID_CENTRO = @ID_CENTRO;";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_CENTRO", idCentro);
+
+                devolver = Convert.ToInt32(cmd.ExecuteScalar());
+
+                con.Close();
+
+            }
+            catch (Exception e)
+            {
+
+                con.Close();
+                throw e;
+
+            }
+
+            return devolver;
+        }
+
+
+        public string DarBajaTratamiento(int idCentro, int usuarioBaja)
+        {
+
+            string resultado = "OK";
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = "UPDATE T_PLAN_TRATAMIENTO " +
+                                     "SET FECHA_BAJA = GETDATE(), ESTADO_PLAN = 'CANCELADO', USUARIO_BAJA = @USUARIO_BAJA " +
+                                     "WHERE ESTADO_PLAN = 'EN CURSO' " +
+                                     "AND FECHA_BAJA IS NULL " +
+                                     "AND ID_TRATAMIENTO = (SELECT DISTINCT(ID_PLAN_TRATAMIENTO) " +
+                                                             "FROM T_TURNOS " +
+                                                             "WHERE ID_TRATAMIENTO = ID_PLAN_TRATAMIENTO " +
+                                                             "AND ID_CENTRO = @ID_CENTRO " +
+                                                             "AND FECHA_BAJA IS NULL " +
+                                                             "AND FECHA_TURNO >= GETDATE()); ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@ID_CENTRO", idCentro);
+                cmd.Parameters.AddWithValue("@USUARIO_BAJA", usuarioBaja);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+
+                resultado = "OK";
+
+            }
+            catch (Exception e)
+            {
+
+                resultado = "ERROR - " + e.ToString();
+                trans.Rollback();
+                con.Close();
+                throw e;
+
+            }
+
+            return resultado;
+
+        }
+
 
     }
 }

@@ -276,19 +276,42 @@ namespace TurneroWeb10
 
                 int id = Convert.ToInt32(p_id);
 
-                string resultado = gestorCentros.DaDarDeBajaTurnos(id, 1);
+                int cantIdTratamiento = gestorCentros.obtenerTratamientos(id);
 
-                if (resultado == "OK") 
+                if (cantIdTratamiento > 0)
                 {
-                    centro.IdCentro = id;
-                    centro.UsuarioBaja = 1;
-                    centro.FechaBaja = DateTime.Today;
 
-                    col = gestorCentros.DarDeBajaCentro(centro);                   
+                    string resultadoBajaTratamiento = gestorCentros.DarBajaTratamiento(id, 1);
+
+                    if(resultadoBajaTratamiento == "OK") {
+
+                        string resultado = gestorCentros.DaDarDeBajaTurnos(id, 1);
+
+                        if (resultado == "OK")
+                        {
+                            centro.IdCentro = id;
+                            centro.UsuarioBaja = 1;
+                            centro.FechaBaja = DateTime.Today;
+
+                            col = gestorCentros.DarDeBajaCentro(centro);
+                        }                      
+                    }                  
                 }
-                    return col;
+                else {
 
-                //return col;
+                    string resultado = gestorCentros.DaDarDeBajaTurnos(id, 1);
+
+                    if (resultado == "OK")
+                    {
+                        centro.IdCentro = id;
+                        centro.UsuarioBaja = 1;
+                        centro.FechaBaja = DateTime.Today;
+
+                        col = gestorCentros.DarDeBajaCentro(centro);
+                    }                  
+
+                }
+                return col;
 
             }
             catch (Exception e)

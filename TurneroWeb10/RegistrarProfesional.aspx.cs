@@ -484,16 +484,44 @@ namespace TurneroWeb10
 
                     if (resultadoBajaProfUsuario == "OK")
                     {
-                        string resultadoBajaProfTurnos = gestorProfesionales.DaDarDeBajaTurnos(id, 1);
 
-                        if (resultadoBajaProfTurnos == "OK")
+                        int cantIdTratamiento = gestorProfesionales.obtenerTratamientos(id);
+
+                        if (cantIdTratamiento > 0)
                         {
-                            profesional.IdProfesional = id;
-                            profesional.UsuarioBaja = 1;
-                            profesional.FechaBaja = DateTime.Today;
 
-                            col = gestorProfesionales.DarBajaProfesional(profesional);
+                            string resultadoBajaTratamiento = gestorProfesionales.DarBajaTratamiento(id, 1);
+
+                            if (resultadoBajaTratamiento == "OK")
+                            {
+
+                                string resultadoBajaProfTurnos = gestorProfesionales.DaDarDeBajaTurnos(id, 1);
+
+                                if (resultadoBajaProfTurnos == "OK")
+                                {
+                                    profesional.IdProfesional = id;
+                                    profesional.UsuarioBaja = 1;
+                                    profesional.FechaBaja = DateTime.Today;
+
+                                    col = gestorProfesionales.DarBajaProfesional(profesional);
+                                }
+                            }
+
                         }
+                        else {
+
+                            string resultadoBajaProfTurnos = gestorProfesionales.DaDarDeBajaTurnos(id, 1);
+
+                            if (resultadoBajaProfTurnos == "OK")
+                            {
+                                profesional.IdProfesional = id;
+                                profesional.UsuarioBaja = 1;
+                                profesional.FechaBaja = DateTime.Today;
+
+                                col = gestorProfesionales.DarBajaProfesional(profesional);
+                            }
+
+                        }                        
                         
                     }
 

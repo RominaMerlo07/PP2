@@ -147,6 +147,35 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+
+        public int obtenerTratamientos(int idCentro)
+        {
+            try
+            {
+                DACentros DaCentros = new DACentros();
+                return DaCentros.obtenerTratamientos(idCentro);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaTratamiento(int idCentro, int usuarioBaja)
+        {
+            try
+            {
+                DACentros DaCentros = new DACentros();
+                return DaCentros.DarBajaTratamiento(idCentro, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 
 

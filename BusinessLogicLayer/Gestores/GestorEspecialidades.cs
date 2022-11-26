@@ -190,6 +190,34 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int obtenerTratamientos(int idEspecialidad)
+        {
+            try
+            {
+                DAEspecialidades DaEspecialidades = new DAEspecialidades();
+                return DaEspecialidades.obtenerTratamientos(idEspecialidad);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaTratamiento(int idEspecialidad, int usuarioBaja)
+        {
+            try
+            {
+                DAEspecialidades DaEspecialidades = new DAEspecialidades();
+                return DaEspecialidades.DarBajaTratamiento(idEspecialidad, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 }

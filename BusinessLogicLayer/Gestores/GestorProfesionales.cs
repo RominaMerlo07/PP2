@@ -328,5 +328,32 @@ namespace BusinessLogicLayer.Gestores
         }
 
 
+        public int obtenerTratamientos(int idProfesional)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.obtenerTratamientos(idProfesional);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string DarBajaTratamiento(int idProfesional, int usuarioBaja)
+        {
+            try
+            {
+                DAProfesional DaProfesional = new DAProfesional();
+                return DaProfesional.DarBajaTratamiento(idProfesional, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

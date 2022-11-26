@@ -179,15 +179,39 @@ namespace TurneroWeb10
 
                 int id = Convert.ToInt32(p_id);
 
-                string resultado = gestorEspecialidades.DaDarDeBajaTurnos(id, 1);
+                int cantIdTratamiento = gestorEspecialidades.obtenerTratamientos(id);
 
-                if (resultado == "OK")
-                {
-                    especialidad.IdEspecialidad = id;
-                    especialidad.UsuarioBaja = 1;
-                    especialidad.FechaBaja = DateTime.Today;
+                if (cantIdTratamiento > 0) {
 
-                    col = gestorEspecialidades.DaDarDeBajaEspecialidad(especialidad);
+                    string resultadoBajaTratamiento = gestorEspecialidades.DarBajaTratamiento(id, 1);
+
+                    if (resultadoBajaTratamiento == "OK") { 
+
+                    string resultado = gestorEspecialidades.DaDarDeBajaTurnos(id, 1);
+
+                        if (resultado == "OK")
+                        {
+                            especialidad.IdEspecialidad = id;
+                            especialidad.UsuarioBaja = 1;
+                            especialidad.FechaBaja = DateTime.Today;
+
+                            col = gestorEspecialidades.DaDarDeBajaEspecialidad(especialidad);
+                        }
+                    }
+
+                }
+                else {
+
+                    string resultado = gestorEspecialidades.DaDarDeBajaTurnos(id, 1);
+
+                    if (resultado == "OK")
+                    {
+                        especialidad.IdEspecialidad = id;
+                        especialidad.UsuarioBaja = 1;
+                        especialidad.FechaBaja = DateTime.Today;
+
+                        col = gestorEspecialidades.DaDarDeBajaEspecialidad(especialidad);
+                    }
                 }
                 return col;
 

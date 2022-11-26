@@ -393,6 +393,34 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public int obtenerTratamientos(int idObraSocial)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.obtenerTratamientos(idObraSocial);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string DarBajaTratamiento(int idObraSocial, int usuarioBaja)
+        {
+            try
+            {
+                DAObrasSociales DaObrasSociales = new DAObrasSociales();
+                return DaObrasSociales.DarBajaTratamiento(idObraSocial, usuarioBaja);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 

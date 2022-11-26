@@ -389,16 +389,44 @@ namespace TurneroWeb10
 
                 int id = Convert.ToInt32(p_id);
 
-                string resultado = gestorOS.DaDarDeBajaTurnos(id, 1);
+                int cantIdTratamiento = gestorOS.obtenerTratamientos(id);
 
-                if (resultado == "OK")
-                {
-                    obraSocial.IdObraSocial = id;
-                    obraSocial.UsuarioBaja = 1;
-                    obraSocial.FechaBaja = DateTime.Today;
+                if (cantIdTratamiento > 0) {
 
-                    col = gestorOS.darBajaObraSocial(obraSocial);
+                    string resultadoBajaTratamiento = gestorOS.DarBajaTratamiento(id, 1);
+
+                    if (resultadoBajaTratamiento == "OK") {
+
+                        string resultado = gestorOS.DaDarDeBajaTurnos(id, 1);
+
+                        if (resultado == "OK")
+                        {
+                            obraSocial.IdObraSocial = id;
+                            obraSocial.UsuarioBaja = 1;
+                            obraSocial.FechaBaja = DateTime.Today;
+
+                            col = gestorOS.darBajaObraSocial(obraSocial);
+                        }
+
+                    }                    
+
                 }
+                else
+                {
+
+                    string resultado = gestorOS.DaDarDeBajaTurnos(id, 1);
+
+                    if (resultado == "OK")
+                    {
+                        obraSocial.IdObraSocial = id;
+                        obraSocial.UsuarioBaja = 1;
+                        obraSocial.FechaBaja = DateTime.Today;
+
+                        col = gestorOS.darBajaObraSocial(obraSocial);
+                    }
+
+                }
+                
                 return col;
 
                 //return col;
