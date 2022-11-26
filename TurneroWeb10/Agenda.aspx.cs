@@ -70,7 +70,24 @@ namespace TurneroWeb10
                 throw e;
             }
         }
-        
+
+        [WebMethod]
+        public static string TraeEstadosFecha()
+        {
+            try
+            {
+                GestorTurno gestorTurno = new GestorTurno();
+                DataTable estados = gestorTurno.TraeEstadosFecha();
+                string col = JsonConvert.SerializeObject(estados);
+                return col;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
         [WebMethod]
         public static void modificarEstadoEnTurno(string idturno, string estado)
         {

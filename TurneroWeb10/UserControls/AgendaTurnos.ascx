@@ -105,10 +105,8 @@
     }
 
     function cambioDeEstado(idturno) {
-        debugger;
-        var estado = $("#SELECT-" + idturno).val();
-
-        console.log(estado);
+       
+        var estado = $("#SELECT-" + idturno).val();       
 
         $.ajax({
             url: "Agenda.aspx/modificarEstadoEnTurno",
@@ -155,6 +153,36 @@
 
         var estados;
 
+        var fecha = $('#dtpFecha').val();
+        console.log(fecha);
+
+        var hoy = new Date();
+        
+        const formatDate = (hoy)=>{
+        let formatted_date = hoy.getDate() + "/" + (hoy.getMonth() + 1) + "/" + hoy.getFullYear()
+         return formatted_date;
+        }
+         
+        var fechaActual = formatDate(hoy);
+
+        console.log(fechaActual);
+
+        if(fecha > fechaActual )
+            {
+                 console.log("no puedo mostrar el estado atendido ni en espera");
+                    $.ajax({
+                    url: "Agenda.aspx/TraeEstadosFecha",
+                    //data: "{idCentro: '" + idCentro + "', dia: '" + dia + "'}",
+                    type: "post",
+                    contentType: "application/json",
+                    async: false,
+                    success: function (data) {
+                        estados = JSON.parse(data.d);
+                    }
+                   });
+            }
+         else{
+
         $.ajax({
             url: "Agenda.aspx/traeEstados",
             //data: "{idCentro: '" + idCentro + "', dia: '" + dia + "'}",
@@ -165,7 +193,7 @@
                 estados = JSON.parse(data.d);
             }
         });
-
+        }
         return estados;
     }
 

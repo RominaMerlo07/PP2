@@ -393,6 +393,31 @@ namespace DataAccess
             }
         }
 
+        public DataTable TraeEstadosFecha()
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"SELECT * 
+                                      FROM T_TURNOS_ESTADOS
+                                     WHERE ESTADO NOT IN ('ATENDIDO','EN ESPERA');";
+
+                cmd = new SqlCommand(consulta, con);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public void ModificarEstadoEnTurno(string idturno, string estado)
         {
             try

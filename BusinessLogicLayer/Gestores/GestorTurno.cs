@@ -156,6 +156,20 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+
+        public DataTable TraeEstadosFecha()
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                return Daturno.TraeEstadosFecha();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void ModificarEstadoEnTurno(string idturno, string estado)
         {
             try
