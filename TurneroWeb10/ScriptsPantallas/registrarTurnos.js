@@ -1037,8 +1037,8 @@ function sendDataPacienteOS(numero) {
                 
 
 
-                var Acciones = '<a href="#" onclick="return seleccionarOS(' + idObraPaciente + ",'" + numero + "'" + ')"  class="btn btn-info btnSeleccionarOS" > <span class="fa-solid fa-square-check"></span></a>' +
-                               '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fas fa-minus-square"></span></a >';
+                var Acciones = '<a href="#" onclick="return seleccionarOS(' + idObraPaciente + ",'" + numero + "'" + ')"  class="btn btn-primary btnSeleccionarOS" > <span class="fa-solid fa-square-check" title="seleccionar"> </span></a>' +
+                    '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fa fa-trash" title="dar de baja"></span></a >';
 
 
                 arrayPacienteOS.push([

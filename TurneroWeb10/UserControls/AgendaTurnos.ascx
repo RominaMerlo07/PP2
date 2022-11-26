@@ -108,6 +108,8 @@
         debugger;
         var estado = $("#SELECT-" + idturno).val();
 
+        console.log(estado);
+
         $.ajax({
             url: "Agenda.aspx/modificarEstadoEnTurno",
             data: "{idturno: '" + idturno + "', estado: '" + estado + "'}",

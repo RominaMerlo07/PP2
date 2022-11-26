@@ -285,6 +285,7 @@ namespace DataAccess
                                         from T_TURNOS t
                                         where t.ID_PROFESIONAL = @idProfesional
                                         and t.FECHA_BAJA is null
+                                        AND t.ESTADO NOT IN ('CANCELADO')
                                         AND t.FECHA_TURNO = @diaTurno
                                             order by hora_desde";
 
@@ -409,6 +410,40 @@ namespace DataAccess
                                         FECHA_MOD = GETDATE()
                                     where ID_TURNO = @idTurnos
                                         ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@estado", estado);
+                cmd.Parameters.AddWithValue("@idTurnos", idturno);
+
+                cmd.ExecuteNonQuery();
+                trans.Commit();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public void CancelarTurno(string idturno, string estado)
+        {
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"
+                                    update T_TURNOS
+                                    set ESTADO = @estado,
+                                        USUARIO_BAJA = 1,
+                                        FECHA_BAJA = GETDATE()
+                                    where ID_TURNO = @idTurnos";
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Transaction = trans;

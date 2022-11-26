@@ -169,6 +169,20 @@ namespace BusinessLogicLayer.Gestores
             }
         }
 
+        public void CancelarTurno(string idturno, string estado)
+        {
+            try
+            {
+                DATurno Daturno = new DATurno();
+                Daturno.CancelarTurno(idturno, estado);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public DataTable TraerTurnosInformes(string idSucursal, string idObraSocial, string fechaDesde, string fechaHasta)
         {
             try

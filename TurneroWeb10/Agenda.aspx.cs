@@ -77,7 +77,17 @@ namespace TurneroWeb10
             try
             {
                 GestorTurno gestorTurno = new GestorTurno();
-                gestorTurno.ModificarEstadoEnTurno(idturno, estado);
+
+                if (estado == "CANCELADO")                {
+
+                    gestorTurno.CancelarTurno(idturno, estado);
+                }
+                else {
+
+                    gestorTurno.ModificarEstadoEnTurno(idturno, estado);
+
+                }
+
             }
             catch (Exception e)
             {
