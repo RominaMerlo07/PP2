@@ -388,7 +388,7 @@ function registrarProfesional(datosProfesional) {
                 swal("Hecho", "Profesional registrado con Éxito!", "success"); //error
                 //$("#tabla_profesionales").DataTable().fnClearTable();
                 sendDataProfesionales();
-                window.location.reload();
+               // window.location.reload();
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
