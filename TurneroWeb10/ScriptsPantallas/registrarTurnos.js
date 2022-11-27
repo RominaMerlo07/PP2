@@ -9,7 +9,7 @@ var btnRegistrarOS = document.getElementById("btnRegistrarOS");
 var btnAgregar = document.getElementById("btnAgregar");
 var btnCancelar = document.getElementById("btnCancelar");
 var btnRegistrarNew = document.getElementById("btnRegistrarNew");
-var btnRegistrarExis = document.getElementById("btnRegistrarExis"); seleccionarOS
+var btnRegistrarExis = document.getElementById("btnRegistrarExis");
 
 
 
@@ -870,7 +870,7 @@ function cargarComboPlanes(idObraSocial, ddl) {
 
 function registrarTurnoNew(datosTurno) {
 
-    window.location.reload();
+    //window.location.reload();
 
     $.ajax({
         url: "RegistrarTurno.aspx/RegistrarTurnoNew",
@@ -1264,7 +1264,7 @@ $('#btnRegistrarExis').click(function (e) {
 });
 
 function registrarSoloTurno(obraTurnoPaciente) {
-   window.location.reload();
+   //window.location.reload();
 
     $.ajax({
         url: "RegistrarTurno.aspx/RegistrarSoloTurno",

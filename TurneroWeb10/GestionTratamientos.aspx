@@ -50,14 +50,14 @@
                             </div> 
                         </div>
                     </div>
-                    <div class="box-body table-responsive">
-                        <div class="col-md-12">
-                            <div class="table table-striped table-hover">   
+                    <div class="box-body">
+                        <div class="">
+                            <%--<div class="table table-striped table-hover">--%>   
                                 <div id="tGestionTratamiento" >
                                     <table style="width:100%" class="table table-striped table-hover table-bordered" id="tablaTratamientos">
                                     </table>
                                 </div>  
-                            </div>
+                            <%--</div>--%>
                         </div>
                     </div>
                 </div>
@@ -398,7 +398,7 @@
                                 <h5 class="card-title mb-2 text-muted">Agregar turno al tratamiento</h5>
                                 <div class="form-row">
                                     <div class="col-sm-4 col-md-4 col-lg-4" id="divDiaTurnoEd" >
-                                        <div class="input-group mb-3">
+                                        <div class="input-group mb-3" id="dispHorTratam">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Dia: </span>
                                             </div>
@@ -406,6 +406,7 @@
                                                 <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
                                             </select>
                                         </div>
+                                        <div class="alert alert-danger mr-3" role="alert" id="msgHorariosError" style="display:none" > </div>
                                     </div>
                                     <div class="col-sm-4 col-md-4 col-lg-4" id="divHoraTurnoEd" style="display:none">
                                         <div class="input-group mb-3">
@@ -447,13 +448,10 @@
                                     
                                 </div>
                                 <br />
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div id="tListarTurnosEditar">
-                                            <table style="width:100%" class="table table-striped " id="tablaTurnosEditar" >
-                                            </table>
-                                        </div>
-                                    </div>
+
+                                <div id="tListarTurnosEditar">
+                                    <table  class="table table-hover table-bordered table-striped " id="tablaTurnosEditar" >
+                                    </table>
                                 </div>
                             </div>
                         </div>

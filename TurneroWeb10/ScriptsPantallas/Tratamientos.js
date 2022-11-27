@@ -288,27 +288,34 @@ function cargarTablaTratamientos(idPaciente) {
 }
 
 function buscarPacienteFiltrar(dniPaciente) {
-    $.ajax({
-        url: "GestionTratamientos.aspx/buscarPaciente",
-        data: "{dniPaciente: '" + dniPaciente + "'}",
-        type: "post",
-        contentType: "application/json",
-        async: false,
-        success: function (data) {
-            var paciente = JSON.parse(data.d);
-            var datosPaciente;
 
-            if (data.d != "null") {
-                datosPaciente = paciente.Apellido + " " + paciente.Nombre;
-                $('#txtIdPacienteFiltrar').val(paciente.IdPaciente);
+    if (dniPaciente != "") {
+        $.ajax({
+            url: "GestionTratamientos.aspx/buscarPaciente",
+            data: "{dniPaciente: '" + dniPaciente + "'}",
+            type: "post",
+            contentType: "application/json",
+            async: false,
+            success: function (data) {
+                var paciente = JSON.parse(data.d);
+                var datosPaciente;
 
-            } else {
-                datosPaciente = "";
-                swal("Paciente no encontrado", "Por favor primero registre al paciente.", "warning");
+                if (data.d != "null") {
+                    datosPaciente = paciente.Apellido + " " + paciente.Nombre;
+                    $('#txtIdPacienteFiltrar').val(paciente.IdPaciente);
+
+                } else {
+                    datosPaciente = "";
+                    $('#txtIdPacienteFiltrar').val("");
+                    swal("Paciente no encontrado", "Por favor primero registre al paciente.", "warning");
+                }
+                $('#txtPacienteFiltrar').val(datosPaciente);
             }
-            $('#txtPacienteFiltrar').val(datosPaciente);
-        }
-    });
+        });
+    } else {
+        $('#txtIdPacienteFiltrar').val("");
+        $('#txtPacienteFiltrar').val("");
+    }
 }
 
 // #region editarTratamiento
@@ -343,12 +350,13 @@ function limpiarModalEditarTratamiento() {
     $("#ddlDiaTurnoEd").empty();
     $("#divHoraTurnoEd").hide();
     $("#ddlHoraDesdeEd").empty();
+    $("#ddlMinDesdeEd").val("00");
     $("#divBtnAgregarTurnoEd").hide();
 
 }
 
 function cargarDatosEditar(idTratamiento) {
-
+    limpiarModalEditarTratamiento();
     $.ajax({
         url: "GestionTratamientos.aspx/traerTratamientoEditar",
         data: "{idTratamiento: '" + idTratamiento
@@ -385,7 +393,7 @@ function cargarDatosEditar(idTratamiento) {
                 var validacion = moment().isSameOrBefore(e.FECHA_TURNO, 'day');
 
                 var acciones = '';
-                if (validacion) {
+                if ((validacion) && (e.ESTADO != "CANCELADO")) {
                     acciones = '<a href="#" onclick="return cancelarTurnoEd(' + e.ID_TURNO + ', ' + e.ID_TRATAMIENTO + ')"  class="btn btn-danger btnCancelarEd" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';
                 }
                 //var acciones = '<a href="#" onclick="return cancelarTurnoEd(' + e.ID_TURNO + ', ' + e.ID_TRATAMIENTO + ')"  class="btn btn-danger btnCancelarEd" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';
@@ -487,10 +495,21 @@ function crearComboDiasEd(eventosDispHorArr) {
         $("#ddlDiaTurnoEd").val(selected);
         //fin
         $("#ddlDiaTurnoEd").show();
+
+        $("#dispHorTratam").show();
+        $("#msgHorariosError").hide();
+
+        
     } else {
 
         $("#ddlDiaTurnoEd").empty();
         $("#ddlDiaTurnoEd").hide();
+
+        $("#dispHorTratam").hide();
+        $('#msgHorariosError').text("El profesional no tiene Disponibilidad Horaria para este Especialidad, o para esta Sucursal.");
+        $("#msgHorariosError").show();
+
+
 
     }
 }
@@ -499,14 +518,14 @@ function dibujarTablaTurnosEditar(arrayTurnosEditar) {
 
     var table = $('#tablaTurnosEditar').DataTable({
         data: arrayTurnosEditar,
-        "scrollX": true,
+
         "languaje": {
             "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Spanish.json"
         },
         "ordering": true,
         "order": [[6, "asc"]],
         "bDestroy": true,
-        "bAutoWidth": true,
+
         columns: [
             { title: "ID_TURNO", visible: false },
 
@@ -529,12 +548,22 @@ function dibujarTablaTurnosEditar(arrayTurnosEditar) {
                 "sNext": "Siguiente"
             }
         },
+
+        "rowCallback": function (row, data, index) {
+            if (data[5] == 'CANCELADO') {
+
+                $('td', row).css('background-color', '#ed2639');
+                $('td', row).css('color', 'rgba(255, 255, 255, .8)');
+
+                //$('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
+            } 
+        },
         "bPaginate": true,
         "pageLength": 5,
         buttons: [
             //{ extend: 'copy', text: "Copiar" },
-            { extend: 'print', text: "Imprimir" },
-            { extend: 'pdf', orientation: 'landscape' },
+            { extend: 'print', text: "Imprimir", exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7] } },
+            { extend: 'pdf', orientation: 'landscape', exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7] } },
             { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
         ]
     });
@@ -1043,6 +1072,7 @@ function cargarObrasSocialesPaciente(ddl,idPaciente) {
         async: false,
         success: function (data) {
             // TODO ¿ que pasa si el paciente no tiene cargada aun ninguna obra social ?
+            
             if (data.d != null) {
                 $(ddl).empty();
                 $(ddl).append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');
@@ -1188,7 +1218,8 @@ function limpiarModalCreaTratamiento() {
 
     $('#txtDocumento').val("");
     $('#txtIdPaciente').val("");
-
+    $('#txtPaciente').val("");
+    
     $('#ddlSucursal').val(0);
     $('#ddlEspecialidad').empty();
     $('#ddlEspecialidad').append('<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>');

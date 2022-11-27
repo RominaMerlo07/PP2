@@ -484,7 +484,6 @@
 
             $('#btnBaja').click(function ()
             {
-                debugger;
                 var idProfesional = $('#idProfesionalBaja').val();
                 var idDisponibilidad = $('#idDisponibilidadBaja').val();
                 var cantidadTurnos = consultarTurnosEnDisponibilidad(idDisponibilidad, idProfesional);
@@ -630,7 +629,6 @@
 
         function validarDatosModalRegistrar(disponibilidad) {
 
-            debugger;
             if (disponibilidad.p_sucursal == null) { return "Seleccione una Sucursal." }
             else if (disponibilidad.p_fechaDesde == "") { return "Seleccione correctamente la fecha." }
             else if (disponibilidad.p_fechaHasta == "") { return "Seleccione correctamente la fecha." }
@@ -937,7 +935,7 @@
         }
 
         function cargarModalBaja(idDisponibilidad, idProfesional) {
-            debugger;
+
             cargarComboCentros('#ddlSucursalBaja');
             $('#idProfesionalBaja').val(idProfesional);
             $('#idDisponibilidadBaja').val(idDisponibilidad);

@@ -269,7 +269,7 @@
             });
 
             $('#btnReprogramarTurnoEd').click(function () {
-                debugger;
+
                 if ($("#ddlDiaTurnoEd").val() != 0) {
                     var turnoReprogramado;
                     turnoReprogramado = armarArrayTurnoEd();
@@ -301,7 +301,7 @@
                   
 
                     var turnosReprogramar = [];
-                    //debugger;
+
                     if (result.length > 0) {
                         result.forEach(function (e) {  
 
@@ -311,7 +311,7 @@
                             var nombrePaciente = e.Paciente.Nombre + " " + e.Paciente.Apellido;
                             var pacienteNombre = nombrePaciente;
                             var telPaciente = e.Paciente.NroContacto;
-                            debugger;
+
                             var obraPlan = "";
                             if (e.ObraSocial != null) {
 
@@ -663,7 +663,7 @@
         }
 
         function cargarHorasEd(dispHoraria, idDisp) {
-            debugger;
+
             var dispHorariaArr = dispHoraria.HorariosProfesional;
             var contador = Object.keys(dispHorariaArr).length;
             if (contador > 0) {

@@ -93,16 +93,14 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
 
                 string consulta = @"SELECT os.ID_OBRA_SOCIAL, 
-                                           os.DESCRIPCION
-                                      FROM t_pacientes p, T_OBRAS_PACIENTES op, T_OBRAS_SOCIALES os, T_OBRAS_PLANES opl
-                                     WHERE p.ID_PACIENTE = op.ID_PACIENTE
-                                       AND os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
-									   AND op.ID_PLAN = opl.ID_PLANES
-                                       AND p.FECHA_BAJA IS NULL
-                                       AND op.FECHA_BAJA IS NULL
-                                       AND os.FECHA_BAJA IS NULL
-									   AND opl.FECHA_BAJA IS NULL
-                                       AND p.ID_PACIENTE = @ID_PACIENTE";
+                                            os.DESCRIPCION
+                                        FROM t_pacientes p, T_OBRAS_PACIENTES op, T_OBRAS_SOCIALES os
+                                        WHERE p.ID_PACIENTE = op.ID_PACIENTE
+                                        AND os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                        AND p.FECHA_BAJA IS NULL
+                                        AND op.FECHA_BAJA IS NULL
+                                        AND os.FECHA_BAJA IS NULL
+                                        AND p.ID_PACIENTE = @ID_PACIENTE";
 
             
 
