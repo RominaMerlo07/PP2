@@ -167,7 +167,7 @@
 
         console.log(fechaActual);
 
-        if(fecha > fechaActual )
+        if(fecha < fechaActual )
             {
                  console.log("no puedo mostrar el estado atendido ni en espera");
                     $.ajax({
@@ -182,6 +182,8 @@
                    });
             }
          else{
+
+               console.log("puedo mostrar el atendido");
 
         $.ajax({
             url: "Agenda.aspx/traeEstados",
