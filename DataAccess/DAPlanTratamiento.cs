@@ -216,7 +216,7 @@ namespace DataAccess
                                     FROM T_PLAN_TRATAMIENTO PT
                                         INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
                                     WHERE PT.ESTADO_PLAN != 'CANCELADO' 
-                                        AND T.ESTADO != 'CANCELADO' 
+                                        --AND T.ESTADO != 'CANCELADO' 
                                         AND PT.ID_TRATAMIENTO = @idTratamiento ;";
 
                 cmd = new SqlCommand(consulta, con);

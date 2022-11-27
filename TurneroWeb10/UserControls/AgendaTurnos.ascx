@@ -213,7 +213,7 @@
                 var turnos = [];
                 datos.forEach(function (e)
                 {
-                    debugger;
+
                     var IdTurno = e.ID_TURNO;
                     var Hora = e.HORA_DESDE;
                     var Especialidad = e.ESPECIALIDAD;
