@@ -155,6 +155,16 @@
         #no-cursor {
             cursor: none;
         }
+
+        .form-control {
+            height: calc(1.5em + 0.75rem + 4px) !important;
+        }
+        .form-control.select2 {
+            height: auto !important;
+        }
+        .select2-container--bootstrap4 .select2-selection--single {
+            height: calc(1.5em + 0.75rem + 4px) !important;
+        }
     </style>
 
 </head>
@@ -298,11 +308,10 @@
                                     <i class="fa-solid fa-id-card-clip"></i>
                                     <span>Obras Sociales</span>
                                 </a>
-                                <a class="dropdown-item" id="idLiquidacionObraSocial" href="LiquidacionObraSocial.aspx">
-                                    <%-- <i class="fas fa-folder-plus"></i>--%>
+                                <%--<a class="dropdown-item" id="idLiquidacionObraSocial" href="LiquidacionObraSocial.aspx">
                                     <i class="fa-solid fa-hospital-user"></i>
                                     <span>Liquidaciones</span>
-                                </a>
+                                </a>--%>
                                 <a class="dropdown-item" id="idInformes" href="InformeObras.aspx">
                                     <i class="far fa-clipboard"></i>
                                     <span>Informes</span>

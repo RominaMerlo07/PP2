@@ -208,7 +208,7 @@
                                                     <input type="text" name="email2" class="form-control" id="id__txtEmail2" maxlength="14" onkeypress="return emailFirst(event)" placeholder="gmail.com" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
 
                                                 </div>
-                                                <p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>
+                                                <%--<p class="formulario__error" id="p__txtEmail2">Por favor, ingrese un email valido</p>--%>
                                             </div>
                                         </div>
                                     </div>
@@ -532,5 +532,4 @@
     <link href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/styleRegistrarProfesional.css"%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarProfesional.js"%>"></script>
     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/RegistrarProfesionales_validacion.js"%>"></script>
-
 </asp:Content>

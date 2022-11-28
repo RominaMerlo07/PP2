@@ -124,9 +124,9 @@ function actualizar(idBuscar) {
     })
 }
 
-function especialidades(numero, profesional, matricula) {
+function especialidadesLoquinsongs(numero, profesional, matricula) {
 
-    console.log(numero, profesional, matricula);
+    //console.log(numero, profesional, matricula);
     
     var texto = "Profesional: " + profesional + " -  Matrícula: " + matricula;
     $("#infoProfesional").text(texto);
@@ -388,7 +388,6 @@ function registrarProfesional(datosProfesional) {
                 swal("Hecho", "Profesional registrado con Éxito!", "success"); //error
                 //$("#tabla_profesionales").DataTable().fnClearTable();
                 sendDataProfesionales();
-                window.location.reload();
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -513,7 +512,7 @@ function sendDataProfesionales() {
                     var jsonStr = '["' + DateFechaNac + '", "' + Numero + '", "' + Profesional + '", "' + DNI + '", "' + Matricula + '", "' + Nacimiento + '","' + Contacto + '","' + Email + '","' + Domicilio + '"]';
                     //const array = JSON.parse(jsonStr);
 
-                    var Especialidad = '<button id="btnEspecialidades" class="btn btn-warning btn-especialidades" type="reset" onclick= "return especialidades(' + Numero + ",'" + Profesional + "'," + Matricula + ')" ><i class="fa-solid fa-hospital-user"></i> Consultar </button>';
+                    var Especialidad = '<button id="btnEspecialidades" class="btn btn-warning btn-especialidades" type="reset" onclick= "return especialidadesLoquinsongs(' + Numero + ",'" + Profesional + "'," + Matricula + ')" ><i class="fa-solid fa-hospital-user"></i> Consultar </button>';
 
                     var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ')"  class="btn btn-primary" > <span class="fas fa-user-edit" title="Modificar"></span></a > ' +
                         '<a href="#" onclick="return inactivar(' + Numero + ",'" + Profesional + "'" + ')"  class="btn btn-danger btnInactivar" > <span class="fas fa-user-minus" title="Dar de baja"></span></a > ';
@@ -555,7 +554,7 @@ function sendDataProfesionales() {
                         }
                     },
                     "bPaginate": true,
-                    "pageLength": 3,
+                    "pageLength": 8,
                     buttons: [
                         //{ extend: 'copy', text: "Copiar" },
                         { extend: 'print', text: "Imprimir" },

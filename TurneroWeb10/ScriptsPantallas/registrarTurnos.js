@@ -10,7 +10,7 @@ var btnAgregar = document.getElementById("btnAgregar");
 var btnCancelar = document.getElementById("btnCancelar");
 var btnRegistrarNew = document.getElementById("btnRegistrarNew");
 var btnRegistrarExis = document.getElementById("btnRegistrarExis");
-
+var obraTurnoPaciente;
 
 
 $(document).ready(function () {
@@ -96,7 +96,7 @@ $(document).ready(function () {
                 $("#calDisposicionHoraria").hide();
                 $("#calTurnos").hide();
 
-                limpiarCampos();
+                limpiarCampingsongs();
             }
         }
         else {
@@ -131,7 +131,7 @@ $(document).ready(function () {
             $("#calDisposicionHoraria").hide();
             $("#calTurnos").hide();
 
-            limpiarCampos();
+            limpiarCampingsongs();
         }
         }
 
@@ -664,7 +664,7 @@ function dibujaCalendarioDisp(idEspecialidad) {
 //    $("#calTurnos").hide();
 //}
 
-function limpiarCampos() {
+function limpiarCampingsongs() {
 
     $('#ddlSucursal').val(0);
     $('#ddlEspecialidad').empty();
@@ -870,7 +870,6 @@ function cargarComboPlanes(idObraSocial, ddl) {
 
 function registrarTurnoNew(datosTurno) {
 
-    //window.location.reload();
 
     $.ajax({
         url: "RegistrarTurno.aspx/RegistrarTurnoNew",
@@ -1037,7 +1036,7 @@ function sendDataPacienteOS(numero) {
                 
 
 
-                var Acciones = '<a href="#" onclick="return seleccionarOS(' + idObraPaciente + ",'" + numero + "'" + ')"  class="btn btn-primary btnSeleccionarOS" > <span class="fa-solid fa-square-check" title="seleccionar"> </span></a>' +
+                var Acciones = '<a href="#" onclick="return seleccionarOSsocialingsong(' + idObraPaciente + ",'" + numero + "'" + ')"  class="btn btn-primary btnSeleccionarOS" > <span class="fa-solid fa-square-check" title="seleccionar"> </span></a>' +
                     '<a href="#" onclick="return inactivarE(' + numero + ",'" + idObraPaciente + "'" + ')" class="btn btn-danger btnInactivarE"> <span class="fa fa-trash" title="dar de baja"></span></a >';
 
 
@@ -1072,6 +1071,9 @@ function sendDataPacienteOS(numero) {
                     ],
                     //dom: 'Bfrtip',
                     //dom: '<"top"B>rti<"bottom"fp><"clear">',
+                    'fnCreatedRow': function (nRow, aData, iDataIndex) {
+                        $(nRow).attr('id', aData[0]); // or whatever you choose to set as the id
+                    },
                     "oLanguage": {
                         "sLengthMenu": "Mostrar _MENU_ resultados por página",
                         "sSearch": "Filtrar:",
@@ -1207,19 +1209,20 @@ function registrarOSxPaciente(obraPaciente) {
 };
 
 
-function seleccionarOS(idObraPaciente, numero) {
+function seleccionarOSsocialingsong(idObraPaciente, numero) {
+    debugger;
     btnRegistrarExis.disabled = true;
 
     centro = $('#ddlSucursal').val();
     especialidad = $('#ddlEspecialidad').val();
-
     var table = $('#tablaOSPaciente').DataTable();
+
     $('#tablaOSPaciente tbody').on('click', 'tr', function (e) {
 
         e.preventDefault();
 
         var resulfila = [];
-        resulfila = table.row(this).data();   
+        resulfila = table.row("#" + idObraPaciente).data();   
 
         console.log(resulfila);
  
@@ -1260,11 +1263,10 @@ $('#btnRegistrarExis').click(function (e) {
     $("#calDisposicionHoraria").hide();
     $("#calTurnos").hide();
 
-    limpiarCampos();
+    limpiarCampingsongs();
 });
 
 function registrarSoloTurno(obraTurnoPaciente) {
-   //window.location.reload();
 
     $.ajax({
         url: "RegistrarTurno.aspx/RegistrarSoloTurno",
