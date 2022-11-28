@@ -379,7 +379,23 @@ namespace DataAccess
 										AND P.FECHA_BAJA IS NULL
 										AND OP.FECHA_BAJA IS NULL
 										AND OS.FECHA_BAJA IS NULL
-										AND OSP.FECHA_BAJA IS NULL;";
+										AND OSP.FECHA_BAJA IS NULL
+                                    UNION
+                                    SELECT P.ID_PACIENTE, 
+	                                        P.NOMBRE,
+	                                        P.APELLIDO, 
+	                                        P.DOCUMENTO, 
+	                                        P.NRO_CONTACTO,
+	                                        P.EMAIL_CONTACTO,
+                                            NULL ,
+	                                        NULL, 
+	                                        NULL,
+	                                        NULL, 
+	                                        NULL 'PLAN',
+	                                        NULL
+                                    FROM T_PACIENTES P
+                                    WHERE P.ID_PACIENTE = @ID_PACIENTE
+                                    AND P.FECHA_BAJA IS NULL;";
 
 
                 cmd = new SqlCommand(consulta, con);

@@ -497,7 +497,7 @@ namespace DataAccess
                                        AND OP.ID_PLAN =  OPL.ID_PLANES
                                        AND OP.ID_OBRA_PACIENTE = @ID_OBRA_PACIENTE
                                        AND OS.FECHA_BAJA IS NULL
-                                       AND C.FECHA_BAJA IS NULL
+                                       AND OPL.FECHA_BAJA IS NULL
                                        AND OP.FECHA_BAJA IS NULL;";
 
 
