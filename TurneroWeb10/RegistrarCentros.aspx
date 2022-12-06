@@ -7,15 +7,12 @@
         <h1 style="text-align: center">CENTROS DE ATENCIÓN</h1>
     </section>
 
-    <section class="content">   
-        
-         <div class="row">
+    <section class="content">          
+         <%--<div class="row">
             <button class="btn btn-success btn-lg float-right" type="button" id="btnRegistrarModal"> <i class="fa-solid fa-house-medical"></i> | Registrar Centro de Atención</button>
-        </div>
+        </div>--%>
         <br />
 
-        <!-- Lista centros -->
-        <!-- Datatable Part -->
         <div class="row">
             <div class="box box-primary">
                 <div class="box-header">
@@ -25,22 +22,19 @@
                     <div class="col-md-12">
                         <table id="tabla_Centros" style="width:100%" class="table table-bordered table-hover">
                             <tbody id="tbl_body_table">
-                                <!-- DATA POR MEDIO DE AJAX-->
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Datatable -->
-        <!-- End Lista centros -->
-
     </section>
 
 
 
     <%--Modal Registrar--%>
-    <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <%-- <div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header text-white bg-info">
@@ -139,7 +133,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
     <%--Final Modal registrar--%>
 
