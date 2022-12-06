@@ -41,7 +41,7 @@ namespace TurneroWeb10
         {
             try
             {
-                string result = "ok";
+               
 
                 GestorTurno gTurnos = new GestorTurno();
                 DataTable dt = gTurnos.TraerTurnosDelDia(idCentro, dia);

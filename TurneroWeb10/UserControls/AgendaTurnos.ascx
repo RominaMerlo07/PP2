@@ -50,6 +50,7 @@
 <script type="text/javascript">
     
     var rol;
+    var turno;
     $(document).ready(function () {
         
         rol = traerRol();
@@ -106,7 +107,7 @@
 
     function cambioDeEstado(idturno) {
        
-        var estado = $("#SELECT-" + idturno).val();       
+        var estado = $("#SELECT-" + idturno).val();      
 
         $.ajax({
             url: "Agenda.aspx/modificarEstadoEnTurno",
@@ -130,6 +131,7 @@
     function cambioNroOrden(idturno) {
 
         var nroOrden = $("#" + idturno).val();
+      
 
         $.ajax({
             url: "Agenda.aspx/modificarNroOrden",
@@ -150,42 +152,11 @@
     }
 
     function traerEstados() {
+             
 
-        var estados;
+          var estados;
 
-        var fecha = $('#dtpFecha').val();
-        console.log(fecha);
-
-        var hoy = new Date();
-        
-        const formatDate = (hoy)=>{
-        let formatted_date = hoy.getDate() + "/" + (hoy.getMonth() + 1) + "/" + hoy.getFullYear()
-         return formatted_date;
-        }
-         
-        var fechaActual = formatDate(hoy);
-
-        console.log(fechaActual);
-
-        if(fecha < fechaActual )
-            {
-                 console.log("no puedo mostrar el estado atendido ni en espera");
-                    $.ajax({
-                    url: "Agenda.aspx/TraeEstadosFecha",
-                    //data: "{idCentro: '" + idCentro + "', dia: '" + dia + "'}",
-                    type: "post",
-                    contentType: "application/json",
-                    async: false,
-                    success: function (data) {
-                        estados = JSON.parse(data.d);
-                    }
-                   });
-            }
-         else{
-
-               console.log("puedo mostrar el atendido");
-
-        $.ajax({
+               $.ajax({
             url: "Agenda.aspx/traeEstados",
             //data: "{idCentro: '" + idCentro + "', dia: '" + dia + "'}",
             type: "post",
@@ -195,7 +166,7 @@
                 estados = JSON.parse(data.d);
             }
         });
-        }
+      
         return estados;
     }
 
@@ -217,6 +188,7 @@
                 {
 
                     var IdTurno = e.ID_TURNO;
+                    turno = IdTurno;
                     var Hora = e.HORA_DESDE;
                     var Especialidad = e.ESPECIALIDAD;
                     var Profesional = e.PROFESIONAL;
@@ -231,17 +203,21 @@
                     var NroAutObra = e.NRO_AUTORIZACION_OBRA === null ? '' : e.NRO_AUTORIZACION_OBRA;
                     var Orden = '<input type="text" style="text-align: left" class="form-control" id="' + e.ID_TURNO + '" placeholder="Completar..." value="' + NroAutObra + '" onkeypress="return soloNumeros(event)" onchange="cambioNroOrden(' + e.ID_TURNO + ')" />';
 
+
+
+
                     var comboEstado =
                         '<select class="custom-select form-control" id="SELECT-' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ')">';
                     var comboEstadosItems = '';
                     estados.forEach(function (f) {
-                        if (e.ESTADO == f.ESTADO) {
+                        if (e.ESTADO == f.ESTADO) {          
 
-                            if (e.ESTADO == 'ATENDIDO') {
+                            if (e.ESTADO == 'ATENDIDO' || e.ESTADO == 'CANCELADO') {
                                 comboEstado = '<select class="custom-select form-control" id="SELECT-' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ') "disabled="true">';
                             }
 
                             comboEstadosItems += ' <option selected value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
+                            
                         }
                         else {
 
@@ -253,6 +229,7 @@
                     });
 
                     comboEstado += comboEstadosItems + '</select>';
+                
 
                     turnos.push([IdTurno, Centro, Fecha, Hora, Especialidad, Profesional, Paciente, Telefono, ObraSocial, NroAfiliado, Orden, Estado, comboEstado]);
                                     
@@ -283,6 +260,7 @@
                         { title: "Estado", visible: false },
                         { title: "Estado", width:"20%"}
                     ],
+                    order: ([[3, 'asc'], [4, 'asc']]),
                     //dom: 'Bfrtip',
                     dom: '<"top"B>rti<"bottom"fp><"clear">',
                     "oLanguage": {

@@ -316,8 +316,8 @@ namespace DataAccess
             {
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
-                string consulta = @"
-                                    select * ,
+
+                string consulta = @"select * ,
 	                                (select distinct C.NOMBRE_CENTRO from T_CENTROS C
 		                                where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
                                     (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
@@ -347,11 +347,46 @@ namespace DataAccess
                                     t.NRO_AFILIADO,
                                     t.NRO_AUTORIZACION_OBRA
                                         from T_TURNOS t
-                                        where t.FECHA_BAJA is null
-                                        and t.ESTADO NOT IN ('CANCELADO')
-                                        and t.ID_CENTRO = @idCentro
+                                        where t.ID_CENTRO = @idCentro                                  
                                         AND t.FECHA_TURNO = @dia
-                                            order by hora_desde";
+                                            order by hora_desde;";
+
+                //string consulta = @"
+                //                    select * ,
+                //                 (select distinct C.NOMBRE_CENTRO from T_CENTROS C
+                //                  where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
+                //                    (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
+                //                        WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
+                //                    ) as ESPECIALIDAD,
+                //                    (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
+                //                        where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
+                //                        and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
+                //                    ) as PROFESIONAL,
+                //                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
+                //                     FROM T_PACIENTES PA
+                //                     WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
+                //                    (SELECT PA.NRO_CONTACTO
+                //                     FROM T_PACIENTES PA
+                //                     WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as CONTACTO,
+                //                    (SELECT concat(os.DESCRIPCION, ' (', op.DESCRIPCION ,')') 
+                //                    FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
+                //                    WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                //                    and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                //                    and op.ID_PLANES = t.ID_PLAN_OBRA
+                //                    UNION
+                //                 SELECT os.DESCRIPCION
+                //                   FROM T_OBRAS_SOCIALES os, T_OBRAS_PACIENTES op
+                //                  WHERE op.ID_OBRA_SOCIAL = os.ID_OBRA_SOCIAL
+                //                    AND os.DESCRIPCION = 'PARTICULAR'
+                //                    AND op.ID_PACIENTE = T.ID_PACIENTE) as OBRA_SOCIAL,
+                //                    t.NRO_AFILIADO,
+                //                    t.NRO_AUTORIZACION_OBRA
+                //                        from T_TURNOS t
+                //                        where t.FECHA_BAJA is null
+                //                        and t.ESTADO NOT IN ('CANCELADO')
+                //                        and t.ID_CENTRO = @idCentro
+                //                        AND t.FECHA_TURNO = @dia
+                //                            order by hora_desde";
 
                 cmd = new SqlCommand(consulta, con);
                 cmd.Parameters.AddWithValue("@idCentro", idCentro);

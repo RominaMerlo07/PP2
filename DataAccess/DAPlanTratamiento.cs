@@ -69,35 +69,43 @@ namespace DataAccess
             {
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
-                string consulta = @"SELECT top 20  PT.ID_TRATAMIENTO,
-		                                    PT.FECHA AS FECHA_ALTA,
-                                    (select distinct C.NOMBRE_CENTRO from T_CENTROS C
-	                                    where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
-                                    (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
-                                        WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
-                                    ) as ESPECIALIDAD,
-                                    (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
-                                        where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
-                                        and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
-                                    ) as PROFESIONAL,
-                                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
-                                        FROM T_PACIENTES PA
-                                        WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
-                                    (SELECT concat(os.DESCRIPCION, ' (', op.DESCRIPCION ,')') 
-                                    FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
-                                    WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
-                                    and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
-                                    and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL,
-                                    t.NRO_AFILIADO,
-                                    t.NRO_AUTORIZACION_OBRA,
-                                    PT.CONSENTIMIENTO_FIRMADO
-                                    FROM T_PLAN_TRATAMIENTO PT
-                                    INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
-                                    WHERE PT.ESTADO_PLAN != 'CANCELADO' 
-                                    {0}
-                                    GROUP BY ID_TRATAMIENTO, PT.FECHA, T.ID_CENTRO, T.ID_ESPECIALIDAD, T.ID_PROFESIONAL, 
-	                                    T.ID_PACIENTE,T.ID_OBRA_SOCIAL, T.ID_PLAN_OBRA, T.NRO_AFILIADO, T.NRO_AUTORIZACION_OBRA, PT.CONSENTIMIENTO_FIRMADO 
-                                    order by FECHA_ALTA desc";
+                //TOP 20 SE LA QUITE PARA MOSTRAR TODOS LOS TRATAMIENTOS
+                string consulta = @"	SELECT  PT.ID_TRATAMIENTO,
+		                                                PT.FECHA AS FECHA_ALTA,
+                                                (select distinct C.NOMBRE_CENTRO from T_CENTROS C
+	                                                where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
+                                                (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
+                                                    WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
+                                                ) as ESPECIALIDAD,
+                                                (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
+                                                    where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
+                                                    and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
+                                                ) as PROFESIONAL,
+                                                (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
+                                                    FROM T_PACIENTES PA
+                                                    WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
+                                                (SELECT concat(os.DESCRIPCION, ' (', op.DESCRIPCION ,')') 
+                                                FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
+                                                WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                                and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                                and op.ID_PLANES = t.ID_PLAN_OBRA
+	                                            UNION 
+                                               SELECT os.DESCRIPCION
+                                                FROM T_OBRAS_SOCIALES OS, T_OBRAS_PACIENTES OP
+                                                WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                                and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                                and os.ID_OBRA_SOCIAL NOT IN (SELECT ID_OBRA_SOCIAL FROM T_OBRAS_PLANES
+					                                                          WHERE FECHA_BAJA is null)) as OBRA_SOCIAL,
+                                                t.NRO_AFILIADO,
+                                                t.NRO_AUTORIZACION_OBRA,
+                                                PT.CONSENTIMIENTO_FIRMADO
+                                                FROM T_PLAN_TRATAMIENTO PT
+                                                INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
+                                                WHERE PT.ESTADO_PLAN != 'CANCELADO' 
+                                                {0}
+                                                GROUP BY ID_TRATAMIENTO, PT.FECHA, T.ID_CENTRO, T.ID_ESPECIALIDAD, T.ID_PROFESIONAL, 
+	                                                T.ID_PACIENTE,T.ID_OBRA_SOCIAL, T.ID_PLAN_OBRA, T.NRO_AFILIADO, T.NRO_AUTORIZACION_OBRA, PT.CONSENTIMIENTO_FIRMADO 
+                                                order by FECHA_ALTA desc";
 
                 string data = "";
                 if (!String.IsNullOrEmpty(idPaciente))
@@ -178,46 +186,52 @@ namespace DataAccess
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
                 string consulta = @"SELECT 
-	                                    T.ID_TURNO,
-	                                    PT.ID_TRATAMIENTO,
-	                                    T.ID_PACIENTE,
-	                                    T.ID_PROFESIONAL,
-	                                    T.ID_OBRA_SOCIAL,
-	                                    T.ID_ESPECIALIDAD,
-	                                    T.ID_CENTRO,
-	                                    T.ID_PLAN_OBRA,
-
-	                                    T.FECHA_TURNO,
-	                                    T.HORA_DESDE,
-	                                    T.ESTADO,	
-                                    (select distinct C.NOMBRE_CENTRO from T_CENTROS C
-	                                    where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
-                                    (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
-                                        WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
-                                    ) as ESPECIALIDAD,
-                                    (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
-                                        where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
-                                        and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
-                                    ) as PROFESIONAL,
-                                    (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
-                                        FROM T_PACIENTES PA
-                                        WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
-                                    (SELECT PA.DOCUMENTO
-                                        FROM T_PACIENTES PA
-                                        WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as DOCUMENTO,
-                                    (SELECT concat(os.DESCRIPCION, ' (', op.DESCRIPCION ,')') 
-                                        FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
-                                        WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
-                                        and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
-                                        and op.ID_PLANES = t.ID_PLAN_OBRA) as OBRA_SOCIAL,
-                                    t.NRO_AFILIADO,
-                                    t.NRO_AUTORIZACION_OBRA,
-                                    t.OBSERVACIONES
-                                    FROM T_PLAN_TRATAMIENTO PT
-                                        INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
-                                    WHERE PT.ESTADO_PLAN != 'CANCELADO' 
-                                        --AND T.ESTADO != 'CANCELADO' 
-                                        AND PT.ID_TRATAMIENTO = @idTratamiento ;";
+	                                T.ID_TURNO,
+	                                PT.ID_TRATAMIENTO,
+	                                T.ID_PACIENTE,
+	                                T.ID_PROFESIONAL,
+	                                T.ID_OBRA_SOCIAL,
+	                                T.ID_ESPECIALIDAD,
+	                                T.ID_CENTRO,
+	                                T.ID_PLAN_OBRA,
+	                                T.FECHA_TURNO,
+	                                T.HORA_DESDE,
+	                                T.ESTADO,	
+                                (select distinct C.NOMBRE_CENTRO from T_CENTROS C
+	                                where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
+                                (SELECT distinct E.DESCRIPCION FROM T_ESPECIALIDADES E
+                                    WHERE E.ID_ESPECIALIDADES = t.ID_ESPECIALIDAD
+                                ) as ESPECIALIDAD,
+                                (select distinct p.APELLIDO + ' ' + p.NOMBRE from T_PROFESIONALES_DETALLE PD, T_PROFESIONALES p 
+                                    where Pd.ID_PROFESIONAL = T.ID_PROFESIONAL
+                                    and pd.ID_PROFESIONAL = p.ID_PROFESIONAL
+                                ) as PROFESIONAL,
+                                (SELECT CONCAT(PA.APELLIDO, ' ', PA.NOMBRE)
+                                    FROM T_PACIENTES PA
+                                    WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as PACIENTE,
+                                (SELECT PA.DOCUMENTO
+                                    FROM T_PACIENTES PA
+                                    WHERE PA.ID_PACIENTE = T.ID_PACIENTE) as DOCUMENTO,
+                                (SELECT concat(os.DESCRIPCION, ' (', op.DESCRIPCION ,')') 
+                                    FROM T_OBRAS_SOCIALES OS, T_OBRAS_PLANES OP
+                                    WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                    and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                    and op.ID_PLANES = t.ID_PLAN_OBRA
+                                 UNION 
+                                 SELECT os.DESCRIPCION
+                                    FROM T_OBRAS_SOCIALES OS, T_OBRAS_PACIENTES OP
+                                    WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
+                                    and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
+                                    and os.ID_OBRA_SOCIAL NOT IN (SELECT ID_OBRA_SOCIAL FROM T_OBRAS_PLANES
+					                                              WHERE FECHA_BAJA is null)) as OBRA_SOCIAL,
+                                t.NRO_AFILIADO,
+                                t.NRO_AUTORIZACION_OBRA,
+                                t.OBSERVACIONES
+                                FROM T_PLAN_TRATAMIENTO PT
+                                    INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
+                                WHERE PT.ESTADO_PLAN != 'CANCELADO' 
+                                    --AND T.ESTADO != 'CANCELADO' 
+                                    AND PT.ID_TRATAMIENTO = @idTratamiento;";
 
                 cmd = new SqlCommand(consulta, con);
 

@@ -663,8 +663,8 @@ namespace DataAccess
                                            T_USUARIOS u, 
                                            T_PROFESIONALES p
 									 WHERE r.NOMBRE_USUARIO = u.NOMBRE_USUARIO
-									   AND r.ID_PERSONAL = p.ID_PROFESIONAL
-									   AND u.ID_PERSONAL = p.ID_PROFESIONAL
+									 AND r.ID_PROFESIONAL = p.ID_PROFESIONAL
+                                     AND u.ID_PROFESIONAL = p.ID_PROFESIONAL
 									   AND r.NOMBRE_USUARIO = @usuario
 									   AND r.CLAVE_USUARIO = @password
 									   AND r.FECHA_BAJA IS NULL

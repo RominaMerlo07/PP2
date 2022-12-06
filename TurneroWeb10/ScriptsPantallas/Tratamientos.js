@@ -241,7 +241,7 @@ function cargarTablaTratamientos(idPaciente) {
                 },
                 "ordering": true,
                 "bDestroy": true,
-                "bAutoWidth": true,
+                "bAutoWidth": true,                
                 columns: [
                     { title: "NRO. TRATAMIENTO" },
                     { title: "FECHA ALTA" },
@@ -254,6 +254,7 @@ function cargarTablaTratamientos(idPaciente) {
                     { title: "NRO. AUTORIZACION" },
                     { title: "ACCIONES" }
                 ],
+                order: ([[0, 'desc'], [1, 'desc']]),
                 dom: '<"top"B>rti<"bottom"fp><"clear">',
                 "oLanguage": {
                     "sSearch": "Filtrar:",
