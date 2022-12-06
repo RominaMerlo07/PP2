@@ -61,10 +61,10 @@
                                                     <span class="input-group-text">DNI del Personal </span>
                                                 </div>
                                                 <input type="search" name="dni" class="form-control rounded" maxlength="8" id="id__txtDocumento" aria-label="Search"
-                                                    aria-describedby="search-addon" onkeypress="return soloNumeros(event)" /><p style="color: red;">*</p>
+                                                    aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
                                                 <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                                     <i class="fas fa-search"></i>
-                                                </button>
+                                                </button><p style="color: red;">*</p>
                                             </div>
                                             <p class="formulario__error" id="p__txtDocumento">Por favor, ingrese el numero de documento sin puntos</p>
                                         </div>

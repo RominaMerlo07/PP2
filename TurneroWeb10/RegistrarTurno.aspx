@@ -54,7 +54,7 @@
                                         <span class="input-group-text">Sucursal: </span>
                                     </div>
                                     <select class="custom-select form-control" id="ddlSucursal">
-                                    </select><p style="color: red;">*</p>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -64,7 +64,7 @@
                                     </div>
                                     <select class="custom-select form-control" id="ddlEspecialidad">
                                         <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                    </select><p style="color: red;">*</p>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -74,7 +74,7 @@
                                     </div>
                                     <select class="form-control" id="ddlProfesional">
                                         <%--<option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>--%>
-                                    </select><p style="color: red;">*</p>
+                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -338,11 +338,14 @@ namespace DataAccess
                                     WHERE os.ID_OBRA_SOCIAL = t.ID_OBRA_SOCIAL
                                     and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL
                                     and op.ID_PLANES = t.ID_PLAN_OBRA
+                                    and os.FECHA_BAJA is null
+                                    and op.FECHA_BAJA is null
                                     UNION
 	                                SELECT os.DESCRIPCION
 	                                  FROM T_OBRAS_SOCIALES os, T_OBRAS_PACIENTES op
 	                                 WHERE op.ID_OBRA_SOCIAL = os.ID_OBRA_SOCIAL
 	                                   AND os.DESCRIPCION = 'PARTICULAR'
+                                       AND op.FECHA_BAJA IS NULL
 	                                   AND op.ID_PACIENTE = T.ID_PACIENTE) as OBRA_SOCIAL,
                                     t.NRO_AFILIADO,
                                     t.NRO_AUTORIZACION_OBRA

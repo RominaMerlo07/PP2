@@ -97,7 +97,7 @@
                                                 </div>
                                                 <select class="custom-select form-control actualizar" id="ddlSucursal">
                                                     <option value="0" disabled="disabled" selected="selected" hidden="hidden">--Seleccione--</option>
-                                                </select><p style="color: red;">*</p>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                                                 </div>
                                                 <input type='text' class="form-control datepickerAgregar date actualizar" id="dtpFechaDesde"
                                                         placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                                        data-date-format="dd/mm/yyyy" /><p style="color: red;">*</p>
+                                                        data-date-format="dd/mm/yyyy" />
                                                 
                                                     
                                             </div>
@@ -121,7 +121,7 @@
                                                 </div>
                                                 <input type='text' class="form-control datepickerAgregar date actualizar" id="dtpFechaHasta"
                                                     placeholder="DD/MM/YYYY" data-provide="datepicker"
-                                                    data-date-format="dd/mm/yyyy" /><p style="color: red;">*</p>
+                                                    data-date-format="dd/mm/yyyy" />
 
                                             </div>
                                         </div>                           
@@ -155,7 +155,7 @@
                                                     <option value="15">15</option>
                                                     <option value="30">30</option>
                                                     <option value="45">45</option>
-                                                </select><p style="color: red;">*</p>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
                                                     <option value="15">15</option>
                                                     <option value="30">30</option>
                                                     <option value="45">45</option>
-                                                </select><p style="color: red;">*</p>
+                                                </select>
                                             </div>
                                         </div>
                                     </div> 
