@@ -886,6 +886,7 @@
                     { title: "DIAS" },
                     { title: "ACCIONES" }
                 ],
+                order: ([[2, 'desc']]),
                 dom: '<"top"B>rti<"bottom"fp><"clear">',
                 "oLanguage": {
                     "sSearch": "Filtrar:",

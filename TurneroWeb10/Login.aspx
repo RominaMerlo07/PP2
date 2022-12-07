@@ -22,6 +22,7 @@
     <title>LOGIN</title>
 </head>
 <body>
+
     <div class="modal-dialog text-center">
         <div class="col-sm-8 main-section">
             <div class="modal-content">
@@ -34,10 +35,13 @@
                         <input type="text" name="usuario" id="txtUsuario" required />
                     </div>
                     <label for="password">Contraseña</label>
-                    <div class="form-group" id="password-group">
-                        <input type="password" name="password" id="txtPassword" required />                 
+                    <div class="form-group" id="password-group">                      
+                        <input type="password" name="password" id="txtPassword" required />
+                        <%--<div class="input-group-append">
+                            <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"><span class="fa fa-eye-slash icon"></span></button>
+                        </div>--%>
                     </div>
-                    <button type="submit" class="btn btn-info" id="btnIngresar"><i class="fas fa-sign-in-alt"></i> INGRESAR</button>
+                    <button type="submit" class="btn btn-info" id="btnIngresar"><i class="fas fa-sign-in-alt"></i>INGRESAR</button>
                 </form>
                 <div>
                     <a href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "RecuperarPassword.aspx"%>">Recuperar Contraseña</a>
@@ -72,7 +76,7 @@
                     </div>
                     <label for="password">Repetir Contraseña</label>
                     <div class="form-group" id="passNewDos-group">
-                        <input type="password" name="password" id="txtpassNewDos" />
+                        <input type="password" name="password" id="txtpassNewDos" />                      
                     </div>
                     <br />
                     <div class="row">

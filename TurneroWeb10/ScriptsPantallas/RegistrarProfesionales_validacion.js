@@ -420,7 +420,7 @@ $('.date').datepicker({
 
 const expresiones = {
     dni: /^\d{7,8}$/, // 7 a 8 numeros
-    matricula: /^\d{5,8}$/, // 5 a 8 numeros
+    matricula: /^\d{4,8}$/, // 5 a 8 numeros
     nombre: /^[a-zA-ZÀ-ÿ\s]{1,150}$/, // Letras y espacios, pueden llevar acentos.
     apellido: /^[a-zA-ZÀ-ÿ\s]{1,150}$/, // Letras y espacios, pueden llevar acentos.
     //fecha: /^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/,
