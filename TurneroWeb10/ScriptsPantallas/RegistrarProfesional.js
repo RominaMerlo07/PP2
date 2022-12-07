@@ -554,7 +554,7 @@ function sendDataProfesionales() {
                         }
                     },
                     "bPaginate": true,
-                    "pageLength": 8,
+                    "pageLength": 5,
                     buttons: [
                         //{ extend: 'copy', text: "Copiar" },
                         { extend: 'print', text: "Imprimir" },
