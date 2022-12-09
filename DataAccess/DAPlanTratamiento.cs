@@ -98,13 +98,14 @@ namespace DataAccess
 					                                                          WHERE FECHA_BAJA is null)) as OBRA_SOCIAL,
                                                 t.NRO_AFILIADO,
                                                 t.NRO_AUTORIZACION_OBRA,
-                                                PT.CONSENTIMIENTO_FIRMADO
+                                                PT.CONSENTIMIENTO_FIRMADO,
+                                                PT.ESTADO_PLAN
                                                 FROM T_PLAN_TRATAMIENTO PT
                                                 INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
                                                 WHERE PT.ESTADO_PLAN != 'CANCELADO' 
                                                 {0}
                                                 GROUP BY ID_TRATAMIENTO, PT.FECHA, T.ID_CENTRO, T.ID_ESPECIALIDAD, T.ID_PROFESIONAL, 
-	                                                T.ID_PACIENTE,T.ID_OBRA_SOCIAL, T.ID_PLAN_OBRA, T.NRO_AFILIADO, T.NRO_AUTORIZACION_OBRA, PT.CONSENTIMIENTO_FIRMADO 
+	                                                T.ID_PACIENTE,T.ID_OBRA_SOCIAL, T.ID_PLAN_OBRA, T.NRO_AFILIADO, T.NRO_AUTORIZACION_OBRA, PT.CONSENTIMIENTO_FIRMADO, ESTADO_PLAN
                                                 order by FECHA_ALTA desc";
 
                 string data = "";
@@ -609,5 +610,41 @@ namespace DataAccess
             }
         }
         
+        public void completarTratamiento(int idTratamiento)
+        {
+            try
+            {
+
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                con.Open();
+                trans = con.BeginTransaction();
+
+                string consulta = @"update T_PLAN_TRATAMIENTO
+                                        SET 
+                                        ESTADO_PLAN = 'COMPLETADO'
+                                        WHERE ID_TRATAMIENTO = @idTratamiento
+                                    ;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                cmd.Transaction = trans;
+
+                cmd.Parameters.AddWithValue("@idTratamiento", idTratamiento);
+
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                con.Close();
+                throw ex;
+            }
+        }
     }
 }

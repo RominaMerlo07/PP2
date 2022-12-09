@@ -226,11 +226,15 @@ function cargarTablaTratamientos(idPaciente) {
                 var obraSocial = e.OBRA_SOCIAL;
                 var nroAfiliado = e.NRO_AFILIADO;
                 var nroAutorizacionObra = e.NRO_AUTORIZACION_OBRA;
-
-                var Acciones = '<a href="#" onclick="return editarTratamiento(' + idTratamiento + ')"  class="btn btn-primary" > <span class="fa fa-pencil" title="Editar"></span></a > ' +
-                    '<a href="#" onclick="return cancelarTratamiento(' + idTratamiento + ')"  class="btn btn-danger btnCancelar" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';
-
-                tratamientos.push([idTratamiento, fechaAlta, centro, especialidad, profesional, paciente, obraSocial, nroAfiliado, nroAutorizacionObra, Acciones]);
+                var estadoTratamiento = e.ESTADO_PLAN;
+                var Acciones = "";
+                debugger;
+                if (estadoTratamiento == "EN CURSO") {
+                    Acciones = '<a href="#" onclick="return editarTratamiento(' + idTratamiento + ')"  class="btn btn-primary" > <span class="fa fa-pencil" title="Editar"></span></a > ' +
+                        '<a href="#" onclick="return cancelarTratamiento(' + idTratamiento + ')"  class="btn btn-danger btnCancelar" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';
+                }
+                
+                tratamientos.push([idTratamiento, fechaAlta, estadoTratamiento, centro, especialidad, profesional, paciente, obraSocial, nroAfiliado, nroAutorizacionObra, Acciones]);
             });
 
             var table = $('#tablaTratamientos').DataTable({
@@ -243,8 +247,9 @@ function cargarTablaTratamientos(idPaciente) {
                 "bDestroy": true,
                 "bAutoWidth": true,                
                 columns: [
-                    { title: "NRO. TRATAMIENTO" },
+                    { title: "NRO. TRATAMIENTO", visible: false },
                     { title: "FECHA ALTA" },
+                    { title: "ESTADO" },
                     { title: "CENTRO" },
                     { title: "ESPECIALIDAD" },
                     { title: "PROFESIONAL" },
@@ -261,6 +266,12 @@ function cargarTablaTratamientos(idPaciente) {
                     "oPaginate": {
                         "sPrevious": "Anterior",
                         "sNext": "Siguiente"
+                    }
+                },
+                "rowCallback": function (row, data, index) {
+                    if (data[2] == 'COMPLETADO') {
+                        $('td', row).css('background-color', '#90f5a6');
+                        $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
                     }
                 },
                 "bPaginate": true,

@@ -1219,6 +1219,106 @@ namespace DataAccess
             }
         }
 
+        public int evaluarSiPerteneceATratamiento(string idturno)
+        {
+            int resultado = 0;
+            try
+            {
 
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+
+                string consulta = @"select 
+                                    CASE WHEN COUNT(*) > 0 THEN ID_PLAN_TRATAMIENTO ELSE 0 END as RESULT
+                                    from T_TURNOS
+                                    where ID_TURNO = @idTurno
+                                    and ID_PLAN_TRATAMIENTO is not null
+                                    group by ID_PLAN_TRATAMIENTO
+                                    ; ";
+
+                cmd = new SqlCommand(consulta, con);
+                cmd.Parameters.AddWithValue("@idTurno", idturno);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                Turno turno = new Turno();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        resultado = Convert.ToInt32(dr["RESULT"].ToString());
+                    }
+                }
+
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                return resultado;
+            }
+        }
+
+        public List<Turno> traerTurnosDelTratamiento(int idTratamiento)
+        {
+            try
+            {
+                string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
+                con = new SqlConnection(cadenaDeConexion);
+                string consulta = @"SELECT 
+	                                T.ID_TURNO,
+	                                T.FECHA_TURNO,
+	                                T.HORA_DESDE,
+	                                T.ESTADO
+                               
+                                FROM T_PLAN_TRATAMIENTO PT
+                                    INNER JOIN T_TURNOS T ON PT.ID_TRATAMIENTO = T.ID_PLAN_TRATAMIENTO
+                                WHERE PT.ESTADO_PLAN != 'CANCELADO' 
+                                    AND T.ESTADO != 'CANCELADO' 
+                                    AND PT.ID_TRATAMIENTO = @idTratamiento
+                                    order by T.FECHA_TURNO, HORA_DESDE
+                                    ;";
+
+                cmd = new SqlCommand(consulta, con);
+
+                cmd.Parameters.AddWithValue("@idTratamiento", idTratamiento);
+
+                dta = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                dta.Fill(dt);
+
+                List<Turno> listaTurnos = new List<Turno>();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Turno turno = new Turno();
+                        if (dr["ID_TURNO"] != DBNull.Value)
+                            turno.IdTurno = Convert.ToInt32(dr["ID_TURNO"]);
+                        if (dr["FECHA_TURNO"] != DBNull.Value)
+                            turno.FechaTurno = Convert.ToDateTime(dr["FECHA_TURNO"]);
+                        if (dr["HORA_DESDE"] != DBNull.Value)
+                            turno.HoraDesde = TimeSpan.Parse(dr["HORA_DESDE"].ToString());
+                        if (dr["ESTADO"] != DBNull.Value)
+                            turno.Estado = Convert.ToString(dr["ESTADO"]);
+
+                        listaTurnos.Add(turno);
+                    }
+
+                    return listaTurnos;
+
+                } else
+                {
+                    return listaTurnos;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
