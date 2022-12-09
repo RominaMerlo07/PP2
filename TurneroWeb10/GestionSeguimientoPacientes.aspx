@@ -1585,7 +1585,7 @@
                 async: false,
                 success: function (data) {
 
-                    swal("Cuidado", "Detalle guardado correctamente.", "warning");
+                    swal("Hecho!", "Detalle guardado correctamente.", "success");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     swal("Cuidado", "Ha habido un error al cargar la Descripción del turno.", "warning");
