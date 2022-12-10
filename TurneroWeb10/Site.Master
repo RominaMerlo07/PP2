@@ -359,13 +359,11 @@
         <aside class="right-side">
             <%--<section class="content-header">
                 
-
             </section>--%>
             <section class="content">
                 <%--<form id="Form1" runat="server">--%>
                     <div>
                         <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
-                        
                     </div>
                 <%--</form>--%>
             </section>
