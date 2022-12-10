@@ -129,7 +129,7 @@ function accesoUsuario(user) {
 
             } else {
                
-                window.location.href = 'Principal.aspx';
+                window.location.href = 'Dashboard.aspx';
 
                 buscarTurnosVencidos();
                 //$('#btnConfUsuario').show();
