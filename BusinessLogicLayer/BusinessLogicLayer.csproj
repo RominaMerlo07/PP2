@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="EnviadorMail\EnviadorMail.cs" />
     <Compile Include="Gestores\GestorCentros.cs" />
+    <Compile Include="Gestores\GestorDashboard.cs" />
     <Compile Include="Gestores\GestorEspecialidades.cs" />
     <Compile Include="Gestores\GestorHistoriaClinica.cs" />
     <Compile Include="Gestores\GestorObrasSociales.cs" />
