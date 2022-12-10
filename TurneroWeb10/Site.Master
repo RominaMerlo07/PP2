@@ -65,7 +65,7 @@
 
     <%--esto es del Dash : --%>
 
-     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Dashboard.js"%>"></script>
+     
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

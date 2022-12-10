@@ -387,8 +387,8 @@
   <%--  <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>--%>
     <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.0/morris.min.js"></script>--%>
     <%--<script src="js/chartdata.js"></script>--%>
-    <%--<script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Dashboard.js"%>"></script>--%>
-        
+  
+        <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Dashboard.js"%>"></script>
       
        
 
