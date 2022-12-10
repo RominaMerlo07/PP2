@@ -63,6 +63,16 @@
     <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/iCheck/icheck.js"%>"></script>
     <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datepicker/locales/bootstrap-datepicker.es.js"%>" charset="UTF-8"></script>
 
+    <%--esto es del Dash : --%>
+
+     <script type="text/javascript" src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "ScriptsPantallas/Dashboard.js"%>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
     <style>
         html, body {
             min-height: 100%;
@@ -331,6 +341,13 @@
                                 <span> Gestión de Usuarios</span>
                             </a>
                         </li>
+
+                            <li class="nav-item" id="idDashboard">
+                            <a class="nav-link" href="Dashboard.aspx"" role="button" aria-haspopup="true" aria-expanded="false">
+                               <i class="fa-solid fa-house-medical"></i>
+                                <span> Dashboard</span>
+                            </a>                      
+                        </li>    
                     </ul>
                 </section>
             </aside>
@@ -342,11 +359,13 @@
         <aside class="right-side">
             <%--<section class="content-header">
                 
+
             </section>--%>
             <section class="content">
                 <%--<form id="Form1" runat="server">--%>
                     <div>
                         <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+                        
                     </div>
                 <%--</form>--%>
             </section>
