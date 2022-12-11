@@ -14,6 +14,9 @@ let myChart7;
 let myChart8;
 let myChart9;
 
+const format = "YYYY-MM-DD";
+const format2 = "DD-MM-YYYY";
+
 $(document).ready(function () {
 
 /*  Fechas1();*/
@@ -25,29 +28,10 @@ $(document).ready(function () {
         $("#date_range").focus();
     });
 
-
-
-    
-    ObtenerCantidadTurnosTotales();
-    GraficarEspMasDemandadas();
-  
-
-
-
-});
-
-
-
-
-function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
-    debugger
     $('#date_range').daterangepicker({
+        autoUpdateInput: false,
+        opens: 'left',
         locale: {
-
-            autoUpdateInput: false,
-            opens: 'left',
-            startDate: "01/01/2021",
-            endDate: "03/08/2022",
             daysOfWeek: [
                 "Do",
                 "Lu",
@@ -78,93 +62,264 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
             ],
             format: "DD-MM-YYYY"
 
-        },
+        }
     }, function (start, end, label) {
+        startDate = start.format(format);
+        endDate = end.format(format);
+        ObtenerCantidadTurnosTotales(startDate, endDate, label)
+
+        cb(start.format(format2), end.format(format2));
+
+    });
+
+    inicializarTurnosTotales();
+
+    GraficarEspMasDemandadas();
+  
+
+});
+
+function cb(start, end) {
+    $('#date_range').val(start + ' - ' + end);
+}
+
+function inicializarTurnosTotales() {
+
+    var startDate = moment().subtract('days', 365).format(format);
+    var endDate = moment().format(format);
+    ObtenerCantidadTurnosTotales(startDate, endDate, "");
+
+    var startDate2 = moment().subtract('days', 365).format(format2);
+    var endDate2 = moment().format(format2);
+    cb(startDate2, endDate2);
+}
 
 
-        fechaDesde = fecha_desde;
-        fechaHasta = fecha_hasta;
+function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
 
-        arrayFechas = new Array();
+    fechaDesde = fecha_desde;
+    fechaHasta = fecha_hasta;
 
-        arrayFechas.push(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
-        console.log(arrayFechas);
+    $.ajax({
+        type: "POST",
+        url: "Dashboard.aspx/traerCantidadTurnosTotales",
+        data: "{p_fecha_desde: '" + fechaDesde + "', p_fecha_hasta: '" + fechaHasta + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
 
-        fechaDesde = arrayFechas[0];
-        fechaHasta = arrayFechas[1];
+            console.log(data);
 
-        console.log(fechaHasta, fechaDesde);
+            document.getElementById('total-turnos').innerHTML = data.d[7];
+            document.getElementById('turnos-atendidos').innerHTML = data.d[1];
+            document.getElementById('turnos-cancelados').innerHTML = data.d[4];
 
-        $.ajax({
-            type: "POST",
-            url: "Dashboard.aspx/traerCantidadTurnosTotales",
-            data: "{p_fecha_desde: '" + fechaDesde + "', p_fecha_hasta: '" + fechaHasta + "'}",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            async: false,
-            success: function (data) {
+        }
+    })
 
-                console.log(data);
+    $.ajax({
+        type: "POST",
+        url: "Dashboard.aspx/ObtenerTipoObraSocialSparring",
+        data: "{p_fecha_desde: '" + fechaDesde + "', p_fecha_hasta: '" + fechaHasta + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
 
-                document.getElementById('total-turnos').innerHTML = data.d[7];
-                document.getElementById('turnos-atendidos').innerHTML = data.d[1];
-                document.getElementById('turnos-cancelados').innerHTML = data.d[4];
+            console.log(data);
 
+
+
+            var obra_social = [];
+            var porcentaje = [];
+            var cantidad = [];
+
+            obra_social.push(data.d[0]);
+            obra_social.push(data.d[3]);
+
+
+            porcentaje.push(data.d[2]);
+            porcentaje.push(data.d[5]);
+
+
+            cantidad.push(data.d[1]);
+            cantidad.push(data.d[4]);
+
+
+
+            console.log(obra_social, porcentaje);
+
+
+            const ctx = document.getElementById('grafico-os-sparring');
+
+                
+                
+
+            if (myChart0) {
+                myChart0.destroy();
             }
-        })
 
-        $.ajax({
-            type: "POST",
-            url: "Dashboard.aspx/ObtenerTipoObraSocialSparring",
-            data: "{p_fecha_desde: '" + fechaDesde + "', p_fecha_hasta: '" + fechaHasta + "'}",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            async: false,
-            success: function (data) {
+            myChart0 = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: obra_social,
+                    datasets: [{
+                        label: 'Obras Sociales',
+                        data: cantidad,
+                        borderWidth: 1,
+                        backgroundColor: ["#3e95cd", "#8e5ea2"]
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                        responsive: false,
+                        maintainAspectRatio: true,
+                        showScale: false,
+                    }
+                }
+            });
 
-                console.log(data);
+        }
 
-
-
-                var obra_social = [];
-                var porcentaje = [];
-                var cantidad = [];
-
-                obra_social.push(data.d[0]);
-                obra_social.push(data.d[3]);
-
-
-                porcentaje.push(data.d[2]);
-                porcentaje.push(data.d[5]);
-
-
-                cantidad.push(data.d[1]);
-                cantidad.push(data.d[4]);
+    })
 
 
 
-                console.log(obra_social, porcentaje);
+    $.ajax({
+        type: "POST",
+        url: "Dashboard.aspx/ObtenerCantTurnosPorSucursal",
+        data: "{p_fecha_desde: '" + fechaDesde + "', p_fecha_hasta: '" + fechaHasta + "'}",
+        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (data) {
 
-
-                const ctx = document.getElementById('grafico-os-sparring');
+            console.log(data);
 
                 
-                
+            const ctx = document.getElementById('turnos-por-centros');
+            var nombre_centro = [];
+            var estado_turno = [];
+            var cantidad_atendidos = [];
+            var cantidad_cancelados = [];
+            var porcentaje_atendidos = [];
+            var porcentaje_cancelados = [];
 
-                if (myChart0) {
-                    myChart0.destroy();
+            if (data.d !== null) {
+
+
+
+                nombre_centro.push(data.d[0]);
+                nombre_centro.push(data.d[12]);
+                nombre_centro.push(data.d[24]);
+
+                estado_turno.push(data.d[0])
+
+                cantidad_atendidos.push(data.d[2]);
+                cantidad_atendidos.push(data.d[14]);
+                cantidad_atendidos.push(data.d[26]);
+
+                cantidad_cancelados.push(data.d[6]);
+                cantidad_cancelados.push(data.d[18]);
+                cantidad_cancelados.push(data.d[30]);
+
+                document.getElementById('atendidos-cp1').innerHTML = data.d[2];
+                document.getElementById('atendidos-cp2').innerHTML = data.d[14];
+                document.getElementById('atendidos-c').innerHTML = data.d[26];
+
+                document.getElementById('cancelados-cp1').innerHTML = data.d[7] + ' %';
+                document.getElementById('cancelados-cp2').innerHTML = data.d[19] + " %";
+                document.getElementById('cancelados-c').innerHTML = data.d[31] + " %";
+
+                console.log(nombre_centro);
+
+
+                    
+
+
+
+
+                if (myChart1) {
+                    myChart1.destroy();
                 }
 
-                myChart0 = new Chart(ctx, {
+
+                myChart1 = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: obra_social,
-                        datasets: [{
-                            label: 'Obras Sociales',
-                            data: cantidad,
-                            borderWidth: 1,
-                            backgroundColor: ["#3e95cd", "#8e5ea2"]
-                        }]
+                        labels: nombre_centro,
+                        datasets: [
+                            {
+                                label: 'ATENDIDOS',
+                                data: cantidad_atendidos,
+                                borderWidth: 1,
+                                backgroundColor: '#0D2A73',
+                            },
+                            {
+                                label: 'CANCELADOS',
+                                data: cantidad_cancelados,
+                                borderWidth: 1,
+                                backgroundColor: '#F06057',
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            },
+                            responsive: false,
+                            maintainAspectRatio: true,
+                            showScale: false,
+                        },
+
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Cantidad de turnos atentidos y cancelados por sucursal',
+                                font: {
+                                    family: "'Arial', sans-serif",
+                                    size: 30
+                            },
+                                padding: {
+                                    bottom: 30
+                                }
+                            }
+                        }
+
+
+                    }
+                });
+            } else {
+
+
+                if (myChart1) {
+                    myChart1.destroy();
+                }
+
+
+                myChart1 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: '',
+                        datasets: [
+                            {
+                                label: 'ATENDIDOS',
+                                data: 0,
+                                borderWidth: 1,
+                                backgroundColor: '#0D2A73',
+                            },
+                            {
+                                label: 'CANCELADOS',
+                                data: 0,
+                                borderWidth: 1,
+                                backgroundColor: '#F06057',
+                            }
+                        ]
                     },
                     options: {
                         scales: {
@@ -180,170 +335,13 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
 
             }
 
-        })
-
-
-
-        $.ajax({
-            type: "POST",
-            url: "Dashboard.aspx/ObtenerCantTurnosPorSucursal",
-            data: "{p_fecha_desde: '" + fechaDesde + "', p_fecha_hasta: '" + fechaHasta + "'}",
-            dataType: "json",
-            contentType: 'application/json; charset=utf-8',
-            async: false,
-            success: function (data) {
-
-                console.log(data);
-
-                
-                const ctx = document.getElementById('turnos-por-centros');
-                var nombre_centro = [];
-                var estado_turno = [];
-                var cantidad_atendidos = [];
-                var cantidad_cancelados = [];
-                var porcentaje_atendidos = [];
-                var porcentaje_cancelados = [];
-
-                if (data.d !== null) {
-
-
-
-                    nombre_centro.push(data.d[0]);
-                    nombre_centro.push(data.d[12]);
-                    nombre_centro.push(data.d[24]);
-
-                    estado_turno.push(data.d[0])
-
-                    cantidad_atendidos.push(data.d[2]);
-                    cantidad_atendidos.push(data.d[14]);
-                    cantidad_atendidos.push(data.d[26]);
-
-                    cantidad_cancelados.push(data.d[6]);
-                    cantidad_cancelados.push(data.d[18]);
-                    cantidad_cancelados.push(data.d[30]);
-
-                    document.getElementById('atendidos-cp1').innerHTML = data.d[2];
-                    document.getElementById('atendidos-cp2').innerHTML = data.d[14];
-                    document.getElementById('atendidos-c').innerHTML = data.d[26];
-
-                    document.getElementById('cancelados-cp1').innerHTML = data.d[7] + ' %';
-                    document.getElementById('cancelados-cp2').innerHTML = data.d[19] + " %";
-                    document.getElementById('cancelados-c').innerHTML = data.d[31] + " %";
-
-                    console.log(nombre_centro);
-
-
-                    
-
-
-
-
-                    if (myChart1) {
-                        myChart1.destroy();
-                    }
-
-
-                    myChart1 = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: nombre_centro,
-                            datasets: [
-                                {
-                                    label: 'ATENDIDOS',
-                                    data: cantidad_atendidos,
-                                    borderWidth: 1,
-                                    backgroundColor: '#0D2A73',
-                                },
-                                {
-                                    label: 'CANCELADOS',
-                                    data: cantidad_cancelados,
-                                    borderWidth: 1,
-                                    backgroundColor: '#F06057',
-                                }
-                            ]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                },
-                                responsive: false,
-                                maintainAspectRatio: true,
-                                showScale: false,
-                            },
-
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Cantidad de turnos atentidos y cancelados por sucursal',
-                                    font: {
-                                        family: "'Arial', sans-serif",
-                                        size: 30
-                                },
-                                    padding: {
-                                        bottom: 30
-                                    }
-                                }
-                            }
-
-
-                        }
-                    });
-                } else {
-
-
-                    if (myChart1) {
-                        myChart1.destroy();
-                    }
-
-
-                    myChart1 = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: '',
-                            datasets: [
-                                {
-                                    label: 'ATENDIDOS',
-                                    data: 0,
-                                    borderWidth: 1,
-                                    backgroundColor: '#0D2A73',
-                                },
-                                {
-                                    label: 'CANCELADOS',
-                                    data: 0,
-                                    borderWidth: 1,
-                                    backgroundColor: '#F06057',
-                                }
-                            ]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                },
-                                responsive: false,
-                                maintainAspectRatio: true,
-                                showScale: false,
-                            }
-                        }
-                    });
-
-                }
-
                 
 
                 
 
-            }
+        }
 
-        })
-
-
-
-
-    }
-    )
-
+    })
 };
 
 function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
@@ -943,6 +941,7 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
 
 
 function Fechas1() {
+    debugger;
     $('input[name="daterange"]').daterangepicker({
         opens: 'left',
         startDate: "01/01/2021",

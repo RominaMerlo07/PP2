@@ -72,7 +72,7 @@
   <div class="row justify-content-end text-end pt-3 pb-2 mr-4">
       <div class="bg-white h-100 pl-3" style="border: 1px solid #ccc; border-radius:3px; width:270px;">
           <i class="fa fa-calendar" id="i-calendario"></i>&nbsp;
-          <input class="h-100" type="text" name="daterange" value="01/01/2021 - 01/01/2022" id="date_range" style="width:190px;"/>
+          <input class="h-100" type="text" name="daterange"  id="date_range" style="width:190px;"/>
            <span><i class="fa fa-caret-down" id="i-flechita"></i></span>
       </div>
  </div>
