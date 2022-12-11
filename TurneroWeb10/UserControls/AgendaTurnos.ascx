@@ -214,10 +214,11 @@
 
                             if (e.ESTADO == 'ATENDIDO' || e.ESTADO == 'CANCELADO') {
                                 comboEstado = '<select class="custom-select form-control" id="SELECT-' + e.ID_TURNO + '" onchange="cambioDeEstado(' + e.ID_TURNO + ') "disabled="true">';
+                                Orden = '<input type="text" style="text-align: left" class="form-control" id="' + e.ID_TURNO + '" placeholder="Completar..." value="' + NroAutObra + '" onkeypress="return soloNumeros(event)" onchange="cambioNroOrden(' + e.ID_TURNO + ')" disabled />';
+
                             }
 
                             comboEstadosItems += ' <option selected value="' + f.ESTADO + '">' + f.ESTADO + '</option> '
-                            
                         }
                         else {
 
@@ -299,18 +300,15 @@
                     "bPaginate": true,
                     "pageLength": 7,
                     buttons: [
-                        //{ extend: 'copy', text: "Copiar" },
                         {
-                            extend: 'print',
-                            text: "Imprimir",
+                            extend: 'pdf',
+                            orientation: 'landscape',
                             exportOptions: {
-                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12 ]
-                            }
-                        },
-                        {
-                            extend: 'pdf', /*orientation: 'landscape'*/
-                            exportOptions: {
-                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12 ]
+                                columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+                            },
+                            title: '',
+                            customize: function (doc) {
+	                            printDataTable(doc, "AGENDA - TURNOS DEL DÍA")
                             }
                         },
                         { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }

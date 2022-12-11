@@ -52,7 +52,7 @@
                 </div> 
                 <div class="form-row">
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                        <button class="btn btn-primary btn-lg " type="button" id="btnBuscar">Buscar   <i class="fas fa-search fa-xs"></i></button>  
+                        <button class="btn btn-primary btn-lg " type="button" id="btnBuscar"><i class="fas fa-search fa-xs" style="margin-top: 2px"></i> Buscar</button>  
                         
                     </div>
                 </div>
@@ -117,7 +117,6 @@
                     contentType: "application/json",
                     async: false,
                     success: function (data) {
-
                         var turnos = JSON.parse(data.d);
 
                         turnos.forEach(function (e) {
@@ -141,7 +140,7 @@
                         });
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        $(ddl).prop("disabled", true);
+                        //$(ddl).prop("disabled", true);
                     }
                 });
 

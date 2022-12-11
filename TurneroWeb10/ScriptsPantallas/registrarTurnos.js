@@ -596,9 +596,14 @@ function btnListarTurnoClick(turnos) {
         "bPaginate": true,
         "pageLength": 5,
         buttons: [
-            //{ extend: 'copy', text: "Copiar" },
-            { extend: 'print', text: "Imprimir" },
-            { extend: 'pdf', orientation: 'landscape' },
+            {
+                extend: 'pdf',
+                orientation: 'landscape',
+                title: '',
+                customize: function (doc) {
+                    printDataTable(doc, "TURNOS")
+                }
+            },
             { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
         ]
     });

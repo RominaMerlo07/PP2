@@ -277,9 +277,17 @@ function sendDataPacientes() {
         "bPaginate": true,
         "pageLength": 5,
         buttons: [
-            //{ extend: 'copy', text: "Copiar" },
-            { extend: 'print', text: "Imprimir" },
-            { extend: 'pdf', orientation: 'landscape' },
+            {
+                extend: 'pdf',
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [1, 2, 3, 4]
+                },
+                title: '',
+                customize: function (doc) {
+                    printDataTable(doc, "PACIENTES")
+                }
+            },
             { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
         ]
     });
@@ -292,7 +300,6 @@ error: function (xhr, ajaxOptions, thrownError) {
 }
     })
 };
-
 
 function actualizar(idBuscar) {
 
@@ -481,9 +488,17 @@ function sendDataPacienteOS(numero) {
                 "bPaginate": true,
                 "pageLength": 8,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        },
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PACIENTES - OBRAS SOCIALES")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });
@@ -939,9 +954,14 @@ function ObtenerTurnosFuturos(idPaciente) {
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PACIENTES - TURNOS FUTUROS")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });

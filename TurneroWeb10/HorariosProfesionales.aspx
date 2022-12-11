@@ -898,18 +898,15 @@
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
                     {
-                        extend: 'print',
-                        text: "Imprimir",
+                        extend: 'pdf',
+                        orientation: 'landscape',
                         exportOptions: {
-                            columns: [ 1]
-                        }
-                    },
-                    {
-                        extend: 'pdf', /*orientation: 'landscape'*/
-                        exportOptions: {
-                            columns: [ 1 ]
+                            columns: [ 1, 2, 3, 4]
+                        },
+                        title: '',
+                        customize: function (doc) {
+	                        printDataTable(doc, "HORARIOS PROFESIONALES")
                         }
                     },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }

@@ -16,7 +16,7 @@
                 </div>
                 <div class="box-body table-responsive">
                     <div id="tListaObrasSociales">
-                        <table style="width: 100%" class="table table-bordered table-hover" id="tablaObrasSociales">
+                        <table style="width: 100%" class="table table-striped table-hover table-bordered" id="tablaObrasSociales">
                         </table>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                         </div>
                         <div class="box-body table-responsive">
                             <div class="col-md-12">
-                                <table id="tabla_ObraSocial" style="width: 100%" class="table table-bordered table-hover">
+                                <table id="tabla_ObraSocial" style="width: 100%" class="table table-striped table-hover table-bordered">
                                     <tbody id="tbl_body_tableT">
                                         <!-- DATA POR MEDIO DE AJAX-->
                                     </tbody>

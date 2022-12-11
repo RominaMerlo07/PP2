@@ -22,7 +22,7 @@
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
-                        <table id="tabla_pacientes" style="width: 100%" class="table table-bordered table-hover">
+                        <table id="tabla_pacientes" style="width: 100%" class="table table-striped table-hover table-bordered">
                             <tbody id="tbl_body_table">
                                 <!-- DATA POR MEDIO DE AJAX-->
                             </tbody>
@@ -364,7 +364,7 @@
                                     </div>
                                     <div class="box-body table-responsive text-dark">
                                         <div class="col-md-12 ">
-                                            <table style="width: 100%" id="tabla_obrasSociales" class="table table-bordered table-hover">
+                                            <table style="width: 100%" id="tabla_obrasSociales" class="table table-striped table-hover table-bordered">
                                                 <tbody id="tbl_body_table_E">
                                                     <!-- DATA POR MEDIO DE AJAX-->
                                                 </tbody>
@@ -401,7 +401,7 @@
                         </div>
                         <div class="box-body table-responsive">
                             <div class="col-md-12">
-                                <table id="tabla_Turnos" style="width: 100%" class="table table-bordered table-hover">
+                                <table id="tabla_Turnos" style="width: 100%" class="table table-striped table-hover table-bordered">
                                     <tbody id="tbl_body_tableT">
                                         <!-- DATA POR MEDIO DE AJAX-->
                                     </tbody>
