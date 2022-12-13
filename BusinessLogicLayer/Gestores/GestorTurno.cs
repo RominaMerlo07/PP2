@@ -175,6 +175,30 @@ namespace BusinessLogicLayer.Gestores
             try
             {
                 DATurno Daturno = new DATurno();
+
+                int idTratamiento = Daturno.evaluarSiPerteneceATratamiento(idturno);
+                if ((idTratamiento > 0) && (estado == "ATENDIDO"))
+                {
+                    List<Turno> listaTurnos = Daturno.traerTurnosDelTratamiento(idTratamiento);
+                    Boolean quedanTurnosEnTratamiento = false;
+
+                    foreach (Turno turno in listaTurnos)
+                    {
+                        DateTime hoy = DateTime.Today;
+                        if (turno.FechaTurno > hoy)
+                        {
+                            quedanTurnosEnTratamiento = true;
+                            break;
+                        }
+                    }
+
+                    if (!quedanTurnosEnTratamiento)
+                    {
+                        DAPlanTratamiento daTratamiento = new DAPlanTratamiento();
+                        daTratamiento.completarTratamiento(idTratamiento);
+                    }
+                }
+
                 Daturno.ModificarEstadoEnTurno(idturno, estado);
             }
             catch (Exception ex)

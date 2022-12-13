@@ -74,6 +74,7 @@
   <ItemGroup>
     <Content Include="Agenda.aspx" />
     <Content Include="Archivos\29102022_SCRIPT_C_DATOS_INIC.sql" />
+    <Content Include="Dashboard.aspx" />
     <Content Include="Estilos\Content\bootstrap-datepicker.min.css" />
     <Content Include="Estilos\Content\bootstrap-grid.css" />
     <Content Include="Estilos\Content\bootstrap-grid.min.css" />
@@ -485,6 +486,7 @@
     <Content Include="Estilos\css\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Estilos\styleRegistrarProfesional.css" />
     <Content Include="Estilos\styleLogin.css" />
+    <Content Include="favicon.ico" />
     <Content Include="GestionSeguimientoPacientes.aspx" />
     <Content Include="GestionTratamientos.aspx" />
     <Content Include="Global.asax" />
@@ -529,8 +531,8 @@
     <Content Include="Archivos\CONSENTIMIENTO_INFORMADO.pdf" />
     <Content Include="RecuperarPassword.aspx" />
     <Content Include="ReprogramarTurno.aspx" />
-    <Content Include="LiquidacionObraSocial.aspx" />
     <Content Include="ScriptsPantallas\Centros_validacion.js" />
+    <Content Include="ScriptsPantallas\Dashboard.js" />
     <Content Include="ScriptsPantallas\Especialidades.js" />
     <Content Include="ScriptsPantallas\Especialidades_validacion.js" />
     <Content Include="ScriptsPantallas\Personal_validacion.js" />
@@ -1158,6 +1160,13 @@
     <Compile Include="Agenda.aspx.designer.cs">
       <DependentUpon>Agenda.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestionSeguimientoPacientes.aspx.cs">
       <DependentUpon>GestionSeguimientoPacientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1280,13 +1289,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="LiquidacionObraSocial.aspx.cs">
-      <DependentUpon>LiquidacionObraSocial.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="LiquidacionObraSocial.aspx.designer.cs">
-      <DependentUpon>LiquidacionObraSocial.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\AgendaTurnos.ascx.cs">
       <DependentUpon>AgendaTurnos.ascx</DependentUpon>

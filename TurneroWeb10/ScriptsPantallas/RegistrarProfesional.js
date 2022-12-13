@@ -238,9 +238,14 @@ function ObtenerTurnosFuturos(IdProf) {
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PROFESIONALES - TURNOS FUTUROS")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });
@@ -556,9 +561,17 @@ function sendDataProfesionales() {
                     "bPaginate": true,
                     "pageLength": 5,
                     buttons: [
-                        //{ extend: 'copy', text: "Copiar" },
-                        { extend: 'print', text: "Imprimir" },
-                        { extend: 'pdf', orientation: 'landscape' },
+                        {
+                            extend: 'pdf',
+                            orientation: 'landscape',
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7]
+                            },
+                            title: '',
+                            customize: function (doc) {
+                                printDataTable(doc, "PROFESIONALES")
+                            }
+                        },
                         { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                     ]
                 });
@@ -712,9 +725,16 @@ function sendDataProfesional_Especialidades(numero) {
                 "bPaginate": true,
                 "pageLength": 8,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf', orientation: 'landscape',
+                        exportOptions: {
+                            columns: [1]
+                        },
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PROFESIONALES - ESPECIALIDADES")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });
@@ -944,9 +964,14 @@ function ObtenerTurnosFuturosE(IdProf, idEspecialidad) {
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PROFESIONALES - TURNOS FUTUROS")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });

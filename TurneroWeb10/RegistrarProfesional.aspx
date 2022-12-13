@@ -35,7 +35,7 @@
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
-                        <table id="tabla_profesionales" class="table table-bordered table-hover">
+                        <table id="tabla_profesionales" class="table table-striped table-hover table-bordered">
                             <tbody id="tbl_body_table">
                                 <!-- DATA POR MEDIO DE AJAX-->
                             </tbody>
@@ -430,7 +430,7 @@
 
                                     <div class="box-body table-responsive">
                                         <div class="col-md-12">
-                                            <table style="width: 100%" id="tabla_especialidades" class="table table-bordered table-hover">
+                                            <table style="width: 100%" id="tabla_especialidades" class="table table-striped table-hover table-bordered">
                                                 <tbody id="tbl_body_table_E">
                                                     <!-- DATA POR MEDIO DE AJAX-->
                                                 </tbody>
@@ -467,7 +467,7 @@
                         </div>
                         <div class="box-body table-responsive">
                             <div class="col-md-12">
-                                <table id="tabla_Turnos" style="width: 100%" class="table table-bordered table-hover">
+                                <table id="tabla_Turnos" style="width: 100%" class="table table-striped table-hover table-bordered">
                                     <tbody id="tbl_body_tableT">
                                         <!-- DATA POR MEDIO DE AJAX-->
                                     </tbody>
@@ -506,7 +506,7 @@
                         </div>
                         <div class="box-body table-responsive">
                             <div class="col-md-12">
-                                <table id="tabla_TurnosE" style="width: 100%" class="table table-bordered table-hover">
+                                <table id="tabla_TurnosE" style="width: 100%" class="table table-striped table-hover table-bordered">
                                     <tbody id="tbl_body_tableE">
                                         <!-- DATA POR MEDIO DE AJAX-->
                                     </tbody>

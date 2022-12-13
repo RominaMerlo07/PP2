@@ -23,7 +23,7 @@
                 </div>
                 <div class="box-body table-responsive">
                     <div class="col-md-12">
-                        <table id="tabla_Especialidades" style="width:100%" class="table table-bordered table-hover">
+                        <table id="tabla_Especialidades" style="width:100%" class="table table-striped table-hover table-bordered">
                             <tbody id="tbl_body_table">
                                 <!-- DATA POR MEDIO DE AJAX-->
                             </tbody>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="box-body table-responsive">
                             <div class="col-md-12">
-                                <table id="tabla_Especialidad" style="width: 100%" class="table table-bordered table-hover">
+                                <table id="tabla_Especialidad" style="width: 100%" class="table table-striped table-hover table-bordered">
                                     <tbody id="tbl_body_tableT">
                                         <!-- DATA POR MEDIO DE AJAX-->
                                     </tbody>

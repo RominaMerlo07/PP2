@@ -226,11 +226,15 @@ function cargarTablaTratamientos(idPaciente) {
                 var obraSocial = e.OBRA_SOCIAL;
                 var nroAfiliado = e.NRO_AFILIADO;
                 var nroAutorizacionObra = e.NRO_AUTORIZACION_OBRA;
-
-                var Acciones = '<a href="#" onclick="return editarTratamiento(' + idTratamiento + ')"  class="btn btn-primary" > <span class="fa fa-pencil" title="Editar"></span></a > ' +
-                    '<a href="#" onclick="return cancelarTratamiento(' + idTratamiento + ')"  class="btn btn-danger btnCancelar" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';
-
-                tratamientos.push([idTratamiento, fechaAlta, centro, especialidad, profesional, paciente, obraSocial, nroAfiliado, nroAutorizacionObra, Acciones]);
+                var estadoTratamiento = e.ESTADO_PLAN;
+                var Acciones = "";
+                debugger;
+                if (estadoTratamiento == "EN CURSO") {
+                    Acciones = '<a href="#" onclick="return editarTratamiento(' + idTratamiento + ')"  class="btn btn-primary" > <span class="fa fa-pencil" title="Editar"></span></a > ' +
+                        '<a href="#" onclick="return cancelarTratamiento(' + idTratamiento + ')"  class="btn btn-danger btnCancelar" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';
+                }
+                
+                tratamientos.push([idTratamiento, fechaAlta, estadoTratamiento, centro, especialidad, profesional, paciente, obraSocial, nroAfiliado, nroAutorizacionObra, Acciones]);
             });
 
             var table = $('#tablaTratamientos').DataTable({
@@ -243,8 +247,9 @@ function cargarTablaTratamientos(idPaciente) {
                 "bDestroy": true,
                 "bAutoWidth": true,                
                 columns: [
-                    { title: "NRO. TRATAMIENTO" },
+                    { title: "NRO. TRATAMIENTO", visible: false },
                     { title: "FECHA ALTA" },
+                    { title: "ESTADO" },
                     { title: "CENTRO" },
                     { title: "ESPECIALIDAD" },
                     { title: "PROFESIONAL" },
@@ -263,21 +268,24 @@ function cargarTablaTratamientos(idPaciente) {
                         "sNext": "Siguiente"
                     }
                 },
+                "rowCallback": function (row, data, index) {
+                    if (data[2] == 'COMPLETADO') {
+                        $('td', row).css('background-color', '#90f5a6');
+                        $('td', row).eq(8).css('color', 'rgba(255, 255, 255, .8)');
+                    }
+                },
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
                     {
-                        extend: 'print',
-                        text: "Imprimir",
+                        extend: 'pdf',
+                        orientation: 'landscape',
                         exportOptions: {
-                            columns: [1]
-                        }
-                    },
-                    {
-                        extend: 'pdf', /*orientation: 'landscape'*/
-                        exportOptions: {
-                            columns: [1]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        },
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "TRATAMIENTOS")
                         }
                     },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
@@ -562,9 +570,17 @@ function dibujarTablaTurnosEditar(arrayTurnosEditar) {
         "bPaginate": true,
         "pageLength": 5,
         buttons: [
-            //{ extend: 'copy', text: "Copiar" },
-            { extend: 'print', text: "Imprimir", exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7] } },
-            { extend: 'pdf', orientation: 'landscape', exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7] } },
+            {
+                extend: 'pdf',
+                orientation: 'landscape',
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5, 6, 7]
+                },
+                title: '',
+                customize: function (doc) {
+                    printDataTable(doc, "TRATAMIENTOS - TURNOS")
+                }
+            },
             { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
         ]
     });
@@ -1476,9 +1492,16 @@ function dibujaTablaTurnos(arrayTurnos) {
         "bPaginate": true,
         "pageLength": 5,
         buttons: [
-            //{ extend: 'copy', text: "Copiar" },
-            { extend: 'print', text: "Imprimir" },
-            { extend: 'pdf', orientation: 'landscape' },
+            {
+                extend: 'pdf', orientation: 'landscape',
+                exportOptions: {
+                    columns: [2, 4, 6, 8, 9]
+                },
+                title: '',
+                customize: function (doc) {
+                    printDataTable(doc, "TRATAMIENTOS - TURNOS")
+                }
+            },
             { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
         ]
     });

@@ -128,9 +128,17 @@ function sendDataEspecialidad() {
                     "bPaginate": true,
                     "pageLength": 5,
                     buttons: [
-                        //{ extend: 'copy', text: "Copiar" },
-                        { extend: 'print', text: "Imprimir" },
-                        { extend: 'pdf', orientation: 'landscape' },
+                        {
+                            extend: 'pdf',
+                            orientation: 'landscape',
+                            exportOptions: {
+                                columns: [1]
+                            },
+                            title: '',
+                            customize: function (doc) {
+                                printDataTable(doc, "ESPECIALIDADES")
+                            }
+                        },
                         { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                     ]
                 });
@@ -310,8 +318,14 @@ function ObtenerTurnosFuturos(id) {
                 "pageLength": 5,
                 buttons: [
                     //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "ESPECIALIDADES - TURNOS FUTUROS")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });

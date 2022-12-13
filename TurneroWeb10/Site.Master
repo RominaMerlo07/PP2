@@ -1,4 +1,5 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TurneroWeb10.Site" %>
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TurneroWeb10.Site" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +9,7 @@
     <title>Sistema Kinesio - Sparring Center</title>
     <asp:ContentPlaceHolder ID="Head" runat="server"></asp:ContentPlaceHolder>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-
+    
 
     <link rel="stylesheet" type="text/css" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/Content/bootstrap.min.css"%>" />
 <%--    <link rel="stylesheet" type="text/css" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/css/AdminLTE.css"%>" />--%>
@@ -62,6 +63,16 @@
     <link rel="stylesheet" href="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/css/iCheck/flat/green.css"%>"/>
     <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/iCheck/icheck.js"%>"></script>
     <script src="<%=ConfigurationManager.AppSettings["ROOT_PATH"] + "Estilos/js/plugins/datepicker/locales/bootstrap-datepicker.es.js"%>" charset="UTF-8"></script>
+
+    <%--esto es del Dash : --%>
+
+     
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
 
     <style>
         html, body {
@@ -331,6 +342,13 @@
                                 <span> Gestión de Usuarios</span>
                             </a>
                         </li>
+
+                            <li class="nav-item" id="idDashboard">
+                            <a class="nav-link" href="Dashboard.aspx"" role="button" aria-haspopup="true" aria-expanded="false">
+                               <i class="fa-solid fa-house-medical"></i>
+                                <span> Dashboard</span>
+                            </a>                      
+                        </li>    
                     </ul>
                 </section>
             </aside>
