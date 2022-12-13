@@ -218,9 +218,16 @@ function sendDataCentros() {
                         "bPaginate": true,
                         "pageLength": 5,
                         buttons: [
-                            //{ extend: 'copy', text: "Copiar" },
-                            { extend: 'print', text: "Imprimir" },
-                            { extend: 'pdf', orientation: 'landscape' },
+                            {
+                                extend: 'pdf', orientation: 'landscape',
+                                exportOptions: {
+                                    columns: [1, 2, 3, 4, 5]
+                                },
+                                title: '',
+                                customize: function (doc) {
+                                    printDataTable(doc, "CENTROS")
+                                }
+                            },
                             { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                         ]
                     });
@@ -385,9 +392,14 @@ function ObtenerTurnosFuturos(idCentro)
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PACIENTES")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });

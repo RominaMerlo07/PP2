@@ -364,7 +364,7 @@ function sendDataUsuarios() {
                 var Rol = e.Rol;
 
               
-                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ",'" + Personal + "'" + ",'" + Rol + "'" + ')"  class="btn btn-primary" > <span class="fas fa-user-edit"></span></a > ';
+                var Acciones = '<a href="#" onclick="return actualizar(' + Numero + ",'" + Personal + "'" + ",'" + Rol + "'" + ')"  class="btn btn-primary" > <span class="fas fa-user-edit" title="Modificar"></span></a > ';
 
                 //' + "'"+ Numero +"'"+ '
                 arrayUsuarios.push([
@@ -401,9 +401,16 @@ function sendDataUsuarios() {
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf', orientation: 'landscape',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4]
+                        },
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "USUARIOS")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });

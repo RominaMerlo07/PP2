@@ -219,9 +219,17 @@ function sendDataPersonal() {
                 "bPaginate": true,
                 "pageLength": 3,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
-                    { extend: 'print', text: "Imprimir" },
-                    { extend: 'pdf', orientation: 'landscape' },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5, 6]
+                        },
+                        title: '',
+                        customize: function (doc) {
+                            printDataTable(doc, "PERSONAL ADMINISTRATIVO")
+                        }
+                    },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
                 ]
             });

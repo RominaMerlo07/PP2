@@ -388,18 +388,14 @@
                 "bPaginate": true,
                 "pageLength": 5,
                 buttons: [
-                    //{ extend: 'copy', text: "Copiar" },
                     {
-                        extend: 'print',
-                        text: "Imprimir",
+                        extend: 'pdf', orientation: 'landscape',
                         exportOptions: {
-                            columns: [1]
-                        }
-                    },
-                    {
-                        extend: 'pdf', /*orientation: 'landscape'*/
-                        exportOptions: {
-                            columns: [1]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        },
+                        title: '',
+                        customize: function (doc) {
+	                        printDataTable(doc, "REPROGRAMAR TURNOS")
                         }
                     },
                     { extend: 'colvis', columns: ':not(:first-child)', text: "Ocultar/Mostrar columnas" }
