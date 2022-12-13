@@ -181,7 +181,7 @@ namespace TurneroWeb10
 
             catch (Exception e)
             {
-                string error = "Se produjo un error al registrar el profesional " + e.Message;
+                string error = "Se produjo un error al cancelar el turno " + e.Message;
                 return error;
             }
 
