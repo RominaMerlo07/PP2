@@ -21,8 +21,16 @@ $(document).ready(function () {
         $("#date_range").focus();
     });
 
-    $('#i-calendario').click(function () {
+    $('#i-flechita').click(function () {
         $("#date_range").focus();
+    });
+
+    $('#i-calendario1').click(function () {
+        $("#date_range1").focus();
+    });
+
+    $('#i-flechita1').click(function () {
+        $("#date_range1").focus();
     });
 
 
@@ -40,7 +48,7 @@ $(document).ready(function () {
 
 
 function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
-    debugger
+   
     $('#date_range').daterangepicker({
         locale: {
 
@@ -123,8 +131,6 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
             success: function (data) {
 
                 console.log(data);
-
-
 
                 var obra_social = [];
                 var porcentaje = [];

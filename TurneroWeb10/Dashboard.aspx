@@ -11,30 +11,22 @@
 
         #date_range1, 
         #date_range {
-      
-        
          cursor: pointer;
          padding: 15px 15px; 
          border: none;
-         
         }
 
         
-
         #tarjetas-totales{
-        
-         
-
         }
 
         #tarj-os {
-        
-            
-
         }
 
-        #i-flechita, #i-calendario {
-        
+        #i-flechita, 
+        #i-calendario, 
+        #i-flechita1,
+        #i-calendario1 {
             cursor:pointer;
         }
 
@@ -51,11 +43,26 @@
         }
         #div-header :hover {
         
-           background-color:none;
+        /*background-color:none;*/
        
-        background-color:hotpink;
+        background-color:#84b6f4;
         
         }
+        #div-header-a :hover {
+        
+        background-color:#77dd77;
+        }
+
+          #div-header-os :hover {
+        
+        background-color:#fdfd96;
+        }
+
+           #div-header-canc :hover {
+        
+        background-color:#ff6961;
+        }
+
 
 
 
@@ -65,8 +72,9 @@
         <section id="dashboard">
 
             <div class="row" style="padding-bottom:0px; padding-top:20px;">
-                <p class="mx-auto" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode'; font-size:50px;">Sparrring Dashboard</p>
-
+                <p class="mx-auto" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode'; font-size:50px;">
+                   
+                    Sparrring Dashboard</p>
             </div>
 
   <div class="row justify-content-end text-end pt-3 pb-2 mr-4">
@@ -88,10 +96,14 @@
             <div class="col text-center mx-0 h-100">
                  <div class="card" style="border-color: black;">
                    <div class="card-content">
-                       <div class="h-100 w-100" id="div-header">
+                       <div class="h-100 w-100" id="div-header" style="background-color:#6a9eda">
                        <div class="card-header h-100 w-100">
-                           
-                               <h2 class="card-tittle" style="border-color:black; font-size: 20px;"> Turnos Otorgados</h2>
+                                 <span style="width:65px; height:65px; text-align:center">
+                                <i class="fa-sharp fa-solid fa-calendar h-100 w-100"></i>
+                                 </span>
+                           <h2 class="card-tittle" style="border-color:black; font-size:20px;">
+                                 
+                                   Turnos Otorgados</h2>
                            </div>
                            
                        </div>
@@ -105,9 +117,16 @@
             <div class="col text-center mx-0 h-100">
                  <div class="card h-100" style="border-color: black;">
                    <div class="card-content">
+                       <div class="h-100 w-100" id="div-header-a" style="background-color:#42ab49">
+
                         <div class="card-header">
-                          <h2 class="card-tittle" style="border-color:black; font-size: 20px;">Turnos Atendidos</h2>
+                            
+                          <h2 class="card-tittle" style="border-color:black; font-size: 20px;"> 
+                              <i class="fa-solid fa-calendar-check"></i>
+                              Turnos Atendidos</h2>
                         </div>
+                      </div>
+
                         <div class="card-body" <%--style="background-color:rgb(8,116,140,0.8);--%>">
                                 <p id="turnos-atendidos" style="font-family:'Arial Rounded MT'; font-size: 50px"></p>
                         </div>
@@ -118,9 +137,13 @@
              <div class="col text-center mx-0 h-100">
                  <div class="card h-100" style="border-color: black;">
                    <div class="card-content h-100">
-                       <div class="card-header" <%--style="background-color:#fdfd96;"--%> id="tarj-os">
-                           <h2 class="card-tittle" style="border-color:rgb(8,116,140,0.8);font-size: 20px;">Obra Social-Part</h2>
+                       <div class="h-100 w-100" id="div-header-os" style="background-color:#e2e37e">
+
+                       <div class="card-header"  id="tarj-os">
+                           <h2 class="card-tittle" style="border-color:rgb(8,116,140,0.8);font-size: 20px;">
+                               Obra Social-Part</h2>
                        </div>
+                     </div>
                     <div class="card-body" style="width:250px; height:130px;">
                         <div style="position:absolute; top:60px; left:10px; width:250px; height:130px;">
                             <canvas id="grafico-os-sparring"></canvas>
@@ -133,9 +156,14 @@
             <div class="col text-center mx-0 h-100">
                 <div class="card" style="border-color: black;">
                    <div class="card-content h-100">
+                       <div class="h-100 w-100" id="div-header-canc" style="background-color:#e2504c">
+
                        <div class="card-header">
-                           <h2 class="card-tittle" style="border-color:black; font-size: 20px;">Turnos Cancelados</h2>
+                           <h2 class="card-tittle" style="border-color:black; font-size: 20px;">
+                               <i class="fa-solid fa-calendar-xmark"></i>
+                               Turnos Cancelados</h2>
                        </div>
+                     </div>
                     <div class="card-body">
                 <p id="turnos-cancelados" style="font-family:'Arial Rounded MT'; font-size: 50px"></p>
             </div>
@@ -223,7 +251,7 @@
   </div>
        <div class="row pb-4 ml-3 mr-3 justify-content-end">
             <div class="bg-white col-3" style="border: 1px solid #ccc; border-radius:3px; width:10px;">
-          <i class="fa fa-calendar"></i>&nbsp;
+          <i class="fa fa-calendar" id="i-calendario1"></i>&nbsp;
           <input class="h-100 w-75" type="text" name="daterange1" value="01/01/2021 - 15/01/2022" id="date_range1" style="width:400px;"/>
            <span></span><i class="fa fa-caret-down" id="i-flechita1"></i>
       </div>
@@ -231,9 +259,6 @@
           <input class="h-100" type="text" name="daterange1" value="01/01/2021 - 01/15/2021" id="data_range1"/>
       </div>--%>
       </div>
-
-     
-
 
  </section>
   
