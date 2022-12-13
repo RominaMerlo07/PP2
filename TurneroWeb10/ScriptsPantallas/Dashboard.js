@@ -36,19 +36,73 @@ $(document).ready(function () {
         $("#date_range1").focus();
     });
 
+    $('#date_range').daterangepicker({
+        autoUpdateInput: false,
+        opens: 'left',
+        locale: {
+            daysOfWeek: [
+                "Do",
+                "Lu",
+                "Ma",
+                "Mi",
+                "Ju",
+                "Vi",
+                "Sa"
+            ],
+            applyLabel: "Guardar",
+            cancelLabel: "Cancelar",
+            fromLabel: "Desde",
+            toLabel: "Hasta",
+            customRangeLabel: "Personalizar",
+            monthNames: [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Setiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            format: "DD-MM-YYYY"
 
+        }
+    }, function (start, end, label) {
+        startDate = start.format(format);
+        endDate = end.format(format);
+        ObtenerCantidadTurnosTotales(startDate, endDate, label)
 
-    
-    ObtenerCantidadTurnosTotales();
+        cb(start.format(format2), end.format(format2));
+
+    });
+
+    inicializarTurnosTotales();
+
     GraficarEspMasDemandadas();
-  
 
 
 
 });
 
 
+function cb(start, end) {
+    $('#date_range').val(start + ' - ' + end);
+}
 
+function inicializarTurnosTotales() {
+
+    var startDate = moment().subtract('days', 365).format(format);
+    var endDate = moment().format(format);
+    ObtenerCantidadTurnosTotales(startDate, endDate, "");
+
+    var startDate2 = moment().subtract('days', 365).format(format2);
+    var endDate2 = moment().format(format2);
+    cb(startDate2, endDate2);
+}
 
 function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
    
@@ -965,7 +1019,7 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
 
 
 function Fechas1() {
-    debugger;
+
     $('input[name="daterange"]').daterangepicker({
         opens: 'left',
         startDate: "01/01/2021",
