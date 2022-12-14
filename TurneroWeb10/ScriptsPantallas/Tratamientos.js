@@ -228,7 +228,7 @@ function cargarTablaTratamientos(idPaciente) {
                 var nroAutorizacionObra = e.NRO_AUTORIZACION_OBRA;
                 var estadoTratamiento = e.ESTADO_PLAN;
                 var Acciones = "";
-                debugger;
+           
                 if (estadoTratamiento == "EN CURSO") {
                     Acciones = '<a href="#" onclick="return editarTratamiento(' + idTratamiento + ')"  class="btn btn-primary" > <span class="fa fa-pencil" title="Editar"></span></a > ' +
                         '<a href="#" onclick="return cancelarTratamiento(' + idTratamiento + ')"  class="btn btn-danger btnCancelar" > <span class="fa fa-trash" title="Dar de baja"></span></a > ';

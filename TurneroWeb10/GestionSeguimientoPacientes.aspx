@@ -207,7 +207,7 @@
                                     <label class="text-black mr-2 " >
                                         Otros:
                                     </label>
-                                    <textarea class="form-control" id="txtAOtrosM" rows="3" maxlength="300"></textarea>
+                                    <textarea class="form-control" id="txtAOtrosM" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                     <label class="text-black mr-2" id="lblAOtrosM" style="display:none">
                                         0/300
                                     </label>
@@ -220,7 +220,7 @@
                                     <label class="text-black mr-2 " >
                                         Antecedentes:
                                     </label>
-                                    <textarea class="form-control" id="txtAAntecedentesM" rows="3" maxlength="300"></textarea>
+                                    <textarea class="form-control" id="txtAAntecedentesM" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                     <label class="text-black mr-2" id="lblAAntecedentesM" style="display:none">
                                         0/300
                                     </label> 
@@ -299,7 +299,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Profesional Derivante:</span>
                                                 </div>
-                                                <input type="text" style="text-align: left" class="form-control" id="txtProfDerivante"  maxlength="50"/>
+                                                <input type="text" style="text-align: left" class="form-control" id="txtProfDerivante"  maxlength="50" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                                             </div> 
                                         </div>
                                         <div class="col-sm-4 col-md-4 col-lg-4">
@@ -315,7 +315,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Especialidad:</span>
                                                 </div>
-                                                <input type="text" style="text-align: left" class="form-control" id="txtEspecProfDerivante" maxlength="20" />
+                                                <input type="text" style="text-align: left" class="form-control" id="txtEspecProfDerivante" maxlength="20" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                                             </div> 
                                         </div>
                                     </div>
@@ -325,7 +325,7 @@
                                                 <label class="text-black mr-2 " > 
                                                     Diagnóstico de Ingreso:
                                                 </label>
-                                                <textarea class="form-control" id="txtDiagnIngreso" rows="3" maxlength="300"></textarea>
+                                                <textarea class="form-control" id="txtDiagnIngreso" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                                 <label class="text-black mr-2" id="lblDiagnIngreso">
                                                     0/300
                                                 </label> 
@@ -336,7 +336,7 @@
                                                 <label class="text-black mr-2 " > 
                                                     Evaluación de Ingreso:
                                                 </label>
-                                                <textarea class="form-control" id="txtEvaIngreso" rows="3" maxlength="300"></textarea>
+                                                <textarea class="form-control" id="txtEvaIngreso" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                                 <label class="text-black mr-2" id="lblEvaIngreso">
                                                     0/300
                                                 </label> 
@@ -349,7 +349,7 @@
                                                 <label class="text-black mr-2 " >
                                                     Descripción del Plan:
                                                 </label>
-                                                <textarea class="form-control" id="txtDescrPlan" rows="3" maxlength="500"></textarea>
+                                                <textarea class="form-control" id="txtDescrPlan" rows="3" maxlength="500" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                                 <label class="text-black mr-2" id="lblDescrPlan">
                                                     0/500
                                                 </label> 
@@ -360,7 +360,7 @@
                                                 <label class="text-black mr-2 " >
                                                     Objetivo del Plan:
                                                 </label>
-                                                <textarea class="form-control" id="txtObjPlan" rows="3" maxlength="300"></textarea>
+                                                <textarea class="form-control" id="txtObjPlan" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                                 <label class="text-black mr-2" id="lblObjPlan">
                                                     0/300
                                                 </label> 
@@ -553,7 +553,7 @@
                                             <label class="text-black mr-2 " >
                                                 Otros:
                                             </label>
-                                            <textarea class="form-control" id="txtAOtros" rows="3" maxlength="300"></textarea>
+                                            <textarea class="form-control" id="txtAOtros" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                             <label class="text-black mr-2" id="lblAOtros">
                                                 0/300
                                             </label>
@@ -566,7 +566,7 @@
                                             <label class="text-black mr-2 " >
                                                 Antecedentes:
                                             </label>
-                                            <textarea class="form-control" id="txtAAntecedentes" rows="3" maxlength="300"></textarea>
+                                            <textarea class="form-control" id="txtAAntecedentes" rows="3" maxlength="300" onkeyup="javascript:this.value=this.value.toUpperCase();"></textarea>
                                             <label class="text-black mr-2" id="lblAAntecedentes">
                                                 0/300
                                             </label> 
@@ -1549,7 +1549,7 @@
                             observaciones = e.OBSERVACIONES;
                         }
                          
-                        var detalleTurno = "<div class='input-group mb-3'><input type='text' value= '"+ observaciones +"' style='text-align: left' class='form-control' id='INPUT-" + e.ID_TURNO + "' maxlength='100'/><div class='input-group-append'> <button class='btn btn-outline-secondary' onclick='editaObservacionTurno(" + e.ID_TURNO + ")' type='button'><i class='fas fa-save'></i></button></div></div>";
+                        var detalleTurno = "<div class='input-group mb-3'><input type='text' onkeyup='javascript:this.value=this.value.toUpperCase();' value= '"+ observaciones +"' style='text-align: left' class='form-control' id='INPUT-" + e.ID_TURNO + "' maxlength='100'/><div class='input-group-append'> <button class='btn btn-outline-secondary' onclick='editaObservacionTurno(" + e.ID_TURNO + ")' type='button'><i class='fas fa-save'></i></button></div></div>";
                         
                         arrayTurnosEditar.push([
                             e.ID_TURNO,
