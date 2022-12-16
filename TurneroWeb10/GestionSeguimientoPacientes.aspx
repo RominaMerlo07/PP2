@@ -258,7 +258,7 @@
                             <div class="col-md-12">
                                 <div class="table-responsive"> 
                                     <div id="tTratamiento" >
-                                        <table style=" width: 100% !important;" class="table table-striped table-hover table-bordered table-secondary" id="tablaTratamiento">
+                                        <table style=" width: 100% !important;" class="table table-hover table-bordered  table-striped" id="tablaTratamiento">
                                         </table>
                                     </div> 
                                 </div>  
@@ -278,7 +278,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-info text-white">
                     <h4 class="modal-title " id="lblDetalleTratamiento">Detalle del tratamiento</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>       
+                    <button type="button" class="close" onclick="return mostrarTratamientos()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>       
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12" id="crdDetalleTratemiento">
@@ -392,7 +392,7 @@
                                         <div class="table-responsive">
 
                                             <div id="tTurnosTratamiento" style="display: none">
-                                                <table style="width:100%" class="table table-striped table-hover table-bordered table-secondary" id="tablaTurnosTratamiento">
+                                                <table style="width:100%" class="table table-hover table-bordered  table-striped" id="tablaTurnosTratamiento">
                                                 </table>
 
                                             </div>  
@@ -640,11 +640,17 @@
                         $('#msgSinHC').show();
                         $('#btnIniciaHC').show();
                         $('#boxAntecedentes').hide();
+                        $('#boxTratamientos').hide();
                     }
                 }
                 else
                 {
+                    $('#msgSinHC').hide();
+                    $('#boxAntecedentes').hide();
+                    $('#boxTratamientos').hide();
+                    $('#btnIniciaHC').hide();
                     $('#msgCargarPaciente').show();
+                    
                 }
             });
 
