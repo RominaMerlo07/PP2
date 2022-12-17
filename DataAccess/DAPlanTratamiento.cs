@@ -70,7 +70,8 @@ namespace DataAccess
                 string cadenaDeConexion = SqlConnectionManager.getCadenaConexion();
                 con = new SqlConnection(cadenaDeConexion);
                 //TOP 20 SE LA QUITE PARA MOSTRAR TODOS LOS TRATAMIENTOS
-                string consulta = @"	SELECT  PT.ID_TRATAMIENTO,
+                string consulta = @"	SELECT  TOP 70
+                                                PT.ID_TRATAMIENTO,
 		                                                PT.FECHA AS FECHA_ALTA,
                                                 (select distinct C.NOMBRE_CENTRO from T_CENTROS C
 	                                                where c.ID_CENTRO = t.ID_CENTRO) as CENTRO,
