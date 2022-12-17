@@ -315,8 +315,8 @@ function UpdateDataPersonal(id) {
         localidad: $("#id__AtxtLocalidad").val(),
         barrio: $("#id__AtxtBarrio").val(),
         direccion: $("#id__AtxtDomicilio").val(),
-        piso: $("#id__txtPiso").val(),
-        dpto: $("#id__txtDpto").val(),
+        piso: $("#id__AtxtPiso").val(),
+        dpto: $("#id__AtxtDpto").val(),
         celular: $("#id__AtxtCelular").val(),
         email1: $("#id__AtxtEmail1").val(),
         email2: $("#id__AtxtEmail2").val()
