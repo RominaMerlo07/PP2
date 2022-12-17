@@ -116,7 +116,7 @@
                                                         <span class="input-group-text">Calle</span>
                                                     </div>                                                    
                                                         <input type="text" name="calle" id="id__txtCalle" style="text-align: left" class="form-control" maxlength="120" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
-                                                                                                          --%>
+                                                                                                          
                                                 </div>
                                                 <p class="formulario__error" id="p__txtCalle">Por favor, ingrese la calle</p>
                                             </div>
@@ -132,6 +132,24 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
+                                             <div class="col-sm-3">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Piso</span>
+                                                    </div>
+                                                    <input type="text" name="piso" id="id__txtPiso" style="text-align: left" class="form-control" maxlength="2" onkeypress="return soloNumeros(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                </div>
+                                                <p class="formulario__error" id="p__txtPiso">Por favor, ingrese la calle</p>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Dpto</span>
+                                                    </div>
+                                                    <input type="text" name="dpto" style="text-align: left" class="form-control" id="id__txtDpto" maxlength="4" onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                                </div>
+                                                <p class="formulario__error" id="p__txtDpto">Por favor, ingrese el Número o "0".</p>
+                                            </div>
                                             <div class="col">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -140,7 +158,9 @@
                                                     <input type="text" name="barrio" style="text-align: left" class="form-control" id="id__txtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>                                                   
                                                 </div>
                                                  <p class="formulario__error" id="p__txtBarrio">Por favor, ingrese el Barrio</p>
-                                            </div>
+                                            </div>                                         
+                                        </div>
+                                        <div class="form-row">
                                             <div class="col">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -150,9 +170,7 @@
                                                 </div>
                                                 <p class="formulario__error" id="p__txtLocalidad">Por favor, ingrese la Localidad</p>
                                             </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-sm-6">
+                                             <div class="col-sm-6">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Celular</span>
@@ -161,7 +179,7 @@
                                                 </div>
                                                 <p class="formulario__error" id="p__txtCelular">Por favor, ingrese el Celular sin 0 y sin 15</p>
                                             </div>
-                                        </div>
+                                             </div>                                  
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="input-group mb-3">
@@ -273,18 +291,38 @@
                                                     </div>
                                                      <p class="formulario__error" id="p__AtxtDomicilio">Por favor, ingrese el Domicilio</p>
                                                 </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Barrio</span>
+                                            </div>                                        
+                                                <div class="form-row">
+                                                    <div class="col-sm-3">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Piso</span>
+                                                            </div>
+                                                            <input type="text" name="pisoE" id="id__AtxtPiso" style="text-align: left" class="form-control" maxlength="2" onkeypress="return soloNumeros(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                                         </div>
-                                                        <input type="text" name="barrioE" style="text-align: left" class="form-control" id="id__AtxtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
+                                                        <p class="formulario__error" id="p__AtxtPiso">Por favor, ingrese la calle</p>
                                                     </div>
-                                                    <p class="formulario__error" id="p__AtxtBarrio">Por favor, ingrese el Barrio</p>
+                                                    <div class="col-sm-3">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Dpto</span>
+                                                            </div>
+                                                            <input type="text" name="dptoE" style="text-align: left" class="form-control" id="id__AtxtDpto" maxlength="4" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                        </div>
+                                                        <p class="formulario__error" id="p__AtxtDpto">Por favor, ingrese el Número o "0".</p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Barrio</span>
+                                                            </div>
+                                                            <input type="text" name="barrioE" style="text-align: left" class="form-control" id="id__AtxtBarrio" maxlength="100" onkeyup="javascript:this.value=this.value.toUpperCase();" /><p style="color: red;">*</p>
+                                                        </div>
+                                                        <p class="formulario__error" id="p__AtxtBarrio">Por favor, ingrese el Barrio</p>
+                                                    </div>
                                                 </div>
-                                                <div class="col">
+                                            <div class="form-row">
+                                                  <div class="col">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Localidad</span>
@@ -294,8 +332,6 @@
                                                     </div>
                                                     <p class="formulario__error" id="p__AtxtLocalidad">Por favor, ingrese la Localidad</p>
                                                 </div>
-                                            </div>
-                                            <div class="form-row">
                                                 <div class="col-sm-6">
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
