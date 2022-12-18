@@ -1169,9 +1169,9 @@ namespace DataAccess
                                       FROM T_TURNOS
                                      WHERE FECHA_BAJA IS NULL
                                        AND ESTADO NOT IN ('CANCELADO', 'ATENDIDO')
-                                       AND FECHA_TURNO <= GETDATE()
-                                       AND HORA_DESDE <= (SELECT CAST(DATEPART(HOUR,GETDATE()) as char(2))+':'+CAST(DATEPART(MINUTE,GETDATE()) as char(2))+':'+
-                                                         CAST(DATEPART(SECOND,GETDATE()) as char(2)) as hora);";
+                                       AND FECHA_TURNO < GETDATE() -1;";
+                                       //AND HORA_DESDE <= (SELECT CAST(DATEPART(HOUR,GETDATE()) as char(2))+':'+CAST(DATEPART(MINUTE,GETDATE()) as char(2))+':'+
+                                       //                  CAST(DATEPART(SECOND,GETDATE()) as char(2)) as hora);";
 
                 cmd = new SqlCommand(consulta, con);
 

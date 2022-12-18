@@ -21,9 +21,12 @@ namespace TurneroWeb10
 
         [WebMethod]
         public static string registrarPersonal(string p_dni, string p_nombre, string p_apellido, string p_fechaNac,
-                                      string p_calle, string p_numero, string p_barrio, string p_localidad, string p_celular, string p_email1, string p_email2)
+                                      string p_calle, string p_numero, string p_piso, string p_dpto, string p_barrio, string p_localidad, string p_celular, string p_email1, string p_email2)
         {
-            
+
+            string piso;
+            string dpto;
+
             Personal personal = new Personal();
             GestorPersonal gPersonal = new GestorPersonal();
 
@@ -56,7 +59,27 @@ namespace TurneroWeb10
 
                 if ((!string.IsNullOrEmpty(p_calle)) && (!string.IsNullOrEmpty(p_numero)))
                 {
-                    string domicilio = p_calle + " " + p_numero + " Barrio: " + p_barrio;
+                    if (p_piso == "")
+                    {
+                        piso = "-";
+                    }
+                    else
+                    {
+
+                        piso = p_piso;
+                    }
+
+                    if (p_dpto == "")
+                    {
+
+                        dpto = "-";
+                    }
+                    else
+                    {
+                        dpto = p_dpto;
+                    }
+
+                    string domicilio = p_calle + " " + p_numero + " Piso: " + piso + " Dpto: " + dpto + " Barrio: " + p_barrio;
                     personal.Domicilio = domicilio;
                 }
 
@@ -135,8 +158,10 @@ namespace TurneroWeb10
 
         [WebMethod]
         public static string actualizarPersonal(string id, string nombre, string apellido, string dni, string fechaNacimiento,
-                                                   string localidad, string barrio, string direccion, string celular, string email1, string email2)
+                                                   string localidad, string barrio, string direccion, string piso, string dpto, string celular, string email1, string email2)
         {
+            string infoPiso;
+            string infoDpto;
 
             Personal personal = new Personal();
             GestorPersonal gestorPersonal = new GestorPersonal();
@@ -170,7 +195,27 @@ namespace TurneroWeb10
 
                 if (!string.IsNullOrEmpty(direccion))
                 {
-                    string domicilio = direccion + " Barrio: " + barrio;
+                    if (piso == "")
+                    {
+                        infoPiso = "-";
+                    }
+                    else
+                    {
+
+                        infoPiso = piso;
+                    }
+
+                    if (dpto == "")
+                    {
+
+                        infoDpto = "-";
+                    }
+                    else
+                    {
+                        infoDpto = dpto;
+                    }
+
+                    string domicilio = direccion + " Piso: " + infoPiso + " Dpto: " + infoDpto + " Barrio: " + barrio;
                     personal.Domicilio = domicilio;
                 }
 

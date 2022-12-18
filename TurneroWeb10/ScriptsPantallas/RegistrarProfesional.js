@@ -43,6 +43,8 @@ $(document).ready(function () {
         fechaNac = $('#id__dtpFechaNac').val();
         calle = $('#id__txtCalle').val();
         numero = $('#id__txtNumero').val();
+        piso = $('#id__txtPiso').val();
+        dpto = $('#id__txtDpto').val();
         barrio = $('#id__txtBarrio').val();
         localidad = $('#id__txtLocalidad').val();
         celular = $('#id__txtCelular').val();
@@ -63,13 +65,15 @@ $(document).ready(function () {
                 p_fechaNac: fechaNac,
                 p_calle: calle,
                 p_numero: numero,
+                p_piso: piso,
+                p_dpto: dpto,
                 p_barrio: barrio,
                 p_localidad: localidad,
                 p_celular: celular,
                 p_email1: email1,
                 p_email2: email2
             }
-            //console.log(profesional);
+            console.log(profesional);
             registrarProfesional(profesional);
             limpiarCampos();
 
@@ -109,9 +113,14 @@ function actualizar(idBuscar) {
             $("#id__AtxtMatricula").val(data.d.NroMatricula);
             $("#id__AtxtLocalidad").val(data.d.Localidad);
             $("#id__AdtpFechaNac").val(mostrarFecha(data.d.FechaNacimiento));
-            var direccion = data.d.Domicilio.split('Barrio:')
-            $("#id__AtxtDomicilio").val(direccion[0]);
-            $("#id__AtxtBarrio").val(direccion[1]);
+            //var direccion = data.d.Domicilio.split('Barrio:');
+            var calle_num = data.d.Domicilio.split('Piso:');
+            var pisoDpto = calle_num[1].split('Dpto:');
+            var barrio = pisoDpto[1].split('Barrio:');
+            $("#id__AtxtDomicilio").val(calle_num[0]);
+            $("#id__AtxtPiso").val(pisoDpto[0]);
+            $("#id__AtxtDpto").val(barrio[0]);
+            $("#id__AtxtBarrio").val(barrio[1]);
 
             $("#id__AtxtCelular").val(data.d.NroContacto);
             var email = data.d.EmailContacto.split('@');
@@ -345,6 +354,8 @@ function limpiarCampos() {
     $('#id__dtpFechaNac').datepicker('clearDates');
     $('#id__txtCalle').val("");
     $('#id__txtNumero').val("");
+    $('#id__txtPiso').val("");
+    $('#id__txtDpto').val("");
     $('#id__txtBarrio').val("");
     $('#id__txtLocalidad').val("");
     $('#id__txtCelular').val("");
@@ -364,6 +375,8 @@ function deshabilitarCampos(valor) {
     document.getElementById("id__dtpFechaNac").readOnly = valor;
     document.getElementById("id__txtCalle").readOnly = valor;
     document.getElementById("id__txtNumero").readOnly = valor;
+    document.getElementById("id__txtPiso").readOnly = valor;
+    document.getElementById("id__txtDpto").readOnly = valor;
     document.getElementById("id__txtBarrio").readOnly = valor;
     document.getElementById("id__txtLocalidad").readOnly = valor;
     document.getElementById("id__txtCelular").readOnly = valor;
@@ -618,6 +631,8 @@ function UpdateDataProfesionales(id) {
         localidad: $("#id__AtxtLocalidad").val(),
         barrio: $("#id__AtxtBarrio").val(),
         direccion: $("#id__AtxtDomicilio").val(),
+        piso: $("#id__AtxtPiso").val(),
+        dpto: $("#id__AtxtDpto").val(),
         celular: $("#id__AtxtCelular").val(),
         email1: $("#id__AtxtEmail1").val(),
         email2: $("#id__AtxtEmail2").val()

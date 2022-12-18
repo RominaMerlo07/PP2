@@ -516,6 +516,27 @@
                     }
                 )
             });
+
+            $('#ddlHoraDesde').click(function ()
+            {
+                if ($('#ddlHoraDesde').val() == '20') {
+                    $('#ddlMinDesde').prop('disabled', true);
+                } else {
+                    $('#ddlMinDesde').prop('disabled', false);
+                }
+            
+            });
+
+            $('#ddlHoraHasta').click(function ()
+            {
+                if ($('#ddlHoraHasta').val() == '20') {
+                    $('#ddlMinHasta').prop('disabled', true);
+                } else {
+                    $('#ddlMinHasta').prop('disabled', false);
+                }
+            
+            });
+
         });
 
         function cargarTabla(idProfesional) {
@@ -712,6 +733,8 @@
             $('#ddlMinDesde').val('00');
             $('#ddlHoraHasta').val('8');
             $('#ddlMinHasta').val('00');
+            $('#ddlMinDesde').prop('disabled', false);
+            $('#ddlMinHasta').prop('disabled', false);
 
             $("#lunes").iCheck("uncheck");
             $("#martes").iCheck("uncheck");

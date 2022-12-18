@@ -1215,7 +1215,7 @@ function registrarOSxPaciente(obraPaciente) {
 
 
 function seleccionarOSsocialingsong(idObraPaciente, numero) {
-    debugger;
+
     btnRegistrarExis.disabled = true;
 
     centro = $('#ddlSucursal').val();
@@ -1230,14 +1230,14 @@ function seleccionarOSsocialingsong(idObraPaciente, numero) {
         resulfila = table.row("#" + idObraPaciente).data();   
 
         console.log(resulfila);
- 
+
         obraTurnoPaciente = {
             p_centro: centro,
             p_especialidad: especialidad,
             p_fechaTurno: fechaTurno,
             p_horaTurno: horaTurno,
             p_idPaciente: numero,
-            p_idObraSocial: resulfila[0],
+            p_idObraSocial: resulfila[1],
             p_idPlan: resulfila[3],
             p_nroAfiliado: resulfila[6],
             p_profesional: $('#ddlProfesional').val(),

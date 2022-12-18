@@ -103,7 +103,7 @@ namespace TurneroWeb10
                 paciente.IdPaciente = Convert.ToInt32(obj.GetValue("p_idPaciente").ToString());
 
                 histClinica.Tension = Convert.ToBoolean(obj.GetValue("p_tension").ToString());
-                histClinica.TensionValores = obj.GetValue("p_tension").ToString();
+                histClinica.TensionValores = obj.GetValue("p_tension_valores").ToString();
                 histClinica.Diabetes = Convert.ToBoolean(obj.GetValue("p_diabetes").ToString());
                 histClinica.Fumador = Convert.ToBoolean(obj.GetValue("p_fumador").ToString());
                 histClinica.Cardiaco = Convert.ToBoolean(obj.GetValue("p_cardiaco").ToString());

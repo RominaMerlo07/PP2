@@ -182,7 +182,7 @@
 <body class="skin-blue">
     <header class="header">
         <!--INICIO CABERECERA-->
-        <a href="#" class="logo">Sparring</a>
+        <a href="Dashboard.aspx" class="logo">Sparring</a>
         <nav class="navbar navbar-static-top" role="navigation">
             <a href="#" class="nav-btn sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle Navigation</span>
@@ -213,7 +213,13 @@
                         </div>
                     </div>
                     <ul class="sidebar-menu">
-                        <li class="nav-item dropdown active" id="idMesaDeEntrada">
+                        <li class="nav-item " id="idDashboard ">
+                            <a class="nav-link" href="Dashboard.aspx" role="button" aria-haspopup="true" aria-expanded="false">
+                               <i class="fa-solid fa-house-medical"></i>
+                                <span> Inicio</span>
+                            </a>                      
+                        </li>
+                        <li class="nav-item dropdown " id="idMesaDeEntrada">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 <%--  <i class="fas fa-desktop"></i>--%>
                                 <i class="fa-solid fa-laptop-medical"></i>
@@ -341,6 +347,12 @@
                                 <i class="fa fa-users"></i>
                                 <span> Gestión de Usuarios</span>
                             </a>
+                        </li> 
+                        <li class="nav-item" id="idAcercaDe">
+                            <a class="nav-link" href="AcercaDe.aspx" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span> Acerca de</span>
+                            </a>
+                        </li> 
                         </li>
 
                             <li class="nav-item" id="idDashboard">
