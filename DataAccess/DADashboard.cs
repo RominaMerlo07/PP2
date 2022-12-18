@@ -354,30 +354,132 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
                 con.Open();
 
-                string consulta = "(SELECT Q.NOMBRE_CENTRO, Q.ESTADO, Q.CANTIDAD, ISNULL(CAST((SELECT Q.CANTIDAD*100*1.0/NULLIF((SELECT COUNT(*) " +
-                                    "from t_turnos t,T_CENTROS c " +
-                                    "where t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO AND Q.NOMBRE_CENTRO = " +
-                                    "C.NOMBRE_CENTRO),0)) AS " +
-                                    "DECIMAL(10,2)),0) AS 'PORCENTAJE' " +
-                                    "FROM( " +
-                                    "select c.NOMBRE_CENTRO, 'OTORGADO' AS 'ESTADO', count(*) as 'CANTIDAD' " +
-                                    "from " +
-                                    "t_turnos t, T_CENTROS c " +
-                                    "where  t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO " +
-                                    "group by c.NOMBRE_CENTRO " +
-                                    "UNION " +
-                                    "select c.NOMBRE_CENTRO, 'CANCELADO' AS 'ESTADO', count(*) as 'CANTIDAD' " +
-                                    "from t_turnos t, T_CENTROS c " +
-                                    "where  t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO " +
-                                    "and t.ESTADO = 'CANCELADO' " +
-                                    "group by c.NOMBRE_CENTRO " +
-                                    "UNION " +
-                                    "select c.NOMBRE_CENTRO, 'ATENDIDO' AS 'ESTADO', count(*) as 'CANTIDAD' " +
-                                    "from t_turnos t, T_CENTROS c " +
-                                    "where  t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO " +
-                                    "and t.ESTADO = 'ATENDIDO' " +
-                                    "group by c.NOMBRE_CENTRO " +
-                                    ")Q) ";
+                string consulta = @"(SELECT Q.NOMBRE_CENTRO, 
+		                                        Q.ESTADO, 
+		                                        Q.CANTIDAD, 
+		                                        ISNULL(CAST
+				                                        (
+				                                        (SELECT Q.CANTIDAD*100*1.0/NULLIF((SELECT COUNT(*) 
+					                                        from t_turnos t,T_CENTROS c 
+					                                        where t.fecha_turno between @fecha_desde and @fecha_hasta 
+					                                        and t.ID_CENTRO = c.ID_CENTRO AND Q.NOMBRE_CENTRO = C.NOMBRE_CENTRO
+				                                        ),0)
+			                                        ) AS DECIMAL(10,2)),0) AS 'PORCENTAJE' 
+                                        FROM( 
+	                                        SELECT 'CARLOS PAZ I' AS NOMBRE_CENTRO, 
+			                                        ESTADO,
+			                                        CP AS CANTIDAD
+	                                        FROM
+	                                        (
+	                                        select COUNT(*) AS CP,
+			                                        'ATENDIDO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CARLOS PAZ I'
+			                                        and t.ESTADO = 'ATENDIDO' 
+	                                        UNION ALL
+	                                        select COUNT(*) AS CP,
+			                                        'CANCELADO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CARLOS PAZ I'
+			                                        and t.ESTADO = 'CANCELADO' 
+	                                        UNION ALL
+	                                        select COUNT(*) AS CP,
+			                                        'OTORGADO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CARLOS PAZ I'
+	                                        ) A
+                                        UNION ALL
+	                                        SELECT 'CARLOS PAZ II' AS NOMBRE_CENTRO, 
+			                                        ESTADO,
+			                                        CP AS CANTIDAD
+	                                        FROM
+	                                        (
+	                                        select COUNT(*) AS CP,
+			                                        'ATENDIDO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CARLOS PAZ II'
+			                                        and t.ESTADO = 'ATENDIDO' 
+	                                        UNION ALL
+	                                        select COUNT(*) AS CP,
+			                                        'CANCELADO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CARLOS PAZ II'
+			                                        and t.ESTADO = 'CANCELADO' 
+	                                        UNION ALL
+	                                        select COUNT(*) AS CP,
+			                                        'OTORGADO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CARLOS PAZ II'	
+	                                        ) A
+                                        UNION ALL
+	                                        SELECT 'CORDOBA' AS NOMBRE_CENTRO, 
+			                                        ESTADO,
+			                                        CP AS CANTIDAD
+	                                        FROM
+	                                        (
+	                                        select COUNT(*) AS CP,
+			                                        'ATENDIDO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CORDOBA'
+			                                        and t.ESTADO = 'ATENDIDO' 
+			
+	                                        UNION ALL
+	                                        select COUNT(*) AS CP,
+			                                        'CANCELADO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CORDOBA'
+			                                        and t.ESTADO = 'CANCELADO' 
+	                                        UNION ALL
+	                                        select COUNT(*) AS CP,
+			                                        'OTORGADO' AS ESTADO
+			                                        from t_turnos t, T_CENTROS c 
+			                                        where  t.fecha_turno between @fecha_desde and @fecha_hasta 
+			                                        and t.ID_CENTRO = c.ID_CENTRO
+			                                        AND C.NOMBRE_CENTRO = 'CORDOBA'
+	                                        ) A
+                                         )
+                                        Q)";
+
+                //string consulta = "(SELECT Q.NOMBRE_CENTRO, Q.ESTADO, Q.CANTIDAD, ISNULL(CAST((SELECT Q.CANTIDAD*100*1.0/NULLIF((SELECT COUNT(*) " +
+                //                    "from t_turnos t,T_CENTROS c " +
+                //                    "where t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO AND Q.NOMBRE_CENTRO = " +
+                //                    "C.NOMBRE_CENTRO),0)) AS " +
+                //                    "DECIMAL(10,2)),0) AS 'PORCENTAJE' " +
+                //                    "FROM( " +
+                //                    "select c.NOMBRE_CENTRO, 'OTORGADO' AS 'ESTADO', count(*) as 'CANTIDAD' " +
+                //                    "from " +
+                //                    "t_turnos t, T_CENTROS c " +
+                //                    "where  t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO " +
+                //                    "group by c.NOMBRE_CENTRO " +
+                //                    "UNION " +
+                //                    "select c.NOMBRE_CENTRO, 'CANCELADO' AS 'ESTADO', count(*) as 'CANTIDAD' " +
+                //                    "from t_turnos t, T_CENTROS c " +
+                //                    "where  t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO " +
+                //                    "and t.ESTADO = 'CANCELADO' " +
+                //                    "group by c.NOMBRE_CENTRO " +
+                //                    "UNION " +
+                //                    "select c.NOMBRE_CENTRO, 'ATENDIDO' AS 'ESTADO', count(*) as 'CANTIDAD' " +
+                //                    "from t_turnos t, T_CENTROS c " +
+                //                    "where  t.fecha_turno between @fecha_desde and @fecha_hasta and t.ID_CENTRO = c.ID_CENTRO " +
+                //                    "and t.ESTADO = 'ATENDIDO' " +
+                //                    "group by c.NOMBRE_CENTRO " +
+                //                    ")Q) ";
 
 
                 cmd = new SqlCommand(consulta, con);
