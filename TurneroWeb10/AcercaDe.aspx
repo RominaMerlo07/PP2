@@ -26,7 +26,7 @@
                             <tr>
                                 <th scope="row">Carpeta de Administración de Proyectos</th>
                                 <td>
-                                    <a href="Archivos/Carpeta de Administracion de Proyectos.zip" download="Carpeta_de_administracion_de_proyectos">
+                                    <a href="Archivos/Carpeta de Administracion de Proyectos.pdf" download="Carpeta_de_administracion_de_proyectos">
                                         <i class="fas fa-file-download"></i> Descargar
                                     </a> 
                                 </td>
@@ -42,7 +42,7 @@
                             <tr>
                                 <th scope="row">Carpeta de Práctica Profesionalizante</th>
                                 <td>
-                                    <a href="Archivos/Carpeta de Practica Profesionalizante.zip" download="Carpeta_de_practica_profesionalizante">
+                                    <a href="Archivos/Carpeta de Practica Profesionalizante.pdf" download="Carpeta_de_practica_profesionalizante">
                                         <i class="fas fa-file-download"></i> Descargar
                                     </a> 
                                 </td>

@@ -8,7 +8,7 @@ let myChart1;
 let myChart2;
 let myChart3;
 let myChart4;
-let myChart5;
+let myChart51;
 let myChart6;
 let myChart7;
 let myChart8;
@@ -82,14 +82,65 @@ $(document).ready(function () {
 
     inicializarTurnosTotales();
 
-    GraficarEspMasDemandadas();
+    $('input[name="daterange1"]').daterangepicker({
+        locale: {
+
+            autoUpdateInput: false,
+            opens: 'left',
+            startDate: "01/01/2021",
+            endDate: "03/08/2022",
+            daysOfWeek: [
+                "Do",
+                "Lu",
+                "Ma",
+                "Mi",
+                "Ju",
+                "Vi",
+                "Sa"
+            ],
+            applyLabel: "Guardar",
+            cancelLabel: "Cancelar",
+            fromLabel: "Desde",
+            toLabel: "Hasta",
+            customRangeLabel: "Personalizar",
+            monthNames: [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Setiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            format: "DD-MM-YYYY"
+
+        },
+    }, function (start, end, label) {
 
 
+        startDate = start.format(format);
+        endDate = end.format(format);
+        GraficarEspMasDemandadas(startDate, endDate);
+
+        cb1(start.format(format2), end.format(format2));
+
+    });
+
+    inicializarEstadisticas();
 
 });
 
 function cb(start, end) {
     $('#date_range').val(start + ' - ' + end);
+}
+
+function cb1(start, end) {
+    $('#date_range1').val(start + ' - ' + end);
 }
 
 function inicializarTurnosTotales() {
@@ -102,6 +153,19 @@ function inicializarTurnosTotales() {
     var endDate2 = moment().format(format2);
     cb(startDate2, endDate2);
 }
+
+function inicializarEstadisticas() {
+
+    var startDate = moment().subtract('days', 365).format(format);
+    var endDate = moment().format(format);
+    GraficarEspMasDemandadas(startDate,endDate);
+
+    var startDate2 = moment().subtract('days', 365).format(format2);
+    var endDate2 = moment().format(format2);
+    cb1(startDate2, endDate2);
+}
+
+
 
 
 function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
@@ -172,15 +236,21 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
             myChart0 = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: obra_social,
+                    labels:obra_social,
                     datasets: [{
-                        label: 'Obras Sociales',
+                        label: '',
                         data: cantidad,
                         borderWidth: 1,
-                        backgroundColor: ["#3e95cd", "#8e5ea2"]
-                    }]
+                        backgroundColor: ["#81638b", "#dac9df"]
+                    }
+                    ]
                 },
                 options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true
@@ -236,6 +306,11 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
                 cantidad_cancelados.push(data.d[18]);
                 cantidad_cancelados.push(data.d[30]);
 
+               
+
+                
+
+                if(data.d[2])
                 document.getElementById('atendidos-cp1').innerHTML = data.d[2];
                 document.getElementById('atendidos-cp2').innerHTML = data.d[14];
                 document.getElementById('atendidos-c').innerHTML = data.d[26];
@@ -266,7 +341,7 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
                                 label: 'ATENDIDOS',
                                 data: cantidad_atendidos,
                                 borderWidth: 1,
-                                backgroundColor: '#0D2A73',
+                                backgroundColor: '#42ab49',
                             },
                             {
                                 label: 'CANCELADOS',
@@ -286,19 +361,19 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
                             showScale: false,
                         },
 
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Cantidad de turnos atentidos y cancelados por sucursal',
-                                font: {
-                                    family: "'Arial', sans-serif",
-                                    size: 30
-                            },
-                                padding: {
-                                    bottom: 30
-                                }
-                            }
-                        }
+                        //plugins: {
+                        //    //title: {
+                        //    //    display: true,
+                        //    //    text: 'Cantidad de turnos atentidos y cancelados por sucursal',
+                        //    //    font: {
+                        //    //        family: "'Arial', sans-serif",
+                        //    //        size: 30
+                        //    ////},
+                        //    //    padding: {
+                        //    //        bottom: 30
+                        //    //    }
+                        //    //}
+                        //}
 
 
                     }
@@ -320,7 +395,7 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
                                 label: 'ATENDIDOS',
                                 data: 0,
                                 borderWidth: 1,
-                                backgroundColor: '#0D2A73',
+                                backgroundColor: '#42ab49',
                             },
                             {
                                 label: 'CANCELADOS',
@@ -355,57 +430,57 @@ function ObtenerCantidadTurnosTotales(fecha_desde, fecha_hasta, estado) {
 
 function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
 
-    $('input[name="daterange1"]').daterangepicker({
-        locale: {
+    //$('input[name="daterange1"]').daterangepicker({
+    //    locale: {
 
-            autoUpdateInput: false,
-            opens: 'left',
-            startDate: "01/01/2021",
-            endDate: "03/08/2022",
-            daysOfWeek: [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
-            ],
-            applyLabel: "Guardar",
-            cancelLabel: "Cancelar",
-            fromLabel: "Desde",
-            toLabel: "Hasta",
-            customRangeLabel: "Personalizar",
-            monthNames: [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Setiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            format: "DD-MM-YYYY"
+    //        autoUpdateInput: false,
+    //        opens: 'left',
+    //        startDate: "01/01/2021",
+    //        endDate: "03/08/2022",
+    //        daysOfWeek: [
+    //            "Do",
+    //            "Lu",
+    //            "Ma",
+    //            "Mi",
+    //            "Ju",
+    //            "Vi",
+    //            "Sa"
+    //        ],
+    //        applyLabel: "Guardar",
+    //        cancelLabel: "Cancelar",
+    //        fromLabel: "Desde",
+    //        toLabel: "Hasta",
+    //        customRangeLabel: "Personalizar",
+    //        monthNames: [
+    //            "Enero",
+    //            "Febrero",
+    //            "Marzo",
+    //            "Abril",
+    //            "Mayo",
+    //            "Junio",
+    //            "Julio",
+    //            "Agosto",
+    //            "Setiembre",
+    //            "Octubre",
+    //            "Noviembre",
+    //            "Diciembre"
+    //        ],
+    //        format: "DD-MM-YYYY"
 
-        },
-    }, function (start, end, label) {
+    //    },
+    //}, function (start, end, label) {
 
         fechaDesde = fecha_desde;
         fechaHasta = fecha_hasta;
 
-        arrayFechas = new Array();
+        //arrayFechas = new Array();
 
-        arrayFechas.push(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
-        console.log(arrayFechas);
-        fechaDesde = arrayFechas[0];
-        fechaHasta = arrayFechas[1];
+        //arrayFechas.push(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+        //console.log(arrayFechas);
+        //fechaDesde = arrayFechas[0];
+        //fechaHasta = arrayFechas[1];
 
-        console.log(fechaHasta, fechaDesde);
+        //console.log(fechaHasta, fechaDesde);
 
 
         $.ajax({
@@ -453,6 +528,9 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
 
                 const ctx = document.getElementById('grafico-especialidades');
 
+                
+
+
                 if (myChart2) {
                     myChart2.destroy();
                 }
@@ -463,11 +541,17 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
                         labels: especialidad,
                         datasets: [{
                             label: 'Especialidades más demandadas',
+                            backgroundColor: ['#8f7193', '#a788ab', '#c0a0c3', '#dfcae1','#e5dde6'],
                             data: cantidad,
                             borderWidth: 1
                         }]
                     },
                     options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -538,10 +622,17 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
                         datasets: [{
                             label: 'Especialidades menos demandadas',
                             data: cantidadm,
-                            borderWidth: 1
+                            borderWidth: 1,
+                            backgroundColor: ['#b5ffff', '#8ae0db', '#5dc1b9', '#42a8a1', '#239089'],
+                            
                         }]
                     },
                     options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -656,7 +747,8 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
                             {
                                 label: 'Carlos Paz I',
                                 data: porcentaje_cp1,
-                                borderWidth: 1
+                                borderWidth: 1,
+                               
                             }
                         ]
                     },
@@ -674,15 +766,16 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
                 });
 
 
-                const ctx1 = document.getElementById('grafico-especialidades-mas-cp2');
+                const ctx11 = document.getElementById('grafico-espec-mas-cp2');
 
-                if (myChart5) {
-                    myChart5.destroy();
+                
+                if (myChart51) {
+                    myChart51.destroy();
 
                 }
 
 
-                myChart5 = new Chart(ctx1, {
+                myChart51 = new Chart(ctx11, {
                     type: 'doughnut',
                     data: {
                         labels: especialidad_cp2,
@@ -702,19 +795,21 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
                             responsive: false,
                             maintainAspectRatio: true,
                             showScale: false,
-                        }
+                        },
+                        
                     }
                 });
 
+                const ctx6 = document.getElementById('grafico-espec-mas-cba');
 
-
-                const ctx3 = document.getElementById('grafico-especialidades-mas-c');
 
                 if (myChart6) {
                     myChart6.destroy();
+
                 }
 
-                myChart6 = new Chart(ctx3, {
+
+                myChart6 = new Chart(ctx6, {
                     type: 'doughnut',
                     data: {
                         labels: especialidad_c,
@@ -734,14 +829,10 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
                             responsive: false,
                             maintainAspectRatio: true,
                             showScale: false,
-                        }
+                        },
+
                     }
                 });
-
-
-
-
-
 
 
             }
@@ -942,10 +1033,10 @@ function GraficarEspMasDemandadas(fecha_desde, fecha_hasta) {
 
 
 
-    }
-
-    )
 };
+
+    
+
 
 
 
