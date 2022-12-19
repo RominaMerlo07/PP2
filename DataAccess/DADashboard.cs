@@ -542,7 +542,7 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
                 con.Open();
 
-                string consulta = "select TOP 3 x.NOMBRE_CENTRO, x.DESCRIPCION,x.cantidad,CAST( x.cantidad*100*1.0/(select COUNT(*) from T_CENTROS c," +
+                string consulta = "select TOP 10 x.NOMBRE_CENTRO, x.DESCRIPCION,x.cantidad,CAST( x.cantidad*100*1.0/(select COUNT(*) from T_CENTROS c," +
                     "T_TURNOS t, T_ESPECIALIDADES e " +
                     "where t.FECHA_TURNO between @fecha_desde and @fecha_hasta and t.ID_ESPECIALIDAD = e.ID_ESPECIALIDADES and c.ID_CENTRO = 1 and t.ID_CENTRO = 1) AS decimal " +
                     "(10, 2)) as 'porcetaje '" +
@@ -626,7 +626,7 @@ namespace DataAccess
                 con = new SqlConnection(cadenaDeConexion);
                 con.Open();
 
-                string consulta = "select TOP 3 x.NOMBRE_CENTRO, x.DESCRIPCION,x.cantidad,CAST( x.cantidad*100*1.0/(select COUNT(*) from T_CENTROS c," +
+                string consulta = "select TOP 10 x.NOMBRE_CENTRO, x.DESCRIPCION,x.cantidad,CAST( x.cantidad*100*1.0/(select COUNT(*) from T_CENTROS c," +
                     "T_TURNOS t, T_ESPECIALIDADES e " +
                     "where t.FECHA_TURNO between @fecha_desde and @fecha_hasta and t.ID_ESPECIALIDAD = e.ID_ESPECIALIDADES and c.ID_CENTRO = 1 and t.ID_CENTRO = 1) AS decimal " +
                     "(10, 2)) as 'porcetaje '" +
