@@ -673,6 +673,15 @@ function soloNumeros(event) {
     }
 };
 
+function piso(event) {
+    var regex = new RegExp("^[(pbPB)0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+    }
+};
+
 
 function soloLetras (event) {
     var regex = new RegExp("^[a-zA-Z ]+$");

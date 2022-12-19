@@ -137,7 +137,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Piso</span>
                                                     </div>
-                                                    <input type="text" name="piso" id="id__txtPiso" style="text-align: left" class="form-control" maxlength="2" onkeypress="return soloNumeros(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                                                    <input type="text" name="piso" id="id__txtPiso" style="text-align: left" class="form-control" maxlength="2" onkeypress="return piso(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" />
                                                 </div>
                                                 <p class="formulario__error" id="p__txtPiso">Por favor, ingrese la calle</p>
                                             </div>
