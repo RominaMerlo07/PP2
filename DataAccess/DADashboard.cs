@@ -265,7 +265,7 @@ namespace DataAccess
                     " os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL AND OS.DESCRIPCION = 'PARTICULAR' " +
                     "group by os.DESCRIPCION)P) " +
                     "UNION " +
-                    "(SELECT 'OTRAS', SUM(X.CANTIDAD) as [cantidad] FROM(SELECT os.DESCRIPCION, count(*) AS 'CANTIDAD' FROM T_OBRAS_PACIENTES op," +
+                    "(SELECT 'OBRAS', SUM(X.CANTIDAD) as [cantidad] FROM(SELECT os.DESCRIPCION, count(*) AS 'CANTIDAD' FROM T_OBRAS_PACIENTES op," +
                     "T_OBRAS_SOCIALES os, T_TURNOS t where " +
                     "op.ID_PACIENTE = (SELECT t.ID_PACIENTE WHERE t.FECHA_TURNO between @fecha_desde and @fecha_hasta and estado = 'ATENDIDO') " +
                     "and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL AND OS.DESCRIPCION != 'PARTICULAR' " +
@@ -276,7 +276,7 @@ namespace DataAccess
                     "and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL AND OS.DESCRIPCION = 'PARTICULAR' " +
                     "group by os.DESCRIPCION)P) " +
                     "UNION " +
-                    "(SELECT 'OTRAS', SUM(X.CANTIDAD) as [cantidad] FROM(SELECT os.DESCRIPCION, count(*) AS 'CANTIDAD' FROM T_OBRAS_PACIENTES op, " +
+                    "(SELECT 'OBRAS', SUM(X.CANTIDAD) as [cantidad] FROM(SELECT os.DESCRIPCION, count(*) AS 'CANTIDAD' FROM T_OBRAS_PACIENTES op, " +
                     "T_OBRAS_SOCIALES os, T_TURNOS t where " +
                     "op.ID_PACIENTE = (SELECT t.ID_PACIENTE WHERE t.FECHA_TURNO between @fecha_desde and @fecha_hasta and estado = 'ATENDIDO') " +
                     "and os.ID_OBRA_SOCIAL = op.ID_OBRA_SOCIAL AND OS.DESCRIPCION != 'PARTICULAR' " +
