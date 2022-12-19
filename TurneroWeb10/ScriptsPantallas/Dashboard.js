@@ -83,12 +83,11 @@ $(document).ready(function () {
     inicializarTurnosTotales();
 
     $('input[name="daterange1"]').daterangepicker({
-        locale: {
+        
 
             autoUpdateInput: false,
-            opens: 'left',
-            startDate: "01/01/2021",
-            endDate: "03/08/2022",
+        opens: 'left',
+        locale: {
             daysOfWeek: [
                 "Do",
                 "Lu",
@@ -145,22 +144,22 @@ function cb1(start, end) {
 
 function inicializarTurnosTotales() {
 
-    var startDate = moment().subtract('days', 365).format(format);
+    var startDate = moment().subtract('months', 1).format(format);
     var endDate = moment().format(format);
     ObtenerCantidadTurnosTotales(startDate, endDate, "");
 
-    var startDate2 = moment().subtract('days', 365).format(format2);
+    var startDate2 = moment().subtract('months', 1).format(format2);
     var endDate2 = moment().format(format2);
     cb(startDate2, endDate2);
 }
 
 function inicializarEstadisticas() {
 
-    var startDate = moment().subtract('days', 365).format(format);
+    var startDate = moment().subtract('months',1).format(format);
     var endDate = moment().format(format);
     GraficarEspMasDemandadas(startDate,endDate);
 
-    var startDate2 = moment().subtract('days', 365).format(format2);
+    var startDate2 = moment().subtract('months',1).format(format2);
     var endDate2 = moment().format(format2);
     cb1(startDate2, endDate2);
 }

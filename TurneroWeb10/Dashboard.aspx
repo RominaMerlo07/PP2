@@ -231,7 +231,7 @@
                                     <p style="font-family:'Arial Rounded MT';font-size:20px;">Atendidos</p>
                                     <h3 id="atendidos-cp1" style="color:#42ab49"></h3>
                                     <p style="font-family:'Arial Rounded MT';font-size:20px;">Cancelados</p>
-                                    <h3 id="cancelados-cp1" style="color:#0D2A73"></h3>
+                                    <h3 id="cancelados-cp1" style="color:#F06057"></h3>
                                     
                                                 </div>
                                             </div>
@@ -247,7 +247,7 @@
                                     <p style="font-family:'Arial Rounded MT';font-size:20px;">Atendidos</p>
                                     <h3 id="atendidos-cp2" style="color:#42ab49"></h3>
                                     <p style="font-family:'Arial Rounded MT';font-size:20px;">Cancelados</p>
-                                    <h3 id="cancelados-cp2" style="color:#0D2A73">
+                                    <h3 id="cancelados-cp2" style="color:#F06057">
                                         
                                     </h3>
                                     <%--<p>Nuevos Clientes</p>--%>
@@ -265,7 +265,7 @@
                                     <p style="font-family:'Arial Rounded MT';font-size:20px;">Atendidos</p>
                                      <h3 id="atendidos-c" style="color:#42ab49"></h3>
                                     <p style="font-family:'Arial Rounded MT';font-size:20px;">Cancelados</p>
-                                     <h3 id="cancelados-c" style="color:#0D2A73"></h3>
+                                     <h3 id="cancelados-c" style="color:#F06057"></h3>
                                                
                                     <%--<p>Nuevos Clientes</p>--%>
                                                 </div>
@@ -286,7 +286,7 @@
        <div class="row pb-4 ml-3 mr-4 justify-content-end">
             <div class="bg-white col-3" style="border: 1px solid #ccc; border-radius:3px; width:10px; margin-right:5px;">
           <i class="fa fa-calendar" id="i-calendario1"></i>&nbsp;
-          <input class="h-100 w-75" type="text" name="daterange1" value="01/01/2021 - 15/01/2022" id="date_range1" style="width:360px;"/>
+          <input class="h-100 w-75" type="text" name="daterange1" id="date_range1" style="width:360px;"/>
            <span></span><i class="fa fa-caret-down" id="i-flechita1"></i>
       </div>
      <%-- <div class="col-12 justify-content-end d-flex text-end h-100">
@@ -368,7 +368,7 @@
             <h3 class="card-title">Córdoba</h3>
         </div>
         <div class="card-body" style="width:400px; height:350px;">
-            <div style="position:absolute; top:60px;width:400px; height:350px; padding-top:40px;">
+            <div style="position:absolute; top:60px;width:300px; height:400px; padding-top:40px;">
 
             </div>
                     <canvas id="grafico-espec-mas-cba"></canvas>
@@ -390,7 +390,7 @@
             <h3 class="card-title">Carlos Paz I</h3>
         </div>
         <div class="card-body" style="width:400px; height: 400px;">
-            <div style="position:absolute; top:60px;width:400px; height:400px; padding-top:40px;">
+            <div style="position:absolute; top:60px;width:350px; height:400px; padding-top:40px;">
                 <canvas id="grafico-especialidades-menos-cp1"></canvas>
             </div>
             
@@ -404,7 +404,7 @@
             <h3 class="card-title">Carlos Paz II</h3>
         </div>
         <div class="card-body" style="width:400px; height: 400px";>
-            <div style="position:absolute; top:60px;width:400px; height:400px; padding-top:40px;">
+            <div style="position:absolute; top:60px;width:350px; height:400px; padding-top:40px;">
                 <canvas id="grafico-especialidades-menos-cp2"></canvas>
             </div>
             
@@ -417,7 +417,7 @@
             <h3 class="card-title">Córdoba</h3>
         </div>
         <div class="card-body" style="width:400px; height: 400px";>
-            <div style="position:absolute; top:60px;width:400px; height:400px; padding-top:40px;">
+            <div style="position:absolute; top:60px;width:350px; height:400px; padding-top:40px;">
                 <canvas id="grafico-especialidades-menos-c"></canvas>
             </div>
             
