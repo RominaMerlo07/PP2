@@ -619,39 +619,7 @@
 
             $('#btnBuscarDNIFiltrar').click(function () {
 
-                var dniPaciente = $('#txtDocumentoFiltrar').val();
-                var historiaClinica = buscarPacienteFiltrar(dniPaciente);
-
-                if ($('#txtPacienteFiltrar').val() != "") {
-
-                    $('#msgCargarPaciente').hide();
-
-                    if (historiaClinica != null)
-                    {
-                        $('#msgSinHC').hide();
-                        $('#btnIniciaHC').hide();
-
-                        mostrarDatosHC(historiaClinica, paciente);
-                        mostrarTratamientos();
-
-                    } else
-                    {
-                        //muestra btn para cargarla
-                        $('#msgSinHC').show();
-                        $('#btnIniciaHC').show();
-                        $('#boxAntecedentes').hide();
-                        $('#boxTratamientos').hide();
-                    }
-                }
-                else
-                {
-                    $('#msgSinHC').hide();
-                    $('#boxAntecedentes').hide();
-                    $('#boxTratamientos').hide();
-                    $('#btnIniciaHC').hide();
-                    $('#msgCargarPaciente').show();
-                    
-                }
+                buscarDniPacienteComienzo();
             });
 
             $('#btnIniciarSeguimiento').click(function ()
@@ -992,6 +960,8 @@
                     success: function (data) {
 
                         $("#modalGenerarTratamiento").modal('hide');
+                        $("#modalIniciaSeguimiento").modal('hide');
+                        buscarDniPacienteComienzo();
                         swal("Hecho", "Tratamiento registrado con éxito!", "success");
 
                     },
@@ -1173,6 +1143,42 @@
             //#endregion
         });
 
+        function buscarDniPacienteComienzo() {
+            var dniPaciente = $('#txtDocumentoFiltrar').val();
+            var historiaClinica = buscarPacienteFiltrar(dniPaciente);
+
+            if ($('#txtPacienteFiltrar').val() != "") {
+
+                $('#msgCargarPaciente').hide();
+
+                if (historiaClinica != null)
+                {
+                    $('#msgSinHC').hide();
+                    $('#btnIniciaHC').hide();
+
+                    mostrarDatosHC(historiaClinica, paciente);
+                    mostrarTratamientos();
+
+                } else
+                {
+                    //muestra btn para cargarla
+                    $('#msgSinHC').show();
+                    $('#btnIniciaHC').show();
+                    $('#boxAntecedentes').hide();
+                    $('#boxTratamientos').hide();
+                }
+            }
+            else
+            {
+                $('#msgSinHC').hide();
+                $('#boxAntecedentes').hide();
+                $('#boxTratamientos').hide();
+                $('#btnIniciaHC').hide();
+                $('#msgCargarPaciente').show();
+                    
+            }
+        }
+
         function buscarPacienteFiltrar(dniPaciente)
         {
             var historiaClinica;
@@ -1340,7 +1346,6 @@
                         var tratamientos = [];
                         datos.forEach(function (e)
                         {
-
                             var idTratamiento = e.ID_TRATAMIENTO;
                             var fechaAlta = getFormattedDate(new Date(e.FECHA_ALTA));
                             var centro = e.CENTRO;
