@@ -144,11 +144,11 @@ function cb1(start, end) {
 
 function inicializarTurnosTotales() {
 
-    var startDate = moment().subtract('months', 1).format(format);
+    var startDate = moment().format(format);
     var endDate = moment().format(format);
     ObtenerCantidadTurnosTotales(startDate, endDate, "");
 
-    var startDate2 = moment().subtract('months', 1).format(format2);
+    var startDate2 = moment().format(format2);
     var endDate2 = moment().format(format2);
     cb(startDate2, endDate2);
 }
