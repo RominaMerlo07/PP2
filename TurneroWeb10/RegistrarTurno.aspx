@@ -154,7 +154,7 @@
                                                 <span class="input-group-text">Paciente: </span>
                                             </div>
                                             <input type="search" name="dni" class="form-control rounded" id="id__txtDocumento" maxlength="8" placeholder="Ingrese DNI" aria-label="Search"
-                                                aria-describedby="search-addon" onkeypress="return soloNumeros(event)" /><p style="color: red;">*</p>
+                                                aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
                                              <%--<input type="search" name="dni" style="text-align: left" class="formulario-input form-control rounded" id="id__txtDocumento" maxlength="8" onkeypress="return soloNumeros(event)" onpaste="return false" aria-label="Search"
                                                 aria-describedby="search-addon"/>--%> 
                                             <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
@@ -222,7 +222,7 @@
                                                     <span class="input-group-text">Obra Social: </span>
                                                 </div>
                                                 <select class="custom-select form-control" id="ddlObraSocial" disabled="disabled">
-                                                </select><p style="color: red;">*</p>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col ">

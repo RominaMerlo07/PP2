@@ -39,7 +39,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Profesional: </span>
                                 </div>
-                                <select class="form-control" id="txtNombreProf" ></select><p style="color: red;">*</p>
+                                <select class="form-control" id="txtNombreProf" ></select>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-8" >

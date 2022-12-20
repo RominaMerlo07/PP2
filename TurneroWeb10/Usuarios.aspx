@@ -64,7 +64,7 @@
                                                     aria-describedby="search-addon" onkeypress="return soloNumeros(event)" />
                                                 <button class="btn btn-outline-secondary" id="btnBuscarDNI" type="button">
                                                     <i class="fas fa-search"></i>
-                                                </button><p style="color: red;">*</p>
+                                                </button>
                                             </div>
                                             <p class="formulario__error" id="p__txtDocumento">Por favor, ingrese el numero de documento sin puntos</p>
                                         </div>
