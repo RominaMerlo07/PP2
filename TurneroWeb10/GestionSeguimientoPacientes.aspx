@@ -1013,11 +1013,11 @@
                     async: false,
                     success: function (data) {
 
-                        swal("Hecho", "Tratamiento editado con éxito!", "success");
+                        swal("Hecho", "Seguimiento guardado con éxito!", "success");
 
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        swal("Cuidado", "Ha habido un error al editar el Tratamiento.", "warning");
+                        swal("Cuidado", "Ha habido un error al editar el Seguimiento.", "warning");
                     }
                 });
 
